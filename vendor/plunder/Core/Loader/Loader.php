@@ -2,6 +2,7 @@
 
 namespace Plunder\Core\Loader;
 
+use Plunder\Helpers\Cache\Cache;
 use Symfony\Component\Yaml\Parser;
 use Plunder\Core\Container\Container;
 
@@ -16,15 +17,19 @@ class Loader
 	}
 
 	/**
-	 * [init Inicializa elementos elementos para o Framework]
+	 * [init Inicializa elementos para o Framework]
 	 * @return [type] [description]
 	 */
-	public function init(){
+	private function init(){
 		$di = new Container(new Parser());
 
-		$finder = Container::get('finder');
-		var_dump($finder);
 
+
+/*
+		$finder = Container::get('finder');
+		$yaml = Container::get('yam');
+		var_dump(Container::$container);
+*/
 	}
 
 }
