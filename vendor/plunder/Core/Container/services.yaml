@@ -1,0 +1,7 @@
+services:
+    yaml:
+        class: Symfony\Component\Yaml\Yaml
+        params: null
+    finder:
+        class: Symfony\Component\Finder\Finder
+        params: null

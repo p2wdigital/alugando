@@ -1,0 +1,22 @@
+{
+    "name": "plunder/plunder-master",
+    "license": "MIT",
+    "type": "project",
+    "description": "Plunder Standard Edition distribution",
+    "require":{
+        "php": ">=5.4",
+        "symfony/yaml": "~2.3",
+        "symfony/console": "~2.3",
+        "symfony/finder": "~2.3",
+        "symfony/validator": "~2.3",
+        "symfony/filesystem": "~2.3",
+        "symfony/config": "~2.3",
+        "propel/propel": "~2.0@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Plunder\\": ["vendor/"],
+            "": ["src/"]
+        }
+    }    
+}

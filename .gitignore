@@ -1,0 +1,4 @@
+!/vendor
+/vendor/*
+!/vendor/plunder
+composer.lock
