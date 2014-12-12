@@ -1,19 +1,24 @@
 <?php 
 
 namespace Plunder\Helpers\Cache;
-use Symfony\Component\Filesystem\Filesystem;
+
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 /**
 * 
 */
 class Cache 
 {
 	protected $finder;
-	protected $files;
-
-	public function __construct(Finder $finder, FileSystem $file){
+	protected $fs;
+	/**
+	 * [__construct description]
+	 * @param Finder     $finder [description]
+	 * @param FileSystem $fs     [description]
+	 */
+	public function __construct(Finder $finder, FileSystem $fs){
 		$this->finder 	= $finder;
-		$this->file 	= $file;
+		$this->fs 		= $fs;
 		return $this;
 	}
 
@@ -82,8 +87,16 @@ class Cache
 		return false;
 	}
 
-	public function setCache($path, $content, $files){
-		
+	public function setCache($path, $content, Finder $finder){
+		$pathFile = $this->generatePath($path);
+		$files = array();
+		foreach ($finder as $key => $value):
+			$files[$value->getPathname()] = $valeu->getMTime();
+		endforeach;
+
+		$dump = sprintf("$contentCache = %s \n $filesCache = %s", var_export($content, true), var_export($files, true));
+
+		$this->fs->dumpFile($pathFile, $dump);
 	}
 
 	public function getCache($path){
@@ -92,10 +105,11 @@ class Cache
 	}
 
 	public  function existsFile($path){
-		return $this->files->exists($this->generatePath($path));
+		return $this->fs->exists($this->generatePath($path));
 	}
 
 	private function generatePath($path){
+		return sprintf("%s/app/cache/%s/%s/%s.cache", BASE_DIR, ENVIRONMENT, str_replace(".", "/", $path), $path);
 		return ENVIRONMENT . str_replace(".", "/", $path) . "/".$path .".cache";
 	}
 

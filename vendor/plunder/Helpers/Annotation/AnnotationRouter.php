@@ -7,7 +7,7 @@ namespace Plunder\Helpers\Annotation;
 */
 class AnnotationRouter extends Annotation
 {
-	protected $route
+	protected $route;
 
 	public function __construct(Finder $finder, Cache $cache){
 		$fileCache	= "plunder.route";
@@ -29,6 +29,7 @@ class AnnotationRouter extends Annotation
 			$this->route = array_merge( $this->route, $this->handleFile($value->getContents()) );
 		endforeach;
 
+		$this->setCache();
 		return $this;
 
 	}

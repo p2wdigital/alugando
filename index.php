@@ -17,7 +17,10 @@ $loader = new Loader();
 
 echo number_format((microtime(true) - $ini),3) ." ms";
 
-
+$path = "plunder.route";
+echo sprintf("%s/app/cache/%s/%s.cache", BASE_DIR, ENVIRONMENT, str_replace(".", "/", $path));
+$path = "plunder.config";
+echo sprintf("%s/app/cache/%s/%s.cache", BASE_DIR, ENVIRONMENT, str_replace(".", "/", $path));
 
 $finder = new Finder();
 $finder->name("*Controller.php");
@@ -27,12 +30,13 @@ foreach ($finder as $key => $value) {
 	var_dump($value->getATime());
 	var_dump($value->getMTime());
 	var_dump($value->getCTime());
-	var_dump(stat($value->getPathname()));
-	var_dump(get_class_methods($value));
+	var_dump($value->getPathname());
+	//var_dump(get_class_methods($value));
 	
 }
 
 
 
+echo number_format((microtime(true) - $ini),3) ." ms";
 
 

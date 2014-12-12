@@ -36,19 +36,34 @@ class Container
 		if (!array_key_exists($key, $config)) return null;
 		
 		$methodAux = array_flip(get_class_methods($config[$key]["class"]));
+		var_dump($methodAux);
 		
-		// Se não foi incluido parametros nas configurações
-		// retorna uma nova instancia da classe
-		if ($config[$key]['params'] == null || array_key_exists("__construct", $methodAux)):
-			try {
-				return self::$container[$key] = new $config[$key]["class"];
-			} catch (\Exception $e) {
-				//Em caso de erro tenta montar dinamicamente os parametros
-			}
+		// Se não foi incluido parametros nas configurações ou a class
+		// não possui um method construct retorna uma nova instancia da classe
+		if ($config[$key]['params'] == null || !array_key_exists("__construct", $methodAux)):
+			return self::$container[$key] = new $config[$key]["class"];
 		endif;
 
+		echo 'Entrei';
+		$method = new \ReflectionMethod($config[$key]["class"], '__construct');
 
-		//var_dump($methodAux);
+		$parameters = $method->getParameters();
+		foreach ($parameters as $key => $value):
+			if(array_key_exists($value->name, self::$config[$key]['params'])):
+
+			endif;
+		endforeach;
+//rc = new ReflectionClass('Foo');
+//$foo = $rc->newInstanceArgs( array(1,2,3,4,5) );
+		var_dump(self::$config[$key]);
+		var_dump($method->getParameters());
+		var_dump(get_class_methods($method->getParameters()[0]));
+		var_dump(get_class_methods($method));
+		return;
+
+
+
+
 		if($x):
 			$method = new \ReflectionMethod($config[$key]["class"], '__construct');
 			
@@ -60,7 +75,5 @@ class Container
 		endif;
 
 
-//		var_dump(get_class_methods($method));
-//		var_dump($method->getNumberOfParameters());
 	}
 }
