@@ -13,20 +13,13 @@ abstract class Annotation
 	protected $files;
 	protected $cache;
 	
-	protected function verifyCache($path, $environment){
-		if ($environment == 'dev'):
-			$files = array();
-			foreach ($this->finder as $key => $value):
-				$files[] = $value->getPathname();
-			endforeach;
+	protected function verifyCache($path, Finder $finder){
+		$files = array();
+		foreach ($this->finder as $key => $value):
+			$files[] = $value->getPathname();
+		endforeach;
 
-			return $this->cache->verifyChanges($path, $files);
-		elseif (condition):
-			
-		else:
-
-		endif;
-
+		return $this->cache->verifyChanges($path, $files);
 	}
 
 }

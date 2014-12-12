@@ -27,6 +27,7 @@ class Cache
 		//inicializa as variavéis possiveis do cache;
 		$filesCache 	= null;
 		$contentCache	= null;
+		$pathFile = $this->generatePath($path);
 
 		//Se enviado array de files vazio, não temos com o 
 		//que comparar, então consideramos como alterado
@@ -38,8 +39,7 @@ class Cache
 		
 		//Monta caminho do arquivo em cache, se o arquivo 
 		//não existe é considerado como alterado
-		$pathFile = $this->generatePath($path);
-		if(!$this->files->exists($pathFile)):
+		if(!$this->existsFile($path)):
 			return true;
 		endif;
 
@@ -82,6 +82,18 @@ class Cache
 		return false;
 	}
 
+	public function setCache($path, $content, $files){
+		
+	}
+
+	public function getCache($path){
+		eval(file_get_contents($this->generatePath($path)));
+		return $contentCache;
+	}
+
+	public  function existsFile($path){
+		return $this->files->exists($this->generatePath($path));
+	}
 
 	private function generatePath($path){
 		return ENVIRONMENT . str_replace(".", "/", $path) . "/".$path .".cache";
