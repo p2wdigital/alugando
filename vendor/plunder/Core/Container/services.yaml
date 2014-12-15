@@ -6,10 +6,16 @@ services:
         class: Symfony\Component\Finder\Finder
         params: null
     filesystem:
-        class: Symfony\Component\Filesystem\Filesystem;
+        class: Symfony\Component\Filesystem\Filesystem
         params: null
     cache:
         class: Plunder\Helpers\Cache\Cache
         params:
             finder: %finder%
-            file: %file%
+            fs: %filesystem%
+    router:
+        class: Plunder\Core\Router\Router
+        params: null
+    request:
+        class: Plunder\Core\HttpRequest\Request
+        params: null

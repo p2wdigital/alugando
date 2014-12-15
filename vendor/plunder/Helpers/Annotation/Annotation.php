@@ -9,17 +9,14 @@ use Symfony\Component\Finder\Finder;
 */
 abstract class Annotation
 {
-	protected $finder;
-	protected $files;
-	protected $cache;
 	
-	protected function verifyCache($path, Finder $finder){
+	protected function verifyCache($path, Finder $finder, Cache $cache){
 		$files = array();
-		foreach ($this->finder as $key => $value):
+		foreach ($finder as $key => $value):
 			$files[] = $value->getPathname();
 		endforeach;
 
-		return $this->cache->verifyChanges($path, $files);
+		return $cache->verifyChanges($path, $files);
 	}
 
 }

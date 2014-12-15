@@ -21,13 +21,13 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
-		$di = new Container(new Parser());
-		var_dump(Container::get('cache'));
-		//$annotation		= new AnnotationRouter(Container::get('finder'), Container::get('cache'));
-		//$routers 		= 
+		new Container(new Parser());
+		$routers = new AnnotationRouter(Container::get('finder'), Container::get('cache'));
+		$route = Container::get('router');
+		$request = Container::get('request');
 
-
-
+		$routeRequest = $route->resolve($request, $routers->getRoute());
+		var_dump($routeRequest);
 
 /*
 		$finder = Container::get('finder');

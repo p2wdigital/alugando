@@ -1,8 +1,8 @@
 <?php
 
-
+namespace Admin\Controller;
 /**
-* @Route("/admin") 
+* @Route("/") 
 */
 class AdminController
 {
@@ -10,13 +10,13 @@ class AdminController
 	 * @Route("/", name="admin_home")
 	 */
 	public function indexAction(){
-		echo "Entrei no Admin / Homesadsadsadssas";
+		echo "Entrei no Admin / Homsesssadsadsadssasssss";
 	}
 
 	/**
 	 * @Route("/new", name="admin_new")
 	 */
-	public function newAction(){
+	public function newAction($id){
 		echo "Entrei no Admin / New";
 	}
 

@@ -48,7 +48,7 @@ class Cache
 			return true;
 		endif;
 
-		eval(file_get_contents($pathFiles));
+		eval(file_get_contents($pathFile));
 		//Se as variaveis continuam com os valores iniciais
 		//provavelmente tivemos algum erro no comando eval ou
 		//o cache foi geredo de forma errada
@@ -86,15 +86,20 @@ class Cache
 
 		return false;
 	}
-
+	/**
+	 * [setCache Gera arquivo de cache]
+	 * @param [type] $path    [nome do arquivo]
+	 * @param [type] $content [conteudo do arquivo]
+	 * @param Finder $finder  [Arquivos que geraram o cache]
+	 */
 	public function setCache($path, $content, Finder $finder){
 		$pathFile = $this->generatePath($path);
 		$files = array();
 		foreach ($finder as $key => $value):
-			$files[$value->getPathname()] = $valeu->getMTime();
+			$files[$value->getPathname()] = $value->getMTime();
 		endforeach;
 
-		$dump = sprintf("$contentCache = %s \n $filesCache = %s", var_export($content, true), var_export($files, true));
+		$dump = sprintf("\$contentCache = %s; \n \$filesCache = %s;", var_export($content, true), var_export($files, true));
 
 		$this->fs->dumpFile($pathFile, $dump);
 	}

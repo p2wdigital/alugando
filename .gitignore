@@ -1,4 +1,5 @@
 !/vendor
+/app/cache
 /vendor/*
 !/vendor/plunder
 composer.lock

@@ -1,13 +1,14 @@
 <?php 
 
 namespace Plunder\Helpers\Annotation;
-
+use Plunder\Helpers\Cache\Cache;
+use Symfony\Component\Finder\Finder;
 /**
 * Class Annotation Router
 */
 class AnnotationRouter extends Annotation
 {
-	protected $route;
+	protected $route = array();
 
 	public function __construct(Finder $finder, Cache $cache){
 		$fileCache	= "plunder.route";
@@ -20,16 +21,16 @@ class AnnotationRouter extends Annotation
 		$finder->name("*Controller.php");
 		$finder->files()->in(BASE_DIR."/src");
 
-		if(ENVIRONMENT == 'dev' && $this->verifyCache($fileCache, $finder) == false):
-			$this->route = $cache->getCache($this->fileCache);
+		if(ENVIRONMENT == 'dev' && $this->verifyCache($fileCache, $finder, $cache) == false):
+			$this->route = $cache->getCache($fileCache);
 			return $this;
 		endif;
 
 		foreach ($finder as $key => $value):
 			$this->route = array_merge( $this->route, $this->handleFile($value->getContents()) );
 		endforeach;
-
-		$this->setCache();
+		
+		$cache->setCache($fileCache, $this->route, $finder);
 		return $this;
 
 	}
@@ -116,6 +117,11 @@ class AnnotationRouter extends Annotation
 			endif;
 
 		endforeach;	
+		if($namespace == null):
+			throw new \Exception("Controller sem namespace", 1);
+		endif;
+			
+
 		return $route;
 	}
 
@@ -173,7 +179,7 @@ class AnnotationRouter extends Annotation
 				//Gera array de chave e valor dos parametros
 				$auxRoute = explode("=", $value);
 				if(count($auxRoute)== 1):
-					$route['route'] = $auxRoute[0];
+					$route['route'] = rtrim($auxRoute[0], "/");
 				elseif (count($auxRoute) == 2):
 					$route[$auxRoute[0]] = $auxRoute[1];
 				endif;
