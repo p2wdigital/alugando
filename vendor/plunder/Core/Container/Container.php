@@ -56,7 +56,6 @@ class Container
 					$param[] = self::get(str_replace("%", "", $aux));
 				else:
 					$param[] = $aux;
-
 				endif;
 			endif;
 		endforeach;

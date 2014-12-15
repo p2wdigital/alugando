@@ -10,11 +10,11 @@ class AdminController
 	 * @Route("/", name="admin_home")
 	 */
 	public function indexAction(){
-		echo "Entrei no Admin / Homsesssadsadsadssasssss";
+		echo "Entrei no Admin / Homsesssadsadssadssasssss";
 	}
 
 	/**
-	 * @Route("/new", name="admin_new")
+	 * @Route("/new/{id}", name="admin_new")
 	 */
 	public function newAction($id){
 		echo "Entrei no Admin / New";

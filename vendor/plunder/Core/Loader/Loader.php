@@ -28,7 +28,11 @@ class Loader
 
 		$routeRequest = $route->resolve($request, $routers->getRoute());
 		var_dump($routeRequest);
+		var_dump(preg_quote($request->getPathInfo(),"/"));
 
+		$string = "/admin/estoque/{id}/{user}/{ola}";
+		//preg_match_all("/\{(.*?)\}/i", $string, $matches);
+		//var_dump($matches[1]);
 /*
 		$finder = Container::get('finder');
 		$yaml = Container::get('yam');

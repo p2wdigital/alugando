@@ -85,7 +85,10 @@ class AnnotationRouter extends Annotation
 						"class"=>$class, 
 						"route"=> strtolower(rtrim($item['route'], "/")),
 						"name"=>$item['name'], 
-						"action"=>"indexAction"
+						"action"=>"indexAction",
+						"defaults"=>"",
+						"requirements"=>"",
+						"method"=>""
 
 					);
 				endforeach;
