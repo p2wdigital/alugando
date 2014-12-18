@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+require_once("/../vendor/autoload.php");
+use Symfony\Component\Console\Application;
+use Plunder\Command\TesteCommand;
+use Plunder\Command\TestarCommand;
+include('/../vendor/propel/propel/bin/propel.php');
+$application = new Application();
+$application->add(new TesteCommand);
+$application->add(new TestarCommand);
+$application->run();

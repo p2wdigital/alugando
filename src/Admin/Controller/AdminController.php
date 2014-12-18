@@ -14,10 +14,18 @@ class AdminController
 	}
 
 	/**
-	 * @Route("/new/{id}", name="admin_new")
+	 * @Route("/new/{page}", name="admin_new", defaults={"page":1}, requirements={"page":"\d*"})
 	 */
 	public function newAction($id){
 		echo "Entrei no Admin / New";
 	}
+
+	/**
+	 * @Route("/update/{id}/{user}", name="admin_new", requirements={"id":"\d+"} defaults={"user":"palex"})
+	 */
+	public function newAction($id){
+		echo "Entrei no Admin / New";
+	}
+
 
 }

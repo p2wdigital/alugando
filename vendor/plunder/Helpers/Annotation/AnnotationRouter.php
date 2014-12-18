@@ -39,6 +39,7 @@ class AnnotationRouter extends Annotation
 		//Separa cada linha da class em um array;
 		$file 		= explode("\n", $content);
 		$result 	= array();
+		
 
 		//Filtra apenas as ocorrencias necessárias para gerar a rota;
 		foreach ($file as $key => $value):
@@ -169,13 +170,18 @@ class AnnotationRouter extends Annotation
 	}
 
 	private function getRouteParam($value){
-
+		//var_dump($value);
 		if(strpos($value, "@Route") !== false):
 			//Retira espaços em branco, @route, " , ', que não estiverem no padrao {"id":value}
-			$str = preg_replace("/(\=\{.*?\})|((\"+)|@route\(|\s+|\*|\))/i", "$1", $value);
+			//	$str = preg_replace("/(\=\{.*?\})|((\"+)|@route\(|\s+|\*|\))/i", "$1", $value);
+			preg_match_all('/(?#atributos json)[, ]+?(\w+=\{.*?\})|(?#atributos simples)[( ]["]+([\s\w\/\-\.\{\}]*?)"+|(?#atributos compostos)[ ,]([^\s]+=+[^\s{,]+)[, )]+?/', $value, $mat);
+			$aux = array_filter(array_merge($mat[1], $mat[2], $mat[3]));
+			//var_dump($value);
+			//var_dump($mat);
+
 
 			//Gera array com o delimitador ,
-			$aux = explode("," ,$str);
+			//$aux = explode("," ,$str);
 			$route = array();
 			foreach ($aux as $key => $value):
 

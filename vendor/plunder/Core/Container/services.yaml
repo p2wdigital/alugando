@@ -13,9 +13,16 @@ services:
         params:
             finder: %finder%
             fs: %filesystem%
-    router:
-        class: Plunder\Core\Router\Router
-        params: null
     request:
         class: Plunder\Core\HttpRequest\Request
         params: null
+    annotation_router:
+        class: Plunder\Helpers\Annotation\AnnotationRouter
+        params: 
+            finder: %finder%
+            cache: %cache%
+    router:
+        class: Plunder\Core\Router\Router
+        params:
+            request: %request%
+            routers: %annotation_router%
