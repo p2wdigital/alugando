@@ -2,6 +2,9 @@
 
 namespace Plunder\Core\Container;
 use Symfony\Component\Yaml\Parser;
+use Plunder\Helpers\Cache\Cache;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
 /**
 * 
 */
@@ -15,7 +18,18 @@ class Container
 	 * @param Parser $yaml [Instancia do YAML Parser]
 	 */
 	public function __construct(Parser $yaml){
-		self::$config = $yaml->parse(file_get_contents(__DIR__ . '\services.yaml'))['services'];
+		if (ENVIRONMENT == 'prod'):
+			$fileCache = 'plunder.services';
+			$cache = new Cache(new Finder(), new Filesystem());
+			if($cache->existsFile($fileCache)):
+				self::$config = $cache->getCache($fileCache);
+			else:
+				self::$config = $yaml->parse(file_get_contents(__DIR__ . '\services.yaml'))['services'];
+				$cache->setCache($fileCache, self::$config);
+			endif;
+		else:
+			self::$config = $yaml->parse(file_get_contents(__DIR__ . '\services.yaml'))['services'];
+		endif;
 	}
 
 	public static function load($key, $class){

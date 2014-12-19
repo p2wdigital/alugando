@@ -92,9 +92,12 @@ class Cache
 	 * @param [type] $content [conteudo do arquivo]
 	 * @param Finder $finder  [Arquivos que geraram o cache]
 	 */
-	public function setCache($path, $content, Finder $finder){
+	public function setCache($path, $content, Finder $finder = null){
 		$pathFile = $this->generatePath($path);
 		$files = array();
+
+		if($finder == null) $finder = array();
+
 		foreach ($finder as $key => $value):
 			$files[$value->getPathname()] = $value->getMTime();
 		endforeach;

@@ -11,7 +11,7 @@ $ini = microtime(true);
 require_once 'vendor/autoload.php';
 
 //DEFINES ENVIRONMENT (dev | prod);
-define("ENVIRONMENT", "dev");
+define("ENVIRONMENT", "prod");
 define("BASE_DIR", __DIR__);
 $loader = new Loader();
 
@@ -34,8 +34,11 @@ $finder->files()->in(BASE_DIR."/src");
 	
 }
 */
+$debug = array(
+	"Memoria"=>memory_get_peak_usage(true)/1024/1024 . "MB",
+	"Time"=>number_format((microtime(true) - $ini),3) ." ms",
+);
+var_dump($debug);
 
-var_dump(memory_get_peak_usage(true)/1024/1024);
-echo number_format((microtime(true) - $ini),3) ." ms";
 
 
