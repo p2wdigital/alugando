@@ -1,0 +1,6 @@
+{#% extends "::base.html.twig" %#}
+ola mundo
+<br>
+{% for item in cliente %}
+  {{item.id}} -  {{item.razao_social}} - {{item.contato}} <br>
+{% endfor %}

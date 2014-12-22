@@ -26,3 +26,6 @@ services:
         params:
             request: %request%
             routers: %annotation_router%
+    templating:
+        class: Plunder\Core\Twig\TwigTemplating
+        params: null

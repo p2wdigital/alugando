@@ -145,9 +145,8 @@ class AnnotationRouter extends Annotation
 	private function getClassName($value){
 		
 		if(strpos($value, "class") !== false):
-			$replace = array(" ", "class", "{");
-			$str = str_replace($replace, "", trim($value));
-			return array("class"=>$str);
+			preg_match("/^class +(\w+)/i", $value, $matches);
+			return array("class"=>$matches[1]);
 		endif;
 
 		return false;

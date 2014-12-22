@@ -11,8 +11,10 @@ $ini = microtime(true);
 require_once 'vendor/autoload.php';
 
 //DEFINES ENVIRONMENT (dev | prod);
-define("ENVIRONMENT", "prod");
+define("ENVIRONMENT", "dev");
 define("BASE_DIR", __DIR__);
+echo "ola mundo";
+
 $loader = new Loader();
 
 

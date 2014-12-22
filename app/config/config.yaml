@@ -3,6 +3,8 @@ propel:
       connections:
           default:
               adapter: mysql
+              settings:
+                charset: utf8
               classname: Propel\Runtime\Connection\ConnectionWrapper
               dsn: "mysql:host=localhost;dbname=wep2"
               user: root

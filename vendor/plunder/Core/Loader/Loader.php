@@ -23,9 +23,10 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
-		require_once (BASE_DIR."/app/propel/config_propel.php");
+		//require_once (BASE_DIR."/app/propel/config_propel.php");
 		new Container(new Parser());
 		$route = Container::get('router');
+		//var_dump($route);
 		$routeParam = $route->getContext();
 		
 		$class 	= $routeParam['namespace'] . "\\" . $routeParam['class'];

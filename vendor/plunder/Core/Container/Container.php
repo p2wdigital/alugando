@@ -30,6 +30,7 @@ class Container
 		else:
 			self::$config = $yaml->parse(file_get_contents(__DIR__ . '\services.yaml'))['services'];
 		endif;
+
 	}
 
 	public static function load($key, $class){

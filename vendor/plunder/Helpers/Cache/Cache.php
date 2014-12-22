@@ -16,9 +16,9 @@ class Cache
 	 * @param Finder     $finder [description]
 	 * @param FileSystem $fs     [description]
 	 */
-	public function __construct(Finder $finder, FileSystem $fs){
+	public function __construct(Finder $finder){
 		$this->finder 	= $finder;
-		$this->fs 		= $fs;
+		//$this->fs 		= $fs;
 		return $this;
 	}
 
@@ -104,7 +104,9 @@ class Cache
 
 		$dump = sprintf("\$contentCache = %s; \n \$filesCache = %s;", var_export($content, true), var_export($files, true));
 
-		$this->fs->dumpFile($pathFile, $dump);
+		$this->createDir($pathFile);
+		file_put_contents($pathFile, $dump);
+		//$this->fs->dumpFile($pathFile, $dump);
 	}
 
 	public function getCache($path){
@@ -113,7 +115,8 @@ class Cache
 	}
 
 	public  function existsFile($path){
-		return $this->fs->exists($this->generatePath($path));
+		return file_exists($this->generatePath($path));
+		//return $this->fs->exists($this->generatePath($path));
 	}
 
 	private function generatePath($path){
@@ -121,7 +124,19 @@ class Cache
 		return ENVIRONMENT . str_replace(".", "/", $path) . "/".$path .".cache";
 	}
 
+	private function createDir($file){
+		preg_match("/^([\w:\/\\\]+)\/[\w.]+/", $file, $matches);
+		$aux = explode("/", $matches[1]);
+		$path = '';
+		foreach ($aux as $key => $value):
+			$path .= $value ."/";
+			if(!is_dir($path)):
+				mkdir($path);
+			endif;
+		endforeach;
 
+
+	}
 
 
 }
