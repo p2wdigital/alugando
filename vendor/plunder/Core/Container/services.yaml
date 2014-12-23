@@ -1,6 +1,6 @@
 services:
     yaml:
-        class: Symfony\Component\Yaml\Yaml
+        class: Symfony\Component\Yaml\Parser
         params: null
     finder:
         class: Symfony\Component\Finder\Finder

@@ -1,20 +1,6 @@
-propel:
-  database:
-      connections:
-          default:
-              adapter: mysql
-              settings:
-                charset: utf8
-              classname: Propel\Runtime\Connection\ConnectionWrapper
-              dsn: "mysql:host=localhost;dbname=wep2"
-              user: root
-              password: null
-              attributes:
-  runtime:
-      defaultConnection: default
-      connections:
-          - default
-  generator:
-      defaultConnection: default
-      connections:
-          - default
+plunder:
+    database: wep2
+    charset: utf8
+    host: localhost
+    user: root
+    password: null

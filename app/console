@@ -1,11 +1,21 @@
 #!/usr/bin/env php
 <?php
 require_once("/../vendor/autoload.php");
+use Plunder\Core\Container\Container;
+use Plunder\Core\Config\Config;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Yaml\Parser;
 use Plunder\Command\ReverseCommand;
 use Plunder\Command\BuildCommand;
+use Plunder\Command\ReversePlunderCommand;
+
+define("ENVIRONMENT", "dev");
+define("BASE_DIR", realpath(__DIR__ ."/../"));
+new Container(new Parser());
+new Config(Container::get('yaml'), Container::get('cache'));
 
 $application = new Application();
 $application->add(new ReverseCommand );
 $application->add(new BuildCommand );
+$application->add(new ReversePlunderCommand );
 $application->run();

@@ -6,7 +6,7 @@ use Plunder\Helpers\Cache\Cache;
 use Symfony\Component\Yaml\Parser;
 use Plunder\Core\Container\Container;
 use Plunder\Helpers\Annotation\AnnotationRouter;
-
+use Plunder\Core\Config\Config;
 use Table\Model\ClienteQuery;
 /**
 * Loader Class
@@ -19,20 +19,30 @@ class Loader
 	}
 
 	/**
-	 * [init Inicializa elementos para o Framework]
+	 * [init Inicializa elementos essenciais para o Framework]
 	 * @return [type] [description]
 	 */
 	private function init(){
 		//require_once (BASE_DIR."/app/propel/config_propel.php");
 		new Container(new Parser());
-		$route = Container::get('router');
-		//var_dump($route);
-		$routeParam = $route->getContext();
+		new Config(Container::get('yaml'), Container::get('cache'));
 		
-		$class 	= $routeParam['namespace'] . "\\" . $routeParam['class'];
-		$params = $routeParam['params'];
+		$route = Container::get('router');
+		$this->callController($route->getContext());
+	}
 
-		$method = new \ReflectionMethod($class, $routeParam['action']);
+
+	/**
+	 * [callController Chama o Method do Controller que 
+	 *  corresponde ao Contexto da Rota]
+	 * @param  [type] $route [Contexto da Rota]
+	 * @return [type]        [null]
+	 */
+	private function callController($route){
+		$class 	= $route['namespace'] . "\\" . $route['class'];
+		$params = $route['params'];
+
+		$method = new \ReflectionMethod($class, $route['action']);
 		$parameters = $method->getParameters();
 		$arg = array();
 		foreach ($parameters as $key => $value):
@@ -50,9 +60,9 @@ class Loader
 		endforeach;
 		
 		$method->invokeArgs($method->getDeclaringClass()->newInstance(), $arg);
-		
-
 
 	}
+
+
 
 }

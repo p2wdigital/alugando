@@ -17,6 +17,11 @@ echo "ola mundo";
 
 $loader = new Loader();
 
+$var = "orcamento";
+$var = explode("_", $var);
+$x = array_map('ucfirst', $var);
+var_dump(implode("", $x));
+
 
 //$path = "plunder.route";
 //echo sprintf("%s/app/cache/%s/%s.cache", BASE_DIR, ENVIRONMENT, str_replace(".", "/", $path));

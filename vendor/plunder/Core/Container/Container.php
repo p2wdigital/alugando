@@ -4,7 +4,6 @@ namespace Plunder\Core\Container;
 use Symfony\Component\Yaml\Parser;
 use Plunder\Helpers\Cache\Cache;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
 /**
 * 
 */
@@ -20,7 +19,7 @@ class Container
 	public function __construct(Parser $yaml){
 		if (ENVIRONMENT == 'prod'):
 			$fileCache = 'plunder.services';
-			$cache = new Cache(new Finder(), new Filesystem());
+			$cache = new Cache(new Finder());
 			if($cache->existsFile($fileCache)):
 				self::$config = $cache->getCache($fileCache);
 			else:
