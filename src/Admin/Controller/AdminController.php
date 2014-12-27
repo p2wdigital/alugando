@@ -19,9 +19,9 @@ class AdminController extends Controller
 		//$cliente = ClienteQuery::create()->find();
 		$cliente = array();
 		
-		$db = new \PDO('mysql:host=localhost;dbname=wep2', "root", null);
-		$result = $db->query("select * from cliente");
-		$cliente = $result->fetchAll();
+		//$db = new \PDO('mysql:host=localhost;dbname=wep2', "root", null);
+		//$result = $db->query("select * from cliente");
+		//$cliente = $result->fetchAll();
 		
 		//var_dump(Container::$container);
 		return $this->render("Admin:Admin:index.html.twig", array("cliente"=>$cliente));
@@ -33,10 +33,11 @@ class AdminController extends Controller
 	 */
 	public function newAction($page, Request $request){
 		echo "Entrei no Admin / New " . $page;
-		$cliente = ClienteQuery::create()->find();
+		/*$cliente = ClienteQuery::create()->find();
 		foreach ($cliente as $key => $value) {
 			echo $value->getRazaoSocial() . " - " . $value->getContato();
 		}
+		*/
 		//var_dump($request);
 	}
 

@@ -16,8 +16,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Plunder\\": ["vendor/"],
-            "": ["src/"]
+            "": ["src"],
+            "Plunder\\": ["vendor/"]
         }
     }    
 }

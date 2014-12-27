@@ -1,5 +1,7 @@
 <?php 
-use Plunder\Core\Loader\Loader;
+// SETUP AUTO LOAD COMPOSER
+require_once 'vendor/autoload.php';
+use \Plunder\Core\Loader\Loader;
 use Symfony\Component\Finder\Finder;
 //get statart time;
 $ini = microtime(true);
@@ -7,15 +9,16 @@ $ini = microtime(true);
 //echo "<br>" . microtime(true);
 
 
-// SETUP AUTO LOAD COMPOSER
-require_once 'vendor/autoload.php';
+
 
 //DEFINES ENVIRONMENT (dev | prod);
 define("ENVIRONMENT", "dev");
 define("BASE_DIR", __DIR__);
+define("SEP", DIRECTORY_SEPARATOR);
 echo "ola mundo";
 
 $loader = new Loader();
+
 
 $var = "orcamento";
 $var = explode("_", $var);
