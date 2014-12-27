@@ -1,84 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database name="wep2" namespace="Table\Model">
+<database name="plunder" namespace="Table\Model">
   <table name="cliente" phpName="Cliente">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="razao_social" phpName="RazaoSocial" type="VARCHAR" />
-    <column name="contato" phpName="Contato" type="VARCHAR" />
-    <column name="email" phpName="Email" type="VARCHAR" />
-    <column name="documento" phpName="Documento" type="VARCHAR" />
-    <column name="tipo_pessoa" phpName="TipoPessoa" type="VARCHAR" />
-    <column name="cep" phpName="Cep" type="VARCHAR" />
-    <column name="endereco" phpName="Endereco" type="VARCHAR" />
-    <column name="numero" phpName="Numero" type="INTEGER" />
-    <column name="complemento" phpName="Complemento" type="VARCHAR" />
-    <column name="bairro" phpName="Bairro" type="VARCHAR" />
-    <column name="cidade" phpName="Cidade" type="VARCHAR" />
-    <column name="uf" phpName="Uf" type="VARCHAR" />
-    <column name="telefone" phpName="Telefone" type="TEXT" />
-    <column name="status" phpName="Status" type="INTEGER" />
-    <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP" />
-    <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP" />
-    <column name="user_id_inclusao" phpName="UserIdInclusao" type="INTEGER" />
-    <column name="user_id_alteracao" phpName="UserIdAlteracao" type="INTEGER" />
-  </table>
-  <table name="estoque" phpName="Estoque">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="produto_id" phpName="ProdutoId" type="INTEGER" />
-    <column name="ns" phpName="Ns" type="TEXT" />
-    <column name="patrimonio" phpName="Patrimonio" type="INTEGER" />
-    <column name="internet" phpName="Internet" type="VARCHAR" />
-    <column name="codigo_barras" phpName="CodigoBarras" type="INTEGER" />
-    <column name="data_compra" phpName="DataCompra" type="DATE" />
-    <column name="valor" phpName="Valor" type="DECIMAL" />
-    <column name="numero_nf" phpName="NumeroNf" type="VARCHAR" />
-    <column name="historico" phpName="Historico" type="TEXT" />
-    <column name="status" phpName="Status" type="INTEGER" />
-    <column name="motivo" phpName="Motivo" type="INTEGER" />
-    <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP" />
-    <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP" />
-    <column name="user_id_inclusao" phpName="UserIdInclusao" type="INTEGER" />
-    <column name="user_id_alteracao" phpName="UserIdAlteracao" type="INTEGER" />
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <column name="nome" phpName="Nome" type="VARCHAR" required="true" />
   </table>
   <table name="orcamento" phpName="Orcamento">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="cliente_id" phpName="ClienteId" type="INTEGER" />
-    <column name="email" phpName="Email" type="VARCHAR" />
-    <column name="empresa" phpName="Empresa" type="VARCHAR" />
-    <column name="contato" phpName="Contato" type="VARCHAR" />
-    <column name="data" phpName="Data" type="DATE" />
-    <column name="data_inicio" phpName="DataInicio" type="DATE" />
-    <column name="data_fim" phpName="DataFim" type="DATE" />
-    <column name="prazo" phpName="Prazo" type="INTEGER" />
-    <column name="status" phpName="Status" type="INTEGER" />
-    <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP" />
-    <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP" />
-    <column name="user_id_inclusao" phpName="UserIdInclusao" type="INTEGER" />
-    <column name="user_id_alteracao" phpName="UserIdAlteracao" type="INTEGER" />
-  </table>
-  <table name="orcamento_item" phpName="OrcamentoItem">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="orcamento_id" phpName="OrcamentoId" type="INTEGER" />
-    <column name="produto_id" phpName="ProdutoId" type="INTEGER" />
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
     <column name="qtd" phpName="Qtd" type="INTEGER" />
-    <column name="valor" phpName="Valor" type="DECIMAL" />
-  </table>
-  <table name="produto" phpName="Produto">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="categoria" phpName="Categoria" type="INTEGER" />
-    <column name="nome" phpName="Nome" type="VARCHAR" />
-    <column name="modelo" phpName="Modelo" type="VARCHAR" />
-  </table>
-  <table name="produto_valor" phpName="ProdutoValor">
-    <column name="id" phpName="Id" type="INTEGER" />
-    <column name="produto_id" phpName="ProdutoId" type="INTEGER" />
-    <column name="prazo" phpName="Prazo" type="INTEGER" />
-    <column name="valor" phpName="Valor" type="DECIMAL" />
+    <column name="valor" phpName="Valor" type="DECIMAL" size="8" scale="2" />
+    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" />
   </table>
   <table name="user" phpName="User">
-    <column name="id" phpName="Id" type="INTEGER" />
+    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" />
     <column name="user" phpName="User" type="VARCHAR" />
-    <column name="pass" phpName="Pass" type="TEXT" />
+    <column name="password" phpName="Password" type="TEXT" />
     <column name="salt" phpName="Salt" type="TEXT" />
-    <column name="role" phpName="Role" type="VARCHAR" />
   </table>
 </database>

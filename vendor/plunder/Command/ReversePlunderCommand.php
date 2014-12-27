@@ -68,6 +68,28 @@ class ReversePlunderCommand extends Command{
 		$column['phpName'] 		= $this->phpName($col['COLUMN_NAME']);
 		$column['type']			= $this->parseType($col['DATA_TYPE']);
 
+		if ($col['COLUMN_KEY'] == "PRI") 
+			$column['primaryKey'] = "true";
+		
+		if ($col['COLUMN_KEY'] == "UNI") 
+			$column['uniqueKey'] = "true";
+		
+		if (strpos($col['EXTRA'], "auto_increment") !== false) 
+			$column['autoIncrement'] = "true";
+		
+		if ($col['IS_NULLABLE'] == "YES") 
+			$column['required'] = "true";
+
+
+		if ($col['CHARACTER_MAXIMUM_LENGTH'] !== null && $col['DATA_TYPE'] == 'decimal')
+			$column['size'] = $col['CHARACTER_MAXIMUM_LENGTH'];
+
+		if($col['DATA_TYPE'] == 'decimal' && $col['NUMERIC_PRECISION'] !== null):
+			$column['size'] = $col['NUMERIC_PRECISION'];
+			$column['scale'] = $col['NUMERIC_SCALE'];
+		endif;
+
+
 		$val = $this->arrayToXml("column", $column);
 		$this->xml .= $this->e4 . $val . $this->line;
 	}
