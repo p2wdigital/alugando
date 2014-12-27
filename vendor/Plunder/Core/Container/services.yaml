@@ -1,0 +1,31 @@
+services:
+    yaml:
+        class: Symfony\Component\Yaml\Parser
+        params: null
+    finder:
+        class: Symfony\Component\Finder\Finder
+        params: null
+    filesystem:
+        class: Symfony\Component\Filesystem\Filesystem
+        params: null
+    cache:
+        class: Plunder\Helpers\Cache\Cache
+        params:
+            finder: %finder%
+            fs: %filesystem%
+    request:
+        class: Plunder\Core\HttpRequest\Request
+        params: null
+    annotation_router:
+        class: Plunder\Helpers\Annotation\AnnotationRouter
+        params: 
+            finder: %finder%
+            cache: %cache%
+    router:
+        class: Plunder\Core\Router\Router
+        params:
+            request: %request%
+            routers: %annotation_router%
+    templating:
+        class: Plunder\Core\Twig\TwigTemplating
+        params: null
