@@ -36,7 +36,6 @@ class Config
 				$config = $config[$value];
 			else:
 				throw new \Exception("Parametro de Configuração não Existe " . $param  , 1);
-				var_dump("continua");
 			endif;
 		endforeach;
 		return $config;

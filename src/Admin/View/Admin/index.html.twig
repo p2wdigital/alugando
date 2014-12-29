@@ -1,6 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teste</title>
+</head>
+<body>
 {#% extends "::base.html.twig" %#}
-ola mundo
-<br>
+
 {% for item in cliente %}
-  {{item.id}} -  {{item.razao_social}} - {{item.contato}} <br>
+  {{item.id}} -  {{item.razao_social}} - {{item.contato}}
+  {#
+  	{{item.id}} -  {{item.RazaoSocial}} - {{item.Contato}}
+   #} 
+  <br>
 {% endfor %}
+
+</body>
+</html>

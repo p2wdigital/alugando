@@ -3,3 +3,4 @@
 /vendor/*
 !/vendor/Plunder
 composer.lock
+*.bak

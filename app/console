@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
-require_once("/../vendor/autoload.php");
+
+require_once __DIR__ ."/../vendor/autoload.php";
 use Plunder\Core\Container\Container;
 use Plunder\Core\Config\Config;
 use Symfony\Component\Console\Application;
@@ -11,6 +12,7 @@ use Plunder\Command\ReversePlunderCommand;
 
 define("ENVIRONMENT", "dev");
 define("BASE_DIR", realpath(__DIR__ ."/../"));
+define("SEP", DIRECTORY_SEPARATOR);
 new Container(new Parser());
 new Config(Container::get('yaml'), Container::get('cache'));
 
@@ -19,3 +21,6 @@ $application->add(new ReverseCommand );
 $application->add(new BuildCommand );
 $application->add(new ReversePlunderCommand );
 $application->run();
+
+
+?>

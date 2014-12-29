@@ -1,5 +1,5 @@
 plunder:
-    database: plunder
+    database: wep2
     charset: utf8
     host: localhost
     user: root

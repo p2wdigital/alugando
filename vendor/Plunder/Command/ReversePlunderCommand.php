@@ -50,13 +50,18 @@ class ReversePlunderCommand extends Command{
 		$table = "";
 		foreach ($result->fetchAll() as $key => $value):
 			if($table != $value['TABLE_NAME']):
-				if($table != "") $this->closeTable();
+				if($table != ""):
+					$this->relationsTable($db, $table);
+					$this->closeTable();
+				endif;
 				$this->openTable($value['TABLE_NAME']);
 				$table = $value['TABLE_NAME'];
 			endif;
 			$this->column($value);
 
+
 		endforeach;
+		$this->relationsTable($db, $value['TABLE_NAME']);
 		$this->closeTable();
 		$this->closeXml();
 	}
@@ -70,6 +75,60 @@ class ReversePlunderCommand extends Command{
 
 		$val = $this->arrayToXml("column", $column);
 		$this->xml .= $this->e4 . $val . $this->line;
+	}
+
+	protected function relationsTable($db, $table){
+
+		$query = sprintf('select keyy.*, ref.CONSTRAINT_TYPE from 
+						 KEY_COLUMN_USAGE as keyy left join TABLE_CONSTRAINTS as ref 
+						 ON(keyy.CONSTRAINT_NAME = ref.constraint_name and keyy.CONSTRAINT_SCHEMA = ref.CONSTRAINT_SCHEMA and keyy.TABLE_NAME = ref.TABLE_NAME)  
+						where keyy.CONSTRAINT_SCHEMA = "%s" 
+						and (keyy.table_name = "%s" or keyy.REFERENCED_TABLE_NAME = "%s" ) ', 
+						config::get('plunder.database'), $table, $table );
+		$result = $db->query($query);
+
+		$open 		= null;
+		$primary 	= array();
+		$relations 	= array();
+		foreach ($result->fetchAll() as $key => $value):
+			if ($value['CONSTRAINT_TYPE'] == "PRIMARY KEY"):
+				$primary[] 	= array( 
+							'table'=> $value['TABLE_NAME'],
+							'column'=> $value['COLUMN_NAME']
+				);
+			endif;
+
+			if ($value['CONSTRAINT_TYPE'] == "FOREIGN KEY"):
+				$relations[] = array( 
+							'table'				=> $value['TABLE_NAME'],
+							'column'			=> $value['COLUMN_NAME'],
+							'referenceTable'		=> $value['REFERENCED_TABLE_NAME'],
+							'referenceColumn'	=> $value['REFERENCED_COLUMN_NAME']
+				);
+			endif;
+		endforeach;
+
+		if (count($relations) > 0) $this->openRelations();
+
+		foreach ($relations as $key => $value):
+			$xmlAux = array();
+			if($value['referenceTable'] == $table):
+				$xmlAux['type'] 	= 'OneToMany';
+				$xmlAux['column']	= $value['referenceColumn'];
+				$xmlAux['referenceTable']	= $value['table'];
+				$xmlAux['referenceColumn']	= $value['column'];
+				$this->xml .= $this->e6 . $this->arrayToXml('foreing-key', $xmlAux) .$this->line;
+			endif;
+			if($value['table'] == $table):
+				$xmlAux['type'] 	= 'ManyToOne';
+				$xmlAux['column']	= $value['column'];
+				$xmlAux['referenceTable']	= $value['referenceTable'];
+				$xmlAux['referenceColumn']	= $value['referenceColumn'];
+				$this->xml .= $this->e6 . $this->arrayToXml('foreing-key', $xmlAux) .$this->line;
+			endif;
+		endforeach;
+		$this->closeRelations();
+
 	}
 
 	protected function parseType($type){
@@ -104,6 +163,13 @@ class ReversePlunderCommand extends Command{
 	}
 	protected function closeTable(){
 		$this->xml .= $this->e2 ."</table>". $this->line;
+	}
+	protected function openRelations(){
+		$aux = '<relations>';
+		$this->xml .= $this->e4 . $aux . $this->line;
+	}
+	protected function closeRelations(){
+		$this->xml .= $this->e4 ."</relations>". $this->line;
 	}
 
 	protected function openXml(){

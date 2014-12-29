@@ -7,7 +7,7 @@ use Symfony\Component\Yaml\Parser;
 use Plunder\Core\Container\Container;
 use Plunder\Helpers\Annotation\AnnotationRouter;
 use Plunder\Core\Config\Config;
-//use Table\Model\ClienteQuery;
+use Table\Model\ClienteQuery;
 /**
 * Loader Class
 */
@@ -23,6 +23,7 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
+
 		//require_once (BASE_DIR."/app/propel/config_propel.php");
 		new Container(new Parser());
 		new Config(Container::get('yaml'), Container::get('cache'));

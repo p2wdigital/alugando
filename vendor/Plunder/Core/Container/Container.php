@@ -27,7 +27,7 @@ class Container
 				$cache->setCache($fileCache, self::$config);
 			endif;
 		else:
-			echo 
+			
 			self::$config = $yaml->parse(file_get_contents(__DIR__ . SEP . 'services.yaml'))['services'];
 		endif;
 

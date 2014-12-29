@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database name="plunder" namespace="Table\Model">
+<database name="wep2" namespace="Table\Model">
   <table name="cliente" phpName="Cliente">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
-    <column name="nome" phpName="Nome" type="VARCHAR" required="true" />
+    <column name="id" phpName="Id" type="INTEGER" />
+    <column name="razao_social" phpName="RazaoSocial" type="VARCHAR" />
+    <column name="contato" phpName="Contato" type="VARCHAR" />
+    <column name="cep" phpName="Cep" type="VARCHAR" />
+    <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP" />
+    <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP" />
+    <relations>
+      <foreing-key type="OneToMany" column="id" referenceTable="user" referenceColumn="cliente_id" />
+    </relations>
   </table>
-  <table name="orcamento" phpName="Orcamento">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
-    <column name="qtd" phpName="Qtd" type="INTEGER" />
-    <column name="valor" phpName="Valor" type="DECIMAL" size="8" scale="2" />
-    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" />
+  <table name="produto" phpName="Produto">
+    <column name="id" phpName="Id" type="INTEGER" />
+    <column name="categoria" phpName="Categoria" type="VARCHAR" />
+    <column name="nome" phpName="Nome" type="VARCHAR" />
+    <column name="modelo" phpName="Modelo" type="VARCHAR" />
+    <relations>
+      <foreing-key type="OneToMany" column="id" referenceTable="produto_valor" referenceColumn="produto_id" />
+    </relations>
+  </table>
+  <table name="produto_valor" phpName="ProdutoValor">
+    <column name="id" phpName="Id" type="INTEGER" />
+    <column name="produto_id" phpName="ProdutoId" type="INTEGER" />
+    <column name="prazo" phpName="Prazo" type="INTEGER" />
+    <column name="valor" phpName="Valor" type="DECIMAL" />
+    <relations>
+      <foreing-key type="ManyToOne" column="produto_id" referenceTable="produto" referenceColumn="id" />
+    </relations>
   </table>
   <table name="user" phpName="User">
-    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" />
-    <column name="user" phpName="User" type="VARCHAR" />
-    <column name="password" phpName="Password" type="TEXT" />
-    <column name="salt" phpName="Salt" type="TEXT" />
+    <column name="cliente_id" phpName="ClienteId" type="INTEGER" />
+    <column name="password" phpName="Password" type="INTEGER" />
+    <column name="salt" phpName="Salt" type="VARCHAR" />
+    <column name="email" phpName="Email" type="VARCHAR" />
+    <relations>
+      <foreing-key type="ManyToOne" column="cliente_id" referenceTable="cliente" referenceColumn="id" />
+    </relations>
   </table>
 </database>

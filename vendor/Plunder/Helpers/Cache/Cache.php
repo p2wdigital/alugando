@@ -10,7 +10,6 @@ use Symfony\Component\Filesystem\Filesystem;
 class Cache 
 {
 	protected $finder;
-	protected $fs;
 	/**
 	 * [__construct description]
 	 * @param Finder     $finder [description]
@@ -18,7 +17,6 @@ class Cache
 	 */
 	public function __construct(Finder $finder){
 		$this->finder 	= $finder;
-		//$this->fs 		= $fs;
 		return $this;
 	}
 
@@ -48,7 +46,9 @@ class Cache
 			return true;
 		endif;
 
-		eval(file_get_contents($pathFile));
+		$cache 			= json_decode(file_get_contents($pathFile));
+		$filesCache 	= $cache['filesCache'];
+		$contentCache	= $cache['contentCache'];
 		//Se as variaveis continuam com os valores iniciais
 		//provavelmente tivemos algum erro no comando eval ou
 		//o cache foi geredo de forma errada
@@ -102,15 +102,21 @@ class Cache
 			$files[$value->getPathname()] = $value->getMTime();
 		endforeach;
 
-		$dump = sprintf("\$contentCache = %s; \n \$filesCache = %s;", var_export($content, true), var_export($files, true));
+		$dump = array(
+			'contentCache'=>$content,
+			'filesCache' => $files,
+		);
+		//$dump = sprintf("\$contentCache = %s; \n \$filesCache = %s;", var_export($content, true), var_export($files, true));
 
 		$this->createDir($pathFile);
-		file_put_contents($pathFile, $dump);
-		//$this->fs->dumpFile($pathFile, $dump);
+		file_put_contents($pathFile, json_encode($dump));
 	}
 
 	public function getCache($path){
-		eval(file_get_contents($this->generatePath($path)));
+		//eval(file_get_contents($this->generatePath($path)));
+		$cache 			= json_decode(file_get_contents($this->generatePath($path)), true);
+		$filesCache 	= $cache['filesCache'];
+		$contentCache	= $cache['contentCache'];	
 		return $contentCache;
 	}
 
