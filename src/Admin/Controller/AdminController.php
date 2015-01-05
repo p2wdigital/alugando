@@ -43,15 +43,15 @@ class AdminController extends Controller
 		$db-> exec("SET CHARACTER SET utf8");
 //		$result = $db->query("select * from produto");
 //		$cliente = $result->fetchAll();
-		$query = sprintf("Select * from columns where table_schema = '%s'", 'wep2');
+		//$query = sprintf("Select * from columns where table_schema = '%s'", 'wep2');
 		
 		//$query = 'select * from TABLE_CONSTRAINTS';
-		$result = $db->query($query);
+		//$result = $db->query($query);
 		//var_dump(get_class_methods($db));
 		//var_dump($db->errorInfo());
 
-		var_dump($result->fetchAll());
-		
+		//var_dump($result->fetchAll());
+		$cliente = array();
 		//var_dump($cliente);
 		return $this->render("Admin:Admin:index.html.twig", array("cliente"=>$cliente));
 		//echo "Hello Word";

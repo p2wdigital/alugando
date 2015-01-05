@@ -27,9 +27,9 @@ abstract class ActiveRecord
 			$smtp->bindValue($value, $this->$columns[$key]);
 		endforeach;
 		if(!$smtp->execute()):
-			//var_dump($smtp->errorInfo());
-			//var_dump($smtp->errorCode());
-			throw new \Exception("Erro ao inserir na base de dados:\n" . $db->errorInfo(), $db->errorCode());
+			var_dump($smtp->errorInfo());
+			var_dump($smtp->errorCode());
+			throw new \Exception("Erro ao inserir na base de dados:\n" . $db->errorInfo()[1], $db->errorCode());
 			
 		endif;
 
@@ -47,7 +47,7 @@ abstract class ActiveRecord
 		foreach ($relations as $key => $value):
 			$rel = "a".$value;
 			$this->$rel = $this->$rel->save();
-			var_dump($this->$rel);
+			//var_dump($this->$rel);
 			foreach ($this->getMapRelations($value) as $key => $param):
 				$get = "get" . $this->$rel->getCamelFromName($key);
 				$this->$param = $this->$rel->$get();

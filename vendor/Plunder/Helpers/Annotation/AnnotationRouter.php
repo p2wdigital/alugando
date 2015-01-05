@@ -30,7 +30,8 @@ class AnnotationRouter extends Annotation
 			$this->route = array_merge( $this->route, $this->handleFile($value->getContents()) );
 		endforeach;
 		
-		$cache->setCache($fileCache, $this->route, $finder);
+		//$cache->setCache($fileCache, $this->route, $finder);
+		var_dump($this->route);
 		return $this;
 
 	}
@@ -132,8 +133,8 @@ class AnnotationRouter extends Annotation
 
 	private function getNamespace($value){
 
-		
-		if(preg_match("/^namespace +((\w+\\\)*\w+);$/", $value, $matches)):
+		if(preg_match("/^namespace +(\S+);/", $value, $matches)):
+		//var_dump($matches[1]);
 			return array("namespace"=>$matches[1]);
 		endif;
 
@@ -207,7 +208,7 @@ class AnnotationRouter extends Annotation
 
 	private function getFunction($value){
 		
-		if(preg_match("/^[\t ]*?public +function +(\w+Action) *?\([\S ]*?\)\S?$/", $value, $matches)):
+		if(preg_match("/^[\t ]*?public +function +(\w+Action) *?\([\S ]*?\)\S?/", $value, $matches)):
 			return  array("function"=>$matches[1]);
 		endif;
 		return false;	
