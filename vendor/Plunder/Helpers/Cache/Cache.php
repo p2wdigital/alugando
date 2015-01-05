@@ -46,7 +46,7 @@ class Cache
 			return true;
 		endif;
 
-		$cache 			= json_decode(file_get_contents($pathFile));
+		$cache 			= json_decode(file_get_contents($pathFile), true);
 		$filesCache 	= $cache['filesCache'];
 		$contentCache	= $cache['contentCache'];
 		//Se as variaveis continuam com os valores iniciais

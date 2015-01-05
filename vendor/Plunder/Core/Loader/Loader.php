@@ -29,6 +29,7 @@ class Loader
 		new Config(Container::get('yaml'), Container::get('cache'));
 		
 		$route = Container::get('router');
+		//var_dump($route->getContext());
 		$this->callController($route->getContext());
 	}
 

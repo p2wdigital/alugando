@@ -37,8 +37,8 @@ class AnnotationRouter extends Annotation
 
 	private function handleFile($content){
 		//Separa cada linha da class em um array;
-		$file 		= explode("\n", $content);
-		$result 	= array();
+		$file 			= explode("\n", $content);
+		$result 		= array();
 		
 
 		//Filtra apenas as ocorrencias necessárias para gerar a rota;
@@ -63,7 +63,7 @@ class AnnotationRouter extends Annotation
 		$auxRoute 	= array();
 		$namespace 	= null;
 		$classRoute = array();
-
+		//var_dump($array);
 		foreach ($array as $key => $value):
 			// Guarda Namespace da class				
 			if (array_key_exists("namespace", $value)):
@@ -105,6 +105,7 @@ class AnnotationRouter extends Annotation
 
 				foreach ($classRoute as $key => $c):
 					foreach ($auxRoute as $key => $rota):
+
 						$route[] = array(
 							"namespace"=>$namespace, 
 							"class"=>$class, 
@@ -131,10 +132,9 @@ class AnnotationRouter extends Annotation
 
 	private function getNamespace($value){
 
-		if(strpos($value, "namespace") !== false):
-			$replace = array(" ", "namespace", ";");
-			$str = str_replace($replace, "", trim($value));
-			return array("namespace"=>$str);
+		
+		if(preg_match("/^namespace +((\w+\\\)*\w+);$/", $value, $matches)):
+			return array("namespace"=>$matches[1]);
 		endif;
 
 		return false;
@@ -144,8 +144,7 @@ class AnnotationRouter extends Annotation
 
 	private function getClassName($value){
 		
-		if(strpos($value, "class") !== false):
-			preg_match("/^class +(\w+)/i", $value, $matches);
+		if(preg_match("/^class +(\w+)/i", $value, $matches)):
 			return array("class"=>$matches[1]);
 		endif;
 
@@ -174,8 +173,10 @@ class AnnotationRouter extends Annotation
 			//Retira espaços em branco, @route, " , ', que não estiverem no padrao {"id":value}
 			//	$str = preg_replace("/(\=\{.*?\})|((\"+)|@route\(|\s+|\*|\))/i", "$1", $value);
 			preg_match_all('/(?#atributos json)[, ]+?(\w+=\{.*?\})|(?#atributos simples)[( ]["]+([\s\w\/\-\.\{\}]*?)"+|(?#atributos compostos)[ ,]([^\s]+=+[^\s{,]+)[, )]+?/', $value, $mat);
+			$mat[3] = str_replace("\"", "", $mat[3]);
+
 			$aux = array_filter(array_merge($mat[1], $mat[2], $mat[3]));
-			//var_dump($value);
+			//var_dump($aux);
 			//var_dump($mat);
 
 
@@ -194,7 +195,7 @@ class AnnotationRouter extends Annotation
 			endforeach;
 
 			if(!array_key_exists('name', $route)) $route['name']="";
-			
+			//var_dump($route)	;
 			return $route;
 		endif;
 
@@ -206,18 +207,16 @@ class AnnotationRouter extends Annotation
 
 	private function getFunction($value){
 		
-		if(strpos($value, "function") !== false):
-			$replace = array(" ", "public", "function", ";");
-			$str = str_replace($replace, "", trim($value));
-			$str = explode("(", $str);
-			return  array("function"=>trim($str[0]));
-		endif;	
+		if(preg_match("/^[\t ]*?public +function +(\w+Action) *?\([\S ]*?\)\S?$/", $value, $matches)):
+			return  array("function"=>$matches[1]);
+		endif;
 		return false;	
 
 	}
 
 	//* GET *//
 	public function getRoute(){
+
 		return $this->route;
 	}
 

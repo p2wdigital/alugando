@@ -5,9 +5,31 @@
     <column name="razao_social" phpName="RazaoSocial" type="VARCHAR" required="true" size="100" />
     <column name="contato" phpName="Contato" type="VARCHAR" size="80" />
     <column name="cep" phpName="Cep" type="VARCHAR" required="true" size="8" />
-    <column name="descricao" phpName="Descricao" type="TEXT" />
+    <column name="descricao" phpName="Descricao" type="LONGVARCHAR" />
     <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP" />
     <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP" />
+  </table>
+  <table name="orcamento" phpName="Orcamento">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" required="true" />
+    <column name="valor_total" phpName="ValorTotal" type="DECIMAL" size="8" scale="2" />
+    <column name="prazo" phpName="Prazo" type="INTEGER" />
+    <column name="descricao" phpName="Descricao" type="LONGVARCHAR" />
+    <relations>
+      <foreing-key type="ManyToOne" column="cliente_id" referenceTable="cliente" referenceColumn="id" />
+    </relations>
+  </table>
+  <table name="orcamento_item" phpName="OrcamentoItem">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+    <column name="orcamento_id" phpName="OrcamentoId" type="INTEGER" primaryKey="true" required="true" />
+    <column name="produto_id" phpName="ProdutoId" type="INTEGER" primaryKey="true" required="true" />
+    <column name="valor" phpName="Valor" type="DECIMAL" size="8" scale="2" />
+    <column name="prazo" phpName="Prazo" type="INTEGER" />
+    <column name="quantidade" phpName="Quantidade" type="INTEGER" />
+    <relations>
+      <foreing-key type="ManyToOne" column="orcamento_id" referenceTable="orcamento" referenceColumn="id" />
+      <foreing-key type="ManyToOne" column="produto_id" referenceTable="produto" referenceColumn="id" />
+    </relations>
   </table>
   <table name="produto" phpName="Produto">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
@@ -29,6 +51,8 @@
     <column name="password" phpName="Password" type="INTEGER" required="true" />
     <column name="salt" phpName="Salt" type="VARCHAR" required="true" size="45" />
     <column name="email" phpName="Email" type="VARCHAR" required="true" size="45" />
+    <column name="testeenum" phpName="Testeenum" type="VARCHAR" size="45" />
+    <column name="usercol" phpName="Usercol" type="VARCHAR" size="45" />
     <relations>
       <foreing-key type="OneToOne" column="cliente_id" referenceTable="cliente" referenceColumn="id" />
     </relations>

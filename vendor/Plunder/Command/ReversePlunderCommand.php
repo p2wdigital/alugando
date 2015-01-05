@@ -23,7 +23,7 @@ class ReversePlunderCommand extends Command{
 	protected function configure(){
 
 		$this->setName("plunder:reverse");
-		$this->setDescription("Reverse data base to XML");
+		$this->setDescription("Reverse data base to XML based on config.yml");
 	}
 
 
@@ -69,9 +69,26 @@ class ReversePlunderCommand extends Command{
 
 	protected function column($col){
 		$column = array();
-		$column['name'] 		= $col['COLUMN_NAME'];
-		$column['phpName'] 		= $this->phpName($col['COLUMN_NAME']);
-		$column['type']			= $this->parseType($col['DATA_TYPE']);
+		$column['name'] 			= $col['COLUMN_NAME'];
+		$column['phpName'] 			= $this->phpName($col['COLUMN_NAME']);
+		$column['type']				= $this->parseType($col['DATA_TYPE']);
+
+		if($col['COLUMN_KEY'] 		== "PRI") 				$column['primaryKey'] 		= "true";
+		if($col['EXTRA'] 			== "auto_increment") 	$column['autoIncrement'] 	= "true";
+		
+		if($col['IS_NULLABLE'] 		== 'NO' && !array_key_exists('autoIncrement', $column)):
+			$column['required']		= "true";
+		endif;
+
+		if ($column['type'] 		== "VARCHAR"):
+			$column['size'] 		= $col['CHARACTER_MAXIMUM_LENGTH'];
+		endif;
+
+		if ($column['type'] 		== "DECIMAL"):
+			$column['size'] 		= $col['NUMERIC_PRECISION'];
+			$column['scale'] 		= $col['NUMERIC_SCALE'];
+		endif;
+
 
 		$val = $this->arrayToXml("column", $column);
 		$this->xml .= $this->e4 . $val . $this->line;
@@ -83,14 +100,16 @@ class ReversePlunderCommand extends Command{
 						 KEY_COLUMN_USAGE as keyy left join TABLE_CONSTRAINTS as ref 
 						 ON(keyy.CONSTRAINT_NAME = ref.constraint_name and keyy.CONSTRAINT_SCHEMA = ref.CONSTRAINT_SCHEMA and keyy.TABLE_NAME = ref.TABLE_NAME)  
 						where keyy.CONSTRAINT_SCHEMA = "%s" 
-						and (keyy.table_name = "%s" or keyy.REFERENCED_TABLE_NAME = "%s" ) ', 
-						config::get('plunder.database'), $table, $table );
+						and (keyy.table_name = "%s" ) ', 
+						config::get('plunder.database'), $table );
 		$result = $db->query($query);
 
-		$open 		= null;
-		$primary 	= array();
-		$relations 	= array();
+		$open 			= null;
+		$primary 		= array();
+		$relations 		= array();
+
 		foreach ($result->fetchAll() as $key => $value):
+
 			if ($value['CONSTRAINT_TYPE'] == "PRIMARY KEY"):
 				$primary[] 	= array( 
 							'table'=> $value['TABLE_NAME'],
@@ -112,6 +131,7 @@ class ReversePlunderCommand extends Command{
 
 		foreach ($relations as $key => $value):
 			$xmlAux = array();
+
 			if($value['referenceTable'] == $table):
 				$xmlAux['type'] 	= 'OneToMany';
 				$xmlAux['column']	= $value['referenceColumn'];
@@ -119,40 +139,59 @@ class ReversePlunderCommand extends Command{
 				$xmlAux['referenceColumn']	= $value['column'];
 				$this->xml .= $this->e6 . $this->arrayToXml('foreing-key', $xmlAux) .$this->line;
 			endif;
+
 			if($value['table'] == $table):
-				$xmlAux['type'] 	= 'ManyToOne';
+				if (count($primary) > 1):
+					$xmlAux['type']		= 'ManyToOne';
+				else:
+					$xmlAux['type'] 	= 'OneToOne';
+				endif;
 				$xmlAux['column']	= $value['column'];
 				$xmlAux['referenceTable']	= $value['referenceTable'];
 				$xmlAux['referenceColumn']	= $value['referenceColumn'];
 				$this->xml .= $this->e6 . $this->arrayToXml('foreing-key', $xmlAux) .$this->line;
 			endif;
 		endforeach;
-		$this->closeRelations();
+		
+		if (count($relations) > 0) $this->closeRelations();
+		
 
 	}
 
 	protected function parseType($type){
-		switch (strtolower($type)):
-			case 'int':
-			case 'integer':
-				return "INTEGER";
-				break;
-			case 'varchar':
-				return "VARCHAR";
-				break;
-			case 'decimal':
-				return "DECIMAL";
-				break;
-			case 'text':
-				return "TEXT";
-				break;
-			case 'date':
-				return "DATE";
-				break;
-			case 'timestamp':
-				return "TIMESTAMP";
-				break;
-		endswitch;
+        $types = array(
+	        'tinyint'    => 'TINYINT',
+	        'smallint'   => 'SMALLINT',
+	        'mediumint'  => 'SMALLINT',
+	        'int'        => 'INTEGER',
+	        'integer'    => 'INTEGER',
+	        'bigint'     => 'BIGINT',
+	        'int24'      => 'BIGINT',
+	        'real'       => 'DOUBLE',
+	        'float'      => 'FLOAT',
+	        'decimal'    => 'DECIMAL',
+	        'numeric'    => 'NUMERIC',
+	        'double'     => 'DOUBLE',
+	        'char'       => 'CHAR',
+	        'varchar'    => 'VARCHAR',
+	        'date'       => 'DATE',
+	        'time'       => 'TIME',
+	        'year'       => 'INTEGER',
+	        'datetime'   => 'TIMESTAMP',
+	        'timestamp'  => 'TIMESTAMP',
+	        'tinyblob'   => 'BINARY',
+	        'blob'       => 'BLOB',
+	        'mediumblob' => 'VARBINARY',
+	        'longblob'   => 'LONGVARBINARY',
+	        'longtext'   => 'CLOB',
+	        'tinytext'   => 'VARCHAR',
+	        'mediumtext' => 'LONGVARCHAR',
+	        'text'       => 'LONGVARCHAR',
+	        'enum'       => 'CHAR',
+	        'set'        => 'CHAR',
+        );
+		
+		return $types[$type];
 
 	}
 
@@ -167,7 +206,7 @@ class ReversePlunderCommand extends Command{
 	protected function openRelations(){
 		$aux = '<relations>';
 		$this->xml .= $this->e4 . $aux . $this->line;
-	}
+	}	
 	protected function closeRelations(){
 		$this->xml .= $this->e4 ."</relations>". $this->line;
 	}
@@ -180,7 +219,7 @@ class ReversePlunderCommand extends Command{
 
 	protected function closeXml(){
 		$this->xml .= '</database>';
-		file_put_contents(BASE_DIR . "/app/propel/schema_plunder.xml", $this->xml);
+		file_put_contents(BASE_DIR . "/app/config/schema_plunder.xml", $this->xml);
 	}
 
 	protected function phpName($name){

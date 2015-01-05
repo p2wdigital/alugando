@@ -8,7 +8,7 @@ $ini = microtime(true);
 
 
 //DEFINES ENVIRONMENT (dev | prod);
-define("ENVIRONMENT", "prod");
+define("ENVIRONMENT", "dev");
 define("BASE_DIR", __DIR__);
 define("SEP", DIRECTORY_SEPARATOR);
 

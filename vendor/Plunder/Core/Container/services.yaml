@@ -28,3 +28,6 @@ services:
     templating:
         class: Plunder\Core\Twig\TwigTemplating
         params: null
+    config:
+        class: Plunder\Core\Config\Config
+        params: null

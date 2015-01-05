@@ -1,6 +1,8 @@
 plunder:
-    database: wep2
-    charset: utf8
-    host: localhost
-    user: root
-    password: null
+    database:
+        db: wep2
+        charset: utf8
+        host: localhost
+        user: root
+        password: null
+    encoding: UTF8

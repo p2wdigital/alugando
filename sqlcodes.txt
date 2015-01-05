@@ -1,0 +1,3 @@
+Erro: 1022 - Chave duplicada;
+Erro: 1054 - Coluna não existe;
+Erro: 1055 - Campo x Não esta no groupBy;
