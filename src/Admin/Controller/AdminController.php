@@ -259,9 +259,7 @@ class AdminController extends Controller
 			endif;
 			if ($value['type'] == 'OneToMany'):
 				$this->relOneToMany($value);
-
 			endif;
-
 		endforeach;
 
 		//$func = sprintf("\tpublic function get%s(){\n")

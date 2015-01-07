@@ -65,7 +65,10 @@ class Cliente extends ActiveRecord{
 	protected $aUser;
 
 
-
+    /**
+     * [getId Return the field table {id}]
+     * @return [{int}] [$this->{id}]
+     */
     public function getId(){ 
         return $this->id;
     }
@@ -97,9 +100,14 @@ class Cliente extends ActiveRecord{
 	public function getOrcamentos(){
 		return $this->aOrcamentos;
 	}
-
+    /**
+     * [getUser return $this->aUser]
+     * @return [User] [description]
+     */
 	public function getUser(){
-		return $this->aUser;
+        if ($this->aUser instanceof User):
+		   return $this->aUser;
+        endif;
 	}
 
 
@@ -157,7 +165,10 @@ class Cliente extends ActiveRecord{
             $this->modColumns[] = 'dh_inclusao';
         endif;
     }
-
+    /**
+     * [setDhAlteracao Set the field table dh_alteracao]
+     * @param [{type}] $val 
+     */
     public function setDhAlteracao($val){ 
         if($val !== null)  $val = (string) $val; 
 

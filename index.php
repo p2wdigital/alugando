@@ -2,7 +2,7 @@
 // SETUP AUTO LOAD COMPOSER
 require_once 'vendor/autoload.php';
 use Plunder\Core\Loader\Loader;
-use Symfony\Component\Finder\Finder;
+use Plunder\Helpers\Plunder;
 //get statart time;
 $ini = microtime(true);
 
@@ -13,6 +13,9 @@ define("BASE_DIR", __DIR__);
 define("SEP", DIRECTORY_SEPARATOR);
 
 $loader = new Loader();
+
+
+
 
 
 $debug = array(
