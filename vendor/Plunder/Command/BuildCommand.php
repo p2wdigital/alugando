@@ -17,8 +17,11 @@ use Plunder\Helpers\Plunder;
 */
 class BuildCommand extends Command{
 	protected $model 			= array(
-			"columns"	=> "/model/modelColumns.php",
-			"get"		=> "/model/modelGet.php",
+			"columns"		=> "/model/modelColumns.php",
+			"get"			=> "/model/modelGet.php",
+			"set"			=> "/model/modelSet.php",
+			"getRelation"	=> "/model/modelGetRelation.php",
+			"setRelation"	=> "/model/modelSetRelation.php",
 	);
 	/**
 	 * [$option opções inseridas no console]
@@ -274,8 +277,6 @@ class BuildCommand extends Command{
 		});
 
 		foreach ($relations as $key => $value):
-			var_dump($value);
-			$tableCamel = $this->phpName($value['table']);
 			if ($value['type'] == 'OneToOne'):
 				$this->relOneToOne($value);
 			endif;
@@ -288,35 +289,32 @@ class BuildCommand extends Command{
 	}
 
 	private function relOneToOne($relation){
-		$tableCamel 		= $this->phpName($relation['referenceTable']);
+		$phpName			= Plunder::phpName($relation['referenceTable']);
 		$foreing 			= $relation['foreing'];
 		$column 			= $relation['column'];
 		$referenceColumn	= $relation['referenceColumn'];
 
 		// Gera function gets;
-		$dump 		 			= file_get_contents(__DIR__ . $this->model['get']);
-		$replace['search'] 		= array("{phpName}", "{type}", "{varname}");
-		$replace['replace'] 	= array($phpName, $this->fromToType($type), $column);
+		$dump 		 			= file_get_contents(__DIR__ . $this->model['getRelation']);
+		$replace['search'] 		= array("{phpName}");
+		$replace['replace'] 	= array($phpName);
 		$dump 					= str_replace($replace['search'], $replace['replace'], $dump);
 		$this->gets[] 			=  $dump;
 
+		// Gera function gets;
+		$dump 		 			= file_get_contents(__DIR__ . $this->model['setRelation']);
+		$replace['search'] 		= array("{phpName}","{set}","{mod}");
+		$replace['replace'] 	= array($phpName, ($foreing) ? "add" : "set", ($foreing) ? "add" : "mod");
+		$dump 					= str_replace($replace['search'], $replace['replace'], $dump);
+		$this->sets[] 			=  $dump;
 
-		$dump  = sprintf("\tpublic function get%s(){\n", $tableCamel);
-		$dump .= sprintf("\t\treturn \$this->a%s;\n\t}\n\n", $tableCamel);
-		$this->gets[] = $dump;
-
-		$dump  = sprintf("\tpublic function %s%s(%s \$val){\n",($foreing) ? "add" : "set", $tableCamel, $tableCamel);
-		$dump .= sprintf("\t\t\$this->a%s = \$val;\n", $tableCamel);
-		$dump .= sprintf("\t\t\$this->%sRelations[] = '%s';\n\t}\n\n",($foreing) ? "add" : "mod", $tableCamel);
-		$this->sets[] = $dump;
-
-		$this->use[] = sprintf("use %s\\%s;\n", $this->namespace, $tableCamel);
+		$this->use[] = sprintf("use %s\\%s;\n", $this->namespace, $phpName);
 		$this->mapRelations[$tableCamel] = array( $referenceColumn => $column);
-		$this->varsColumns[] = sprintf("\tprotected \$a%s;\n\n", $tableCamel);
+		$this->varsColumns[] = sprintf("\tprotected \$a%s;\n\n", $phpName);
 	}
 
 	private function relOneToMany($relation){
-		$tableCamel 		= $this->phpName($relation['referenceTable']);
+		$phpName	 		= $this->phpName($relation['referenceTable']);
 		$pluralize			= $this->pluralize($tableCamel);
 		$foreing 			= $relation['foreing'];
 		$column 			= $relation['column'];

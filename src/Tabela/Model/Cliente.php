@@ -101,12 +101,14 @@ class Cliente extends ActiveRecord{
 		return $this->aOrcamentos;
 	}
     /**
-     * [getUser return $this->aUser]
+     * [getUser the relation table User ]
      * @return [User] [description]
      */
 	public function getUser(){
         if ($this->aUser instanceof User):
 		   return $this->aUser;
+        else:
+            return null;
         endif;
 	}
 
