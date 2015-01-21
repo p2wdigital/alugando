@@ -22,7 +22,6 @@ class TwigEnvironment extends Twig_Environment
 
 	private function changeNameTemplating($name){
 		$aux 	 = array_filter(explode(":", $name));
-
 		$caminho = '';
 		if (isset($aux[0])):
 			$caminho 	 = sprintf("%s/View/", $aux[0]);

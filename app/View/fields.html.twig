@@ -1,13 +1,18 @@
 {% block form_row %}
-	<div class="form-control">
+	<div class="form-group">
 		{{block("label")}}
 		{{block("input_type")}}		
 	</div>
 {% endblock %}
 
 {% block input_type %}
-    <input type="{{form.type}}" name="{{form.name}}">
+    <input type="{{form.type}}" name="{{form.name}}" class="form-control">
 {% endblock %}
+
+{% block label %}
+    <label for="{{form.name}}">{{form.name}}</label>
+{% endblock %}
+
 {% block label %}
     <label for="{{form.name}}">{{form.name}}</label>
 {% endblock %}
