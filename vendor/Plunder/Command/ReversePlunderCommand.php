@@ -40,10 +40,10 @@ class ReversePlunderCommand extends Command{
 
 	protected function reverseSchema($arg){
 		$this->openXml();
-		$dns = sprintf('mysql:host=%s;dbname=information_schema', Config::get("plunder.host"));
-		$db = new \PDO($dns, Config::get("plunder.user"), Config::get("plunder.password"));
+		$dns = sprintf('mysql:host=%s;dbname=information_schema', Config::get("plunder.database.host"));
+		$db = new \PDO($dns, Config::get("plunder.database.user"), Config::get("plunder.database.password"));
 
-		$query = sprintf("Select * from columns where table_schema = '%s'", Config::get('plunder.database'));
+		$query = sprintf("Select * from columns where table_schema = '%s'", Config::get('plunder.database.db'));
 
 		$result = $db->query($query);
 
@@ -101,7 +101,7 @@ class ReversePlunderCommand extends Command{
 						 ON(keyy.CONSTRAINT_NAME = ref.constraint_name and keyy.CONSTRAINT_SCHEMA = ref.CONSTRAINT_SCHEMA and keyy.TABLE_NAME = ref.TABLE_NAME)  
 						where keyy.CONSTRAINT_SCHEMA = "%s" 
 						and (keyy.table_name = "%s" ) ', 
-						config::get('plunder.database'), $table );
+						config::get('plunder.database.db'), $table );
 		$result = $db->query($query);
 
 		$open 			= null;
@@ -214,7 +214,7 @@ class ReversePlunderCommand extends Command{
 	protected function openXml(){
 
 		$this->xml .= '<?xml version="1.0" encoding="utf-8"?>' . $this->line;
-		$this->xml .= sprintf('<database name="%s" namespace="Table\Model">', Config::get('plunder.database')) . $this->line;
+		$this->xml .= sprintf('<database name="%s" namespace="Table\Model">', Config::get('plunder.database.db')) . $this->line;
 	}
 
 	protected function closeXml(){
@@ -234,6 +234,40 @@ class ReversePlunderCommand extends Command{
 			$paramsAux .= $key ."=\"" . $value . "\" ";
 		endforeach;
 		return sprintf("<%s %s %s>", $name, trim($paramsAux), ($close) ? "/" : "");
+	}
+	private function fromToType($type){
+
+		$types = array(
+			'CHAR'          => 'string',
+		    'VARCHAR'       => 'string',
+		    'LONGVARCHAR'   => 'string',
+		    'CLOB'          => 'string',
+		    'CLOB_EMU'      => 'resource',
+		    'NUMERIC'       => 'string',
+		    'DECIMAL'       => 'string',
+		    'TINYINT'       => 'int',
+		    'SMALLINT'      => 'int',
+		    'INTEGER'       => 'int',
+		    'BIGINT'        => 'string',
+		    'REAL'          => 'double',
+		    'FLOAT'         => 'double',
+		    'DOUBLE'        => 'double',
+		    'BINARY'        => 'string',
+		    'VARBINARY'     => 'string',
+		    'LONGVARBINARY' => 'string',
+		    'BLOB'          => 'resource',
+		    'BU_DATE'       => 'string',
+		    'DATE'          => 'string',
+		    'TIME'          => 'string',
+		    'TIMESTAMP'     => 'string',
+		    'BU_TIMESTAMP'  => 'string',
+		    'BOOLEAN'       => 'boolean',
+		    'BOOLEAN_EMU'   => 'boolean',
+		    'OBJECT'        => '',
+		    'PHP_ARRAY'     => 'array',
+		    'ENUM'          => 'int',
+		);
+		return $types[(string)$type];
 	}
 
 }

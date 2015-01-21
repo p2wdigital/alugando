@@ -9,7 +9,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -18,18 +17,17 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Table\Model\Cliente as ChildCliente;
 use Table\Model\ClienteQuery as ChildClienteQuery;
-use Table\Model\User as ChildUser;
 use Table\Model\UserQuery as ChildUserQuery;
 use Table\Model\Map\UserTableMap;
 
 /**
  * Base class that represents a row from the 'user' table.
  *
- * 
+ *
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class User implements ActiveRecordInterface 
+abstract class User implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -64,22 +62,16 @@ abstract class User implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id field.
+     * The value for the cliente_id field.
      * @var        int
      */
-    protected $id;
+    protected $cliente_id;
 
     /**
-     * The value for the user field.
-     * @var        string
+     * The value for the password field.
+     * @var        int
      */
-    protected $user;
-
-    /**
-     * The value for the pass field.
-     * @var        string
-     */
-    protected $pass;
+    protected $password;
 
     /**
      * The value for the salt field.
@@ -88,22 +80,27 @@ abstract class User implements ActiveRecordInterface
     protected $salt;
 
     /**
-     * The value for the role field.
+     * The value for the email field.
      * @var        string
      */
-    protected $role;
+    protected $email;
 
     /**
-     * @var        ObjectCollection|ChildCliente[] Collection to store aggregation of ChildCliente objects.
+     * The value for the testeenum field.
+     * @var        string
      */
-    protected $collClientesRelatedByUserIdInclusao;
-    protected $collClientesRelatedByUserIdInclusaoPartial;
+    protected $testeenum;
 
     /**
-     * @var        ObjectCollection|ChildCliente[] Collection to store aggregation of ChildCliente objects.
+     * The value for the usercol field.
+     * @var        string
      */
-    protected $collClientesRelatedByUserIdAlteracao;
-    protected $collClientesRelatedByUserIdAlteracaoPartial;
+    protected $usercol;
+
+    /**
+     * @var        ChildCliente
+     */
+    protected $aCliente;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -112,18 +109,6 @@ abstract class User implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildCliente[]
-     */
-    protected $clientesRelatedByUserIdInclusaoScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildCliente[]
-     */
-    protected $clientesRelatedByUserIdAlteracaoScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Table\Model\Base\User object.
@@ -343,38 +328,28 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id] column value.
-     * 
+     * Get the [cliente_id] column value.
+     *
      * @return int
      */
-    public function getId()
+    public function getClienteId()
     {
-        return $this->id;
+        return $this->cliente_id;
     }
 
     /**
-     * Get the [user] column value.
-     * 
-     * @return string
+     * Get the [password] column value.
+     *
+     * @return int
      */
-    public function getUser()
+    public function getPassword()
     {
-        return $this->user;
-    }
-
-    /**
-     * Get the [pass] column value.
-     * 
-     * @return string
-     */
-    public function getPass()
-    {
-        return $this->pass;
+        return $this->password;
     }
 
     /**
      * Get the [salt] column value.
-     * 
+     *
      * @return string
      */
     public function getSalt()
@@ -383,78 +358,82 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [role] column value.
-     * 
+     * Get the [email] column value.
+     *
      * @return string
      */
-    public function getRole()
+    public function getEmail()
     {
-        return $this->role;
+        return $this->email;
     }
 
     /**
-     * Set the value of [id] column.
-     * 
+     * Get the [testeenum] column value.
+     *
+     * @return string
+     */
+    public function getTesteenum()
+    {
+        return $this->testeenum;
+    }
+
+    /**
+     * Get the [usercol] column value.
+     *
+     * @return string
+     */
+    public function getUsercol()
+    {
+        return $this->usercol;
+    }
+
+    /**
+     * Set the value of [cliente_id] column.
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
-    public function setId($v)
+    public function setClienteId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->id !== $v) {
-            $this->id = $v;
-            $this->modifiedColumns[UserTableMap::COL_ID] = true;
+        if ($this->cliente_id !== $v) {
+            $this->cliente_id = $v;
+            $this->modifiedColumns[UserTableMap::COL_CLIENTE_ID] = true;
+        }
+
+        if ($this->aCliente !== null && $this->aCliente->getId() !== $v) {
+            $this->aCliente = null;
         }
 
         return $this;
-    } // setId()
+    } // setClienteId()
 
     /**
-     * Set the value of [user] column.
-     * 
-     * @param  string $v new value
+     * Set the value of [password] column.
+     *
+     * @param  int $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
-    public function setUser($v)
+    public function setPassword($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->user !== $v) {
-            $this->user = $v;
-            $this->modifiedColumns[UserTableMap::COL_USER] = true;
+        if ($this->password !== $v) {
+            $this->password = $v;
+            $this->modifiedColumns[UserTableMap::COL_PASSWORD] = true;
         }
 
         return $this;
-    } // setUser()
-
-    /**
-     * Set the value of [pass] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function setPass($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->pass !== $v) {
-            $this->pass = $v;
-            $this->modifiedColumns[UserTableMap::COL_PASS] = true;
-        }
-
-        return $this;
-    } // setPass()
+    } // setPassword()
 
     /**
      * Set the value of [salt] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
@@ -473,24 +452,64 @@ abstract class User implements ActiveRecordInterface
     } // setSalt()
 
     /**
-     * Set the value of [role] column.
-     * 
+     * Set the value of [email] column.
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
-    public function setRole($v)
+    public function setEmail($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->role !== $v) {
-            $this->role = $v;
-            $this->modifiedColumns[UserTableMap::COL_ROLE] = true;
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
         }
 
         return $this;
-    } // setRole()
+    } // setEmail()
+
+    /**
+     * Set the value of [testeenum] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Table\Model\User The current object (for fluent API support)
+     */
+    public function setTesteenum($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->testeenum !== $v) {
+            $this->testeenum = $v;
+            $this->modifiedColumns[UserTableMap::COL_TESTEENUM] = true;
+        }
+
+        return $this;
+    } // setTesteenum()
+
+    /**
+     * Set the value of [usercol] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Table\Model\User The current object (for fluent API support)
+     */
+    public function setUsercol($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->usercol !== $v) {
+            $this->usercol = $v;
+            $this->modifiedColumns[UserTableMap::COL_USERCOL] = true;
+        }
+
+        return $this;
+    } // setUsercol()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -528,20 +547,23 @@ abstract class User implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->cliente_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->password = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Pass', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->pass = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Salt', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Salt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->salt = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Role', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->role = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Testeenum', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->testeenum = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Usercol', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->usercol = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -550,7 +572,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\User'), 0, $e);
@@ -572,6 +594,9 @@ abstract class User implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aCliente !== null && $this->cliente_id !== $this->aCliente->getId()) {
+            $this->aCliente = null;
+        }
     } // ensureConsistency
 
     /**
@@ -611,10 +636,7 @@ abstract class User implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collClientesRelatedByUserIdInclusao = null;
-
-            $this->collClientesRelatedByUserIdAlteracao = null;
-
+            $this->aCliente = null;
         } // if (deep)
     }
 
@@ -714,6 +736,18 @@ abstract class User implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aCliente !== null) {
+                if ($this->aCliente->isModified() || $this->aCliente->isNew()) {
+                    $affectedRows += $this->aCliente->save($con);
+                }
+                $this->setCliente($this->aCliente);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -723,40 +757,6 @@ abstract class User implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->clientesRelatedByUserIdInclusaoScheduledForDeletion !== null) {
-                if (!$this->clientesRelatedByUserIdInclusaoScheduledForDeletion->isEmpty()) {
-                    \Table\Model\ClienteQuery::create()
-                        ->filterByPrimaryKeys($this->clientesRelatedByUserIdInclusaoScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->clientesRelatedByUserIdInclusaoScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collClientesRelatedByUserIdInclusao !== null) {
-                foreach ($this->collClientesRelatedByUserIdInclusao as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->clientesRelatedByUserIdAlteracaoScheduledForDeletion !== null) {
-                if (!$this->clientesRelatedByUserIdAlteracaoScheduledForDeletion->isEmpty()) {
-                    \Table\Model\ClienteQuery::create()
-                        ->filterByPrimaryKeys($this->clientesRelatedByUserIdAlteracaoScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collClientesRelatedByUserIdAlteracao !== null) {
-                foreach ($this->collClientesRelatedByUserIdAlteracao as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -779,26 +779,25 @@ abstract class User implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[UserTableMap::COL_ID] = true;
-        if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserTableMap::COL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'id';
+        if ($this->isColumnModified(UserTableMap::COL_CLIENTE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'cliente_id';
         }
-        if ($this->isColumnModified(UserTableMap::COL_USER)) {
-            $modifiedColumns[':p' . $index++]  = 'user';
-        }
-        if ($this->isColumnModified(UserTableMap::COL_PASS)) {
-            $modifiedColumns[':p' . $index++]  = 'pass';
+        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
+            $modifiedColumns[':p' . $index++]  = 'password';
         }
         if ($this->isColumnModified(UserTableMap::COL_SALT)) {
             $modifiedColumns[':p' . $index++]  = 'salt';
         }
-        if ($this->isColumnModified(UserTableMap::COL_ROLE)) {
-            $modifiedColumns[':p' . $index++]  = 'role';
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TESTEENUM)) {
+            $modifiedColumns[':p' . $index++]  = 'testeenum';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_USERCOL)) {
+            $modifiedColumns[':p' . $index++]  = 'usercol';
         }
 
         $sql = sprintf(
@@ -811,20 +810,23 @@ abstract class User implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
-                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
+                    case 'cliente_id':
+                        $stmt->bindValue($identifier, $this->cliente_id, PDO::PARAM_INT);
                         break;
-                    case 'user':                        
-                        $stmt->bindValue($identifier, $this->user, PDO::PARAM_STR);
+                    case 'password':
+                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_INT);
                         break;
-                    case 'pass':                        
-                        $stmt->bindValue($identifier, $this->pass, PDO::PARAM_STR);
-                        break;
-                    case 'salt':                        
+                    case 'salt':
                         $stmt->bindValue($identifier, $this->salt, PDO::PARAM_STR);
                         break;
-                    case 'role':                        
-                        $stmt->bindValue($identifier, $this->role, PDO::PARAM_STR);
+                    case 'email':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case 'testeenum':
+                        $stmt->bindValue($identifier, $this->testeenum, PDO::PARAM_STR);
+                        break;
+                    case 'usercol':
+                        $stmt->bindValue($identifier, $this->usercol, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -833,13 +835,6 @@ abstract class User implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -889,19 +884,22 @@ abstract class User implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getId();
+                return $this->getClienteId();
                 break;
             case 1:
-                return $this->getUser();
+                return $this->getPassword();
                 break;
             case 2:
-                return $this->getPass();
-                break;
-            case 3:
                 return $this->getSalt();
                 break;
+            case 3:
+                return $this->getEmail();
+                break;
             case 4:
-                return $this->getRole();
+                return $this->getTesteenum();
+                break;
+            case 5:
+                return $this->getUsercol();
                 break;
             default:
                 return null;
@@ -933,47 +931,33 @@ abstract class User implements ActiveRecordInterface
         $alreadyDumpedObjects['User'][$this->hashCode()] = true;
         $keys = UserTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getId(),
-            $keys[1] => $this->getUser(),
-            $keys[2] => $this->getPass(),
-            $keys[3] => $this->getSalt(),
-            $keys[4] => $this->getRole(),
+            $keys[0] => $this->getClienteId(),
+            $keys[1] => $this->getPassword(),
+            $keys[2] => $this->getSalt(),
+            $keys[3] => $this->getEmail(),
+            $keys[4] => $this->getTesteenum(),
+            $keys[5] => $this->getUsercol(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
-            if (null !== $this->collClientesRelatedByUserIdInclusao) {
-                
+            if (null !== $this->aCliente) {
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'clientes';
+                        $key = 'cliente';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'clientes';
+                        $key = 'cliente';
                         break;
                     default:
-                        $key = 'Clientes';
+                        $key = 'Cliente';
                 }
-        
-                $result[$key] = $this->collClientesRelatedByUserIdInclusao->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collClientesRelatedByUserIdAlteracao) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'clientes';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'clientes';
-                        break;
-                    default:
-                        $key = 'Clientes';
-                }
-        
-                $result[$key] = $this->collClientesRelatedByUserIdAlteracao->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+
+                $result[$key] = $this->aCliente->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1010,19 +994,22 @@ abstract class User implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setId($value);
+                $this->setClienteId($value);
                 break;
             case 1:
-                $this->setUser($value);
+                $this->setPassword($value);
                 break;
             case 2:
-                $this->setPass($value);
-                break;
-            case 3:
                 $this->setSalt($value);
                 break;
+            case 3:
+                $this->setEmail($value);
+                break;
             case 4:
-                $this->setRole($value);
+                $this->setTesteenum($value);
+                break;
+            case 5:
+                $this->setUsercol($value);
                 break;
         } // switch()
 
@@ -1051,19 +1038,22 @@ abstract class User implements ActiveRecordInterface
         $keys = UserTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
+            $this->setClienteId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setUser($arr[$keys[1]]);
+            $this->setPassword($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPass($arr[$keys[2]]);
+            $this->setSalt($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSalt($arr[$keys[3]]);
+            $this->setEmail($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setRole($arr[$keys[4]]);
+            $this->setTesteenum($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUsercol($arr[$keys[5]]);
         }
     }
 
@@ -1106,20 +1096,23 @@ abstract class User implements ActiveRecordInterface
     {
         $criteria = new Criteria(UserTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserTableMap::COL_ID)) {
-            $criteria->add(UserTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(UserTableMap::COL_CLIENTE_ID)) {
+            $criteria->add(UserTableMap::COL_CLIENTE_ID, $this->cliente_id);
         }
-        if ($this->isColumnModified(UserTableMap::COL_USER)) {
-            $criteria->add(UserTableMap::COL_USER, $this->user);
-        }
-        if ($this->isColumnModified(UserTableMap::COL_PASS)) {
-            $criteria->add(UserTableMap::COL_PASS, $this->pass);
+        if ($this->isColumnModified(UserTableMap::COL_PASSWORD)) {
+            $criteria->add(UserTableMap::COL_PASSWORD, $this->password);
         }
         if ($this->isColumnModified(UserTableMap::COL_SALT)) {
             $criteria->add(UserTableMap::COL_SALT, $this->salt);
         }
-        if ($this->isColumnModified(UserTableMap::COL_ROLE)) {
-            $criteria->add(UserTableMap::COL_ROLE, $this->role);
+        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
+            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_TESTEENUM)) {
+            $criteria->add(UserTableMap::COL_TESTEENUM, $this->testeenum);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_USERCOL)) {
+            $criteria->add(UserTableMap::COL_USERCOL, $this->usercol);
         }
 
         return $criteria;
@@ -1138,7 +1131,7 @@ abstract class User implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildUserQuery::create();
-        $criteria->add(UserTableMap::COL_ID, $this->id);
+        $criteria->add(UserTableMap::COL_CLIENTE_ID, $this->cliente_id);
 
         return $criteria;
     }
@@ -1151,10 +1144,17 @@ abstract class User implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId();
+        $validPk = null !== $this->getClienteId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
+
+        //relation fk_user_cliente1 to table cliente
+        if ($this->aCliente && $hash = spl_object_hash($this->aCliente)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1164,25 +1164,25 @@ abstract class User implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
      */
     public function getPrimaryKey()
     {
-        return $this->getId();
+        return $this->getClienteId();
     }
 
     /**
-     * Generic method to set the primary key (id column).
+     * Generic method to set the primary key (cliente_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setId($key);
+        $this->setClienteId($key);
     }
 
     /**
@@ -1191,7 +1191,7 @@ abstract class User implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getId();
+        return null === $this->getClienteId();
     }
 
     /**
@@ -1207,33 +1207,14 @@ abstract class User implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUser($this->getUser());
-        $copyObj->setPass($this->getPass());
+        $copyObj->setClienteId($this->getClienteId());
+        $copyObj->setPassword($this->getPassword());
         $copyObj->setSalt($this->getSalt());
-        $copyObj->setRole($this->getRole());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getClientesRelatedByUserIdInclusao() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addClienteRelatedByUserIdInclusao($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getClientesRelatedByUserIdAlteracao() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addClienteRelatedByUserIdAlteracao($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
+        $copyObj->setEmail($this->getEmail());
+        $copyObj->setTesteenum($this->getTesteenum());
+        $copyObj->setUsercol($this->getUsercol());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1259,459 +1240,49 @@ abstract class User implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildCliente object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('ClienteRelatedByUserIdInclusao' == $relationName) {
-            return $this->initClientesRelatedByUserIdInclusao();
-        }
-        if ('ClienteRelatedByUserIdAlteracao' == $relationName) {
-            return $this->initClientesRelatedByUserIdAlteracao();
-        }
-    }
-
-    /**
-     * Clears out the collClientesRelatedByUserIdInclusao collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addClientesRelatedByUserIdInclusao()
-     */
-    public function clearClientesRelatedByUserIdInclusao()
-    {
-        $this->collClientesRelatedByUserIdInclusao = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collClientesRelatedByUserIdInclusao collection loaded partially.
-     */
-    public function resetPartialClientesRelatedByUserIdInclusao($v = true)
-    {
-        $this->collClientesRelatedByUserIdInclusaoPartial = $v;
-    }
-
-    /**
-     * Initializes the collClientesRelatedByUserIdInclusao collection.
-     *
-     * By default this just sets the collClientesRelatedByUserIdInclusao collection to an empty array (like clearcollClientesRelatedByUserIdInclusao());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initClientesRelatedByUserIdInclusao($overrideExisting = true)
-    {
-        if (null !== $this->collClientesRelatedByUserIdInclusao && !$overrideExisting) {
-            return;
-        }
-        $this->collClientesRelatedByUserIdInclusao = new ObjectCollection();
-        $this->collClientesRelatedByUserIdInclusao->setModel('\Table\Model\Cliente');
-    }
-
-    /**
-     * Gets an array of ChildCliente objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildCliente[] List of ChildCliente objects
-     * @throws PropelException
-     */
-    public function getClientesRelatedByUserIdInclusao(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collClientesRelatedByUserIdInclusaoPartial && !$this->isNew();
-        if (null === $this->collClientesRelatedByUserIdInclusao || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collClientesRelatedByUserIdInclusao) {
-                // return empty collection
-                $this->initClientesRelatedByUserIdInclusao();
-            } else {
-                $collClientesRelatedByUserIdInclusao = ChildClienteQuery::create(null, $criteria)
-                    ->filterByUserRelatedByUserIdInclusao($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collClientesRelatedByUserIdInclusaoPartial && count($collClientesRelatedByUserIdInclusao)) {
-                        $this->initClientesRelatedByUserIdInclusao(false);
-
-                        foreach ($collClientesRelatedByUserIdInclusao as $obj) {
-                            if (false == $this->collClientesRelatedByUserIdInclusao->contains($obj)) {
-                                $this->collClientesRelatedByUserIdInclusao->append($obj);
-                            }
-                        }
-
-                        $this->collClientesRelatedByUserIdInclusaoPartial = true;
-                    }
-
-                    return $collClientesRelatedByUserIdInclusao;
-                }
-
-                if ($partial && $this->collClientesRelatedByUserIdInclusao) {
-                    foreach ($this->collClientesRelatedByUserIdInclusao as $obj) {
-                        if ($obj->isNew()) {
-                            $collClientesRelatedByUserIdInclusao[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collClientesRelatedByUserIdInclusao = $collClientesRelatedByUserIdInclusao;
-                $this->collClientesRelatedByUserIdInclusaoPartial = false;
-            }
-        }
-
-        return $this->collClientesRelatedByUserIdInclusao;
-    }
-
-    /**
-     * Sets a collection of ChildCliente objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $clientesRelatedByUserIdInclusao A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function setClientesRelatedByUserIdInclusao(Collection $clientesRelatedByUserIdInclusao, ConnectionInterface $con = null)
-    {
-        /** @var ChildCliente[] $clientesRelatedByUserIdInclusaoToDelete */
-        $clientesRelatedByUserIdInclusaoToDelete = $this->getClientesRelatedByUserIdInclusao(new Criteria(), $con)->diff($clientesRelatedByUserIdInclusao);
-
-        
-        $this->clientesRelatedByUserIdInclusaoScheduledForDeletion = $clientesRelatedByUserIdInclusaoToDelete;
-
-        foreach ($clientesRelatedByUserIdInclusaoToDelete as $clienteRelatedByUserIdInclusaoRemoved) {
-            $clienteRelatedByUserIdInclusaoRemoved->setUserRelatedByUserIdInclusao(null);
-        }
-
-        $this->collClientesRelatedByUserIdInclusao = null;
-        foreach ($clientesRelatedByUserIdInclusao as $clienteRelatedByUserIdInclusao) {
-            $this->addClienteRelatedByUserIdInclusao($clienteRelatedByUserIdInclusao);
-        }
-
-        $this->collClientesRelatedByUserIdInclusao = $clientesRelatedByUserIdInclusao;
-        $this->collClientesRelatedByUserIdInclusaoPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Cliente objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Cliente objects.
-     * @throws PropelException
-     */
-    public function countClientesRelatedByUserIdInclusao(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collClientesRelatedByUserIdInclusaoPartial && !$this->isNew();
-        if (null === $this->collClientesRelatedByUserIdInclusao || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collClientesRelatedByUserIdInclusao) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getClientesRelatedByUserIdInclusao());
-            }
-
-            $query = ChildClienteQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUserRelatedByUserIdInclusao($this)
-                ->count($con);
-        }
-
-        return count($this->collClientesRelatedByUserIdInclusao);
-    }
-
-    /**
-     * Method called to associate a ChildCliente object to this object
-     * through the ChildCliente foreign key attribute.
-     *
-     * @param  ChildCliente $l ChildCliente
+     * @param  ChildCliente $v
      * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function addClienteRelatedByUserIdInclusao(ChildCliente $l)
-    {
-        if ($this->collClientesRelatedByUserIdInclusao === null) {
-            $this->initClientesRelatedByUserIdInclusao();
-            $this->collClientesRelatedByUserIdInclusaoPartial = true;
-        }
-
-        if (!$this->collClientesRelatedByUserIdInclusao->contains($l)) {
-            $this->doAddClienteRelatedByUserIdInclusao($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildCliente $clienteRelatedByUserIdInclusao The ChildCliente object to add.
-     */
-    protected function doAddClienteRelatedByUserIdInclusao(ChildCliente $clienteRelatedByUserIdInclusao)
-    {
-        $this->collClientesRelatedByUserIdInclusao[]= $clienteRelatedByUserIdInclusao;
-        $clienteRelatedByUserIdInclusao->setUserRelatedByUserIdInclusao($this);
-    }
-
-    /**
-     * @param  ChildCliente $clienteRelatedByUserIdInclusao The ChildCliente object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function removeClienteRelatedByUserIdInclusao(ChildCliente $clienteRelatedByUserIdInclusao)
-    {
-        if ($this->getClientesRelatedByUserIdInclusao()->contains($clienteRelatedByUserIdInclusao)) {
-            $pos = $this->collClientesRelatedByUserIdInclusao->search($clienteRelatedByUserIdInclusao);
-            $this->collClientesRelatedByUserIdInclusao->remove($pos);
-            if (null === $this->clientesRelatedByUserIdInclusaoScheduledForDeletion) {
-                $this->clientesRelatedByUserIdInclusaoScheduledForDeletion = clone $this->collClientesRelatedByUserIdInclusao;
-                $this->clientesRelatedByUserIdInclusaoScheduledForDeletion->clear();
-            }
-            $this->clientesRelatedByUserIdInclusaoScheduledForDeletion[]= clone $clienteRelatedByUserIdInclusao;
-            $clienteRelatedByUserIdInclusao->setUserRelatedByUserIdInclusao(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Clears out the collClientesRelatedByUserIdAlteracao collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addClientesRelatedByUserIdAlteracao()
-     */
-    public function clearClientesRelatedByUserIdAlteracao()
-    {
-        $this->collClientesRelatedByUserIdAlteracao = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collClientesRelatedByUserIdAlteracao collection loaded partially.
-     */
-    public function resetPartialClientesRelatedByUserIdAlteracao($v = true)
-    {
-        $this->collClientesRelatedByUserIdAlteracaoPartial = $v;
-    }
-
-    /**
-     * Initializes the collClientesRelatedByUserIdAlteracao collection.
-     *
-     * By default this just sets the collClientesRelatedByUserIdAlteracao collection to an empty array (like clearcollClientesRelatedByUserIdAlteracao());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initClientesRelatedByUserIdAlteracao($overrideExisting = true)
-    {
-        if (null !== $this->collClientesRelatedByUserIdAlteracao && !$overrideExisting) {
-            return;
-        }
-        $this->collClientesRelatedByUserIdAlteracao = new ObjectCollection();
-        $this->collClientesRelatedByUserIdAlteracao->setModel('\Table\Model\Cliente');
-    }
-
-    /**
-     * Gets an array of ChildCliente objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildUser is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildCliente[] List of ChildCliente objects
      * @throws PropelException
      */
-    public function getClientesRelatedByUserIdAlteracao(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setCliente(ChildCliente $v = null)
     {
-        $partial = $this->collClientesRelatedByUserIdAlteracaoPartial && !$this->isNew();
-        if (null === $this->collClientesRelatedByUserIdAlteracao || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collClientesRelatedByUserIdAlteracao) {
-                // return empty collection
-                $this->initClientesRelatedByUserIdAlteracao();
-            } else {
-                $collClientesRelatedByUserIdAlteracao = ChildClienteQuery::create(null, $criteria)
-                    ->filterByUserRelatedByUserIdAlteracao($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collClientesRelatedByUserIdAlteracaoPartial && count($collClientesRelatedByUserIdAlteracao)) {
-                        $this->initClientesRelatedByUserIdAlteracao(false);
-
-                        foreach ($collClientesRelatedByUserIdAlteracao as $obj) {
-                            if (false == $this->collClientesRelatedByUserIdAlteracao->contains($obj)) {
-                                $this->collClientesRelatedByUserIdAlteracao->append($obj);
-                            }
-                        }
-
-                        $this->collClientesRelatedByUserIdAlteracaoPartial = true;
-                    }
-
-                    return $collClientesRelatedByUserIdAlteracao;
-                }
-
-                if ($partial && $this->collClientesRelatedByUserIdAlteracao) {
-                    foreach ($this->collClientesRelatedByUserIdAlteracao as $obj) {
-                        if ($obj->isNew()) {
-                            $collClientesRelatedByUserIdAlteracao[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collClientesRelatedByUserIdAlteracao = $collClientesRelatedByUserIdAlteracao;
-                $this->collClientesRelatedByUserIdAlteracaoPartial = false;
-            }
+        if ($v === null) {
+            $this->setClienteId(NULL);
+        } else {
+            $this->setClienteId($v->getId());
         }
 
-        return $this->collClientesRelatedByUserIdAlteracao;
-    }
+        $this->aCliente = $v;
 
-    /**
-     * Sets a collection of ChildCliente objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $clientesRelatedByUserIdAlteracao A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function setClientesRelatedByUserIdAlteracao(Collection $clientesRelatedByUserIdAlteracao, ConnectionInterface $con = null)
-    {
-        /** @var ChildCliente[] $clientesRelatedByUserIdAlteracaoToDelete */
-        $clientesRelatedByUserIdAlteracaoToDelete = $this->getClientesRelatedByUserIdAlteracao(new Criteria(), $con)->diff($clientesRelatedByUserIdAlteracao);
-
-        
-        $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion = $clientesRelatedByUserIdAlteracaoToDelete;
-
-        foreach ($clientesRelatedByUserIdAlteracaoToDelete as $clienteRelatedByUserIdAlteracaoRemoved) {
-            $clienteRelatedByUserIdAlteracaoRemoved->setUserRelatedByUserIdAlteracao(null);
+        // Add binding for other direction of this 1:1 relationship.
+        if ($v !== null) {
+            $v->setUser($this);
         }
 
-        $this->collClientesRelatedByUserIdAlteracao = null;
-        foreach ($clientesRelatedByUserIdAlteracao as $clienteRelatedByUserIdAlteracao) {
-            $this->addClienteRelatedByUserIdAlteracao($clienteRelatedByUserIdAlteracao);
-        }
-
-        $this->collClientesRelatedByUserIdAlteracao = $clientesRelatedByUserIdAlteracao;
-        $this->collClientesRelatedByUserIdAlteracaoPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Cliente objects.
+     * Get the associated ChildCliente object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Cliente objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCliente The associated ChildCliente object.
      * @throws PropelException
      */
-    public function countClientesRelatedByUserIdAlteracao(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getCliente(ConnectionInterface $con = null)
     {
-        $partial = $this->collClientesRelatedByUserIdAlteracaoPartial && !$this->isNew();
-        if (null === $this->collClientesRelatedByUserIdAlteracao || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collClientesRelatedByUserIdAlteracao) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getClientesRelatedByUserIdAlteracao());
-            }
-
-            $query = ChildClienteQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByUserRelatedByUserIdAlteracao($this)
-                ->count($con);
+        if ($this->aCliente === null && ($this->cliente_id !== null)) {
+            $this->aCliente = ChildClienteQuery::create()->findPk($this->cliente_id, $con);
+            // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
+            $this->aCliente->setUser($this);
         }
 
-        return count($this->collClientesRelatedByUserIdAlteracao);
-    }
-
-    /**
-     * Method called to associate a ChildCliente object to this object
-     * through the ChildCliente foreign key attribute.
-     *
-     * @param  ChildCliente $l ChildCliente
-     * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function addClienteRelatedByUserIdAlteracao(ChildCliente $l)
-    {
-        if ($this->collClientesRelatedByUserIdAlteracao === null) {
-            $this->initClientesRelatedByUserIdAlteracao();
-            $this->collClientesRelatedByUserIdAlteracaoPartial = true;
-        }
-
-        if (!$this->collClientesRelatedByUserIdAlteracao->contains($l)) {
-            $this->doAddClienteRelatedByUserIdAlteracao($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildCliente $clienteRelatedByUserIdAlteracao The ChildCliente object to add.
-     */
-    protected function doAddClienteRelatedByUserIdAlteracao(ChildCliente $clienteRelatedByUserIdAlteracao)
-    {
-        $this->collClientesRelatedByUserIdAlteracao[]= $clienteRelatedByUserIdAlteracao;
-        $clienteRelatedByUserIdAlteracao->setUserRelatedByUserIdAlteracao($this);
-    }
-
-    /**
-     * @param  ChildCliente $clienteRelatedByUserIdAlteracao The ChildCliente object to remove.
-     * @return $this|ChildUser The current object (for fluent API support)
-     */
-    public function removeClienteRelatedByUserIdAlteracao(ChildCliente $clienteRelatedByUserIdAlteracao)
-    {
-        if ($this->getClientesRelatedByUserIdAlteracao()->contains($clienteRelatedByUserIdAlteracao)) {
-            $pos = $this->collClientesRelatedByUserIdAlteracao->search($clienteRelatedByUserIdAlteracao);
-            $this->collClientesRelatedByUserIdAlteracao->remove($pos);
-            if (null === $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion) {
-                $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion = clone $this->collClientesRelatedByUserIdAlteracao;
-                $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion->clear();
-            }
-            $this->clientesRelatedByUserIdAlteracaoScheduledForDeletion[]= clone $clienteRelatedByUserIdAlteracao;
-            $clienteRelatedByUserIdAlteracao->setUserRelatedByUserIdAlteracao(null);
-        }
-
-        return $this;
+        return $this->aCliente;
     }
 
     /**
@@ -1721,11 +1292,15 @@ abstract class User implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->id = null;
-        $this->user = null;
-        $this->pass = null;
+        if (null !== $this->aCliente) {
+            $this->aCliente->removeUser($this);
+        }
+        $this->cliente_id = null;
+        $this->password = null;
         $this->salt = null;
-        $this->role = null;
+        $this->email = null;
+        $this->testeenum = null;
+        $this->usercol = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1744,20 +1319,9 @@ abstract class User implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collClientesRelatedByUserIdInclusao) {
-                foreach ($this->collClientesRelatedByUserIdInclusao as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
-            if ($this->collClientesRelatedByUserIdAlteracao) {
-                foreach ($this->collClientesRelatedByUserIdAlteracao as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collClientesRelatedByUserIdInclusao = null;
-        $this->collClientesRelatedByUserIdAlteracao = null;
+        $this->aCliente = null;
     }
 
     /**

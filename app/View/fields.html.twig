@@ -1,0 +1,13 @@
+{% block form_row %}
+	<div class="form-control">
+		{{block("label")}}
+		{{block("input_type")}}		
+	</div>
+{% endblock %}
+
+{% block input_type %}
+    <input type="{{form.type}}" name="{{form.name}}">
+{% endblock %}
+{% block label %}
+    <label for="{{form.name}}">{{form.name}}</label>
+{% endblock %}

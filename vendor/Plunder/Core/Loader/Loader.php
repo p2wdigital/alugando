@@ -24,7 +24,7 @@ class Loader
 	 */
 	private function init(){
 
-		//require_once (BASE_DIR."/app/propel/config_propel.php");
+		require_once (BASE_DIR."/app/config/config_propel.php");
 		new Container(new Parser());
 		new Config(Container::get('yaml'), Container::get('cache'));
 		

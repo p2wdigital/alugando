@@ -5,8 +5,6 @@ use Plunder\Core\Loader\Loader;
 use Plunder\Helpers\Plunder;
 //get statart time;
 $ini = microtime(true);
-
-
 //DEFINES ENVIRONMENT (dev | prod);
 define("ENVIRONMENT", "dev");
 define("BASE_DIR", __DIR__);

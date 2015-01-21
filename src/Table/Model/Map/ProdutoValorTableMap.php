@@ -152,7 +152,7 @@ class ProdutoValorTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Produto', '\\Table\\Model\\Produto', RelationMap::MANY_TO_ONE, array('produto_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('Produto', '\\Table\\Model\\Produto', RelationMap::MANY_TO_ONE, array('produto_id' => 'id', ), null, null);
     } // buildRelations()
 
     /**
@@ -246,7 +246,7 @@ class ProdutoValorTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-            
+
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -260,7 +260,7 @@ class ProdutoValorTableMap extends TableMap
 
         return $pks;
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -321,7 +321,7 @@ class ProdutoValorTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

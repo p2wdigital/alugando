@@ -23,11 +23,11 @@ use Table\Model\Map\ProdutoValorTableMap;
 /**
  * Base class that represents a row from the 'produto_valor' table.
  *
- * 
+ *
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class ProdutoValor implements ActiveRecordInterface 
+abstract class ProdutoValor implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -317,7 +317,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     * 
+     *
      * @return int
      */
     public function getId()
@@ -327,7 +327,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Get the [produto_id] column value.
-     * 
+     *
      * @return int
      */
     public function getProdutoId()
@@ -337,7 +337,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Get the [prazo] column value.
-     * 
+     *
      * @return int
      */
     public function getPrazo()
@@ -347,7 +347,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Get the [valor] column value.
-     * 
+     *
      * @return string
      */
     public function getValor()
@@ -357,7 +357,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Set the value of [id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\ProdutoValor The current object (for fluent API support)
      */
@@ -377,7 +377,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Set the value of [produto_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\ProdutoValor The current object (for fluent API support)
      */
@@ -401,7 +401,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Set the value of [prazo] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\ProdutoValor The current object (for fluent API support)
      */
@@ -421,7 +421,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
     /**
      * Set the value of [valor] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\ProdutoValor The current object (for fluent API support)
      */
@@ -730,16 +730,16 @@ abstract class ProdutoValor implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
+                    case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'produto_id':                        
+                    case 'produto_id':
                         $stmt->bindValue($identifier, $this->produto_id, PDO::PARAM_INT);
                         break;
-                    case 'prazo':                        
+                    case 'prazo':
                         $stmt->bindValue($identifier, $this->prazo, PDO::PARAM_INT);
                         break;
-                    case 'valor':                        
+                    case 'valor':
                         $stmt->bindValue($identifier, $this->valor, PDO::PARAM_STR);
                         break;
                 }
@@ -855,10 +855,10 @@ abstract class ProdutoValor implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aProduto) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'produto';
@@ -869,7 +869,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
                     default:
                         $key = 'Produto';
                 }
-        
+
                 $result[$key] = $this->aProduto->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1046,7 +1046,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
         $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
 
-        //relation fk_produto_valor_produto1 to table produto
+        //relation fk_produto_valor_produto to table produto
         if ($this->aProduto && $hash = spl_object_hash($this->aProduto)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -1061,7 +1061,7 @@ abstract class ProdutoValor implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

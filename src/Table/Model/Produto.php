@@ -1,76 +1,20 @@
-<?php 
-namespace Table\Model; 
-class Produto { 
-    /** 
-    * The value for the id field.
-    * @var        int
-    */ 
-    protected $id; 
+<?php
 
-    /** 
-    * The value for the categoria field.
-    * @var        
-    */ 
-    protected $categoria; 
+namespace Table\Model;
 
-    /** 
-    * The value for the nome field.
-    * @var        
-    */ 
-    protected $nome; 
+use Table\Model\Base\Produto as BaseProduto;
 
-    /** 
-    * The value for the modelo field.
-    * @var        
-    */ 
-    protected $modelo; 
-
-    public function getId(){ 
-        return $this->id;
-    }
-
-    public function getCategoria(){ 
-        return $this->categoria;
-    }
-
-    public function getNome(){ 
-        return $this->nome;
-    }
-
-    public function getModelo(){ 
-        return $this->modelo;
-    }
-
-    public function setId($val){ 
-        if($val !== null)  $val = (int) $val; 
-
-        if($val !== $this->id):
-            $this->id = $val;
-        endif;
-    }
-
-    public function setCategoria($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->categoria):
-            $this->categoria = $val;
-        endif;
-    }
-
-    public function setNome($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->nome):
-            $this->nome = $val;
-        endif;
-    }
-
-    public function setModelo($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->modelo):
-            $this->modelo = $val;
-        endif;
-    }
+/**
+ * Skeleton subclass for representing a row from the 'produto' table.
+ *
+ *
+ *
+ * You should add additional methods to this class to meet the
+ * application requirements.  This class will only be generated as
+ * long as it does not already exist in the output directory.
+ *
+ */
+class Produto extends BaseProduto
+{
 
 }

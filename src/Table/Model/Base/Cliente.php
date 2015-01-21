@@ -29,11 +29,11 @@ use Table\Model\Map\ClienteTableMap;
 /**
  * Base class that represents a row from the 'cliente' table.
  *
- * 
+ *
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Cliente implements ActiveRecordInterface 
+abstract class Cliente implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -86,76 +86,16 @@ abstract class Cliente implements ActiveRecordInterface
     protected $contato;
 
     /**
-     * The value for the email field.
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the documento field.
-     * @var        string
-     */
-    protected $documento;
-
-    /**
-     * The value for the tipo_pessoa field.
-     * @var        string
-     */
-    protected $tipo_pessoa;
-
-    /**
      * The value for the cep field.
      * @var        string
      */
     protected $cep;
 
     /**
-     * The value for the endereco field.
+     * The value for the descricao field.
      * @var        string
      */
-    protected $endereco;
-
-    /**
-     * The value for the numero field.
-     * @var        int
-     */
-    protected $numero;
-
-    /**
-     * The value for the complemento field.
-     * @var        string
-     */
-    protected $complemento;
-
-    /**
-     * The value for the bairro field.
-     * @var        string
-     */
-    protected $bairro;
-
-    /**
-     * The value for the cidade field.
-     * @var        string
-     */
-    protected $cidade;
-
-    /**
-     * The value for the uf field.
-     * @var        string
-     */
-    protected $uf;
-
-    /**
-     * The value for the telefone field.
-     * @var        string
-     */
-    protected $telefone;
-
-    /**
-     * The value for the status field.
-     * @var        int
-     */
-    protected $status;
+    protected $descricao;
 
     /**
      * The value for the dh_inclusao field.
@@ -170,32 +110,15 @@ abstract class Cliente implements ActiveRecordInterface
     protected $dh_alteracao;
 
     /**
-     * The value for the user_id_inclusao field.
-     * @var        int
-     */
-    protected $user_id_inclusao;
-
-    /**
-     * The value for the user_id_alteracao field.
-     * @var        int
-     */
-    protected $user_id_alteracao;
-
-    /**
-     * @var        ChildUser
-     */
-    protected $aUserRelatedByUserIdInclusao;
-
-    /**
-     * @var        ChildUser
-     */
-    protected $aUserRelatedByUserIdAlteracao;
-
-    /**
      * @var        ObjectCollection|ChildOrcamento[] Collection to store aggregation of ChildOrcamento objects.
      */
     protected $collOrcamentos;
     protected $collOrcamentosPartial;
+
+    /**
+     * @var        ChildUser one-to-one related ChildUser object
+     */
+    protected $singleUser;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -430,7 +353,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     * 
+     *
      * @return int
      */
     public function getId()
@@ -440,7 +363,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [razao_social] column value.
-     * 
+     *
      * @return string
      */
     public function getRazaoSocial()
@@ -450,7 +373,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [contato] column value.
-     * 
+     *
      * @return string
      */
     public function getContato()
@@ -459,38 +382,8 @@ abstract class Cliente implements ActiveRecordInterface
     }
 
     /**
-     * Get the [email] column value.
-     * 
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the [documento] column value.
-     * 
-     * @return string
-     */
-    public function getDocumento()
-    {
-        return $this->documento;
-    }
-
-    /**
-     * Get the [tipo_pessoa] column value.
-     * 
-     * @return string
-     */
-    public function getTipoPessoa()
-    {
-        return $this->tipo_pessoa;
-    }
-
-    /**
      * Get the [cep] column value.
-     * 
+     *
      * @return string
      */
     public function getCep()
@@ -499,88 +392,18 @@ abstract class Cliente implements ActiveRecordInterface
     }
 
     /**
-     * Get the [endereco] column value.
-     * 
+     * Get the [descricao] column value.
+     *
      * @return string
      */
-    public function getEndereco()
+    public function getDescricao()
     {
-        return $this->endereco;
-    }
-
-    /**
-     * Get the [numero] column value.
-     * 
-     * @return int
-     */
-    public function getNumero()
-    {
-        return $this->numero;
-    }
-
-    /**
-     * Get the [complemento] column value.
-     * 
-     * @return string
-     */
-    public function getComplemento()
-    {
-        return $this->complemento;
-    }
-
-    /**
-     * Get the [bairro] column value.
-     * 
-     * @return string
-     */
-    public function getBairro()
-    {
-        return $this->bairro;
-    }
-
-    /**
-     * Get the [cidade] column value.
-     * 
-     * @return string
-     */
-    public function getCidade()
-    {
-        return $this->cidade;
-    }
-
-    /**
-     * Get the [uf] column value.
-     * 
-     * @return string
-     */
-    public function getUf()
-    {
-        return $this->uf;
-    }
-
-    /**
-     * Get the [telefone] column value.
-     * 
-     * @return string
-     */
-    public function getTelefone()
-    {
-        return $this->telefone;
-    }
-
-    /**
-     * Get the [status] column value.
-     * 
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->descricao;
     }
 
     /**
      * Get the [optionally formatted] temporal [dh_inclusao] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -600,7 +423,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [dh_alteracao] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -619,28 +442,8 @@ abstract class Cliente implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user_id_inclusao] column value.
-     * 
-     * @return int
-     */
-    public function getUserIdInclusao()
-    {
-        return $this->user_id_inclusao;
-    }
-
-    /**
-     * Get the [user_id_alteracao] column value.
-     * 
-     * @return int
-     */
-    public function getUserIdAlteracao()
-    {
-        return $this->user_id_alteracao;
-    }
-
-    /**
      * Set the value of [id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -660,7 +463,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [razao_social] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -680,7 +483,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [contato] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -699,68 +502,8 @@ abstract class Cliente implements ActiveRecordInterface
     } // setContato()
 
     /**
-     * Set the value of [email] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [documento] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setDocumento($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->documento !== $v) {
-            $this->documento = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_DOCUMENTO] = true;
-        }
-
-        return $this;
-    } // setDocumento()
-
-    /**
-     * Set the value of [tipo_pessoa] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setTipoPessoa($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tipo_pessoa !== $v) {
-            $this->tipo_pessoa = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_TIPO_PESSOA] = true;
-        }
-
-        return $this;
-    } // setTipoPessoa()
-
-    /**
      * Set the value of [cep] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -779,168 +522,28 @@ abstract class Cliente implements ActiveRecordInterface
     } // setCep()
 
     /**
-     * Set the value of [endereco] column.
-     * 
+     * Set the value of [descricao] column.
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
-    public function setEndereco($v)
+    public function setDescricao($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->endereco !== $v) {
-            $this->endereco = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_ENDERECO] = true;
+        if ($this->descricao !== $v) {
+            $this->descricao = $v;
+            $this->modifiedColumns[ClienteTableMap::COL_DESCRICAO] = true;
         }
 
         return $this;
-    } // setEndereco()
-
-    /**
-     * Set the value of [numero] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setNumero($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->numero !== $v) {
-            $this->numero = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_NUMERO] = true;
-        }
-
-        return $this;
-    } // setNumero()
-
-    /**
-     * Set the value of [complemento] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setComplemento($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->complemento !== $v) {
-            $this->complemento = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_COMPLEMENTO] = true;
-        }
-
-        return $this;
-    } // setComplemento()
-
-    /**
-     * Set the value of [bairro] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setBairro($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->bairro !== $v) {
-            $this->bairro = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_BAIRRO] = true;
-        }
-
-        return $this;
-    } // setBairro()
-
-    /**
-     * Set the value of [cidade] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setCidade($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->cidade !== $v) {
-            $this->cidade = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_CIDADE] = true;
-        }
-
-        return $this;
-    } // setCidade()
-
-    /**
-     * Set the value of [uf] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setUf($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->uf !== $v) {
-            $this->uf = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_UF] = true;
-        }
-
-        return $this;
-    } // setUf()
-
-    /**
-     * Set the value of [telefone] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setTelefone($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->telefone !== $v) {
-            $this->telefone = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_TELEFONE] = true;
-        }
-
-        return $this;
-    } // setTelefone()
-
-    /**
-     * Set the value of [status] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setStatus($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->status !== $v) {
-            $this->status = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_STATUS] = true;
-        }
-
-        return $this;
-    } // setStatus()
+    } // setDescricao()
 
     /**
      * Sets the value of [dh_inclusao] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
@@ -960,7 +563,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Sets the value of [dh_alteracao] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
@@ -977,54 +580,6 @@ abstract class Cliente implements ActiveRecordInterface
 
         return $this;
     } // setDhAlteracao()
-
-    /**
-     * Set the value of [user_id_inclusao] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setUserIdInclusao($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->user_id_inclusao !== $v) {
-            $this->user_id_inclusao = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_USER_ID_INCLUSAO] = true;
-        }
-
-        if ($this->aUserRelatedByUserIdInclusao !== null && $this->aUserRelatedByUserIdInclusao->getId() !== $v) {
-            $this->aUserRelatedByUserIdInclusao = null;
-        }
-
-        return $this;
-    } // setUserIdInclusao()
-
-    /**
-     * Set the value of [user_id_alteracao] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function setUserIdAlteracao($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->user_id_alteracao !== $v) {
-            $this->user_id_alteracao = $v;
-            $this->modifiedColumns[ClienteTableMap::COL_USER_ID_ALTERACAO] = true;
-        }
-
-        if ($this->aUserRelatedByUserIdAlteracao !== null && $this->aUserRelatedByUserIdAlteracao->getId() !== $v) {
-            $this->aUserRelatedByUserIdAlteracao = null;
-        }
-
-        return $this;
-    } // setUserIdAlteracao()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -1071,59 +626,23 @@ abstract class Cliente implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ClienteTableMap::translateFieldName('Contato', TableMap::TYPE_PHPNAME, $indexType)];
             $this->contato = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ClienteTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ClienteTableMap::translateFieldName('Documento', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->documento = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ClienteTableMap::translateFieldName('TipoPessoa', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tipo_pessoa = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ClienteTableMap::translateFieldName('Cep', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ClienteTableMap::translateFieldName('Cep', TableMap::TYPE_PHPNAME, $indexType)];
             $this->cep = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ClienteTableMap::translateFieldName('Endereco', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->endereco = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ClienteTableMap::translateFieldName('Descricao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->descricao = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ClienteTableMap::translateFieldName('Numero', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->numero = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : ClienteTableMap::translateFieldName('Complemento', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->complemento = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : ClienteTableMap::translateFieldName('Bairro', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->bairro = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : ClienteTableMap::translateFieldName('Cidade', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->cidade = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : ClienteTableMap::translateFieldName('Uf', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->uf = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : ClienteTableMap::translateFieldName('Telefone', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->telefone = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : ClienteTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->status = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : ClienteTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ClienteTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->dh_inclusao = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : ClienteTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ClienteTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->dh_alteracao = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : ClienteTableMap::translateFieldName('UserIdInclusao', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id_inclusao = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 18 + $startcol : ClienteTableMap::translateFieldName('UserIdAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id_alteracao = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1132,7 +651,7 @@ abstract class Cliente implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 19; // 19 = ClienteTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = ClienteTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Cliente'), 0, $e);
@@ -1154,12 +673,6 @@ abstract class Cliente implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aUserRelatedByUserIdInclusao !== null && $this->user_id_inclusao !== $this->aUserRelatedByUserIdInclusao->getId()) {
-            $this->aUserRelatedByUserIdInclusao = null;
-        }
-        if ($this->aUserRelatedByUserIdAlteracao !== null && $this->user_id_alteracao !== $this->aUserRelatedByUserIdAlteracao->getId()) {
-            $this->aUserRelatedByUserIdAlteracao = null;
-        }
     } // ensureConsistency
 
     /**
@@ -1199,9 +712,9 @@ abstract class Cliente implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aUserRelatedByUserIdInclusao = null;
-            $this->aUserRelatedByUserIdAlteracao = null;
             $this->collOrcamentos = null;
+
+            $this->singleUser = null;
 
         } // if (deep)
     }
@@ -1302,25 +815,6 @@ abstract class Cliente implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aUserRelatedByUserIdInclusao !== null) {
-                if ($this->aUserRelatedByUserIdInclusao->isModified() || $this->aUserRelatedByUserIdInclusao->isNew()) {
-                    $affectedRows += $this->aUserRelatedByUserIdInclusao->save($con);
-                }
-                $this->setUserRelatedByUserIdInclusao($this->aUserRelatedByUserIdInclusao);
-            }
-
-            if ($this->aUserRelatedByUserIdAlteracao !== null) {
-                if ($this->aUserRelatedByUserIdAlteracao->isModified() || $this->aUserRelatedByUserIdAlteracao->isNew()) {
-                    $affectedRows += $this->aUserRelatedByUserIdAlteracao->save($con);
-                }
-                $this->setUserRelatedByUserIdAlteracao($this->aUserRelatedByUserIdAlteracao);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -1334,10 +828,9 @@ abstract class Cliente implements ActiveRecordInterface
 
             if ($this->orcamentosScheduledForDeletion !== null) {
                 if (!$this->orcamentosScheduledForDeletion->isEmpty()) {
-                    foreach ($this->orcamentosScheduledForDeletion as $orcamento) {
-                        // need to save related object because we set the relation to null
-                        $orcamento->save($con);
-                    }
+                    \Table\Model\OrcamentoQuery::create()
+                        ->filterByPrimaryKeys($this->orcamentosScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
                     $this->orcamentosScheduledForDeletion = null;
                 }
             }
@@ -1347,6 +840,12 @@ abstract class Cliente implements ActiveRecordInterface
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
+                }
+            }
+
+            if ($this->singleUser !== null) {
+                if (!$this->singleUser->isDeleted() && ($this->singleUser->isNew() || $this->singleUser->isModified())) {
+                    $affectedRows += $this->singleUser->save($con);
                 }
             }
 
@@ -1385,53 +884,17 @@ abstract class Cliente implements ActiveRecordInterface
         if ($this->isColumnModified(ClienteTableMap::COL_CONTATO)) {
             $modifiedColumns[':p' . $index++]  = 'contato';
         }
-        if ($this->isColumnModified(ClienteTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_DOCUMENTO)) {
-            $modifiedColumns[':p' . $index++]  = 'documento';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_TIPO_PESSOA)) {
-            $modifiedColumns[':p' . $index++]  = 'tipo_pessoa';
-        }
         if ($this->isColumnModified(ClienteTableMap::COL_CEP)) {
             $modifiedColumns[':p' . $index++]  = 'cep';
         }
-        if ($this->isColumnModified(ClienteTableMap::COL_ENDERECO)) {
-            $modifiedColumns[':p' . $index++]  = 'endereco';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_NUMERO)) {
-            $modifiedColumns[':p' . $index++]  = 'numero';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_COMPLEMENTO)) {
-            $modifiedColumns[':p' . $index++]  = 'complemento';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_BAIRRO)) {
-            $modifiedColumns[':p' . $index++]  = 'bairro';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_CIDADE)) {
-            $modifiedColumns[':p' . $index++]  = 'cidade';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_UF)) {
-            $modifiedColumns[':p' . $index++]  = 'uf';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_TELEFONE)) {
-            $modifiedColumns[':p' . $index++]  = 'telefone';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_STATUS)) {
-            $modifiedColumns[':p' . $index++]  = 'status';
+        if ($this->isColumnModified(ClienteTableMap::COL_DESCRICAO)) {
+            $modifiedColumns[':p' . $index++]  = 'descricao';
         }
         if ($this->isColumnModified(ClienteTableMap::COL_DH_INCLUSAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
         }
         if ($this->isColumnModified(ClienteTableMap::COL_DH_ALTERACAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_USER_ID_INCLUSAO)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id_inclusao';
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_USER_ID_ALTERACAO)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id_alteracao';
         }
 
         $sql = sprintf(
@@ -1444,62 +907,26 @@ abstract class Cliente implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
+                    case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'razao_social':                        
+                    case 'razao_social':
                         $stmt->bindValue($identifier, $this->razao_social, PDO::PARAM_STR);
                         break;
-                    case 'contato':                        
+                    case 'contato':
                         $stmt->bindValue($identifier, $this->contato, PDO::PARAM_STR);
                         break;
-                    case 'email':                        
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'documento':                        
-                        $stmt->bindValue($identifier, $this->documento, PDO::PARAM_STR);
-                        break;
-                    case 'tipo_pessoa':                        
-                        $stmt->bindValue($identifier, $this->tipo_pessoa, PDO::PARAM_STR);
-                        break;
-                    case 'cep':                        
+                    case 'cep':
                         $stmt->bindValue($identifier, $this->cep, PDO::PARAM_STR);
                         break;
-                    case 'endereco':                        
-                        $stmt->bindValue($identifier, $this->endereco, PDO::PARAM_STR);
+                    case 'descricao':
+                        $stmt->bindValue($identifier, $this->descricao, PDO::PARAM_STR);
                         break;
-                    case 'numero':                        
-                        $stmt->bindValue($identifier, $this->numero, PDO::PARAM_INT);
-                        break;
-                    case 'complemento':                        
-                        $stmt->bindValue($identifier, $this->complemento, PDO::PARAM_STR);
-                        break;
-                    case 'bairro':                        
-                        $stmt->bindValue($identifier, $this->bairro, PDO::PARAM_STR);
-                        break;
-                    case 'cidade':                        
-                        $stmt->bindValue($identifier, $this->cidade, PDO::PARAM_STR);
-                        break;
-                    case 'uf':                        
-                        $stmt->bindValue($identifier, $this->uf, PDO::PARAM_STR);
-                        break;
-                    case 'telefone':                        
-                        $stmt->bindValue($identifier, $this->telefone, PDO::PARAM_STR);
-                        break;
-                    case 'status':                        
-                        $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
-                        break;
-                    case 'dh_inclusao':                        
+                    case 'dh_inclusao':
                         $stmt->bindValue($identifier, $this->dh_inclusao ? $this->dh_inclusao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'dh_alteracao':                        
+                    case 'dh_alteracao':
                         $stmt->bindValue($identifier, $this->dh_alteracao ? $this->dh_alteracao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'user_id_inclusao':                        
-                        $stmt->bindValue($identifier, $this->user_id_inclusao, PDO::PARAM_INT);
-                        break;
-                    case 'user_id_alteracao':                        
-                        $stmt->bindValue($identifier, $this->user_id_alteracao, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1573,52 +1000,16 @@ abstract class Cliente implements ActiveRecordInterface
                 return $this->getContato();
                 break;
             case 3:
-                return $this->getEmail();
-                break;
-            case 4:
-                return $this->getDocumento();
-                break;
-            case 5:
-                return $this->getTipoPessoa();
-                break;
-            case 6:
                 return $this->getCep();
                 break;
-            case 7:
-                return $this->getEndereco();
+            case 4:
+                return $this->getDescricao();
                 break;
-            case 8:
-                return $this->getNumero();
-                break;
-            case 9:
-                return $this->getComplemento();
-                break;
-            case 10:
-                return $this->getBairro();
-                break;
-            case 11:
-                return $this->getCidade();
-                break;
-            case 12:
-                return $this->getUf();
-                break;
-            case 13:
-                return $this->getTelefone();
-                break;
-            case 14:
-                return $this->getStatus();
-                break;
-            case 15:
+            case 5:
                 return $this->getDhInclusao();
                 break;
-            case 16:
+            case 6:
                 return $this->getDhAlteracao();
-                break;
-            case 17:
-                return $this->getUserIdInclusao();
-                break;
-            case 18:
-                return $this->getUserIdAlteracao();
                 break;
             default:
                 return null;
@@ -1653,61 +1044,33 @@ abstract class Cliente implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getRazaoSocial(),
             $keys[2] => $this->getContato(),
-            $keys[3] => $this->getEmail(),
-            $keys[4] => $this->getDocumento(),
-            $keys[5] => $this->getTipoPessoa(),
-            $keys[6] => $this->getCep(),
-            $keys[7] => $this->getEndereco(),
-            $keys[8] => $this->getNumero(),
-            $keys[9] => $this->getComplemento(),
-            $keys[10] => $this->getBairro(),
-            $keys[11] => $this->getCidade(),
-            $keys[12] => $this->getUf(),
-            $keys[13] => $this->getTelefone(),
-            $keys[14] => $this->getStatus(),
-            $keys[15] => $this->getDhInclusao(),
-            $keys[16] => $this->getDhAlteracao(),
-            $keys[17] => $this->getUserIdInclusao(),
-            $keys[18] => $this->getUserIdAlteracao(),
+            $keys[3] => $this->getCep(),
+            $keys[4] => $this->getDescricao(),
+            $keys[5] => $this->getDhInclusao(),
+            $keys[6] => $this->getDhAlteracao(),
         );
+
+        $utc = new \DateTimeZone('utc');
+        if ($result[$keys[5]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[5]];
+            $result[$keys[5]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
+        if ($result[$keys[6]] instanceof \DateTime) {
+            // When changing timezone we don't want to change existing instances
+            $dateTime = clone $result[$keys[6]];
+            $result[$keys[6]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+        }
+
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
-            if (null !== $this->aUserRelatedByUserIdInclusao) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'user';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'user';
-                        break;
-                    default:
-                        $key = 'User';
-                }
-        
-                $result[$key] = $this->aUserRelatedByUserIdInclusao->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aUserRelatedByUserIdAlteracao) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'user';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'user';
-                        break;
-                    default:
-                        $key = 'User';
-                }
-        
-                $result[$key] = $this->aUserRelatedByUserIdAlteracao->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->collOrcamentos) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'orcamentos';
@@ -1718,8 +1081,23 @@ abstract class Cliente implements ActiveRecordInterface
                     default:
                         $key = 'Orcamentos';
                 }
-        
+
                 $result[$key] = $this->collOrcamentos->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->singleUser) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'user';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'user';
+                        break;
+                    default:
+                        $key = 'User';
+                }
+
+                $result[$key] = $this->singleUser->toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, true);
             }
         }
 
@@ -1765,52 +1143,16 @@ abstract class Cliente implements ActiveRecordInterface
                 $this->setContato($value);
                 break;
             case 3:
-                $this->setEmail($value);
-                break;
-            case 4:
-                $this->setDocumento($value);
-                break;
-            case 5:
-                $this->setTipoPessoa($value);
-                break;
-            case 6:
                 $this->setCep($value);
                 break;
-            case 7:
-                $this->setEndereco($value);
+            case 4:
+                $this->setDescricao($value);
                 break;
-            case 8:
-                $this->setNumero($value);
-                break;
-            case 9:
-                $this->setComplemento($value);
-                break;
-            case 10:
-                $this->setBairro($value);
-                break;
-            case 11:
-                $this->setCidade($value);
-                break;
-            case 12:
-                $this->setUf($value);
-                break;
-            case 13:
-                $this->setTelefone($value);
-                break;
-            case 14:
-                $this->setStatus($value);
-                break;
-            case 15:
+            case 5:
                 $this->setDhInclusao($value);
                 break;
-            case 16:
+            case 6:
                 $this->setDhAlteracao($value);
-                break;
-            case 17:
-                $this->setUserIdInclusao($value);
-                break;
-            case 18:
-                $this->setUserIdAlteracao($value);
                 break;
         } // switch()
 
@@ -1848,52 +1190,16 @@ abstract class Cliente implements ActiveRecordInterface
             $this->setContato($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setEmail($arr[$keys[3]]);
+            $this->setCep($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDocumento($arr[$keys[4]]);
+            $this->setDescricao($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setTipoPessoa($arr[$keys[5]]);
+            $this->setDhInclusao($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setCep($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setEndereco($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setNumero($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setComplemento($arr[$keys[9]]);
-        }
-        if (array_key_exists($keys[10], $arr)) {
-            $this->setBairro($arr[$keys[10]]);
-        }
-        if (array_key_exists($keys[11], $arr)) {
-            $this->setCidade($arr[$keys[11]]);
-        }
-        if (array_key_exists($keys[12], $arr)) {
-            $this->setUf($arr[$keys[12]]);
-        }
-        if (array_key_exists($keys[13], $arr)) {
-            $this->setTelefone($arr[$keys[13]]);
-        }
-        if (array_key_exists($keys[14], $arr)) {
-            $this->setStatus($arr[$keys[14]]);
-        }
-        if (array_key_exists($keys[15], $arr)) {
-            $this->setDhInclusao($arr[$keys[15]]);
-        }
-        if (array_key_exists($keys[16], $arr)) {
-            $this->setDhAlteracao($arr[$keys[16]]);
-        }
-        if (array_key_exists($keys[17], $arr)) {
-            $this->setUserIdInclusao($arr[$keys[17]]);
-        }
-        if (array_key_exists($keys[18], $arr)) {
-            $this->setUserIdAlteracao($arr[$keys[18]]);
+            $this->setDhAlteracao($arr[$keys[6]]);
         }
     }
 
@@ -1945,53 +1251,17 @@ abstract class Cliente implements ActiveRecordInterface
         if ($this->isColumnModified(ClienteTableMap::COL_CONTATO)) {
             $criteria->add(ClienteTableMap::COL_CONTATO, $this->contato);
         }
-        if ($this->isColumnModified(ClienteTableMap::COL_EMAIL)) {
-            $criteria->add(ClienteTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_DOCUMENTO)) {
-            $criteria->add(ClienteTableMap::COL_DOCUMENTO, $this->documento);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_TIPO_PESSOA)) {
-            $criteria->add(ClienteTableMap::COL_TIPO_PESSOA, $this->tipo_pessoa);
-        }
         if ($this->isColumnModified(ClienteTableMap::COL_CEP)) {
             $criteria->add(ClienteTableMap::COL_CEP, $this->cep);
         }
-        if ($this->isColumnModified(ClienteTableMap::COL_ENDERECO)) {
-            $criteria->add(ClienteTableMap::COL_ENDERECO, $this->endereco);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_NUMERO)) {
-            $criteria->add(ClienteTableMap::COL_NUMERO, $this->numero);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_COMPLEMENTO)) {
-            $criteria->add(ClienteTableMap::COL_COMPLEMENTO, $this->complemento);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_BAIRRO)) {
-            $criteria->add(ClienteTableMap::COL_BAIRRO, $this->bairro);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_CIDADE)) {
-            $criteria->add(ClienteTableMap::COL_CIDADE, $this->cidade);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_UF)) {
-            $criteria->add(ClienteTableMap::COL_UF, $this->uf);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_TELEFONE)) {
-            $criteria->add(ClienteTableMap::COL_TELEFONE, $this->telefone);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_STATUS)) {
-            $criteria->add(ClienteTableMap::COL_STATUS, $this->status);
+        if ($this->isColumnModified(ClienteTableMap::COL_DESCRICAO)) {
+            $criteria->add(ClienteTableMap::COL_DESCRICAO, $this->descricao);
         }
         if ($this->isColumnModified(ClienteTableMap::COL_DH_INCLUSAO)) {
             $criteria->add(ClienteTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
         }
         if ($this->isColumnModified(ClienteTableMap::COL_DH_ALTERACAO)) {
             $criteria->add(ClienteTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_USER_ID_INCLUSAO)) {
-            $criteria->add(ClienteTableMap::COL_USER_ID_INCLUSAO, $this->user_id_inclusao);
-        }
-        if ($this->isColumnModified(ClienteTableMap::COL_USER_ID_ALTERACAO)) {
-            $criteria->add(ClienteTableMap::COL_USER_ID_ALTERACAO, $this->user_id_alteracao);
         }
 
         return $criteria;
@@ -2036,7 +1306,7 @@ abstract class Cliente implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -2081,22 +1351,10 @@ abstract class Cliente implements ActiveRecordInterface
     {
         $copyObj->setRazaoSocial($this->getRazaoSocial());
         $copyObj->setContato($this->getContato());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setDocumento($this->getDocumento());
-        $copyObj->setTipoPessoa($this->getTipoPessoa());
         $copyObj->setCep($this->getCep());
-        $copyObj->setEndereco($this->getEndereco());
-        $copyObj->setNumero($this->getNumero());
-        $copyObj->setComplemento($this->getComplemento());
-        $copyObj->setBairro($this->getBairro());
-        $copyObj->setCidade($this->getCidade());
-        $copyObj->setUf($this->getUf());
-        $copyObj->setTelefone($this->getTelefone());
-        $copyObj->setStatus($this->getStatus());
+        $copyObj->setDescricao($this->getDescricao());
         $copyObj->setDhInclusao($this->getDhInclusao());
         $copyObj->setDhAlteracao($this->getDhAlteracao());
-        $copyObj->setUserIdInclusao($this->getUserIdInclusao());
-        $copyObj->setUserIdAlteracao($this->getUserIdAlteracao());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2107,6 +1365,11 @@ abstract class Cliente implements ActiveRecordInterface
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addOrcamento($relObj->copy($deepCopy));
                 }
+            }
+
+            $relObj = $this->getUser();
+            if ($relObj) {
+                $copyObj->setUser($relObj->copy($deepCopy));
             }
 
         } // if ($deepCopy)
@@ -2137,108 +1400,6 @@ abstract class Cliente implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
-    }
-
-    /**
-     * Declares an association between this object and a ChildUser object.
-     *
-     * @param  ChildUser $v
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setUserRelatedByUserIdInclusao(ChildUser $v = null)
-    {
-        if ($v === null) {
-            $this->setUserIdInclusao(NULL);
-        } else {
-            $this->setUserIdInclusao($v->getId());
-        }
-
-        $this->aUserRelatedByUserIdInclusao = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUser object, it will not be re-added.
-        if ($v !== null) {
-            $v->addClienteRelatedByUserIdInclusao($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildUser object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUser The associated ChildUser object.
-     * @throws PropelException
-     */
-    public function getUserRelatedByUserIdInclusao(ConnectionInterface $con = null)
-    {
-        if ($this->aUserRelatedByUserIdInclusao === null && ($this->user_id_inclusao !== null)) {
-            $this->aUserRelatedByUserIdInclusao = ChildUserQuery::create()->findPk($this->user_id_inclusao, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aUserRelatedByUserIdInclusao->addClientesRelatedByUserIdInclusao($this);
-             */
-        }
-
-        return $this->aUserRelatedByUserIdInclusao;
-    }
-
-    /**
-     * Declares an association between this object and a ChildUser object.
-     *
-     * @param  ChildUser $v
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setUserRelatedByUserIdAlteracao(ChildUser $v = null)
-    {
-        if ($v === null) {
-            $this->setUserIdAlteracao(NULL);
-        } else {
-            $this->setUserIdAlteracao($v->getId());
-        }
-
-        $this->aUserRelatedByUserIdAlteracao = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUser object, it will not be re-added.
-        if ($v !== null) {
-            $v->addClienteRelatedByUserIdAlteracao($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildUser object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUser The associated ChildUser object.
-     * @throws PropelException
-     */
-    public function getUserRelatedByUserIdAlteracao(ConnectionInterface $con = null)
-    {
-        if ($this->aUserRelatedByUserIdAlteracao === null && ($this->user_id_alteracao !== null)) {
-            $this->aUserRelatedByUserIdAlteracao = ChildUserQuery::create()->findPk($this->user_id_alteracao, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aUserRelatedByUserIdAlteracao->addClientesRelatedByUserIdAlteracao($this);
-             */
-        }
-
-        return $this->aUserRelatedByUserIdAlteracao;
     }
 
 
@@ -2373,8 +1534,11 @@ abstract class Cliente implements ActiveRecordInterface
         /** @var ChildOrcamento[] $orcamentosToDelete */
         $orcamentosToDelete = $this->getOrcamentos(new Criteria(), $con)->diff($orcamentos);
 
-        
-        $this->orcamentosScheduledForDeletion = $orcamentosToDelete;
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->orcamentosScheduledForDeletion = clone $orcamentosToDelete;
 
         foreach ($orcamentosToDelete as $orcamentoRemoved) {
             $orcamentoRemoved->setCliente(null);
@@ -2468,8 +1632,44 @@ abstract class Cliente implements ActiveRecordInterface
                 $this->orcamentosScheduledForDeletion = clone $this->collOrcamentos;
                 $this->orcamentosScheduledForDeletion->clear();
             }
-            $this->orcamentosScheduledForDeletion[]= $orcamento;
+            $this->orcamentosScheduledForDeletion[]= clone $orcamento;
             $orcamento->setCliente(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Gets a single ChildUser object, which is related to this object by a one-to-one relationship.
+     *
+     * @param  ConnectionInterface $con optional connection object
+     * @return ChildUser
+     * @throws PropelException
+     */
+    public function getUser(ConnectionInterface $con = null)
+    {
+
+        if ($this->singleUser === null && !$this->isNew()) {
+            $this->singleUser = ChildUserQuery::create()->findPk($this->getPrimaryKey(), $con);
+        }
+
+        return $this->singleUser;
+    }
+
+    /**
+     * Sets a single ChildUser object as related to this object by a one-to-one relationship.
+     *
+     * @param  ChildUser $v ChildUser
+     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUser(ChildUser $v = null)
+    {
+        $this->singleUser = $v;
+
+        // Make sure that that the passed-in ChildUser isn't already associated with this object
+        if ($v !== null && $v->getCliente(null, false) === null) {
+            $v->setCliente($this);
         }
 
         return $this;
@@ -2482,31 +1682,13 @@ abstract class Cliente implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aUserRelatedByUserIdInclusao) {
-            $this->aUserRelatedByUserIdInclusao->removeClienteRelatedByUserIdInclusao($this);
-        }
-        if (null !== $this->aUserRelatedByUserIdAlteracao) {
-            $this->aUserRelatedByUserIdAlteracao->removeClienteRelatedByUserIdAlteracao($this);
-        }
         $this->id = null;
         $this->razao_social = null;
         $this->contato = null;
-        $this->email = null;
-        $this->documento = null;
-        $this->tipo_pessoa = null;
         $this->cep = null;
-        $this->endereco = null;
-        $this->numero = null;
-        $this->complemento = null;
-        $this->bairro = null;
-        $this->cidade = null;
-        $this->uf = null;
-        $this->telefone = null;
-        $this->status = null;
+        $this->descricao = null;
         $this->dh_inclusao = null;
         $this->dh_alteracao = null;
-        $this->user_id_inclusao = null;
-        $this->user_id_alteracao = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -2530,11 +1712,13 @@ abstract class Cliente implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->singleUser) {
+                $this->singleUser->clearAllReferences($deep);
+            }
         } // if ($deep)
 
         $this->collOrcamentos = null;
-        $this->aUserRelatedByUserIdInclusao = null;
-        $this->aUserRelatedByUserIdAlteracao = null;
+        $this->singleUser = null;
     }
 
     /**

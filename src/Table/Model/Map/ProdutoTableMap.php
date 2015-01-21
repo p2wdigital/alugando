@@ -59,7 +59,7 @@ class ProdutoTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class ProdutoTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
@@ -92,11 +92,6 @@ class ProdutoTableMap extends TableMap
     const COL_MODELO = 'produto.modelo';
 
     /**
-     * the column name for the multiplicar field
-     */
-    const COL_MULTIPLICAR = 'produto.multiplicar';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -108,11 +103,11 @@ class ProdutoTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Categoria', 'Nome', 'Modelo', 'Multiplicar', ),
-        self::TYPE_CAMELNAME     => array('id', 'categoria', 'nome', 'modelo', 'multiplicar', ),
-        self::TYPE_COLNAME       => array(ProdutoTableMap::COL_ID, ProdutoTableMap::COL_CATEGORIA, ProdutoTableMap::COL_NOME, ProdutoTableMap::COL_MODELO, ProdutoTableMap::COL_MULTIPLICAR, ),
-        self::TYPE_FIELDNAME     => array('id', 'categoria', 'nome', 'modelo', 'multiplicar', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Categoria', 'Nome', 'Modelo', ),
+        self::TYPE_CAMELNAME     => array('id', 'categoria', 'nome', 'modelo', ),
+        self::TYPE_COLNAME       => array(ProdutoTableMap::COL_ID, ProdutoTableMap::COL_CATEGORIA, ProdutoTableMap::COL_NOME, ProdutoTableMap::COL_MODELO, ),
+        self::TYPE_FIELDNAME     => array('id', 'categoria', 'nome', 'modelo', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class ProdutoTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Categoria' => 1, 'Nome' => 2, 'Modelo' => 3, 'Multiplicar' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'categoria' => 1, 'nome' => 2, 'modelo' => 3, 'multiplicar' => 4, ),
-        self::TYPE_COLNAME       => array(ProdutoTableMap::COL_ID => 0, ProdutoTableMap::COL_CATEGORIA => 1, ProdutoTableMap::COL_NOME => 2, ProdutoTableMap::COL_MODELO => 3, ProdutoTableMap::COL_MULTIPLICAR => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'categoria' => 1, 'nome' => 2, 'modelo' => 3, 'multiplicar' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Categoria' => 1, 'Nome' => 2, 'Modelo' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'categoria' => 1, 'nome' => 2, 'modelo' => 3, ),
+        self::TYPE_COLNAME       => array(ProdutoTableMap::COL_ID => 0, ProdutoTableMap::COL_CATEGORIA => 1, ProdutoTableMap::COL_NOME => 2, ProdutoTableMap::COL_MODELO => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'categoria' => 1, 'nome' => 2, 'modelo' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -147,10 +142,9 @@ class ProdutoTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('categoria', 'Categoria', 'INTEGER', true, null, null);
-        $this->addColumn('nome', 'Nome', 'VARCHAR', true, 80, null);
-        $this->addColumn('modelo', 'Modelo', 'VARCHAR', true, 45, null);
-        $this->addColumn('multiplicar', 'Multiplicar', 'INTEGER', true, null, null);
+        $this->addColumn('categoria', 'Categoria', 'VARCHAR', true, 45, null);
+        $this->addColumn('nome', 'Nome', 'VARCHAR', true, 45, null);
+        $this->addColumn('modelo', 'Modelo', 'VARCHAR', false, 45, null);
     } // initialize()
 
     /**
@@ -158,19 +152,9 @@ class ProdutoTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Estoque', '\\Table\\Model\\Estoque', RelationMap::ONE_TO_MANY, array('id' => 'produto_id', ), null, null, 'Estoques');
         $this->addRelation('OrcamentoItem', '\\Table\\Model\\OrcamentoItem', RelationMap::ONE_TO_MANY, array('id' => 'produto_id', ), null, null, 'OrcamentoItems');
-        $this->addRelation('ProdutoValor', '\\Table\\Model\\ProdutoValor', RelationMap::ONE_TO_MANY, array('id' => 'produto_id', ), 'CASCADE', null, 'ProdutoValors');
+        $this->addRelation('ProdutoValor', '\\Table\\Model\\ProdutoValor', RelationMap::ONE_TO_MANY, array('id' => 'produto_id', ), null, null, 'ProdutoValors');
     } // buildRelations()
-    /**
-     * Method to invalidate the instance pool of all tables related to produto     * by a foreign key with ON DELETE CASCADE
-     */
-    public static function clearRelatedInstancePool()
-    {
-        // Invalidate objects in related instance pools,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        ProdutoValorTableMap::clearInstancePool();
-    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -215,7 +199,7 @@ class ProdutoTableMap extends TableMap
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -276,7 +260,7 @@ class ProdutoTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -317,13 +301,11 @@ class ProdutoTableMap extends TableMap
             $criteria->addSelectColumn(ProdutoTableMap::COL_CATEGORIA);
             $criteria->addSelectColumn(ProdutoTableMap::COL_NOME);
             $criteria->addSelectColumn(ProdutoTableMap::COL_MODELO);
-            $criteria->addSelectColumn(ProdutoTableMap::COL_MULTIPLICAR);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.categoria');
             $criteria->addSelectColumn($alias . '.nome');
             $criteria->addSelectColumn($alias . '.modelo');
-            $criteria->addSelectColumn($alias . '.multiplicar');
         }
     }
 

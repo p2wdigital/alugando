@@ -10,6 +10,7 @@ use Plunder\Core\Config\Config;
 class Connect
 {
 	protected static $db;
+	
 	private  function __construct(){
 	}
 

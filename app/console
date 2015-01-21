@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Parser;
 use Plunder\Command\ReverseCommand;
 use Plunder\Command\BuildCommand;
 use Plunder\Command\ReversePlunderCommand;
+use Plunder\Command\PropelBuildCommand;
 
 define("ENVIRONMENT", "dev");
 define("BASE_DIR", realpath(__DIR__ ."/../"));
@@ -19,6 +20,7 @@ new Config(Container::get('yaml'), Container::get('cache'));
 $application = new Application();
 $application->add(new ReverseCommand );
 $application->add(new BuildCommand );
+$application->add(new PropelBuildCommand );
 $application->add(new ReversePlunderCommand );
 $application->run();
 

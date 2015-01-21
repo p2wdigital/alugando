@@ -8,20 +8,19 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Propel\Generator\Command\ModelBuildCommand;
-use Propel\Generator\Command\ConfigConvertCommand;
 use Plunder\Helpers\Plunder;
+use Plunder\Core\Config\Config;
 
 /**
 * 
 */
 class BuildCommand extends Command{
 	protected $model 			= array(
-			"columns"		=> "/model/modelColumns.php",
-			"get"			=> "/model/modelGet.php",
-			"set"			=> "/model/modelSet.php",
-			"getRelation"	=> "/model/modelGetRelation.php",
-			"setRelation"	=> "/model/modelSetRelation.php",
+			"columns"		=> "/Model/modelColumns.php",
+			"get"			=> "/Model/modelGet.php",
+			"set"			=> "/Model/modelSet.php",
+			"getRelation"	=> "/Model/modelGetRelation.php",
+			"setRelation"	=> "/Model/modelSetRelation.php",
 	);
 	/**
 	 * [$option opções inseridas no console]
@@ -133,7 +132,8 @@ class BuildCommand extends Command{
 		$this->option['dir'] 		= ($input->getOption('dir')  == null) ? "app/config" : $input->getOption('dir');
 		$this->option['file'] 		= ($input->getOption('file') == null) ? "schema_plunder.xml" : $input->getOption('file');
 
-        $output->writeln(sprintf("ola : %s - %s - %s", $ns, $dir, $file));
+        //$output->writeln(sprintf("ola : %s - %s - %s", $this->option['ns'], $this->option['dir'], $this->option['file']));
+        $this->buildModel();
 	}
 
 
@@ -146,7 +146,11 @@ class BuildCommand extends Command{
 		$xml = new \SimpleXMLElement($xmlStr);
 		
 		//Armazena o namespace para utilização no decorrer do processo;
-		$this->namespace = (string) $xml->attributes()['namespace'];
+		if ($this->option['ns'] == null):
+			$this->namespace = (string) $xml->attributes()['namespace'];
+		else:
+			$this->namespace = $this->option['ns'];
+		endif;
 		//Gera a relação de todas as tabelas
 		$this->generateRelations($xml);
 
@@ -167,7 +171,7 @@ class BuildCommand extends Command{
 			$this->processRelation($this->className, $this->tableName);
 
 			
-			$this->createFile();
+			//$this->createFile();
 			
 			$this->clear();
 		endforeach;
@@ -180,7 +184,7 @@ class BuildCommand extends Command{
 	 * no decorrer do processo]
 	 * @param  [SimplesXMLElement] $xml [xml do arquivo schema.xml]
 	 */
-	private function generateRelations($xml){
+	protected function generateRelations($xml){
 		$keys = array();
 		foreach ($xml->table as $key => $value):
 		foreach ($value->relations as $key => $relations):
@@ -228,7 +232,7 @@ class BuildCommand extends Command{
 		$size   	= (integer) $col->attributes()['size']|0;
 
 		// Gera variavels protected;
-		$dump 		 			= file_get_contents(__DIR__ . $this->model['column']);
+		$dump 		 			= file_get_contents(__DIR__ . $this->model['columns']);
 		$replace['search'] 		= array("{field_type}", "{type}", "{varname}");
 		$replace['replace'] 	= array("field", $this->fromToType($type), $column);
 		$dump 					= str_replace($replace['search'], $replace['replace'], $dump);
@@ -314,8 +318,8 @@ class BuildCommand extends Command{
 	}
 
 	private function relOneToMany($relation){
-		$phpName	 		= $this->phpName($relation['referenceTable']);
-		$pluralize			= $this->pluralize($tableCamel);
+		$phpName	 		= Plunder::phpName($relation['referenceTable']);
+		$pluralize			= Plunder::phpName($tableCamel);
 		$foreing 			= $relation['foreing'];
 		$column 			= $relation['column'];
 		$referenceColumn	= $relation['referenceColumn'];
@@ -332,6 +336,50 @@ class BuildCommand extends Command{
 		$this->use[] = sprintf("use %s\\%s;\n", $this->namespace, $tableCamel);
 		$this->mapRelations[$tableCamel] = array( $referenceColumn => $column);
 		$this->varsColumns[] = sprintf("\tprotected \$a%s;\n\n", $tableCamel);
+	}
+	private function invertedRelations($relation){
+		$relations = array(
+			'ManyToOne' => 'OneToMany',
+			'OneToMany' => 'ManyToOne',
+			'OneToOne'	=> 'OneToOne',
+		);
+
+		return $relations[$relation];
+	}
+
+	private function fromToType($type){
+
+		$types = array(
+			'CHAR'          => 'string',
+		    'VARCHAR'       => 'string',
+		    'LONGVARCHAR'   => 'string',
+		    'CLOB'          => 'string',
+		    'CLOB_EMU'      => 'resource',
+		    'NUMERIC'       => 'string',
+		    'DECIMAL'       => 'string',
+		    'TINYINT'       => 'int',
+		    'SMALLINT'      => 'int',
+		    'INTEGER'       => 'int',
+		    'BIGINT'        => 'string',
+		    'REAL'          => 'double',
+		    'FLOAT'         => 'double',
+		    'DOUBLE'        => 'double',
+		    'BINARY'        => 'string',
+		    'VARBINARY'     => 'string',
+		    'LONGVARBINARY' => 'string',
+		    'BLOB'          => 'resource',
+		    'BU_DATE'       => 'string',
+		    'DATE'          => 'string',
+		    'TIME'          => 'string',
+		    'TIMESTAMP'     => 'string',
+		    'BU_TIMESTAMP'  => 'string',
+		    'BOOLEAN'       => 'boolean',
+		    'BOOLEAN_EMU'   => 'boolean',
+		    'OBJECT'        => '',
+		    'PHP_ARRAY'     => 'array',
+		    'ENUM'          => 'int',
+		);
+		return $types[(string)$type];
 	}
 
 }

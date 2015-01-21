@@ -59,7 +59,7 @@ class ClienteTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 19;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class ClienteTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 19;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the id field
@@ -87,64 +87,14 @@ class ClienteTableMap extends TableMap
     const COL_CONTATO = 'cliente.contato';
 
     /**
-     * the column name for the email field
-     */
-    const COL_EMAIL = 'cliente.email';
-
-    /**
-     * the column name for the documento field
-     */
-    const COL_DOCUMENTO = 'cliente.documento';
-
-    /**
-     * the column name for the tipo_pessoa field
-     */
-    const COL_TIPO_PESSOA = 'cliente.tipo_pessoa';
-
-    /**
      * the column name for the cep field
      */
     const COL_CEP = 'cliente.cep';
 
     /**
-     * the column name for the endereco field
+     * the column name for the descricao field
      */
-    const COL_ENDERECO = 'cliente.endereco';
-
-    /**
-     * the column name for the numero field
-     */
-    const COL_NUMERO = 'cliente.numero';
-
-    /**
-     * the column name for the complemento field
-     */
-    const COL_COMPLEMENTO = 'cliente.complemento';
-
-    /**
-     * the column name for the bairro field
-     */
-    const COL_BAIRRO = 'cliente.bairro';
-
-    /**
-     * the column name for the cidade field
-     */
-    const COL_CIDADE = 'cliente.cidade';
-
-    /**
-     * the column name for the uf field
-     */
-    const COL_UF = 'cliente.uf';
-
-    /**
-     * the column name for the telefone field
-     */
-    const COL_TELEFONE = 'cliente.telefone';
-
-    /**
-     * the column name for the status field
-     */
-    const COL_STATUS = 'cliente.status';
+    const COL_DESCRICAO = 'cliente.descricao';
 
     /**
      * the column name for the dh_inclusao field
@@ -155,16 +105,6 @@ class ClienteTableMap extends TableMap
      * the column name for the dh_alteracao field
      */
     const COL_DH_ALTERACAO = 'cliente.dh_alteracao';
-
-    /**
-     * the column name for the user_id_inclusao field
-     */
-    const COL_USER_ID_INCLUSAO = 'cliente.user_id_inclusao';
-
-    /**
-     * the column name for the user_id_alteracao field
-     */
-    const COL_USER_ID_ALTERACAO = 'cliente.user_id_alteracao';
 
     /**
      * The default string format for model objects of the related table
@@ -178,11 +118,11 @@ class ClienteTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'RazaoSocial', 'Contato', 'Email', 'Documento', 'TipoPessoa', 'Cep', 'Endereco', 'Numero', 'Complemento', 'Bairro', 'Cidade', 'Uf', 'Telefone', 'Status', 'DhInclusao', 'DhAlteracao', 'UserIdInclusao', 'UserIdAlteracao', ),
-        self::TYPE_CAMELNAME     => array('id', 'razaoSocial', 'contato', 'email', 'documento', 'tipoPessoa', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'telefone', 'status', 'dhInclusao', 'dhAlteracao', 'userIdInclusao', 'userIdAlteracao', ),
-        self::TYPE_COLNAME       => array(ClienteTableMap::COL_ID, ClienteTableMap::COL_RAZAO_SOCIAL, ClienteTableMap::COL_CONTATO, ClienteTableMap::COL_EMAIL, ClienteTableMap::COL_DOCUMENTO, ClienteTableMap::COL_TIPO_PESSOA, ClienteTableMap::COL_CEP, ClienteTableMap::COL_ENDERECO, ClienteTableMap::COL_NUMERO, ClienteTableMap::COL_COMPLEMENTO, ClienteTableMap::COL_BAIRRO, ClienteTableMap::COL_CIDADE, ClienteTableMap::COL_UF, ClienteTableMap::COL_TELEFONE, ClienteTableMap::COL_STATUS, ClienteTableMap::COL_DH_INCLUSAO, ClienteTableMap::COL_DH_ALTERACAO, ClienteTableMap::COL_USER_ID_INCLUSAO, ClienteTableMap::COL_USER_ID_ALTERACAO, ),
-        self::TYPE_FIELDNAME     => array('id', 'razao_social', 'contato', 'email', 'documento', 'tipo_pessoa', 'cep', 'endereco', 'numero', 'complemento', 'bairro', 'cidade', 'uf', 'telefone', 'status', 'dh_inclusao', 'dh_alteracao', 'user_id_inclusao', 'user_id_alteracao', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+        self::TYPE_PHPNAME       => array('Id', 'RazaoSocial', 'Contato', 'Cep', 'Descricao', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('id', 'razaoSocial', 'contato', 'cep', 'descricao', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(ClienteTableMap::COL_ID, ClienteTableMap::COL_RAZAO_SOCIAL, ClienteTableMap::COL_CONTATO, ClienteTableMap::COL_CEP, ClienteTableMap::COL_DESCRICAO, ClienteTableMap::COL_DH_INCLUSAO, ClienteTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('id', 'razao_social', 'contato', 'cep', 'descricao', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -192,11 +132,11 @@ class ClienteTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'RazaoSocial' => 1, 'Contato' => 2, 'Email' => 3, 'Documento' => 4, 'TipoPessoa' => 5, 'Cep' => 6, 'Endereco' => 7, 'Numero' => 8, 'Complemento' => 9, 'Bairro' => 10, 'Cidade' => 11, 'Uf' => 12, 'Telefone' => 13, 'Status' => 14, 'DhInclusao' => 15, 'DhAlteracao' => 16, 'UserIdInclusao' => 17, 'UserIdAlteracao' => 18, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'razaoSocial' => 1, 'contato' => 2, 'email' => 3, 'documento' => 4, 'tipoPessoa' => 5, 'cep' => 6, 'endereco' => 7, 'numero' => 8, 'complemento' => 9, 'bairro' => 10, 'cidade' => 11, 'uf' => 12, 'telefone' => 13, 'status' => 14, 'dhInclusao' => 15, 'dhAlteracao' => 16, 'userIdInclusao' => 17, 'userIdAlteracao' => 18, ),
-        self::TYPE_COLNAME       => array(ClienteTableMap::COL_ID => 0, ClienteTableMap::COL_RAZAO_SOCIAL => 1, ClienteTableMap::COL_CONTATO => 2, ClienteTableMap::COL_EMAIL => 3, ClienteTableMap::COL_DOCUMENTO => 4, ClienteTableMap::COL_TIPO_PESSOA => 5, ClienteTableMap::COL_CEP => 6, ClienteTableMap::COL_ENDERECO => 7, ClienteTableMap::COL_NUMERO => 8, ClienteTableMap::COL_COMPLEMENTO => 9, ClienteTableMap::COL_BAIRRO => 10, ClienteTableMap::COL_CIDADE => 11, ClienteTableMap::COL_UF => 12, ClienteTableMap::COL_TELEFONE => 13, ClienteTableMap::COL_STATUS => 14, ClienteTableMap::COL_DH_INCLUSAO => 15, ClienteTableMap::COL_DH_ALTERACAO => 16, ClienteTableMap::COL_USER_ID_INCLUSAO => 17, ClienteTableMap::COL_USER_ID_ALTERACAO => 18, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'razao_social' => 1, 'contato' => 2, 'email' => 3, 'documento' => 4, 'tipo_pessoa' => 5, 'cep' => 6, 'endereco' => 7, 'numero' => 8, 'complemento' => 9, 'bairro' => 10, 'cidade' => 11, 'uf' => 12, 'telefone' => 13, 'status' => 14, 'dh_inclusao' => 15, 'dh_alteracao' => 16, 'user_id_inclusao' => 17, 'user_id_alteracao' => 18, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'RazaoSocial' => 1, 'Contato' => 2, 'Cep' => 3, 'Descricao' => 4, 'DhInclusao' => 5, 'DhAlteracao' => 6, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'razaoSocial' => 1, 'contato' => 2, 'cep' => 3, 'descricao' => 4, 'dhInclusao' => 5, 'dhAlteracao' => 6, ),
+        self::TYPE_COLNAME       => array(ClienteTableMap::COL_ID => 0, ClienteTableMap::COL_RAZAO_SOCIAL => 1, ClienteTableMap::COL_CONTATO => 2, ClienteTableMap::COL_CEP => 3, ClienteTableMap::COL_DESCRICAO => 4, ClienteTableMap::COL_DH_INCLUSAO => 5, ClienteTableMap::COL_DH_ALTERACAO => 6, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'razao_social' => 1, 'contato' => 2, 'cep' => 3, 'descricao' => 4, 'dh_inclusao' => 5, 'dh_alteracao' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -218,23 +158,11 @@ class ClienteTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('razao_social', 'RazaoSocial', 'VARCHAR', true, 100, null);
-        $this->addColumn('contato', 'Contato', 'VARCHAR', true, 100, null);
-        $this->addColumn('email', 'Email', 'VARCHAR', true, 80, null);
-        $this->addColumn('documento', 'Documento', 'VARCHAR', true, 14, null);
-        $this->addColumn('tipo_pessoa', 'TipoPessoa', 'VARCHAR', true, 1, null);
+        $this->addColumn('contato', 'Contato', 'VARCHAR', false, 80, null);
         $this->addColumn('cep', 'Cep', 'VARCHAR', true, 8, null);
-        $this->addColumn('endereco', 'Endereco', 'VARCHAR', true, 100, null);
-        $this->addColumn('numero', 'Numero', 'INTEGER', true, null, null);
-        $this->addColumn('complemento', 'Complemento', 'VARCHAR', false, 80, null);
-        $this->addColumn('bairro', 'Bairro', 'VARCHAR', true, 45, null);
-        $this->addColumn('cidade', 'Cidade', 'VARCHAR', true, 80, null);
-        $this->addColumn('uf', 'Uf', 'VARCHAR', true, 2, null);
-        $this->addColumn('telefone', 'Telefone', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('status', 'Status', 'INTEGER', false, null, null);
+        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', false, null, null);
         $this->addColumn('dh_inclusao', 'DhInclusao', 'TIMESTAMP', false, null, null);
         $this->addColumn('dh_alteracao', 'DhAlteracao', 'TIMESTAMP', false, null, null);
-        $this->addForeignKey('user_id_inclusao', 'UserIdInclusao', 'INTEGER', 'user', 'id', true, null, null);
-        $this->addForeignKey('user_id_alteracao', 'UserIdAlteracao', 'INTEGER', 'user', 'id', true, null, null);
     } // initialize()
 
     /**
@@ -242,10 +170,18 @@ class ClienteTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('UserRelatedByUserIdInclusao', '\\Table\\Model\\User', RelationMap::MANY_TO_ONE, array('user_id_inclusao' => 'id', ), null, null);
-        $this->addRelation('UserRelatedByUserIdAlteracao', '\\Table\\Model\\User', RelationMap::MANY_TO_ONE, array('user_id_alteracao' => 'id', ), null, null);
         $this->addRelation('Orcamento', '\\Table\\Model\\Orcamento', RelationMap::ONE_TO_MANY, array('id' => 'cliente_id', ), null, null, 'Orcamentos');
+        $this->addRelation('User', '\\Table\\Model\\User', RelationMap::ONE_TO_ONE, array('id' => 'cliente_id', ), 'CASCADE', null);
     } // buildRelations()
+    /**
+     * Method to invalidate the instance pool of all tables related to cliente     * by a foreign key with ON DELETE CASCADE
+     */
+    public static function clearRelatedInstancePool()
+    {
+        // Invalidate objects in related instance pools,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        UserTableMap::clearInstancePool();
+    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -290,7 +226,7 @@ class ClienteTableMap extends TableMap
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -351,7 +287,7 @@ class ClienteTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -391,42 +327,18 @@ class ClienteTableMap extends TableMap
             $criteria->addSelectColumn(ClienteTableMap::COL_ID);
             $criteria->addSelectColumn(ClienteTableMap::COL_RAZAO_SOCIAL);
             $criteria->addSelectColumn(ClienteTableMap::COL_CONTATO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(ClienteTableMap::COL_DOCUMENTO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_TIPO_PESSOA);
             $criteria->addSelectColumn(ClienteTableMap::COL_CEP);
-            $criteria->addSelectColumn(ClienteTableMap::COL_ENDERECO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_NUMERO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_COMPLEMENTO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_BAIRRO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_CIDADE);
-            $criteria->addSelectColumn(ClienteTableMap::COL_UF);
-            $criteria->addSelectColumn(ClienteTableMap::COL_TELEFONE);
-            $criteria->addSelectColumn(ClienteTableMap::COL_STATUS);
+            $criteria->addSelectColumn(ClienteTableMap::COL_DESCRICAO);
             $criteria->addSelectColumn(ClienteTableMap::COL_DH_INCLUSAO);
             $criteria->addSelectColumn(ClienteTableMap::COL_DH_ALTERACAO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_USER_ID_INCLUSAO);
-            $criteria->addSelectColumn(ClienteTableMap::COL_USER_ID_ALTERACAO);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.razao_social');
             $criteria->addSelectColumn($alias . '.contato');
-            $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.documento');
-            $criteria->addSelectColumn($alias . '.tipo_pessoa');
             $criteria->addSelectColumn($alias . '.cep');
-            $criteria->addSelectColumn($alias . '.endereco');
-            $criteria->addSelectColumn($alias . '.numero');
-            $criteria->addSelectColumn($alias . '.complemento');
-            $criteria->addSelectColumn($alias . '.bairro');
-            $criteria->addSelectColumn($alias . '.cidade');
-            $criteria->addSelectColumn($alias . '.uf');
-            $criteria->addSelectColumn($alias . '.telefone');
-            $criteria->addSelectColumn($alias . '.status');
+            $criteria->addSelectColumn($alias . '.descricao');
             $criteria->addSelectColumn($alias . '.dh_inclusao');
             $criteria->addSelectColumn($alias . '.dh_alteracao');
-            $criteria->addSelectColumn($alias . '.user_id_inclusao');
-            $criteria->addSelectColumn($alias . '.user_id_alteracao');
         }
     }
 

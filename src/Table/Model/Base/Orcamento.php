@@ -2,7 +2,6 @@
 
 namespace Table\Model\Base;
 
-use \DateTime;
 use \Exception;
 use \PDO;
 use Propel\Runtime\Propel;
@@ -17,7 +16,6 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Propel\Runtime\Util\PropelDateTime;
 use Table\Model\Cliente as ChildCliente;
 use Table\Model\ClienteQuery as ChildClienteQuery;
 use Table\Model\Orcamento as ChildOrcamento;
@@ -29,11 +27,11 @@ use Table\Model\Map\OrcamentoTableMap;
 /**
  * Base class that represents a row from the 'orcamento' table.
  *
- * 
+ *
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Orcamento implements ActiveRecordInterface 
+abstract class Orcamento implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -80,46 +78,10 @@ abstract class Orcamento implements ActiveRecordInterface
     protected $cliente_id;
 
     /**
-     * The value for the email field.
+     * The value for the valor_total field.
      * @var        string
      */
-    protected $email;
-
-    /**
-     * The value for the empresa field.
-     * @var        string
-     */
-    protected $empresa;
-
-    /**
-     * The value for the contato field.
-     * @var        string
-     */
-    protected $contato;
-
-    /**
-     * The value for the telefone field.
-     * @var        string
-     */
-    protected $telefone;
-
-    /**
-     * The value for the data field.
-     * @var        \DateTime
-     */
-    protected $data;
-
-    /**
-     * The value for the data_inicio field.
-     * @var        \DateTime
-     */
-    protected $data_inicio;
-
-    /**
-     * The value for the data_fim field.
-     * @var        \DateTime
-     */
-    protected $data_fim;
+    protected $valor_total;
 
     /**
      * The value for the prazo field.
@@ -128,40 +90,10 @@ abstract class Orcamento implements ActiveRecordInterface
     protected $prazo;
 
     /**
-     * The value for the carimbo_preco field.
-     * @var        int
+     * The value for the descricao field.
+     * @var        string
      */
-    protected $carimbo_preco;
-
-    /**
-     * The value for the status field.
-     * @var        int
-     */
-    protected $status;
-
-    /**
-     * The value for the dh_inclusao field.
-     * @var        \DateTime
-     */
-    protected $dh_inclusao;
-
-    /**
-     * The value for the dh_alteracao field.
-     * @var        \DateTime
-     */
-    protected $dh_alteracao;
-
-    /**
-     * The value for the user_id_inclusao field.
-     * @var        int
-     */
-    protected $user_id_inclusao;
-
-    /**
-     * The value for the user_id_alteracao field.
-     * @var        int
-     */
-    protected $user_id_alteracao;
+    protected $descricao;
 
     /**
      * @var        ChildCliente
@@ -407,7 +339,7 @@ abstract class Orcamento implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     * 
+     *
      * @return int
      */
     public function getId()
@@ -417,7 +349,7 @@ abstract class Orcamento implements ActiveRecordInterface
 
     /**
      * Get the [cliente_id] column value.
-     * 
+     *
      * @return int
      */
     public function getClienteId()
@@ -426,108 +358,18 @@ abstract class Orcamento implements ActiveRecordInterface
     }
 
     /**
-     * Get the [email] column value.
-     * 
+     * Get the [valor_total] column value.
+     *
      * @return string
      */
-    public function getEmail()
+    public function getValorTotal()
     {
-        return $this->email;
-    }
-
-    /**
-     * Get the [empresa] column value.
-     * 
-     * @return string
-     */
-    public function getEmpresa()
-    {
-        return $this->empresa;
-    }
-
-    /**
-     * Get the [contato] column value.
-     * 
-     * @return string
-     */
-    public function getContato()
-    {
-        return $this->contato;
-    }
-
-    /**
-     * Get the [telefone] column value.
-     * 
-     * @return string
-     */
-    public function getTelefone()
-    {
-        return $this->telefone;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [data] column value.
-     * 
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getData($format = NULL)
-    {
-        if ($format === null) {
-            return $this->data;
-        } else {
-            return $this->data instanceof \DateTime ? $this->data->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [data_inicio] column value.
-     * 
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getDataInicio($format = NULL)
-    {
-        if ($format === null) {
-            return $this->data_inicio;
-        } else {
-            return $this->data_inicio instanceof \DateTime ? $this->data_inicio->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [data_fim] column value.
-     * 
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getDataFim($format = NULL)
-    {
-        if ($format === null) {
-            return $this->data_fim;
-        } else {
-            return $this->data_fim instanceof \DateTime ? $this->data_fim->format($format) : null;
-        }
+        return $this->valor_total;
     }
 
     /**
      * Get the [prazo] column value.
-     * 
+     *
      * @return int
      */
     public function getPrazo()
@@ -536,88 +378,18 @@ abstract class Orcamento implements ActiveRecordInterface
     }
 
     /**
-     * Get the [carimbo_preco] column value.
-     * 
-     * @return int
-     */
-    public function getCarimboPreco()
-    {
-        return $this->carimbo_preco;
-    }
-
-    /**
-     * Get the [status] column value.
-     * 
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [dh_inclusao] column value.
-     * 
+     * Get the [descricao] column value.
      *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
+     * @return string
      */
-    public function getDhInclusao($format = NULL)
+    public function getDescricao()
     {
-        if ($format === null) {
-            return $this->dh_inclusao;
-        } else {
-            return $this->dh_inclusao instanceof \DateTime ? $this->dh_inclusao->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [dh_alteracao] column value.
-     * 
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getDhAlteracao($format = NULL)
-    {
-        if ($format === null) {
-            return $this->dh_alteracao;
-        } else {
-            return $this->dh_alteracao instanceof \DateTime ? $this->dh_alteracao->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [user_id_inclusao] column value.
-     * 
-     * @return int
-     */
-    public function getUserIdInclusao()
-    {
-        return $this->user_id_inclusao;
-    }
-
-    /**
-     * Get the [user_id_alteracao] column value.
-     * 
-     * @return int
-     */
-    public function getUserIdAlteracao()
-    {
-        return $this->user_id_alteracao;
+        return $this->descricao;
     }
 
     /**
      * Set the value of [id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
      */
@@ -637,7 +409,7 @@ abstract class Orcamento implements ActiveRecordInterface
 
     /**
      * Set the value of [cliente_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
      */
@@ -660,148 +432,28 @@ abstract class Orcamento implements ActiveRecordInterface
     } // setClienteId()
 
     /**
-     * Set the value of [email] column.
-     * 
+     * Set the value of [valor_total] column.
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
      */
-    public function setEmail($v)
+    public function setValorTotal($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_EMAIL] = true;
+        if ($this->valor_total !== $v) {
+            $this->valor_total = $v;
+            $this->modifiedColumns[OrcamentoTableMap::COL_VALOR_TOTAL] = true;
         }
 
         return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [empresa] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setEmpresa($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->empresa !== $v) {
-            $this->empresa = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_EMPRESA] = true;
-        }
-
-        return $this;
-    } // setEmpresa()
-
-    /**
-     * Set the value of [contato] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setContato($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->contato !== $v) {
-            $this->contato = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_CONTATO] = true;
-        }
-
-        return $this;
-    } // setContato()
-
-    /**
-     * Set the value of [telefone] column.
-     * 
-     * @param  string $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setTelefone($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->telefone !== $v) {
-            $this->telefone = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_TELEFONE] = true;
-        }
-
-        return $this;
-    } // setTelefone()
-
-    /**
-     * Sets the value of [data] column to a normalized version of the date/time value specified.
-     * 
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setData($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->data !== null || $dt !== null) {
-            if ($dt !== $this->data) {
-                $this->data = $dt;
-                $this->modifiedColumns[OrcamentoTableMap::COL_DATA] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setData()
-
-    /**
-     * Sets the value of [data_inicio] column to a normalized version of the date/time value specified.
-     * 
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setDataInicio($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->data_inicio !== null || $dt !== null) {
-            if ($dt !== $this->data_inicio) {
-                $this->data_inicio = $dt;
-                $this->modifiedColumns[OrcamentoTableMap::COL_DATA_INICIO] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDataInicio()
-
-    /**
-     * Sets the value of [data_fim] column to a normalized version of the date/time value specified.
-     * 
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setDataFim($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->data_fim !== null || $dt !== null) {
-            if ($dt !== $this->data_fim) {
-                $this->data_fim = $dt;
-                $this->modifiedColumns[OrcamentoTableMap::COL_DATA_FIM] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDataFim()
+    } // setValorTotal()
 
     /**
      * Set the value of [prazo] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
      */
@@ -820,124 +472,24 @@ abstract class Orcamento implements ActiveRecordInterface
     } // setPrazo()
 
     /**
-     * Set the value of [carimbo_preco] column.
-     * 
-     * @param  int $v new value
+     * Set the value of [descricao] column.
+     *
+     * @param  string $v new value
      * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
      */
-    public function setCarimboPreco($v)
+    public function setDescricao($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->carimbo_preco !== $v) {
-            $this->carimbo_preco = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_CARIMBO_PRECO] = true;
-        }
-
-        return $this;
-    } // setCarimboPreco()
-
-    /**
-     * Set the value of [status] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setStatus($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->status !== $v) {
-            $this->status = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_STATUS] = true;
+        if ($this->descricao !== $v) {
+            $this->descricao = $v;
+            $this->modifiedColumns[OrcamentoTableMap::COL_DESCRICAO] = true;
         }
 
         return $this;
-    } // setStatus()
-
-    /**
-     * Sets the value of [dh_inclusao] column to a normalized version of the date/time value specified.
-     * 
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setDhInclusao($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->dh_inclusao !== null || $dt !== null) {
-            if ($dt !== $this->dh_inclusao) {
-                $this->dh_inclusao = $dt;
-                $this->modifiedColumns[OrcamentoTableMap::COL_DH_INCLUSAO] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDhInclusao()
-
-    /**
-     * Sets the value of [dh_alteracao] column to a normalized version of the date/time value specified.
-     * 
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setDhAlteracao($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->dh_alteracao !== null || $dt !== null) {
-            if ($dt !== $this->dh_alteracao) {
-                $this->dh_alteracao = $dt;
-                $this->modifiedColumns[OrcamentoTableMap::COL_DH_ALTERACAO] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setDhAlteracao()
-
-    /**
-     * Set the value of [user_id_inclusao] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setUserIdInclusao($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->user_id_inclusao !== $v) {
-            $this->user_id_inclusao = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_USER_ID_INCLUSAO] = true;
-        }
-
-        return $this;
-    } // setUserIdInclusao()
-
-    /**
-     * Set the value of [user_id_alteracao] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Orcamento The current object (for fluent API support)
-     */
-    public function setUserIdAlteracao($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->user_id_alteracao !== $v) {
-            $this->user_id_alteracao = $v;
-            $this->modifiedColumns[OrcamentoTableMap::COL_USER_ID_ALTERACAO] = true;
-        }
-
-        return $this;
-    } // setUserIdAlteracao()
+    } // setDescricao()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -981,62 +533,14 @@ abstract class Orcamento implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : OrcamentoTableMap::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->cliente_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrcamentoTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrcamentoTableMap::translateFieldName('ValorTotal', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->valor_total = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrcamentoTableMap::translateFieldName('Empresa', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->empresa = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrcamentoTableMap::translateFieldName('Contato', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->contato = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : OrcamentoTableMap::translateFieldName('Telefone', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->telefone = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : OrcamentoTableMap::translateFieldName('Data', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
-                $col = null;
-            }
-            $this->data = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : OrcamentoTableMap::translateFieldName('DataInicio', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
-                $col = null;
-            }
-            $this->data_inicio = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : OrcamentoTableMap::translateFieldName('DataFim', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00') {
-                $col = null;
-            }
-            $this->data_fim = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : OrcamentoTableMap::translateFieldName('Prazo', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrcamentoTableMap::translateFieldName('Prazo', TableMap::TYPE_PHPNAME, $indexType)];
             $this->prazo = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : OrcamentoTableMap::translateFieldName('CarimboPreco', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->carimbo_preco = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : OrcamentoTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->status = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : OrcamentoTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->dh_inclusao = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : OrcamentoTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->dh_alteracao = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : OrcamentoTableMap::translateFieldName('UserIdInclusao', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id_inclusao = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : OrcamentoTableMap::translateFieldName('UserIdAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user_id_alteracao = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrcamentoTableMap::translateFieldName('Descricao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->descricao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -1045,7 +549,7 @@ abstract class Orcamento implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 16; // 16 = OrcamentoTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = OrcamentoTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Orcamento'), 0, $e);
@@ -1283,47 +787,14 @@ abstract class Orcamento implements ActiveRecordInterface
         if ($this->isColumnModified(OrcamentoTableMap::COL_CLIENTE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'cliente_id';
         }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_EMPRESA)) {
-            $modifiedColumns[':p' . $index++]  = 'empresa';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_CONTATO)) {
-            $modifiedColumns[':p' . $index++]  = 'contato';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_TELEFONE)) {
-            $modifiedColumns[':p' . $index++]  = 'telefone';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA)) {
-            $modifiedColumns[':p' . $index++]  = 'data';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA_INICIO)) {
-            $modifiedColumns[':p' . $index++]  = 'data_inicio';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA_FIM)) {
-            $modifiedColumns[':p' . $index++]  = 'data_fim';
+        if ($this->isColumnModified(OrcamentoTableMap::COL_VALOR_TOTAL)) {
+            $modifiedColumns[':p' . $index++]  = 'valor_total';
         }
         if ($this->isColumnModified(OrcamentoTableMap::COL_PRAZO)) {
             $modifiedColumns[':p' . $index++]  = 'prazo';
         }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_CARIMBO_PRECO)) {
-            $modifiedColumns[':p' . $index++]  = 'carimbo_preco';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_STATUS)) {
-            $modifiedColumns[':p' . $index++]  = 'status';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DH_INCLUSAO)) {
-            $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DH_ALTERACAO)) {
-            $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_USER_ID_INCLUSAO)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id_inclusao';
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_USER_ID_ALTERACAO)) {
-            $modifiedColumns[':p' . $index++]  = 'user_id_alteracao';
+        if ($this->isColumnModified(OrcamentoTableMap::COL_DESCRICAO)) {
+            $modifiedColumns[':p' . $index++]  = 'descricao';
         }
 
         $sql = sprintf(
@@ -1336,53 +807,20 @@ abstract class Orcamento implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
+                    case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'cliente_id':                        
+                    case 'cliente_id':
                         $stmt->bindValue($identifier, $this->cliente_id, PDO::PARAM_INT);
                         break;
-                    case 'email':                        
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                    case 'valor_total':
+                        $stmt->bindValue($identifier, $this->valor_total, PDO::PARAM_STR);
                         break;
-                    case 'empresa':                        
-                        $stmt->bindValue($identifier, $this->empresa, PDO::PARAM_STR);
-                        break;
-                    case 'contato':                        
-                        $stmt->bindValue($identifier, $this->contato, PDO::PARAM_STR);
-                        break;
-                    case 'telefone':                        
-                        $stmt->bindValue($identifier, $this->telefone, PDO::PARAM_STR);
-                        break;
-                    case 'data':                        
-                        $stmt->bindValue($identifier, $this->data ? $this->data->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'data_inicio':                        
-                        $stmt->bindValue($identifier, $this->data_inicio ? $this->data_inicio->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'data_fim':                        
-                        $stmt->bindValue($identifier, $this->data_fim ? $this->data_fim->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'prazo':                        
+                    case 'prazo':
                         $stmt->bindValue($identifier, $this->prazo, PDO::PARAM_INT);
                         break;
-                    case 'carimbo_preco':                        
-                        $stmt->bindValue($identifier, $this->carimbo_preco, PDO::PARAM_INT);
-                        break;
-                    case 'status':                        
-                        $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
-                        break;
-                    case 'dh_inclusao':                        
-                        $stmt->bindValue($identifier, $this->dh_inclusao ? $this->dh_inclusao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'dh_alteracao':                        
-                        $stmt->bindValue($identifier, $this->dh_alteracao ? $this->dh_alteracao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'user_id_inclusao':                        
-                        $stmt->bindValue($identifier, $this->user_id_inclusao, PDO::PARAM_INT);
-                        break;
-                    case 'user_id_alteracao':                        
-                        $stmt->bindValue($identifier, $this->user_id_alteracao, PDO::PARAM_INT);
+                    case 'descricao':
+                        $stmt->bindValue($identifier, $this->descricao, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1453,46 +891,13 @@ abstract class Orcamento implements ActiveRecordInterface
                 return $this->getClienteId();
                 break;
             case 2:
-                return $this->getEmail();
+                return $this->getValorTotal();
                 break;
             case 3:
-                return $this->getEmpresa();
-                break;
-            case 4:
-                return $this->getContato();
-                break;
-            case 5:
-                return $this->getTelefone();
-                break;
-            case 6:
-                return $this->getData();
-                break;
-            case 7:
-                return $this->getDataInicio();
-                break;
-            case 8:
-                return $this->getDataFim();
-                break;
-            case 9:
                 return $this->getPrazo();
                 break;
-            case 10:
-                return $this->getCarimboPreco();
-                break;
-            case 11:
-                return $this->getStatus();
-                break;
-            case 12:
-                return $this->getDhInclusao();
-                break;
-            case 13:
-                return $this->getDhAlteracao();
-                break;
-            case 14:
-                return $this->getUserIdInclusao();
-                break;
-            case 15:
-                return $this->getUserIdAlteracao();
+            case 4:
+                return $this->getDescricao();
                 break;
             default:
                 return null;
@@ -1526,29 +931,18 @@ abstract class Orcamento implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getClienteId(),
-            $keys[2] => $this->getEmail(),
-            $keys[3] => $this->getEmpresa(),
-            $keys[4] => $this->getContato(),
-            $keys[5] => $this->getTelefone(),
-            $keys[6] => $this->getData(),
-            $keys[7] => $this->getDataInicio(),
-            $keys[8] => $this->getDataFim(),
-            $keys[9] => $this->getPrazo(),
-            $keys[10] => $this->getCarimboPreco(),
-            $keys[11] => $this->getStatus(),
-            $keys[12] => $this->getDhInclusao(),
-            $keys[13] => $this->getDhAlteracao(),
-            $keys[14] => $this->getUserIdInclusao(),
-            $keys[15] => $this->getUserIdAlteracao(),
+            $keys[2] => $this->getValorTotal(),
+            $keys[3] => $this->getPrazo(),
+            $keys[4] => $this->getDescricao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aCliente) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cliente';
@@ -1559,11 +953,11 @@ abstract class Orcamento implements ActiveRecordInterface
                     default:
                         $key = 'Cliente';
                 }
-        
+
                 $result[$key] = $this->aCliente->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collOrcamentoItems) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'orcamentoItems';
@@ -1574,7 +968,7 @@ abstract class Orcamento implements ActiveRecordInterface
                     default:
                         $key = 'OrcamentoItems';
                 }
-        
+
                 $result[$key] = $this->collOrcamentoItems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1618,46 +1012,13 @@ abstract class Orcamento implements ActiveRecordInterface
                 $this->setClienteId($value);
                 break;
             case 2:
-                $this->setEmail($value);
+                $this->setValorTotal($value);
                 break;
             case 3:
-                $this->setEmpresa($value);
-                break;
-            case 4:
-                $this->setContato($value);
-                break;
-            case 5:
-                $this->setTelefone($value);
-                break;
-            case 6:
-                $this->setData($value);
-                break;
-            case 7:
-                $this->setDataInicio($value);
-                break;
-            case 8:
-                $this->setDataFim($value);
-                break;
-            case 9:
                 $this->setPrazo($value);
                 break;
-            case 10:
-                $this->setCarimboPreco($value);
-                break;
-            case 11:
-                $this->setStatus($value);
-                break;
-            case 12:
-                $this->setDhInclusao($value);
-                break;
-            case 13:
-                $this->setDhAlteracao($value);
-                break;
-            case 14:
-                $this->setUserIdInclusao($value);
-                break;
-            case 15:
-                $this->setUserIdAlteracao($value);
+            case 4:
+                $this->setDescricao($value);
                 break;
         } // switch()
 
@@ -1692,46 +1053,13 @@ abstract class Orcamento implements ActiveRecordInterface
             $this->setClienteId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setEmail($arr[$keys[2]]);
+            $this->setValorTotal($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setEmpresa($arr[$keys[3]]);
+            $this->setPrazo($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setContato($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setTelefone($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setData($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setDataInicio($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setDataFim($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setPrazo($arr[$keys[9]]);
-        }
-        if (array_key_exists($keys[10], $arr)) {
-            $this->setCarimboPreco($arr[$keys[10]]);
-        }
-        if (array_key_exists($keys[11], $arr)) {
-            $this->setStatus($arr[$keys[11]]);
-        }
-        if (array_key_exists($keys[12], $arr)) {
-            $this->setDhInclusao($arr[$keys[12]]);
-        }
-        if (array_key_exists($keys[13], $arr)) {
-            $this->setDhAlteracao($arr[$keys[13]]);
-        }
-        if (array_key_exists($keys[14], $arr)) {
-            $this->setUserIdInclusao($arr[$keys[14]]);
-        }
-        if (array_key_exists($keys[15], $arr)) {
-            $this->setUserIdAlteracao($arr[$keys[15]]);
+            $this->setDescricao($arr[$keys[4]]);
         }
     }
 
@@ -1780,47 +1108,14 @@ abstract class Orcamento implements ActiveRecordInterface
         if ($this->isColumnModified(OrcamentoTableMap::COL_CLIENTE_ID)) {
             $criteria->add(OrcamentoTableMap::COL_CLIENTE_ID, $this->cliente_id);
         }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_EMAIL)) {
-            $criteria->add(OrcamentoTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_EMPRESA)) {
-            $criteria->add(OrcamentoTableMap::COL_EMPRESA, $this->empresa);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_CONTATO)) {
-            $criteria->add(OrcamentoTableMap::COL_CONTATO, $this->contato);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_TELEFONE)) {
-            $criteria->add(OrcamentoTableMap::COL_TELEFONE, $this->telefone);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA)) {
-            $criteria->add(OrcamentoTableMap::COL_DATA, $this->data);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA_INICIO)) {
-            $criteria->add(OrcamentoTableMap::COL_DATA_INICIO, $this->data_inicio);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DATA_FIM)) {
-            $criteria->add(OrcamentoTableMap::COL_DATA_FIM, $this->data_fim);
+        if ($this->isColumnModified(OrcamentoTableMap::COL_VALOR_TOTAL)) {
+            $criteria->add(OrcamentoTableMap::COL_VALOR_TOTAL, $this->valor_total);
         }
         if ($this->isColumnModified(OrcamentoTableMap::COL_PRAZO)) {
             $criteria->add(OrcamentoTableMap::COL_PRAZO, $this->prazo);
         }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_CARIMBO_PRECO)) {
-            $criteria->add(OrcamentoTableMap::COL_CARIMBO_PRECO, $this->carimbo_preco);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_STATUS)) {
-            $criteria->add(OrcamentoTableMap::COL_STATUS, $this->status);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DH_INCLUSAO)) {
-            $criteria->add(OrcamentoTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_DH_ALTERACAO)) {
-            $criteria->add(OrcamentoTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_USER_ID_INCLUSAO)) {
-            $criteria->add(OrcamentoTableMap::COL_USER_ID_INCLUSAO, $this->user_id_inclusao);
-        }
-        if ($this->isColumnModified(OrcamentoTableMap::COL_USER_ID_ALTERACAO)) {
-            $criteria->add(OrcamentoTableMap::COL_USER_ID_ALTERACAO, $this->user_id_alteracao);
+        if ($this->isColumnModified(OrcamentoTableMap::COL_DESCRICAO)) {
+            $criteria->add(OrcamentoTableMap::COL_DESCRICAO, $this->descricao);
         }
 
         return $criteria;
@@ -1840,6 +1135,7 @@ abstract class Orcamento implements ActiveRecordInterface
     {
         $criteria = ChildOrcamentoQuery::create();
         $criteria->add(OrcamentoTableMap::COL_ID, $this->id);
+        $criteria->add(OrcamentoTableMap::COL_CLIENTE_ID, $this->cliente_id);
 
         return $criteria;
     }
@@ -1852,10 +1148,18 @@ abstract class Orcamento implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId();
+        $validPk = null !== $this->getId() &&
+            null !== $this->getClienteId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
+
+        //relation fk_orcamento_cliente1 to table cliente
+        if ($this->aCliente && $hash = spl_object_hash($this->aCliente)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1865,25 +1169,31 @@ abstract class Orcamento implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getId();
+        $pks = array();
+        $pks[0] = $this->getId();
+        $pks[1] = $this->getClienteId();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setId($key);
+        $this->setId($keys[0]);
+        $this->setClienteId($keys[1]);
     }
 
     /**
@@ -1892,7 +1202,7 @@ abstract class Orcamento implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getId();
+        return (null === $this->getId()) && (null === $this->getClienteId());
     }
 
     /**
@@ -1909,20 +1219,9 @@ abstract class Orcamento implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setClienteId($this->getClienteId());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setEmpresa($this->getEmpresa());
-        $copyObj->setContato($this->getContato());
-        $copyObj->setTelefone($this->getTelefone());
-        $copyObj->setData($this->getData());
-        $copyObj->setDataInicio($this->getDataInicio());
-        $copyObj->setDataFim($this->getDataFim());
+        $copyObj->setValorTotal($this->getValorTotal());
         $copyObj->setPrazo($this->getPrazo());
-        $copyObj->setCarimboPreco($this->getCarimboPreco());
-        $copyObj->setStatus($this->getStatus());
-        $copyObj->setDhInclusao($this->getDhInclusao());
-        $copyObj->setDhAlteracao($this->getDhAlteracao());
-        $copyObj->setUserIdInclusao($this->getUserIdInclusao());
-        $copyObj->setUserIdAlteracao($this->getUserIdAlteracao());
+        $copyObj->setDescricao($this->getDescricao());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -2148,7 +1447,7 @@ abstract class Orcamento implements ActiveRecordInterface
         /** @var ChildOrcamentoItem[] $orcamentoItemsToDelete */
         $orcamentoItemsToDelete = $this->getOrcamentoItems(new Criteria(), $con)->diff($orcamentoItems);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -2290,20 +1589,9 @@ abstract class Orcamento implements ActiveRecordInterface
         }
         $this->id = null;
         $this->cliente_id = null;
-        $this->email = null;
-        $this->empresa = null;
-        $this->contato = null;
-        $this->telefone = null;
-        $this->data = null;
-        $this->data_inicio = null;
-        $this->data_fim = null;
+        $this->valor_total = null;
         $this->prazo = null;
-        $this->carimbo_preco = null;
-        $this->status = null;
-        $this->dh_inclusao = null;
-        $this->dh_alteracao = null;
-        $this->user_id_inclusao = null;
-        $this->user_id_alteracao = null;
+        $this->descricao = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

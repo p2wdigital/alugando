@@ -16,8 +16,6 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Table\Model\Estoque as ChildEstoque;
-use Table\Model\EstoqueQuery as ChildEstoqueQuery;
 use Table\Model\OrcamentoItem as ChildOrcamentoItem;
 use Table\Model\OrcamentoItemQuery as ChildOrcamentoItemQuery;
 use Table\Model\Produto as ChildProduto;
@@ -29,11 +27,11 @@ use Table\Model\Map\ProdutoTableMap;
 /**
  * Base class that represents a row from the 'produto' table.
  *
- * 
+ *
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Produto implements ActiveRecordInterface 
+abstract class Produto implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -75,7 +73,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * The value for the categoria field.
-     * @var        int
+     * @var        string
      */
     protected $categoria;
 
@@ -90,18 +88,6 @@ abstract class Produto implements ActiveRecordInterface
      * @var        string
      */
     protected $modelo;
-
-    /**
-     * The value for the multiplicar field.
-     * @var        int
-     */
-    protected $multiplicar;
-
-    /**
-     * @var        ObjectCollection|ChildEstoque[] Collection to store aggregation of ChildEstoque objects.
-     */
-    protected $collEstoques;
-    protected $collEstoquesPartial;
 
     /**
      * @var        ObjectCollection|ChildOrcamentoItem[] Collection to store aggregation of ChildOrcamentoItem objects.
@@ -122,12 +108,6 @@ abstract class Produto implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildEstoque[]
-     */
-    protected $estoquesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -360,7 +340,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     * 
+     *
      * @return int
      */
     public function getId()
@@ -370,8 +350,8 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Get the [categoria] column value.
-     * 
-     * @return int
+     *
+     * @return string
      */
     public function getCategoria()
     {
@@ -380,7 +360,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Get the [nome] column value.
-     * 
+     *
      * @return string
      */
     public function getNome()
@@ -390,7 +370,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Get the [modelo] column value.
-     * 
+     *
      * @return string
      */
     public function getModelo()
@@ -399,18 +379,8 @@ abstract class Produto implements ActiveRecordInterface
     }
 
     /**
-     * Get the [multiplicar] column value.
-     * 
-     * @return int
-     */
-    public function getMultiplicar()
-    {
-        return $this->multiplicar;
-    }
-
-    /**
      * Set the value of [id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Table\Model\Produto The current object (for fluent API support)
      */
@@ -430,14 +400,14 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Set the value of [categoria] column.
-     * 
-     * @param  int $v new value
+     *
+     * @param  string $v new value
      * @return $this|\Table\Model\Produto The current object (for fluent API support)
      */
     public function setCategoria($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->categoria !== $v) {
@@ -450,7 +420,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Set the value of [nome] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Produto The current object (for fluent API support)
      */
@@ -470,7 +440,7 @@ abstract class Produto implements ActiveRecordInterface
 
     /**
      * Set the value of [modelo] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Table\Model\Produto The current object (for fluent API support)
      */
@@ -487,26 +457,6 @@ abstract class Produto implements ActiveRecordInterface
 
         return $this;
     } // setModelo()
-
-    /**
-     * Set the value of [multiplicar] column.
-     * 
-     * @param  int $v new value
-     * @return $this|\Table\Model\Produto The current object (for fluent API support)
-     */
-    public function setMultiplicar($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->multiplicar !== $v) {
-            $this->multiplicar = $v;
-            $this->modifiedColumns[ProdutoTableMap::COL_MULTIPLICAR] = true;
-        }
-
-        return $this;
-    } // setMultiplicar()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -548,16 +498,13 @@ abstract class Produto implements ActiveRecordInterface
             $this->id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ProdutoTableMap::translateFieldName('Categoria', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->categoria = (null !== $col) ? (int) $col : null;
+            $this->categoria = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ProdutoTableMap::translateFieldName('Nome', TableMap::TYPE_PHPNAME, $indexType)];
             $this->nome = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ProdutoTableMap::translateFieldName('Modelo', TableMap::TYPE_PHPNAME, $indexType)];
             $this->modelo = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ProdutoTableMap::translateFieldName('Multiplicar', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->multiplicar = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -566,7 +513,7 @@ abstract class Produto implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = ProdutoTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 4; // 4 = ProdutoTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Produto'), 0, $e);
@@ -626,8 +573,6 @@ abstract class Produto implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
-
-            $this->collEstoques = null;
 
             $this->collOrcamentoItems = null;
 
@@ -743,23 +688,6 @@ abstract class Produto implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->estoquesScheduledForDeletion !== null) {
-                if (!$this->estoquesScheduledForDeletion->isEmpty()) {
-                    \Table\Model\EstoqueQuery::create()
-                        ->filterByPrimaryKeys($this->estoquesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->estoquesScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collEstoques !== null) {
-                foreach ($this->collEstoques as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->orcamentoItemsScheduledForDeletion !== null) {
                 if (!$this->orcamentoItemsScheduledForDeletion->isEmpty()) {
                     \Table\Model\OrcamentoItemQuery::create()
@@ -832,9 +760,6 @@ abstract class Produto implements ActiveRecordInterface
         if ($this->isColumnModified(ProdutoTableMap::COL_MODELO)) {
             $modifiedColumns[':p' . $index++]  = 'modelo';
         }
-        if ($this->isColumnModified(ProdutoTableMap::COL_MULTIPLICAR)) {
-            $modifiedColumns[':p' . $index++]  = 'multiplicar';
-        }
 
         $sql = sprintf(
             'INSERT INTO produto (%s) VALUES (%s)',
@@ -846,20 +771,17 @@ abstract class Produto implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
+                    case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'categoria':                        
-                        $stmt->bindValue($identifier, $this->categoria, PDO::PARAM_INT);
+                    case 'categoria':
+                        $stmt->bindValue($identifier, $this->categoria, PDO::PARAM_STR);
                         break;
-                    case 'nome':                        
+                    case 'nome':
                         $stmt->bindValue($identifier, $this->nome, PDO::PARAM_STR);
                         break;
-                    case 'modelo':                        
+                    case 'modelo':
                         $stmt->bindValue($identifier, $this->modelo, PDO::PARAM_STR);
-                        break;
-                    case 'multiplicar':                        
-                        $stmt->bindValue($identifier, $this->multiplicar, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -935,9 +857,6 @@ abstract class Produto implements ActiveRecordInterface
             case 3:
                 return $this->getModelo();
                 break;
-            case 4:
-                return $this->getMultiplicar();
-                break;
             default:
                 return null;
                 break;
@@ -972,31 +891,15 @@ abstract class Produto implements ActiveRecordInterface
             $keys[1] => $this->getCategoria(),
             $keys[2] => $this->getNome(),
             $keys[3] => $this->getModelo(),
-            $keys[4] => $this->getMultiplicar(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
-            if (null !== $this->collEstoques) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'estoques';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'estoques';
-                        break;
-                    default:
-                        $key = 'Estoques';
-                }
-        
-                $result[$key] = $this->collEstoques->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collOrcamentoItems) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'orcamentoItems';
@@ -1007,11 +910,11 @@ abstract class Produto implements ActiveRecordInterface
                     default:
                         $key = 'OrcamentoItems';
                 }
-        
+
                 $result[$key] = $this->collOrcamentoItems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collProdutoValors) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'produtoValors';
@@ -1022,7 +925,7 @@ abstract class Produto implements ActiveRecordInterface
                     default:
                         $key = 'ProdutoValors';
                 }
-        
+
                 $result[$key] = $this->collProdutoValors->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1071,9 +974,6 @@ abstract class Produto implements ActiveRecordInterface
             case 3:
                 $this->setModelo($value);
                 break;
-            case 4:
-                $this->setMultiplicar($value);
-                break;
         } // switch()
 
         return $this;
@@ -1111,9 +1011,6 @@ abstract class Produto implements ActiveRecordInterface
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setModelo($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setMultiplicar($arr[$keys[4]]);
         }
     }
 
@@ -1168,9 +1065,6 @@ abstract class Produto implements ActiveRecordInterface
         if ($this->isColumnModified(ProdutoTableMap::COL_MODELO)) {
             $criteria->add(ProdutoTableMap::COL_MODELO, $this->modelo);
         }
-        if ($this->isColumnModified(ProdutoTableMap::COL_MULTIPLICAR)) {
-            $criteria->add(ProdutoTableMap::COL_MULTIPLICAR, $this->multiplicar);
-        }
 
         return $criteria;
     }
@@ -1214,7 +1108,7 @@ abstract class Produto implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1260,18 +1154,11 @@ abstract class Produto implements ActiveRecordInterface
         $copyObj->setCategoria($this->getCategoria());
         $copyObj->setNome($this->getNome());
         $copyObj->setModelo($this->getModelo());
-        $copyObj->setMultiplicar($this->getMultiplicar());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
-
-            foreach ($this->getEstoques() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addEstoque($relObj->copy($deepCopy));
-                }
-            }
 
             foreach ($this->getOrcamentoItems() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
@@ -1326,236 +1213,12 @@ abstract class Produto implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Estoque' == $relationName) {
-            return $this->initEstoques();
-        }
         if ('OrcamentoItem' == $relationName) {
             return $this->initOrcamentoItems();
         }
         if ('ProdutoValor' == $relationName) {
             return $this->initProdutoValors();
         }
-    }
-
-    /**
-     * Clears out the collEstoques collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addEstoques()
-     */
-    public function clearEstoques()
-    {
-        $this->collEstoques = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collEstoques collection loaded partially.
-     */
-    public function resetPartialEstoques($v = true)
-    {
-        $this->collEstoquesPartial = $v;
-    }
-
-    /**
-     * Initializes the collEstoques collection.
-     *
-     * By default this just sets the collEstoques collection to an empty array (like clearcollEstoques());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initEstoques($overrideExisting = true)
-    {
-        if (null !== $this->collEstoques && !$overrideExisting) {
-            return;
-        }
-        $this->collEstoques = new ObjectCollection();
-        $this->collEstoques->setModel('\Table\Model\Estoque');
-    }
-
-    /**
-     * Gets an array of ChildEstoque objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildProduto is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildEstoque[] List of ChildEstoque objects
-     * @throws PropelException
-     */
-    public function getEstoques(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collEstoquesPartial && !$this->isNew();
-        if (null === $this->collEstoques || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collEstoques) {
-                // return empty collection
-                $this->initEstoques();
-            } else {
-                $collEstoques = ChildEstoqueQuery::create(null, $criteria)
-                    ->filterByProduto($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collEstoquesPartial && count($collEstoques)) {
-                        $this->initEstoques(false);
-
-                        foreach ($collEstoques as $obj) {
-                            if (false == $this->collEstoques->contains($obj)) {
-                                $this->collEstoques->append($obj);
-                            }
-                        }
-
-                        $this->collEstoquesPartial = true;
-                    }
-
-                    return $collEstoques;
-                }
-
-                if ($partial && $this->collEstoques) {
-                    foreach ($this->collEstoques as $obj) {
-                        if ($obj->isNew()) {
-                            $collEstoques[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collEstoques = $collEstoques;
-                $this->collEstoquesPartial = false;
-            }
-        }
-
-        return $this->collEstoques;
-    }
-
-    /**
-     * Sets a collection of ChildEstoque objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $estoques A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildProduto The current object (for fluent API support)
-     */
-    public function setEstoques(Collection $estoques, ConnectionInterface $con = null)
-    {
-        /** @var ChildEstoque[] $estoquesToDelete */
-        $estoquesToDelete = $this->getEstoques(new Criteria(), $con)->diff($estoques);
-
-        
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->estoquesScheduledForDeletion = clone $estoquesToDelete;
-
-        foreach ($estoquesToDelete as $estoqueRemoved) {
-            $estoqueRemoved->setProduto(null);
-        }
-
-        $this->collEstoques = null;
-        foreach ($estoques as $estoque) {
-            $this->addEstoque($estoque);
-        }
-
-        $this->collEstoques = $estoques;
-        $this->collEstoquesPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Estoque objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Estoque objects.
-     * @throws PropelException
-     */
-    public function countEstoques(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collEstoquesPartial && !$this->isNew();
-        if (null === $this->collEstoques || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collEstoques) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getEstoques());
-            }
-
-            $query = ChildEstoqueQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByProduto($this)
-                ->count($con);
-        }
-
-        return count($this->collEstoques);
-    }
-
-    /**
-     * Method called to associate a ChildEstoque object to this object
-     * through the ChildEstoque foreign key attribute.
-     *
-     * @param  ChildEstoque $l ChildEstoque
-     * @return $this|\Table\Model\Produto The current object (for fluent API support)
-     */
-    public function addEstoque(ChildEstoque $l)
-    {
-        if ($this->collEstoques === null) {
-            $this->initEstoques();
-            $this->collEstoquesPartial = true;
-        }
-
-        if (!$this->collEstoques->contains($l)) {
-            $this->doAddEstoque($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildEstoque $estoque The ChildEstoque object to add.
-     */
-    protected function doAddEstoque(ChildEstoque $estoque)
-    {
-        $this->collEstoques[]= $estoque;
-        $estoque->setProduto($this);
-    }
-
-    /**
-     * @param  ChildEstoque $estoque The ChildEstoque object to remove.
-     * @return $this|ChildProduto The current object (for fluent API support)
-     */
-    public function removeEstoque(ChildEstoque $estoque)
-    {
-        if ($this->getEstoques()->contains($estoque)) {
-            $pos = $this->collEstoques->search($estoque);
-            $this->collEstoques->remove($pos);
-            if (null === $this->estoquesScheduledForDeletion) {
-                $this->estoquesScheduledForDeletion = clone $this->collEstoques;
-                $this->estoquesScheduledForDeletion->clear();
-            }
-            $this->estoquesScheduledForDeletion[]= clone $estoque;
-            $estoque->setProduto(null);
-        }
-
-        return $this;
     }
 
     /**
@@ -1674,7 +1337,7 @@ abstract class Produto implements ActiveRecordInterface
         /** @var ChildOrcamentoItem[] $orcamentoItemsToDelete */
         $orcamentoItemsToDelete = $this->getOrcamentoItems(new Criteria(), $con)->diff($orcamentoItems);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1920,7 +1583,7 @@ abstract class Produto implements ActiveRecordInterface
         /** @var ChildProdutoValor[] $produtoValorsToDelete */
         $produtoValorsToDelete = $this->getProdutoValors(new Criteria(), $con)->diff($produtoValors);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -2036,7 +1699,6 @@ abstract class Produto implements ActiveRecordInterface
         $this->categoria = null;
         $this->nome = null;
         $this->modelo = null;
-        $this->multiplicar = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -2055,11 +1717,6 @@ abstract class Produto implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collEstoques) {
-                foreach ($this->collEstoques as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collOrcamentoItems) {
                 foreach ($this->collOrcamentoItems as $o) {
                     $o->clearAllReferences($deep);
@@ -2072,7 +1729,6 @@ abstract class Produto implements ActiveRecordInterface
             }
         } // if ($deep)
 
-        $this->collEstoques = null;
         $this->collOrcamentoItems = null;
         $this->collProdutoValors = null;
     }

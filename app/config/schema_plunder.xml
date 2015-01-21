@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<database name="wep2" namespace="Tabela\Model">
+<database name="wep2" namespace="Tab\Model">
   <table name="cliente" phpName="Cliente">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" />
     <column name="razao_social" phpName="RazaoSocial" type="VARCHAR" required="true" size="100" />

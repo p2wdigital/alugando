@@ -18,12 +18,14 @@ class Controller
 
 	public function render($templating, $args = array(), $display = true){
 		$twig = Container::get('templating');
-		return $twig->render($this->changeNameTemplating($templating), $args, $display);
+		return $twig->render($templating, $args, $display);
 	}
 
 
 	private function changeNameTemplating($name){
 		$aux 		 = explode(":", $name);
+		$aux 		= array_filter($aux);
+
 		$caminho 	 = sprintf("%s/View/", $aux[0]);
 		unset($aux[0]);
 		$caminho 	.= implode("/", $aux);

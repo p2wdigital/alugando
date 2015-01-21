@@ -18,55 +18,66 @@ use Table\Model\Map\UserTableMap;
 /**
  * Base class that represents a query for the 'user' table.
  *
- * 
  *
- * @method     ChildUserQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildUserQuery orderByUser($order = Criteria::ASC) Order by the user column
- * @method     ChildUserQuery orderByPass($order = Criteria::ASC) Order by the pass column
+ *
+ * @method     ChildUserQuery orderByClienteId($order = Criteria::ASC) Order by the cliente_id column
+ * @method     ChildUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
  * @method     ChildUserQuery orderBySalt($order = Criteria::ASC) Order by the salt column
- * @method     ChildUserQuery orderByRole($order = Criteria::ASC) Order by the role column
+ * @method     ChildUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
+ * @method     ChildUserQuery orderByTesteenum($order = Criteria::ASC) Order by the testeenum column
+ * @method     ChildUserQuery orderByUsercol($order = Criteria::ASC) Order by the usercol column
  *
- * @method     ChildUserQuery groupById() Group by the id column
- * @method     ChildUserQuery groupByUser() Group by the user column
- * @method     ChildUserQuery groupByPass() Group by the pass column
+ * @method     ChildUserQuery groupByClienteId() Group by the cliente_id column
+ * @method     ChildUserQuery groupByPassword() Group by the password column
  * @method     ChildUserQuery groupBySalt() Group by the salt column
- * @method     ChildUserQuery groupByRole() Group by the role column
+ * @method     ChildUserQuery groupByEmail() Group by the email column
+ * @method     ChildUserQuery groupByTesteenum() Group by the testeenum column
+ * @method     ChildUserQuery groupByUsercol() Group by the usercol column
  *
  * @method     ChildUserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildUserQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildUserQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildUserQuery leftJoinClienteRelatedByUserIdInclusao($relationAlias = null) Adds a LEFT JOIN clause to the query using the ClienteRelatedByUserIdInclusao relation
- * @method     ChildUserQuery rightJoinClienteRelatedByUserIdInclusao($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ClienteRelatedByUserIdInclusao relation
- * @method     ChildUserQuery innerJoinClienteRelatedByUserIdInclusao($relationAlias = null) Adds a INNER JOIN clause to the query using the ClienteRelatedByUserIdInclusao relation
- *
- * @method     ChildUserQuery leftJoinClienteRelatedByUserIdAlteracao($relationAlias = null) Adds a LEFT JOIN clause to the query using the ClienteRelatedByUserIdAlteracao relation
- * @method     ChildUserQuery rightJoinClienteRelatedByUserIdAlteracao($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ClienteRelatedByUserIdAlteracao relation
- * @method     ChildUserQuery innerJoinClienteRelatedByUserIdAlteracao($relationAlias = null) Adds a INNER JOIN clause to the query using the ClienteRelatedByUserIdAlteracao relation
+ * @method     ChildUserQuery leftJoinCliente($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cliente relation
+ * @method     ChildUserQuery rightJoinCliente($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cliente relation
+ * @method     ChildUserQuery innerJoinCliente($relationAlias = null) Adds a INNER JOIN clause to the query using the Cliente relation
  *
  * @method     \Table\Model\ClienteQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUser findOne(ConnectionInterface $con = null) Return the first ChildUser matching the query
  * @method     ChildUser findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUser matching the query, or a new ChildUser object populated from the query conditions when no match is found
  *
- * @method     ChildUser findOneById(int $id) Return the first ChildUser filtered by the id column
- * @method     ChildUser findOneByUser(string $user) Return the first ChildUser filtered by the user column
- * @method     ChildUser findOneByPass(string $pass) Return the first ChildUser filtered by the pass column
+ * @method     ChildUser findOneByClienteId(int $cliente_id) Return the first ChildUser filtered by the cliente_id column
+ * @method     ChildUser findOneByPassword(int $password) Return the first ChildUser filtered by the password column
  * @method     ChildUser findOneBySalt(string $salt) Return the first ChildUser filtered by the salt column
- * @method     ChildUser findOneByRole(string $role) Return the first ChildUser filtered by the role column
+ * @method     ChildUser findOneByEmail(string $email) Return the first ChildUser filtered by the email column
+ * @method     ChildUser findOneByTesteenum(string $testeenum) Return the first ChildUser filtered by the testeenum column
+ * @method     ChildUser findOneByUsercol(string $usercol) Return the first ChildUser filtered by the usercol column *
+
+ * @method     ChildUser requirePk($key, ConnectionInterface $con = null) Return the ChildUser by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOne(ConnectionInterface $con = null) Return the first ChildUser matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildUser requireOneByClienteId(int $cliente_id) Return the first ChildUser filtered by the cliente_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByPassword(int $password) Return the first ChildUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneBySalt(string $salt) Return the first ChildUser filtered by the salt column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByEmail(string $email) Return the first ChildUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByTesteenum(string $testeenum) Return the first ChildUser filtered by the testeenum column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildUser requireOneByUsercol(string $usercol) Return the first ChildUser filtered by the usercol column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildUser objects based on current ModelCriteria
- * @method     ChildUser[]|ObjectCollection findById(int $id) Return ChildUser objects filtered by the id column
- * @method     ChildUser[]|ObjectCollection findByUser(string $user) Return ChildUser objects filtered by the user column
- * @method     ChildUser[]|ObjectCollection findByPass(string $pass) Return ChildUser objects filtered by the pass column
+ * @method     ChildUser[]|ObjectCollection findByClienteId(int $cliente_id) Return ChildUser objects filtered by the cliente_id column
+ * @method     ChildUser[]|ObjectCollection findByPassword(int $password) Return ChildUser objects filtered by the password column
  * @method     ChildUser[]|ObjectCollection findBySalt(string $salt) Return ChildUser objects filtered by the salt column
- * @method     ChildUser[]|ObjectCollection findByRole(string $role) Return ChildUser objects filtered by the role column
+ * @method     ChildUser[]|ObjectCollection findByEmail(string $email) Return ChildUser objects filtered by the email column
+ * @method     ChildUser[]|ObjectCollection findByTesteenum(string $testeenum) Return ChildUser objects filtered by the testeenum column
+ * @method     ChildUser[]|ObjectCollection findByUsercol(string $usercol) Return ChildUser objects filtered by the usercol column
  * @method     ChildUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class UserQuery extends ModelCriteria
 {
-    
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+
     /**
      * Initializes internal state of \Table\Model\Base\UserQuery object.
      *
@@ -152,9 +163,9 @@ abstract class UserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, user, pass, salt, role FROM user WHERE id = :p0';
+        $sql = 'SELECT cliente_id, password, salt, email, testeenum, usercol FROM user WHERE cliente_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -226,7 +237,7 @@ abstract class UserQuery extends ModelCriteria
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(UserTableMap::COL_ID, $key, Criteria::EQUAL);
+        return $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -239,20 +250,22 @@ abstract class UserQuery extends ModelCriteria
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(UserTableMap::COL_ID, $keys, Criteria::IN);
+        return $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $keys, Criteria::IN);
     }
 
     /**
-     * Filter the query on the id column
+     * Filter the query on the cliente_id column
      *
      * Example usage:
      * <code>
-     * $query->filterById(1234); // WHERE id = 1234
-     * $query->filterById(array(12, 34)); // WHERE id IN (12, 34)
-     * $query->filterById(array('min' => 12)); // WHERE id > 12
+     * $query->filterByClienteId(1234); // WHERE cliente_id = 1234
+     * $query->filterByClienteId(array(12, 34)); // WHERE cliente_id IN (12, 34)
+     * $query->filterByClienteId(array('min' => 12)); // WHERE cliente_id > 12
      * </code>
      *
-     * @param     mixed $id The value to use as filter.
+     * @see       filterByCliente()
+     *
+     * @param     mixed $clienteId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -260,16 +273,16 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function filterById($id = null, $comparison = null)
+    public function filterByClienteId($clienteId = null, $comparison = null)
     {
-        if (is_array($id)) {
+        if (is_array($clienteId)) {
             $useMinMax = false;
-            if (isset($id['min'])) {
-                $this->addUsingAlias(UserTableMap::COL_ID, $id['min'], Criteria::GREATER_EQUAL);
+            if (isset($clienteId['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $clienteId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($id['max'])) {
-                $this->addUsingAlias(UserTableMap::COL_ID, $id['max'], Criteria::LESS_EQUAL);
+            if (isset($clienteId['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $clienteId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -280,65 +293,48 @@ abstract class UserQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(UserTableMap::COL_ID, $id, $comparison);
+        return $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $clienteId, $comparison);
     }
 
     /**
-     * Filter the query on the user column
+     * Filter the query on the password column
      *
      * Example usage:
      * <code>
-     * $query->filterByUser('fooValue');   // WHERE user = 'fooValue'
-     * $query->filterByUser('%fooValue%'); // WHERE user LIKE '%fooValue%'
+     * $query->filterByPassword(1234); // WHERE password = 1234
+     * $query->filterByPassword(array(12, 34)); // WHERE password IN (12, 34)
+     * $query->filterByPassword(array('min' => 12)); // WHERE password > 12
      * </code>
      *
-     * @param     string $user The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $password The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function filterByUser($user = null, $comparison = null)
+    public function filterByPassword($password = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($user)) {
+        if (is_array($password)) {
+            $useMinMax = false;
+            if (isset($password['min'])) {
+                $this->addUsingAlias(UserTableMap::COL_PASSWORD, $password['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($password['max'])) {
+                $this->addUsingAlias(UserTableMap::COL_PASSWORD, $password['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $user)) {
-                $user = str_replace('*', '%', $user);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(UserTableMap::COL_USER, $user, $comparison);
-    }
-
-    /**
-     * Filter the query on the pass column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPass('fooValue');   // WHERE pass = 'fooValue'
-     * $query->filterByPass('%fooValue%'); // WHERE pass LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $pass The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByPass($pass = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($pass)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $pass)) {
-                $pass = str_replace('*', '%', $pass);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(UserTableMap::COL_PASS, $pass, $comparison);
+        return $this->addUsingAlias(UserTableMap::COL_PASSWORD, $password, $comparison);
     }
 
     /**
@@ -371,69 +367,131 @@ abstract class UserQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the role column
+     * Filter the query on the email column
      *
      * Example usage:
      * <code>
-     * $query->filterByRole('fooValue');   // WHERE role = 'fooValue'
-     * $query->filterByRole('%fooValue%'); // WHERE role LIKE '%fooValue%'
+     * $query->filterByEmail('fooValue');   // WHERE email = 'fooValue'
+     * $query->filterByEmail('%fooValue%'); // WHERE email LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $role The value to use as filter.
+     * @param     string $email The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function filterByRole($role = null, $comparison = null)
+    public function filterByEmail($email = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($role)) {
+            if (is_array($email)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $role)) {
-                $role = str_replace('*', '%', $role);
+            } elseif (preg_match('/[\%\*]/', $email)) {
+                $email = str_replace('*', '%', $email);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(UserTableMap::COL_ROLE, $role, $comparison);
+        return $this->addUsingAlias(UserTableMap::COL_EMAIL, $email, $comparison);
+    }
+
+    /**
+     * Filter the query on the testeenum column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTesteenum('fooValue');   // WHERE testeenum = 'fooValue'
+     * $query->filterByTesteenum('%fooValue%'); // WHERE testeenum LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $testeenum The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByTesteenum($testeenum = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($testeenum)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $testeenum)) {
+                $testeenum = str_replace('*', '%', $testeenum);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_TESTEENUM, $testeenum, $comparison);
+    }
+
+    /**
+     * Filter the query on the usercol column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUsercol('fooValue');   // WHERE usercol = 'fooValue'
+     * $query->filterByUsercol('%fooValue%'); // WHERE usercol LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $usercol The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildUserQuery The current query, for fluid interface
+     */
+    public function filterByUsercol($usercol = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($usercol)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $usercol)) {
+                $usercol = str_replace('*', '%', $usercol);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserTableMap::COL_USERCOL, $usercol, $comparison);
     }
 
     /**
      * Filter the query by a related \Table\Model\Cliente object
      *
-     * @param \Table\Model\Cliente|ObjectCollection $cliente  the related object to use as filter
+     * @param \Table\Model\Cliente|ObjectCollection $cliente The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildUserQuery The current query, for fluid interface
      */
-    public function filterByClienteRelatedByUserIdInclusao($cliente, $comparison = null)
+    public function filterByCliente($cliente, $comparison = null)
     {
         if ($cliente instanceof \Table\Model\Cliente) {
             return $this
-                ->addUsingAlias(UserTableMap::COL_ID, $cliente->getUserIdInclusao(), $comparison);
+                ->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $cliente->getId(), $comparison);
         } elseif ($cliente instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
             return $this
-                ->useClienteRelatedByUserIdInclusaoQuery()
-                ->filterByPrimaryKeys($cliente->getPrimaryKeys())
-                ->endUse();
+                ->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $cliente->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByClienteRelatedByUserIdInclusao() only accepts arguments of type \Table\Model\Cliente or Collection');
+            throw new PropelException('filterByCliente() only accepts arguments of type \Table\Model\Cliente or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the ClienteRelatedByUserIdInclusao relation
+     * Adds a JOIN clause to the query using the Cliente relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function joinClienteRelatedByUserIdInclusao($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinCliente($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ClienteRelatedByUserIdInclusao');
+        $relationMap = $tableMap->getRelation('Cliente');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -448,14 +506,14 @@ abstract class UserQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'ClienteRelatedByUserIdInclusao');
+            $this->addJoinObject($join, 'Cliente');
         }
 
         return $this;
     }
 
     /**
-     * Use the ClienteRelatedByUserIdInclusao relation Cliente object
+     * Use the Cliente relation Cliente object
      *
      * @see useQuery()
      *
@@ -465,84 +523,11 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return \Table\Model\ClienteQuery A secondary query class using the current class as primary query
      */
-    public function useClienteRelatedByUserIdInclusaoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useClienteQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinClienteRelatedByUserIdInclusao($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ClienteRelatedByUserIdInclusao', '\Table\Model\ClienteQuery');
-    }
-
-    /**
-     * Filter the query by a related \Table\Model\Cliente object
-     *
-     * @param \Table\Model\Cliente|ObjectCollection $cliente  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildUserQuery The current query, for fluid interface
-     */
-    public function filterByClienteRelatedByUserIdAlteracao($cliente, $comparison = null)
-    {
-        if ($cliente instanceof \Table\Model\Cliente) {
-            return $this
-                ->addUsingAlias(UserTableMap::COL_ID, $cliente->getUserIdAlteracao(), $comparison);
-        } elseif ($cliente instanceof ObjectCollection) {
-            return $this
-                ->useClienteRelatedByUserIdAlteracaoQuery()
-                ->filterByPrimaryKeys($cliente->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByClienteRelatedByUserIdAlteracao() only accepts arguments of type \Table\Model\Cliente or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the ClienteRelatedByUserIdAlteracao relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildUserQuery The current query, for fluid interface
-     */
-    public function joinClienteRelatedByUserIdAlteracao($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ClienteRelatedByUserIdAlteracao');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'ClienteRelatedByUserIdAlteracao');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the ClienteRelatedByUserIdAlteracao relation Cliente object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\ClienteQuery A secondary query class using the current class as primary query
-     */
-    public function useClienteRelatedByUserIdAlteracaoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinClienteRelatedByUserIdAlteracao($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ClienteRelatedByUserIdAlteracao', '\Table\Model\ClienteQuery');
+            ->joinCliente($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Cliente', '\Table\Model\ClienteQuery');
     }
 
     /**
@@ -555,7 +540,7 @@ abstract class UserQuery extends ModelCriteria
     public function prune($user = null)
     {
         if ($user) {
-            $this->addUsingAlias(UserTableMap::COL_ID, $user->getId(), Criteria::NOT_EQUAL);
+            $this->addUsingAlias(UserTableMap::COL_CLIENTE_ID, $user->getClienteId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
@@ -612,9 +597,9 @@ abstract class UserQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             UserTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             UserTableMap::clearRelatedInstancePool();
 

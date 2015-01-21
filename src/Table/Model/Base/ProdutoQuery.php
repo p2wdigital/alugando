@@ -18,27 +18,21 @@ use Table\Model\Map\ProdutoTableMap;
 /**
  * Base class that represents a query for the 'produto' table.
  *
- * 
+ *
  *
  * @method     ChildProdutoQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildProdutoQuery orderByCategoria($order = Criteria::ASC) Order by the categoria column
  * @method     ChildProdutoQuery orderByNome($order = Criteria::ASC) Order by the nome column
  * @method     ChildProdutoQuery orderByModelo($order = Criteria::ASC) Order by the modelo column
- * @method     ChildProdutoQuery orderByMultiplicar($order = Criteria::ASC) Order by the multiplicar column
  *
  * @method     ChildProdutoQuery groupById() Group by the id column
  * @method     ChildProdutoQuery groupByCategoria() Group by the categoria column
  * @method     ChildProdutoQuery groupByNome() Group by the nome column
  * @method     ChildProdutoQuery groupByModelo() Group by the modelo column
- * @method     ChildProdutoQuery groupByMultiplicar() Group by the multiplicar column
  *
  * @method     ChildProdutoQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildProdutoQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildProdutoQuery innerJoin($relation) Adds a INNER JOIN clause to the query
- *
- * @method     ChildProdutoQuery leftJoinEstoque($relationAlias = null) Adds a LEFT JOIN clause to the query using the Estoque relation
- * @method     ChildProdutoQuery rightJoinEstoque($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Estoque relation
- * @method     ChildProdutoQuery innerJoinEstoque($relationAlias = null) Adds a INNER JOIN clause to the query using the Estoque relation
  *
  * @method     ChildProdutoQuery leftJoinOrcamentoItem($relationAlias = null) Adds a LEFT JOIN clause to the query using the OrcamentoItem relation
  * @method     ChildProdutoQuery rightJoinOrcamentoItem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the OrcamentoItem relation
@@ -48,29 +42,36 @@ use Table\Model\Map\ProdutoTableMap;
  * @method     ChildProdutoQuery rightJoinProdutoValor($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ProdutoValor relation
  * @method     ChildProdutoQuery innerJoinProdutoValor($relationAlias = null) Adds a INNER JOIN clause to the query using the ProdutoValor relation
  *
- * @method     \Table\Model\EstoqueQuery|\Table\Model\OrcamentoItemQuery|\Table\Model\ProdutoValorQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\OrcamentoItemQuery|\Table\Model\ProdutoValorQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildProduto findOne(ConnectionInterface $con = null) Return the first ChildProduto matching the query
  * @method     ChildProduto findOneOrCreate(ConnectionInterface $con = null) Return the first ChildProduto matching the query, or a new ChildProduto object populated from the query conditions when no match is found
  *
  * @method     ChildProduto findOneById(int $id) Return the first ChildProduto filtered by the id column
- * @method     ChildProduto findOneByCategoria(int $categoria) Return the first ChildProduto filtered by the categoria column
+ * @method     ChildProduto findOneByCategoria(string $categoria) Return the first ChildProduto filtered by the categoria column
  * @method     ChildProduto findOneByNome(string $nome) Return the first ChildProduto filtered by the nome column
- * @method     ChildProduto findOneByModelo(string $modelo) Return the first ChildProduto filtered by the modelo column
- * @method     ChildProduto findOneByMultiplicar(int $multiplicar) Return the first ChildProduto filtered by the multiplicar column
+ * @method     ChildProduto findOneByModelo(string $modelo) Return the first ChildProduto filtered by the modelo column *
+
+ * @method     ChildProduto requirePk($key, ConnectionInterface $con = null) Return the ChildProduto by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProduto requireOne(ConnectionInterface $con = null) Return the first ChildProduto matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildProduto requireOneById(int $id) Return the first ChildProduto filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProduto requireOneByCategoria(string $categoria) Return the first ChildProduto filtered by the categoria column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProduto requireOneByNome(string $nome) Return the first ChildProduto filtered by the nome column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProduto requireOneByModelo(string $modelo) Return the first ChildProduto filtered by the modelo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildProduto[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildProduto objects based on current ModelCriteria
  * @method     ChildProduto[]|ObjectCollection findById(int $id) Return ChildProduto objects filtered by the id column
- * @method     ChildProduto[]|ObjectCollection findByCategoria(int $categoria) Return ChildProduto objects filtered by the categoria column
+ * @method     ChildProduto[]|ObjectCollection findByCategoria(string $categoria) Return ChildProduto objects filtered by the categoria column
  * @method     ChildProduto[]|ObjectCollection findByNome(string $nome) Return ChildProduto objects filtered by the nome column
  * @method     ChildProduto[]|ObjectCollection findByModelo(string $modelo) Return ChildProduto objects filtered by the modelo column
- * @method     ChildProduto[]|ObjectCollection findByMultiplicar(int $multiplicar) Return ChildProduto objects filtered by the multiplicar column
  * @method     ChildProduto[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class ProdutoQuery extends ModelCriteria
 {
-    
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+
     /**
      * Initializes internal state of \Table\Model\Base\ProdutoQuery object.
      *
@@ -156,9 +157,9 @@ abstract class ProdutoQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, categoria, nome, modelo, multiplicar FROM produto WHERE id = :p0';
+        $sql = 'SELECT id, categoria, nome, modelo FROM produto WHERE id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -292,36 +293,24 @@ abstract class ProdutoQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByCategoria(1234); // WHERE categoria = 1234
-     * $query->filterByCategoria(array(12, 34)); // WHERE categoria IN (12, 34)
-     * $query->filterByCategoria(array('min' => 12)); // WHERE categoria > 12
+     * $query->filterByCategoria('fooValue');   // WHERE categoria = 'fooValue'
+     * $query->filterByCategoria('%fooValue%'); // WHERE categoria LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $categoria The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $categoria The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildProdutoQuery The current query, for fluid interface
      */
     public function filterByCategoria($categoria = null, $comparison = null)
     {
-        if (is_array($categoria)) {
-            $useMinMax = false;
-            if (isset($categoria['min'])) {
-                $this->addUsingAlias(ProdutoTableMap::COL_CATEGORIA, $categoria['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($categoria['max'])) {
-                $this->addUsingAlias(ProdutoTableMap::COL_CATEGORIA, $categoria['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($categoria)) {
                 $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $categoria)) {
+                $categoria = str_replace('*', '%', $categoria);
+                $comparison = Criteria::LIKE;
             }
         }
 
@@ -384,120 +373,6 @@ abstract class ProdutoQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ProdutoTableMap::COL_MODELO, $modelo, $comparison);
-    }
-
-    /**
-     * Filter the query on the multiplicar column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByMultiplicar(1234); // WHERE multiplicar = 1234
-     * $query->filterByMultiplicar(array(12, 34)); // WHERE multiplicar IN (12, 34)
-     * $query->filterByMultiplicar(array('min' => 12)); // WHERE multiplicar > 12
-     * </code>
-     *
-     * @param     mixed $multiplicar The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildProdutoQuery The current query, for fluid interface
-     */
-    public function filterByMultiplicar($multiplicar = null, $comparison = null)
-    {
-        if (is_array($multiplicar)) {
-            $useMinMax = false;
-            if (isset($multiplicar['min'])) {
-                $this->addUsingAlias(ProdutoTableMap::COL_MULTIPLICAR, $multiplicar['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($multiplicar['max'])) {
-                $this->addUsingAlias(ProdutoTableMap::COL_MULTIPLICAR, $multiplicar['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(ProdutoTableMap::COL_MULTIPLICAR, $multiplicar, $comparison);
-    }
-
-    /**
-     * Filter the query by a related \Table\Model\Estoque object
-     *
-     * @param \Table\Model\Estoque|ObjectCollection $estoque  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildProdutoQuery The current query, for fluid interface
-     */
-    public function filterByEstoque($estoque, $comparison = null)
-    {
-        if ($estoque instanceof \Table\Model\Estoque) {
-            return $this
-                ->addUsingAlias(ProdutoTableMap::COL_ID, $estoque->getProdutoId(), $comparison);
-        } elseif ($estoque instanceof ObjectCollection) {
-            return $this
-                ->useEstoqueQuery()
-                ->filterByPrimaryKeys($estoque->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByEstoque() only accepts arguments of type \Table\Model\Estoque or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Estoque relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildProdutoQuery The current query, for fluid interface
-     */
-    public function joinEstoque($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Estoque');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Estoque');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Estoque relation Estoque object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\EstoqueQuery A secondary query class using the current class as primary query
-     */
-    public function useEstoqueQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinEstoque($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Estoque', '\Table\Model\EstoqueQuery');
     }
 
     /**
@@ -713,9 +588,9 @@ abstract class ProdutoQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             ProdutoTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             ProdutoTableMap::clearRelatedInstancePool();
 

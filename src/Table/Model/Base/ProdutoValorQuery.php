@@ -18,7 +18,7 @@ use Table\Model\Map\ProdutoValorTableMap;
 /**
  * Base class that represents a query for the 'produto_valor' table.
  *
- * 
+ *
  *
  * @method     ChildProdutoValorQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildProdutoValorQuery orderByProdutoId($order = Criteria::ASC) Order by the produto_id column
@@ -46,7 +46,15 @@ use Table\Model\Map\ProdutoValorTableMap;
  * @method     ChildProdutoValor findOneById(int $id) Return the first ChildProdutoValor filtered by the id column
  * @method     ChildProdutoValor findOneByProdutoId(int $produto_id) Return the first ChildProdutoValor filtered by the produto_id column
  * @method     ChildProdutoValor findOneByPrazo(int $prazo) Return the first ChildProdutoValor filtered by the prazo column
- * @method     ChildProdutoValor findOneByValor(string $valor) Return the first ChildProdutoValor filtered by the valor column
+ * @method     ChildProdutoValor findOneByValor(string $valor) Return the first ChildProdutoValor filtered by the valor column *
+
+ * @method     ChildProdutoValor requirePk($key, ConnectionInterface $con = null) Return the ChildProdutoValor by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProdutoValor requireOne(ConnectionInterface $con = null) Return the first ChildProdutoValor matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ *
+ * @method     ChildProdutoValor requireOneById(int $id) Return the first ChildProdutoValor filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProdutoValor requireOneByProdutoId(int $produto_id) Return the first ChildProdutoValor filtered by the produto_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProdutoValor requireOneByPrazo(int $prazo) Return the first ChildProdutoValor filtered by the prazo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProdutoValor requireOneByValor(string $valor) Return the first ChildProdutoValor filtered by the valor column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildProdutoValor[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildProdutoValor objects based on current ModelCriteria
  * @method     ChildProdutoValor[]|ObjectCollection findById(int $id) Return ChildProdutoValor objects filtered by the id column
@@ -58,7 +66,8 @@ use Table\Model\Map\ProdutoValorTableMap;
  */
 abstract class ProdutoValorQuery extends ModelCriteria
 {
-    
+    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+
     /**
      * Initializes internal state of \Table\Model\Base\ProdutoValorQuery object.
      *
@@ -146,8 +155,8 @@ abstract class ProdutoValorQuery extends ModelCriteria
     {
         $sql = 'SELECT id, produto_id, prazo, valor FROM produto_valor WHERE id = :p0 AND produto_id = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -558,9 +567,9 @@ abstract class ProdutoValorQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             ProdutoValorTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             ProdutoValorTableMap::clearRelatedInstancePool();
 

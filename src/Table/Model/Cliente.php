@@ -1,130 +1,20 @@
-<?php 
-namespace Table\Model; 
-class Cliente { 
-    /** 
-    * The value for the id field.
-    * @var        int
-    */ 
-    protected $id; 
+<?php
 
-    /** 
-    * The value for the razao_social field.
-    * @var        
-    */ 
-    protected $razao_social; 
+namespace Table\Model;
 
-    /** 
-    * The value for the contato field.
-    * @var        
-    */ 
-    protected $contato; 
+use Table\Model\Base\Cliente as BaseCliente;
 
-    /** 
-    * The value for the cep field.
-    * @var        
-    */ 
-    protected $cep; 
-
-    /** 
-    * The value for the descricao field.
-    * @var        string
-    */ 
-    protected $descricao; 
-
-    /** 
-    * The value for the dh_inclusao field.
-    * @var        string
-    */ 
-    protected $dh_inclusao; 
-
-    /** 
-    * The value for the dh_alteracao field.
-    * @var        string
-    */ 
-    protected $dh_alteracao; 
-
-    public function getId(){ 
-        return $this->id;
-    }
-
-    public function getRazaoSocial(){ 
-        return $this->razao_social;
-    }
-
-    public function getContato(){ 
-        return $this->contato;
-    }
-
-    public function getCep(){ 
-        return $this->cep;
-    }
-
-    public function getDescricao(){ 
-        return $this->descricao;
-    }
-
-    public function getDhInclusao(){ 
-        return $this->dh_inclusao;
-    }
-
-    public function getDhAlteracao(){ 
-        return $this->dh_alteracao;
-    }
-
-    public function setId($val){ 
-        if($val !== null)  $val = (int) $val; 
-
-        if($val !== $this->id):
-            $this->id = $val;
-        endif;
-    }
-
-    public function setRazaoSocial($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->razao_social):
-            $this->razao_social = $val;
-        endif;
-    }
-
-    public function setContato($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->contato):
-            $this->contato = $val;
-        endif;
-    }
-
-    public function setCep($val){ 
-        if($val !== null)  $val = () $val; 
-
-        if($val !== $this->cep):
-            $this->cep = $val;
-        endif;
-    }
-
-    public function setDescricao($val){ 
-        if($val !== null)  $val = (string) $val; 
-
-        if($val !== $this->descricao):
-            $this->descricao = $val;
-        endif;
-    }
-
-    public function setDhInclusao($val){ 
-        if($val !== null)  $val = (string) $val; 
-
-        if($val !== $this->dh_inclusao):
-            $this->dh_inclusao = $val;
-        endif;
-    }
-
-    public function setDhAlteracao($val){ 
-        if($val !== null)  $val = (string) $val; 
-
-        if($val !== $this->dh_alteracao):
-            $this->dh_alteracao = $val;
-        endif;
-    }
+/**
+ * Skeleton subclass for representing a row from the 'cliente' table.
+ *
+ *
+ *
+ * You should add additional methods to this class to meet the
+ * application requirements.  This class will only be generated as
+ * long as it does not already exist in the output directory.
+ *
+ */
+class Cliente extends BaseCliente
+{
 
 }
