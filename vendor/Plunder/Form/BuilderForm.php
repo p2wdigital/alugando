@@ -15,7 +15,7 @@ class BuilderForm
 	}
 
 	public function getFields(){
-		return (object)$this->fields;
+		return $this->fields;
 	}
 	
 }
