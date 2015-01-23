@@ -16,6 +16,8 @@ $debug = array(
 	"Memoria"=>memory_get_peak_usage(true)/1024/1024 . "MB",
 	"Time"=>number_format((microtime(true) - $ini),3) ." ms",
 );
+
+
 var_dump($debug);
 
 

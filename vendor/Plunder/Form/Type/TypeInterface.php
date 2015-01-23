@@ -7,9 +7,6 @@ namespace Plunder\Form\Type;
 * Interface Type
 */
 interface TypeInterface{
-	protected $name;
-	protected $field;
-	protected $options;
 
 	public function __construct($name, $field, $options);
 	/**
@@ -29,7 +26,7 @@ interface TypeInterface{
 	 * @param  [type] $options [description]
 	 * @return [type]          [description]
 	 */
-	public function getField($options);
+	public function getField();
 
 
 }

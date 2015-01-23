@@ -10,11 +10,11 @@ class FormTwig extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction('form_row', array($this,'form_row'), array('needs_context'=>true, 'is_safe'=>array('html'))),
+            new Twig_SimpleFunction('form_row', array($this,'form_row'), array('is_safe'=>array('html'))),
         );
     }
 
-    public function form_row($context, $name){
+    public function form_row($field, $option = array()){
 		$cacheDir 	= sprintf("app/cache/%s/twig", ENVIRONMENT);
 		$debug 		= false;
 
@@ -30,7 +30,7 @@ class FormTwig extends Twig_Extension
 
 		$twig->addExtension(new \Twig_Extension_Debug());
 
-		return $twig->render("formLoader.html", array('form'=>$context['form'][$name]));
+		return $twig->render("formLoader.html", $option + $field);
 
     	
     }

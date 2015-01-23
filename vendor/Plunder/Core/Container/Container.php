@@ -34,8 +34,9 @@ class Container
 	}
 
 	public static function load($key, $class){
-
+		self::$container[$key] = $class;
 	}
+
 	/**
 	 * [get Retorna uma instancia da classe]
 	 * @param  [string] $key     [Apelido da classe]
