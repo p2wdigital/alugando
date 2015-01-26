@@ -3,9 +3,9 @@
 namespace Plunder\Form\Type;
 use Plunder\Helpers\Plunder;
 /**
-* Class TextType
+* Class NumberType
 */
-class TextType extends AbstractType implements TypeInterface
+class TextareaType extends AbstractType implements TypeInterface
 {
 
 	/**
@@ -18,7 +18,7 @@ class TextType extends AbstractType implements TypeInterface
 	}
 
 	public function getName(){
-		return "text";
+		return "textarea";
 	}
 	
 	public function getField(){
@@ -30,7 +30,7 @@ class TextType extends AbstractType implements TypeInterface
 		$field['name']		= sprintf("%s[%s]", $this->name, $this->field);
 		$field['field'] 	= $this->field;
 		$field['type']		= $this->getName();
-		$field['input']		= true;
+		$field['input']		= false;
 		$field['value'] 	= $this->getValue();
 		
 		if (!array_key_exists('label', $options)):

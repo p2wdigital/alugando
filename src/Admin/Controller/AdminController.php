@@ -34,10 +34,12 @@ class AdminController extends Controller
 	/**
 	 * @Route("/insert", name="admin_insert")
 	 */
-	public function insertAction(){
+	public function insertAction(Request $request){
 		$cliente = new Cliente();
 		$form = new Form(new ClienteType(), $cliente);
-		$form->createView();
+		var_dump($request->request);
+
+
 		return $this->render("Admin:Admin:insert.html.twig", array("form"=>$form->createView()));
 	}
 

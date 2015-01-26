@@ -1,15 +1,39 @@
+{# Form Row #}
 {% block form_row %}
 	<div class="form-group">
-		{{block("label")}}
-		{{block("input_type")}}		
+		{% if input  %}
+			{{block('label')}}
+			{{block('input_type')}}
+		{% else %}
+			{{block('label')}}
+			{{block(type)}}
+		{% endif %}	
 	</div>
 {% endblock %}
 
+{# Show Field#}
+{% block show_field %}
+
+{% endblock %}
+
+{# Label #}
+{% block label %}
+	{% if type not in ['submit'] %}
+    <label for="{{name}}">{{label}}</label>
+	{% endif %}
+{% endblock %}
+
+{# Input Type#}
 {% block input_type %}
     <input type="{{type}}" name="{{name}}" class="form-control">
 {% endblock %}
 
-{% block label %}
-    <label for="{{name}}">{{label}}</label>
+{% block textarea %}
+	
+    <textarea name="{{name}}" class="form-control">{{value}}</textarea>
 {% endblock %}
 
+
+{% block submit %}
+    <input type="submit" name="{{name}}" value="{{label}}">
+{% endblock %}

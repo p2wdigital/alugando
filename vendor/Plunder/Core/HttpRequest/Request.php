@@ -33,6 +33,9 @@ class Request
 		$this->server 	= 	new ParameterBag($server);
 	}
 
+	public function getRequest(){
+		$this->request->getAll();
+	}
 
 	public function getPathInfo(){
 		return $this->server->get("PATH_INFO", "", false);

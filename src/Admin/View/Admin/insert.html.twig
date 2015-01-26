@@ -3,10 +3,15 @@
 {% block body %}
 <div class="container">
 	<div class="row">
-		{{dump(form)}}
+		
+		<form action="" method="POST">
+			
 		{{form_row(form.razao_social)}}
 		{{form_row(form.contato)}}
-		{{form_row(form.contato, {'label':"Contato Substitui"})}}
+		{{form_row(form.cep)}}
+		{{form_row(form.decricao)}}
+		{{form_row(form.save)}}
+		</form>
 	</div>
 </div>
 

@@ -3,9 +3,9 @@
 namespace Plunder\Form\Type;
 use Plunder\Helpers\Plunder;
 /**
-* Class TextType
+* Class NumberType
 */
-class TextType extends AbstractType implements TypeInterface
+class NumberType extends AbstractType implements TypeInterface
 {
 
 	/**
@@ -18,7 +18,7 @@ class TextType extends AbstractType implements TypeInterface
 	}
 
 	public function getName(){
-		return "text";
+		return "number";
 	}
 	
 	public function getField(){

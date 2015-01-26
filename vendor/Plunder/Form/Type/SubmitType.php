@@ -5,7 +5,7 @@ use Plunder\Helpers\Plunder;
 /**
 * Class TextType
 */
-class TextType extends AbstractType implements TypeInterface
+class SubmitType extends AbstractType implements TypeInterface
 {
 
 	/**
@@ -18,7 +18,7 @@ class TextType extends AbstractType implements TypeInterface
 	}
 
 	public function getName(){
-		return "text";
+		return "submit";
 	}
 	
 	public function getField(){
@@ -30,13 +30,11 @@ class TextType extends AbstractType implements TypeInterface
 		$field['name']		= sprintf("%s[%s]", $this->name, $this->field);
 		$field['field'] 	= $this->field;
 		$field['type']		= $this->getName();
-		$field['input']		= true;
-		$field['value'] 	= $this->getValue();
+		$field['input']		= false;
 		
 		if (!array_key_exists('label', $options)):
 			$field['label'] = $this->labelName($this->field);
 		endif;
-
 
 		return $field = $field + $options;
 

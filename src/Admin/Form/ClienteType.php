@@ -19,12 +19,11 @@ class ClienteType extends AbstractFormType{
 	}
 
 	public function buildForm(BuilderForm $builder, array $option){
-		$builder->add('razao_social', 'text', array(
-			'label'=>'Nome',
-			'attr'=>array("class"=>"oal"),
-		));
+		$builder->add('razao_social', 'text');
 		$builder->add('contato', 'text');
-		$builder->add('save', 'text');
+		$builder->add('cep', 'number');
+		$builder->add('decricao', 'textarea');
+		$builder->add('save', 'submit');
 	}
 
 

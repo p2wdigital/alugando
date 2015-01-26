@@ -25,7 +25,7 @@ class TwigTemplating
 
 		$loader = new TwigLoaderFilesystem(array('src', 'app/View'));
 		$twig = new \Twig_Environment($loader, array(
-		    //'cache' => $cacheDir,
+		    'cache' => $cacheDir,
 		    'debug'=>$debug
 		));
 		$twig->addExtension(new Twig_Extension_Debug());
