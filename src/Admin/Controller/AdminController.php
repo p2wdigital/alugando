@@ -22,12 +22,9 @@ class AdminController extends Controller
 	 * @Route("/", name="admin_home")
 	 */
 	public function indexAction(){
-		$con = Propel::getWriteConnection('default');
-		$con->useDebug(true);
 		
 		$cliente = ClienteQuery::create()->select(array('RazaoSocial', 'Contato'))->find();
 		
-		var_dump($con->getLastExecutedQuery());
 		return $this->render("Admin:Admin:index.html.twig", array("cliente"=>$cliente));
 	}
 
@@ -35,10 +32,18 @@ class AdminController extends Controller
 	 * @Route("/insert", name="admin_insert")
 	 */
 	public function insertAction(Request $request){
+		$con = Propel::getWriteConnection('default');
+		$con->useDebug(true);
 		$cliente = new Cliente();
 		$form = new Form(new ClienteType(), $cliente);
-		var_dump($request->request);
-
+		var_dump($request->request->get("cliente"));
+		if(isset($_POST['cliente'])):
+			$form->handleRequest($request);
+			var_dump($cliente);
+			//$cliente->save();
+			var_dump($con->getLastExecutedQuery());
+			echo $cliente->getId();
+		endif;
 
 		return $this->render("Admin:Admin:insert.html.twig", array("form"=>$form->createView()));
 	}

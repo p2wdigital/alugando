@@ -38,5 +38,7 @@ class ParameterBag
 		endif;
 	}
 
-	
+	public function getAll(){
+		return $parameter;
+	}
 }

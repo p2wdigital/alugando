@@ -22,7 +22,7 @@ class ClienteType extends AbstractFormType{
 		$builder->add('razao_social', 'text');
 		$builder->add('contato', 'text');
 		$builder->add('cep', 'number');
-		$builder->add('decricao', 'textarea');
+		$builder->add('descricao', 'textarea');
 		$builder->add('save', 'submit');
 	}
 
