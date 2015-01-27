@@ -18,18 +18,16 @@ use Propel\Runtime\Parser\AbstractParser;
 use Table\Model\Orcamento as ChildOrcamento;
 use Table\Model\OrcamentoItemQuery as ChildOrcamentoItemQuery;
 use Table\Model\OrcamentoQuery as ChildOrcamentoQuery;
-use Table\Model\Produto as ChildProduto;
-use Table\Model\ProdutoQuery as ChildProdutoQuery;
 use Table\Model\Map\OrcamentoItemTableMap;
 
 /**
  * Base class that represents a row from the 'orcamento_item' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class OrcamentoItem implements ActiveRecordInterface
+abstract class OrcamentoItem implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -76,10 +74,16 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     protected $orcamento_id;
 
     /**
-     * The value for the produto_id field.
-     * @var        int
+     * The value for the produto field.
+     * @var        string
      */
-    protected $produto_id;
+    protected $produto;
+
+    /**
+     * The value for the quantidade field.
+     * @var        string
+     */
+    protected $quantidade;
 
     /**
      * The value for the valor field.
@@ -88,26 +92,9 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     protected $valor;
 
     /**
-     * The value for the prazo field.
-     * @var        int
-     */
-    protected $prazo;
-
-    /**
-     * The value for the quantidade field.
-     * @var        int
-     */
-    protected $quantidade;
-
-    /**
      * @var        ChildOrcamento
      */
     protected $aOrcamento;
-
-    /**
-     * @var        ChildProduto
-     */
-    protected $aProduto;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -336,7 +323,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     *
+     * 
      * @return int
      */
     public function getId()
@@ -346,7 +333,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
 
     /**
      * Get the [orcamento_id] column value.
-     *
+     * 
      * @return int
      */
     public function getOrcamentoId()
@@ -355,18 +342,28 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     }
 
     /**
-     * Get the [produto_id] column value.
-     *
-     * @return int
+     * Get the [produto] column value.
+     * 
+     * @return string
      */
-    public function getProdutoId()
+    public function getProduto()
     {
-        return $this->produto_id;
+        return $this->produto;
+    }
+
+    /**
+     * Get the [quantidade] column value.
+     * 
+     * @return string
+     */
+    public function getQuantidade()
+    {
+        return $this->quantidade;
     }
 
     /**
      * Get the [valor] column value.
-     *
+     * 
      * @return string
      */
     public function getValor()
@@ -375,28 +372,8 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     }
 
     /**
-     * Get the [prazo] column value.
-     *
-     * @return int
-     */
-    public function getPrazo()
-    {
-        return $this->prazo;
-    }
-
-    /**
-     * Get the [quantidade] column value.
-     *
-     * @return int
-     */
-    public function getQuantidade()
-    {
-        return $this->quantidade;
-    }
-
-    /**
      * Set the value of [id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
      */
@@ -416,7 +393,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
 
     /**
      * Set the value of [orcamento_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
      */
@@ -439,32 +416,48 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     } // setOrcamentoId()
 
     /**
-     * Set the value of [produto_id] column.
-     *
-     * @param  int $v new value
+     * Set the value of [produto] column.
+     * 
+     * @param  string $v new value
      * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
      */
-    public function setProdutoId($v)
+    public function setProduto($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->produto_id !== $v) {
-            $this->produto_id = $v;
-            $this->modifiedColumns[OrcamentoItemTableMap::COL_PRODUTO_ID] = true;
-        }
-
-        if ($this->aProduto !== null && $this->aProduto->getId() !== $v) {
-            $this->aProduto = null;
+        if ($this->produto !== $v) {
+            $this->produto = $v;
+            $this->modifiedColumns[OrcamentoItemTableMap::COL_PRODUTO] = true;
         }
 
         return $this;
-    } // setProdutoId()
+    } // setProduto()
+
+    /**
+     * Set the value of [quantidade] column.
+     * 
+     * @param  string $v new value
+     * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
+     */
+    public function setQuantidade($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->quantidade !== $v) {
+            $this->quantidade = $v;
+            $this->modifiedColumns[OrcamentoItemTableMap::COL_QUANTIDADE] = true;
+        }
+
+        return $this;
+    } // setQuantidade()
 
     /**
      * Set the value of [valor] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
      */
@@ -481,46 +474,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
 
         return $this;
     } // setValor()
-
-    /**
-     * Set the value of [prazo] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
-     */
-    public function setPrazo($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->prazo !== $v) {
-            $this->prazo = $v;
-            $this->modifiedColumns[OrcamentoItemTableMap::COL_PRAZO] = true;
-        }
-
-        return $this;
-    } // setPrazo()
-
-    /**
-     * Set the value of [quantidade] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
-     */
-    public function setQuantidade($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->quantidade !== $v) {
-            $this->quantidade = $v;
-            $this->modifiedColumns[OrcamentoItemTableMap::COL_QUANTIDADE] = true;
-        }
-
-        return $this;
-    } // setQuantidade()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -564,17 +517,14 @@ abstract class OrcamentoItem implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : OrcamentoItemTableMap::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->orcamento_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrcamentoItemTableMap::translateFieldName('ProdutoId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->produto_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : OrcamentoItemTableMap::translateFieldName('Produto', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->produto = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrcamentoItemTableMap::translateFieldName('Valor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : OrcamentoItemTableMap::translateFieldName('Quantidade', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->quantidade = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrcamentoItemTableMap::translateFieldName('Valor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->valor = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : OrcamentoItemTableMap::translateFieldName('Prazo', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->prazo = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : OrcamentoItemTableMap::translateFieldName('Quantidade', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->quantidade = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -583,7 +533,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = OrcamentoItemTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = OrcamentoItemTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\OrcamentoItem'), 0, $e);
@@ -607,9 +557,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     {
         if ($this->aOrcamento !== null && $this->orcamento_id !== $this->aOrcamento->getId()) {
             $this->aOrcamento = null;
-        }
-        if ($this->aProduto !== null && $this->produto_id !== $this->aProduto->getId()) {
-            $this->aProduto = null;
         }
     } // ensureConsistency
 
@@ -651,7 +598,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aOrcamento = null;
-            $this->aProduto = null;
         } // if (deep)
     }
 
@@ -763,13 +709,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
                 $this->setOrcamento($this->aOrcamento);
             }
 
-            if ($this->aProduto !== null) {
-                if ($this->aProduto->isModified() || $this->aProduto->isNew()) {
-                    $affectedRows += $this->aProduto->save($con);
-                }
-                $this->setProduto($this->aProduto);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -813,17 +752,14 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         if ($this->isColumnModified(OrcamentoItemTableMap::COL_ORCAMENTO_ID)) {
             $modifiedColumns[':p' . $index++]  = 'orcamento_id';
         }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRODUTO_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'produto_id';
-        }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_VALOR)) {
-            $modifiedColumns[':p' . $index++]  = 'valor';
-        }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRAZO)) {
-            $modifiedColumns[':p' . $index++]  = 'prazo';
+        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRODUTO)) {
+            $modifiedColumns[':p' . $index++]  = 'produto';
         }
         if ($this->isColumnModified(OrcamentoItemTableMap::COL_QUANTIDADE)) {
             $modifiedColumns[':p' . $index++]  = 'quantidade';
+        }
+        if ($this->isColumnModified(OrcamentoItemTableMap::COL_VALOR)) {
+            $modifiedColumns[':p' . $index++]  = 'valor';
         }
 
         $sql = sprintf(
@@ -836,23 +772,20 @@ abstract class OrcamentoItem implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
+                    case 'id':                        
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'orcamento_id':
+                    case 'orcamento_id':                        
                         $stmt->bindValue($identifier, $this->orcamento_id, PDO::PARAM_INT);
                         break;
-                    case 'produto_id':
-                        $stmt->bindValue($identifier, $this->produto_id, PDO::PARAM_INT);
+                    case 'produto':                        
+                        $stmt->bindValue($identifier, $this->produto, PDO::PARAM_STR);
                         break;
-                    case 'valor':
+                    case 'quantidade':                        
+                        $stmt->bindValue($identifier, $this->quantidade, PDO::PARAM_STR);
+                        break;
+                    case 'valor':                        
                         $stmt->bindValue($identifier, $this->valor, PDO::PARAM_STR);
-                        break;
-                    case 'prazo':
-                        $stmt->bindValue($identifier, $this->prazo, PDO::PARAM_INT);
-                        break;
-                    case 'quantidade':
-                        $stmt->bindValue($identifier, $this->quantidade, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -923,16 +856,13 @@ abstract class OrcamentoItem implements ActiveRecordInterface
                 return $this->getOrcamentoId();
                 break;
             case 2:
-                return $this->getProdutoId();
+                return $this->getProduto();
                 break;
             case 3:
-                return $this->getValor();
+                return $this->getQuantidade();
                 break;
             case 4:
-                return $this->getPrazo();
-                break;
-            case 5:
-                return $this->getQuantidade();
+                return $this->getValor();
                 break;
             default:
                 return null;
@@ -966,19 +896,18 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getOrcamentoId(),
-            $keys[2] => $this->getProdutoId(),
-            $keys[3] => $this->getValor(),
-            $keys[4] => $this->getPrazo(),
-            $keys[5] => $this->getQuantidade(),
+            $keys[2] => $this->getProduto(),
+            $keys[3] => $this->getQuantidade(),
+            $keys[4] => $this->getValor(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aOrcamento) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'orcamento';
@@ -989,23 +918,8 @@ abstract class OrcamentoItem implements ActiveRecordInterface
                     default:
                         $key = 'Orcamento';
                 }
-
+        
                 $result[$key] = $this->aOrcamento->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aProduto) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'produto';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'produto';
-                        break;
-                    default:
-                        $key = 'Produto';
-                }
-
-                $result[$key] = $this->aProduto->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1048,16 +962,13 @@ abstract class OrcamentoItem implements ActiveRecordInterface
                 $this->setOrcamentoId($value);
                 break;
             case 2:
-                $this->setProdutoId($value);
+                $this->setProduto($value);
                 break;
             case 3:
-                $this->setValor($value);
+                $this->setQuantidade($value);
                 break;
             case 4:
-                $this->setPrazo($value);
-                break;
-            case 5:
-                $this->setQuantidade($value);
+                $this->setValor($value);
                 break;
         } // switch()
 
@@ -1092,16 +1003,13 @@ abstract class OrcamentoItem implements ActiveRecordInterface
             $this->setOrcamentoId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setProdutoId($arr[$keys[2]]);
+            $this->setProduto($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setValor($arr[$keys[3]]);
+            $this->setQuantidade($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setPrazo($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setQuantidade($arr[$keys[5]]);
+            $this->setValor($arr[$keys[4]]);
         }
     }
 
@@ -1150,17 +1058,14 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         if ($this->isColumnModified(OrcamentoItemTableMap::COL_ORCAMENTO_ID)) {
             $criteria->add(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $this->orcamento_id);
         }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRODUTO_ID)) {
-            $criteria->add(OrcamentoItemTableMap::COL_PRODUTO_ID, $this->produto_id);
-        }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_VALOR)) {
-            $criteria->add(OrcamentoItemTableMap::COL_VALOR, $this->valor);
-        }
-        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRAZO)) {
-            $criteria->add(OrcamentoItemTableMap::COL_PRAZO, $this->prazo);
+        if ($this->isColumnModified(OrcamentoItemTableMap::COL_PRODUTO)) {
+            $criteria->add(OrcamentoItemTableMap::COL_PRODUTO, $this->produto);
         }
         if ($this->isColumnModified(OrcamentoItemTableMap::COL_QUANTIDADE)) {
             $criteria->add(OrcamentoItemTableMap::COL_QUANTIDADE, $this->quantidade);
+        }
+        if ($this->isColumnModified(OrcamentoItemTableMap::COL_VALOR)) {
+            $criteria->add(OrcamentoItemTableMap::COL_VALOR, $this->valor);
         }
 
         return $criteria;
@@ -1181,7 +1086,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         $criteria = ChildOrcamentoItemQuery::create();
         $criteria->add(OrcamentoItemTableMap::COL_ID, $this->id);
         $criteria->add(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $this->orcamento_id);
-        $criteria->add(OrcamentoItemTableMap::COL_PRODUTO_ID, $this->produto_id);
 
         return $criteria;
     }
@@ -1195,21 +1099,13 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     public function hashCode()
     {
         $validPk = null !== $this->getId() &&
-            null !== $this->getOrcamentoId() &&
-            null !== $this->getProdutoId();
+            null !== $this->getOrcamentoId();
 
-        $validPrimaryKeyFKs = 2;
+        $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
 
         //relation fk_orcamento_item_orcamento1 to table orcamento
         if ($this->aOrcamento && $hash = spl_object_hash($this->aOrcamento)) {
-            $primaryKeyFKs[] = $hash;
-        } else {
-            $validPrimaryKeyFKs = false;
-        }
-
-        //relation fk_orcamento_item_produto1 to table produto
-        if ($this->aProduto && $hash = spl_object_hash($this->aProduto)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
@@ -1223,7 +1119,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.
@@ -1234,7 +1130,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         $pks = array();
         $pks[0] = $this->getId();
         $pks[1] = $this->getOrcamentoId();
-        $pks[2] = $this->getProdutoId();
 
         return $pks;
     }
@@ -1249,7 +1144,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     {
         $this->setId($keys[0]);
         $this->setOrcamentoId($keys[1]);
-        $this->setProdutoId($keys[2]);
     }
 
     /**
@@ -1258,7 +1152,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getId()) && (null === $this->getOrcamentoId()) && (null === $this->getProdutoId());
+        return (null === $this->getId()) && (null === $this->getOrcamentoId());
     }
 
     /**
@@ -1275,10 +1169,9 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setOrcamentoId($this->getOrcamentoId());
-        $copyObj->setProdutoId($this->getProdutoId());
-        $copyObj->setValor($this->getValor());
-        $copyObj->setPrazo($this->getPrazo());
+        $copyObj->setProduto($this->getProduto());
         $copyObj->setQuantidade($this->getQuantidade());
+        $copyObj->setValor($this->getValor());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1345,9 +1238,7 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     public function getOrcamento(ConnectionInterface $con = null)
     {
         if ($this->aOrcamento === null && ($this->orcamento_id !== null)) {
-            $this->aOrcamento = ChildOrcamentoQuery::create()
-                ->filterByOrcamentoItem($this) // here
-                ->findOne($con);
+            $this->aOrcamento = ChildOrcamentoQuery::create()->findPk($this->orcamento_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1361,57 +1252,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildProduto object.
-     *
-     * @param  ChildProduto $v
-     * @return $this|\Table\Model\OrcamentoItem The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setProduto(ChildProduto $v = null)
-    {
-        if ($v === null) {
-            $this->setProdutoId(NULL);
-        } else {
-            $this->setProdutoId($v->getId());
-        }
-
-        $this->aProduto = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildProduto object, it will not be re-added.
-        if ($v !== null) {
-            $v->addOrcamentoItem($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildProduto object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildProduto The associated ChildProduto object.
-     * @throws PropelException
-     */
-    public function getProduto(ConnectionInterface $con = null)
-    {
-        if ($this->aProduto === null && ($this->produto_id !== null)) {
-            $this->aProduto = ChildProdutoQuery::create()->findPk($this->produto_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aProduto->addOrcamentoItems($this);
-             */
-        }
-
-        return $this->aProduto;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1421,15 +1261,11 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         if (null !== $this->aOrcamento) {
             $this->aOrcamento->removeOrcamentoItem($this);
         }
-        if (null !== $this->aProduto) {
-            $this->aProduto->removeOrcamentoItem($this);
-        }
         $this->id = null;
         $this->orcamento_id = null;
-        $this->produto_id = null;
-        $this->valor = null;
-        $this->prazo = null;
+        $this->produto = null;
         $this->quantidade = null;
+        $this->valor = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1451,7 +1287,6 @@ abstract class OrcamentoItem implements ActiveRecordInterface
         } // if ($deep)
 
         $this->aOrcamento = null;
-        $this->aProduto = null;
     }
 
     /**

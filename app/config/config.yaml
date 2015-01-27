@@ -7,7 +7,7 @@ propel:
                 charset: utf8
               classname: Propel\Runtime\Connection\ConnectionWrapper
               #classname: Propel\Runtime\Connection\DebugPDO
-              dsn: "mysql:host=localhost;dbname=wep2"
+              dsn: "mysql:host=localhost;dbname=wep2test"
               user: root
               password: null
               attributes:

@@ -157,10 +157,10 @@ class ClienteTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('razao_social', 'RazaoSocial', 'VARCHAR', true, 100, null);
-        $this->addColumn('contato', 'Contato', 'VARCHAR', false, 80, null);
+        $this->addColumn('razao_social', 'RazaoSocial', 'VARCHAR', true, 80, null);
+        $this->addColumn('contato', 'Contato', 'VARCHAR', true, 80, null);
         $this->addColumn('cep', 'Cep', 'VARCHAR', true, 8, null);
-        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', true, null, null);
         $this->addColumn('dh_inclusao', 'DhInclusao', 'TIMESTAMP', false, null, null);
         $this->addColumn('dh_alteracao', 'DhAlteracao', 'TIMESTAMP', false, null, null);
     } // initialize()
@@ -170,18 +170,8 @@ class ClienteTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Orcamento', '\\Table\\Model\\Orcamento', RelationMap::ONE_TO_MANY, array('id' => 'cliente_id', ), null, null, 'Orcamentos');
-        $this->addRelation('User', '\\Table\\Model\\User', RelationMap::ONE_TO_ONE, array('id' => 'cliente_id', ), 'CASCADE', null);
+        $this->addRelation('User', '\\Table\\Model\\User', RelationMap::ONE_TO_ONE, array('id' => 'cliente_id', ), null, null);
     } // buildRelations()
-    /**
-     * Method to invalidate the instance pool of all tables related to cliente     * by a foreign key with ON DELETE CASCADE
-     */
-    public static function clearRelatedInstancePool()
-    {
-        // Invalidate objects in related instance pools,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        UserTableMap::clearInstancePool();
-    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -226,7 +216,7 @@ class ClienteTableMap extends TableMap
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -287,7 +277,7 @@ class ClienteTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

@@ -59,7 +59,7 @@ class OrcamentoTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class OrcamentoTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
@@ -77,24 +77,19 @@ class OrcamentoTableMap extends TableMap
     const COL_ID = 'orcamento.id';
 
     /**
-     * the column name for the cliente_id field
-     */
-    const COL_CLIENTE_ID = 'orcamento.cliente_id';
-
-    /**
-     * the column name for the valor_total field
-     */
-    const COL_VALOR_TOTAL = 'orcamento.valor_total';
-
-    /**
      * the column name for the prazo field
      */
     const COL_PRAZO = 'orcamento.prazo';
 
     /**
-     * the column name for the descricao field
+     * the column name for the data_inicio field
      */
-    const COL_DESCRICAO = 'orcamento.descricao';
+    const COL_DATA_INICIO = 'orcamento.data_inicio';
+
+    /**
+     * the column name for the data_fim field
+     */
+    const COL_DATA_FIM = 'orcamento.data_fim';
 
     /**
      * The default string format for model objects of the related table
@@ -108,11 +103,11 @@ class OrcamentoTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'ClienteId', 'ValorTotal', 'Prazo', 'Descricao', ),
-        self::TYPE_CAMELNAME     => array('id', 'clienteId', 'valorTotal', 'prazo', 'descricao', ),
-        self::TYPE_COLNAME       => array(OrcamentoTableMap::COL_ID, OrcamentoTableMap::COL_CLIENTE_ID, OrcamentoTableMap::COL_VALOR_TOTAL, OrcamentoTableMap::COL_PRAZO, OrcamentoTableMap::COL_DESCRICAO, ),
-        self::TYPE_FIELDNAME     => array('id', 'cliente_id', 'valor_total', 'prazo', 'descricao', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Prazo', 'DataInicio', 'DataFim', ),
+        self::TYPE_CAMELNAME     => array('id', 'prazo', 'dataInicio', 'dataFim', ),
+        self::TYPE_COLNAME       => array(OrcamentoTableMap::COL_ID, OrcamentoTableMap::COL_PRAZO, OrcamentoTableMap::COL_DATA_INICIO, OrcamentoTableMap::COL_DATA_FIM, ),
+        self::TYPE_FIELDNAME     => array('id', 'prazo', 'data_inicio', 'data_fim', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class OrcamentoTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'ClienteId' => 1, 'ValorTotal' => 2, 'Prazo' => 3, 'Descricao' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'clienteId' => 1, 'valorTotal' => 2, 'prazo' => 3, 'descricao' => 4, ),
-        self::TYPE_COLNAME       => array(OrcamentoTableMap::COL_ID => 0, OrcamentoTableMap::COL_CLIENTE_ID => 1, OrcamentoTableMap::COL_VALOR_TOTAL => 2, OrcamentoTableMap::COL_PRAZO => 3, OrcamentoTableMap::COL_DESCRICAO => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'cliente_id' => 1, 'valor_total' => 2, 'prazo' => 3, 'descricao' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Prazo' => 1, 'DataInicio' => 2, 'DataFim' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'prazo' => 1, 'dataInicio' => 2, 'dataFim' => 3, ),
+        self::TYPE_COLNAME       => array(OrcamentoTableMap::COL_ID => 0, OrcamentoTableMap::COL_PRAZO => 1, OrcamentoTableMap::COL_DATA_INICIO => 2, OrcamentoTableMap::COL_DATA_FIM => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'prazo' => 1, 'data_inicio' => 2, 'data_fim' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -147,10 +142,9 @@ class OrcamentoTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addForeignPrimaryKey('cliente_id', 'ClienteId', 'INTEGER' , 'cliente', 'id', true, null, null);
-        $this->addColumn('valor_total', 'ValorTotal', 'DECIMAL', false, 8, null);
         $this->addColumn('prazo', 'Prazo', 'INTEGER', false, null, null);
-        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('data_inicio', 'DataInicio', 'VARCHAR', false, 255, null);
+        $this->addColumn('data_fim', 'DataFim', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -158,62 +152,8 @@ class OrcamentoTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Cliente', '\\Table\\Model\\Cliente', RelationMap::MANY_TO_ONE, array('cliente_id' => 'id', ), null, null);
         $this->addRelation('OrcamentoItem', '\\Table\\Model\\OrcamentoItem', RelationMap::ONE_TO_MANY, array('id' => 'orcamento_id', ), null, null, 'OrcamentoItems');
     } // buildRelations()
-
-    /**
-     * Adds an object to the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database. In some cases you may need to explicitly add objects
-     * to the cache in order to ensure that the same objects are always returned by find*()
-     * and findPk*() calls.
-     *
-     * @param \Table\Model\Orcamento $obj A \Table\Model\Orcamento object.
-     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
-     */
-    public static function addInstanceToPool($obj, $key = null)
-    {
-        if (Propel::isInstancePoolingEnabled()) {
-            if (null === $key) {
-                $key = serialize(array((string) $obj->getId(), (string) $obj->getClienteId()));
-            } // if key === null
-            self::$instances[$key] = $obj;
-        }
-    }
-
-    /**
-     * Removes an object from the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database.  In some cases -- especially when you override doDelete
-     * methods in your stub classes -- you may need to explicitly remove objects
-     * from the cache in order to prevent returning objects that no longer exist.
-     *
-     * @param mixed $value A \Table\Model\Orcamento object or a primary key value.
-     */
-    public static function removeInstanceFromPool($value)
-    {
-        if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \Table\Model\Orcamento) {
-                $key = serialize(array((string) $value->getId(), (string) $value->getClienteId()));
-
-            } elseif (is_array($value) && count($value) === 2) {
-                // assume we've been passed a primary key";
-                $key = serialize(array((string) $value[0], (string) $value[1]));
-            } elseif ($value instanceof Criteria) {
-                self::$instances = [];
-
-                return;
-            } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \Table\Model\Orcamento object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
-                throw $e;
-            }
-
-            unset(self::$instances[$key]);
-        }
-    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -231,11 +171,11 @@ class OrcamentoTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -252,22 +192,13 @@ class OrcamentoTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-            $pks = [];
-
-        $pks[] = (int) $row[
+        return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
-        $pks[] = (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 1 + $offset
-                : self::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
-
-        return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -328,7 +259,7 @@ class OrcamentoTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -366,16 +297,14 @@ class OrcamentoTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(OrcamentoTableMap::COL_ID);
-            $criteria->addSelectColumn(OrcamentoTableMap::COL_CLIENTE_ID);
-            $criteria->addSelectColumn(OrcamentoTableMap::COL_VALOR_TOTAL);
             $criteria->addSelectColumn(OrcamentoTableMap::COL_PRAZO);
-            $criteria->addSelectColumn(OrcamentoTableMap::COL_DESCRICAO);
+            $criteria->addSelectColumn(OrcamentoTableMap::COL_DATA_INICIO);
+            $criteria->addSelectColumn(OrcamentoTableMap::COL_DATA_FIM);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.cliente_id');
-            $criteria->addSelectColumn($alias . '.valor_total');
             $criteria->addSelectColumn($alias . '.prazo');
-            $criteria->addSelectColumn($alias . '.descricao');
+            $criteria->addSelectColumn($alias . '.data_inicio');
+            $criteria->addSelectColumn($alias . '.data_fim');
         }
     }
 
@@ -427,17 +356,7 @@ class OrcamentoTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(OrcamentoTableMap::DATABASE_NAME);
-            // primary key is composite; we therefore, expect
-            // the primary key passed to be an array of pkey values
-            if (count($values) == count($values, COUNT_RECURSIVE)) {
-                // array is not multi-dimensional
-                $values = array($values);
-            }
-            foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(OrcamentoTableMap::COL_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(OrcamentoTableMap::COL_CLIENTE_ID, $value[1]));
-                $criteria->addOr($criterion);
-            }
+            $criteria->add(OrcamentoTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = OrcamentoQuery::create()->mergeWith($criteria);

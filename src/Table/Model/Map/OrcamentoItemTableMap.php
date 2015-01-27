@@ -59,7 +59,7 @@ class OrcamentoItemTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class OrcamentoItemTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the id field
@@ -82,24 +82,19 @@ class OrcamentoItemTableMap extends TableMap
     const COL_ORCAMENTO_ID = 'orcamento_item.orcamento_id';
 
     /**
-     * the column name for the produto_id field
+     * the column name for the produto field
      */
-    const COL_PRODUTO_ID = 'orcamento_item.produto_id';
-
-    /**
-     * the column name for the valor field
-     */
-    const COL_VALOR = 'orcamento_item.valor';
-
-    /**
-     * the column name for the prazo field
-     */
-    const COL_PRAZO = 'orcamento_item.prazo';
+    const COL_PRODUTO = 'orcamento_item.produto';
 
     /**
      * the column name for the quantidade field
      */
     const COL_QUANTIDADE = 'orcamento_item.quantidade';
+
+    /**
+     * the column name for the valor field
+     */
+    const COL_VALOR = 'orcamento_item.valor';
 
     /**
      * The default string format for model objects of the related table
@@ -113,11 +108,11 @@ class OrcamentoItemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'OrcamentoId', 'ProdutoId', 'Valor', 'Prazo', 'Quantidade', ),
-        self::TYPE_CAMELNAME     => array('id', 'orcamentoId', 'produtoId', 'valor', 'prazo', 'quantidade', ),
-        self::TYPE_COLNAME       => array(OrcamentoItemTableMap::COL_ID, OrcamentoItemTableMap::COL_ORCAMENTO_ID, OrcamentoItemTableMap::COL_PRODUTO_ID, OrcamentoItemTableMap::COL_VALOR, OrcamentoItemTableMap::COL_PRAZO, OrcamentoItemTableMap::COL_QUANTIDADE, ),
-        self::TYPE_FIELDNAME     => array('id', 'orcamento_id', 'produto_id', 'valor', 'prazo', 'quantidade', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'OrcamentoId', 'Produto', 'Quantidade', 'Valor', ),
+        self::TYPE_CAMELNAME     => array('id', 'orcamentoId', 'produto', 'quantidade', 'valor', ),
+        self::TYPE_COLNAME       => array(OrcamentoItemTableMap::COL_ID, OrcamentoItemTableMap::COL_ORCAMENTO_ID, OrcamentoItemTableMap::COL_PRODUTO, OrcamentoItemTableMap::COL_QUANTIDADE, OrcamentoItemTableMap::COL_VALOR, ),
+        self::TYPE_FIELDNAME     => array('id', 'orcamento_id', 'produto', 'quantidade', 'valor', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -127,11 +122,11 @@ class OrcamentoItemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'OrcamentoId' => 1, 'ProdutoId' => 2, 'Valor' => 3, 'Prazo' => 4, 'Quantidade' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'orcamentoId' => 1, 'produtoId' => 2, 'valor' => 3, 'prazo' => 4, 'quantidade' => 5, ),
-        self::TYPE_COLNAME       => array(OrcamentoItemTableMap::COL_ID => 0, OrcamentoItemTableMap::COL_ORCAMENTO_ID => 1, OrcamentoItemTableMap::COL_PRODUTO_ID => 2, OrcamentoItemTableMap::COL_VALOR => 3, OrcamentoItemTableMap::COL_PRAZO => 4, OrcamentoItemTableMap::COL_QUANTIDADE => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'orcamento_id' => 1, 'produto_id' => 2, 'valor' => 3, 'prazo' => 4, 'quantidade' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'OrcamentoId' => 1, 'Produto' => 2, 'Quantidade' => 3, 'Valor' => 4, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'orcamentoId' => 1, 'produto' => 2, 'quantidade' => 3, 'valor' => 4, ),
+        self::TYPE_COLNAME       => array(OrcamentoItemTableMap::COL_ID => 0, OrcamentoItemTableMap::COL_ORCAMENTO_ID => 1, OrcamentoItemTableMap::COL_PRODUTO => 2, OrcamentoItemTableMap::COL_QUANTIDADE => 3, OrcamentoItemTableMap::COL_VALOR => 4, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'orcamento_id' => 1, 'produto' => 2, 'quantidade' => 3, 'valor' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -153,10 +148,9 @@ class OrcamentoItemTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignPrimaryKey('orcamento_id', 'OrcamentoId', 'INTEGER' , 'orcamento', 'id', true, null, null);
-        $this->addForeignPrimaryKey('produto_id', 'ProdutoId', 'INTEGER' , 'produto', 'id', true, null, null);
-        $this->addColumn('valor', 'Valor', 'DECIMAL', false, 8, null);
-        $this->addColumn('prazo', 'Prazo', 'INTEGER', false, null, null);
-        $this->addColumn('quantidade', 'Quantidade', 'INTEGER', false, null, null);
+        $this->addColumn('produto', 'Produto', 'VARCHAR', false, 45, null);
+        $this->addColumn('quantidade', 'Quantidade', 'VARCHAR', false, 45, null);
+        $this->addColumn('valor', 'Valor', 'VARCHAR', false, 45, null);
     } // initialize()
 
     /**
@@ -165,7 +159,6 @@ class OrcamentoItemTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Orcamento', '\\Table\\Model\\Orcamento', RelationMap::MANY_TO_ONE, array('orcamento_id' => 'id', ), null, null);
-        $this->addRelation('Produto', '\\Table\\Model\\Produto', RelationMap::MANY_TO_ONE, array('produto_id' => 'id', ), null, null);
     } // buildRelations()
 
     /**
@@ -183,7 +176,7 @@ class OrcamentoItemTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize(array((string) $obj->getId(), (string) $obj->getOrcamentoId(), (string) $obj->getProdutoId()));
+                $key = serialize(array((string) $obj->getId(), (string) $obj->getOrcamentoId()));
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -203,11 +196,11 @@ class OrcamentoItemTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
             if (is_object($value) && $value instanceof \Table\Model\OrcamentoItem) {
-                $key = serialize(array((string) $value->getId(), (string) $value->getOrcamentoId(), (string) $value->getProdutoId()));
+                $key = serialize(array((string) $value->getId(), (string) $value->getOrcamentoId()));
 
-            } elseif (is_array($value) && count($value) === 3) {
+            } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
-                $key = serialize(array((string) $value[0], (string) $value[1], (string) $value[2]));
+                $key = serialize(array((string) $value[0], (string) $value[1]));
             } elseif ($value instanceof Criteria) {
                 self::$instances = [];
 
@@ -237,11 +230,11 @@ class OrcamentoItemTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 2 + $offset : static::translateFieldName('ProdutoId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 2 + $offset : static::translateFieldName('ProdutoId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -259,7 +252,7 @@ class OrcamentoItemTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-
+            
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -270,15 +263,10 @@ class OrcamentoItemTableMap extends TableMap
                 ? 1 + $offset
                 : self::translateFieldName('OrcamentoId', TableMap::TYPE_PHPNAME, $indexType)
         ];
-        $pks[] = (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 2 + $offset
-                : self::translateFieldName('ProdutoId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
 
         return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -339,7 +327,7 @@ class OrcamentoItemTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -378,17 +366,15 @@ class OrcamentoItemTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(OrcamentoItemTableMap::COL_ID);
             $criteria->addSelectColumn(OrcamentoItemTableMap::COL_ORCAMENTO_ID);
-            $criteria->addSelectColumn(OrcamentoItemTableMap::COL_PRODUTO_ID);
-            $criteria->addSelectColumn(OrcamentoItemTableMap::COL_VALOR);
-            $criteria->addSelectColumn(OrcamentoItemTableMap::COL_PRAZO);
+            $criteria->addSelectColumn(OrcamentoItemTableMap::COL_PRODUTO);
             $criteria->addSelectColumn(OrcamentoItemTableMap::COL_QUANTIDADE);
+            $criteria->addSelectColumn(OrcamentoItemTableMap::COL_VALOR);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.orcamento_id');
-            $criteria->addSelectColumn($alias . '.produto_id');
-            $criteria->addSelectColumn($alias . '.valor');
-            $criteria->addSelectColumn($alias . '.prazo');
+            $criteria->addSelectColumn($alias . '.produto');
             $criteria->addSelectColumn($alias . '.quantidade');
+            $criteria->addSelectColumn($alias . '.valor');
         }
     }
 
@@ -449,7 +435,6 @@ class OrcamentoItemTableMap extends TableMap
             foreach ($values as $value) {
                 $criterion = $criteria->getNewCriterion(OrcamentoItemTableMap::COL_ID, $value[0]);
                 $criterion->addAnd($criteria->getNewCriterion(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $value[1]));
-                $criterion->addAnd($criteria->getNewCriterion(OrcamentoItemTableMap::COL_PRODUTO_ID, $value[2]));
                 $criteria->addOr($criterion);
             }
         }

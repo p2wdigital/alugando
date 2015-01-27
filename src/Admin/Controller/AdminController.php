@@ -39,8 +39,8 @@ class AdminController extends Controller
 		var_dump($request->request->get("cliente"));
 		if(isset($_POST['cliente'])):
 			$form->handleRequest($request);
-			var_dump($cliente);
-			//$cliente->save();
+			//var_dump($cliente);
+			$cliente->save();
 			var_dump($con->getLastExecutedQuery());
 			echo $cliente->getId();
 		endif;

@@ -18,65 +18,47 @@ use Table\Model\Map\OrcamentoTableMap;
 /**
  * Base class that represents a query for the 'orcamento' table.
  *
- *
+ * 
  *
  * @method     ChildOrcamentoQuery orderById($order = Criteria::ASC) Order by the id column
- * @method     ChildOrcamentoQuery orderByClienteId($order = Criteria::ASC) Order by the cliente_id column
- * @method     ChildOrcamentoQuery orderByValorTotal($order = Criteria::ASC) Order by the valor_total column
  * @method     ChildOrcamentoQuery orderByPrazo($order = Criteria::ASC) Order by the prazo column
- * @method     ChildOrcamentoQuery orderByDescricao($order = Criteria::ASC) Order by the descricao column
+ * @method     ChildOrcamentoQuery orderByDataInicio($order = Criteria::ASC) Order by the data_inicio column
+ * @method     ChildOrcamentoQuery orderByDataFim($order = Criteria::ASC) Order by the data_fim column
  *
  * @method     ChildOrcamentoQuery groupById() Group by the id column
- * @method     ChildOrcamentoQuery groupByClienteId() Group by the cliente_id column
- * @method     ChildOrcamentoQuery groupByValorTotal() Group by the valor_total column
  * @method     ChildOrcamentoQuery groupByPrazo() Group by the prazo column
- * @method     ChildOrcamentoQuery groupByDescricao() Group by the descricao column
+ * @method     ChildOrcamentoQuery groupByDataInicio() Group by the data_inicio column
+ * @method     ChildOrcamentoQuery groupByDataFim() Group by the data_fim column
  *
  * @method     ChildOrcamentoQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildOrcamentoQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildOrcamentoQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildOrcamentoQuery leftJoinCliente($relationAlias = null) Adds a LEFT JOIN clause to the query using the Cliente relation
- * @method     ChildOrcamentoQuery rightJoinCliente($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Cliente relation
- * @method     ChildOrcamentoQuery innerJoinCliente($relationAlias = null) Adds a INNER JOIN clause to the query using the Cliente relation
- *
  * @method     ChildOrcamentoQuery leftJoinOrcamentoItem($relationAlias = null) Adds a LEFT JOIN clause to the query using the OrcamentoItem relation
  * @method     ChildOrcamentoQuery rightJoinOrcamentoItem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the OrcamentoItem relation
  * @method     ChildOrcamentoQuery innerJoinOrcamentoItem($relationAlias = null) Adds a INNER JOIN clause to the query using the OrcamentoItem relation
  *
- * @method     \Table\Model\ClienteQuery|\Table\Model\OrcamentoItemQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\OrcamentoItemQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildOrcamento findOne(ConnectionInterface $con = null) Return the first ChildOrcamento matching the query
  * @method     ChildOrcamento findOneOrCreate(ConnectionInterface $con = null) Return the first ChildOrcamento matching the query, or a new ChildOrcamento object populated from the query conditions when no match is found
  *
  * @method     ChildOrcamento findOneById(int $id) Return the first ChildOrcamento filtered by the id column
- * @method     ChildOrcamento findOneByClienteId(int $cliente_id) Return the first ChildOrcamento filtered by the cliente_id column
- * @method     ChildOrcamento findOneByValorTotal(string $valor_total) Return the first ChildOrcamento filtered by the valor_total column
  * @method     ChildOrcamento findOneByPrazo(int $prazo) Return the first ChildOrcamento filtered by the prazo column
- * @method     ChildOrcamento findOneByDescricao(string $descricao) Return the first ChildOrcamento filtered by the descricao column *
-
- * @method     ChildOrcamento requirePk($key, ConnectionInterface $con = null) Return the ChildOrcamento by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamento requireOne(ConnectionInterface $con = null) Return the first ChildOrcamento matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- *
- * @method     ChildOrcamento requireOneById(int $id) Return the first ChildOrcamento filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamento requireOneByClienteId(int $cliente_id) Return the first ChildOrcamento filtered by the cliente_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamento requireOneByValorTotal(string $valor_total) Return the first ChildOrcamento filtered by the valor_total column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamento requireOneByPrazo(int $prazo) Return the first ChildOrcamento filtered by the prazo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamento requireOneByDescricao(string $descricao) Return the first ChildOrcamento filtered by the descricao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildOrcamento findOneByDataInicio(string $data_inicio) Return the first ChildOrcamento filtered by the data_inicio column
+ * @method     ChildOrcamento findOneByDataFim(string $data_fim) Return the first ChildOrcamento filtered by the data_fim column
  *
  * @method     ChildOrcamento[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildOrcamento objects based on current ModelCriteria
  * @method     ChildOrcamento[]|ObjectCollection findById(int $id) Return ChildOrcamento objects filtered by the id column
- * @method     ChildOrcamento[]|ObjectCollection findByClienteId(int $cliente_id) Return ChildOrcamento objects filtered by the cliente_id column
- * @method     ChildOrcamento[]|ObjectCollection findByValorTotal(string $valor_total) Return ChildOrcamento objects filtered by the valor_total column
  * @method     ChildOrcamento[]|ObjectCollection findByPrazo(int $prazo) Return ChildOrcamento objects filtered by the prazo column
- * @method     ChildOrcamento[]|ObjectCollection findByDescricao(string $descricao) Return ChildOrcamento objects filtered by the descricao column
+ * @method     ChildOrcamento[]|ObjectCollection findByDataInicio(string $data_inicio) Return ChildOrcamento objects filtered by the data_inicio column
+ * @method     ChildOrcamento[]|ObjectCollection findByDataFim(string $data_fim) Return ChildOrcamento objects filtered by the data_fim column
  * @method     ChildOrcamento[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class OrcamentoQuery extends ModelCriteria
 {
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
-
+    
     /**
      * Initializes internal state of \Table\Model\Base\OrcamentoQuery object.
      *
@@ -119,10 +101,10 @@ abstract class OrcamentoQuery extends ModelCriteria
      * Go fast if the query is untouched.
      *
      * <code>
-     * $obj = $c->findPk(array(12, 34), $con);
+     * $obj  = $c->findPk(12, $con);
      * </code>
      *
-     * @param array[$id, $cliente_id] $key Primary key to use for the query
+     * @param mixed $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildOrcamento|array|mixed the result, formatted by the current formatter
@@ -132,7 +114,7 @@ abstract class OrcamentoQuery extends ModelCriteria
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = OrcamentoTableMap::getInstanceFromPool(serialize(array((string) $key[0], (string) $key[1]))))) && !$this->formatter) {
+        if ((null !== ($obj = OrcamentoTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -162,11 +144,10 @@ abstract class OrcamentoQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, cliente_id, valor_total, prazo, descricao FROM orcamento WHERE id = :p0 AND cliente_id = :p1';
+        $sql = 'SELECT id, prazo, data_inicio, data_fim FROM orcamento WHERE id = :p0';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
-            $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
             Propel::log($e->getMessage(), Propel::LOG_ERR);
@@ -177,7 +158,7 @@ abstract class OrcamentoQuery extends ModelCriteria
             /** @var ChildOrcamento $obj */
             $obj = new ChildOrcamento();
             $obj->hydrate($row);
-            OrcamentoTableMap::addInstanceToPool($obj, serialize(array((string) $key[0], (string) $key[1])));
+            OrcamentoTableMap::addInstanceToPool($obj, (string) $key);
         }
         $stmt->closeCursor();
 
@@ -206,7 +187,7 @@ abstract class OrcamentoQuery extends ModelCriteria
     /**
      * Find objects by primary key
      * <code>
-     * $objs = $c->findPks(array(array(12, 56), array(832, 123), array(123, 456)), $con);
+     * $objs = $c->findPks(array(12, 56, 832), $con);
      * </code>
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
@@ -236,10 +217,8 @@ abstract class OrcamentoQuery extends ModelCriteria
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(OrcamentoTableMap::COL_ID, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $key[1], Criteria::EQUAL);
 
-        return $this;
+        return $this->addUsingAlias(OrcamentoTableMap::COL_ID, $key, Criteria::EQUAL);
     }
 
     /**
@@ -251,17 +230,8 @@ abstract class OrcamentoQuery extends ModelCriteria
      */
     public function filterByPrimaryKeys($keys)
     {
-        if (empty($keys)) {
-            return $this->add(null, '1<>1', Criteria::CUSTOM);
-        }
-        foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(OrcamentoTableMap::COL_ID, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(OrcamentoTableMap::COL_CLIENTE_ID, $key[1], Criteria::EQUAL);
-            $cton0->addAnd($cton1);
-            $this->addOr($cton0);
-        }
 
-        return $this;
+        return $this->addUsingAlias(OrcamentoTableMap::COL_ID, $keys, Criteria::IN);
     }
 
     /**
@@ -306,90 +276,6 @@ abstract class OrcamentoQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the cliente_id column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByClienteId(1234); // WHERE cliente_id = 1234
-     * $query->filterByClienteId(array(12, 34)); // WHERE cliente_id IN (12, 34)
-     * $query->filterByClienteId(array('min' => 12)); // WHERE cliente_id > 12
-     * </code>
-     *
-     * @see       filterByCliente()
-     *
-     * @param     mixed $clienteId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildOrcamentoQuery The current query, for fluid interface
-     */
-    public function filterByClienteId($clienteId = null, $comparison = null)
-    {
-        if (is_array($clienteId)) {
-            $useMinMax = false;
-            if (isset($clienteId['min'])) {
-                $this->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $clienteId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($clienteId['max'])) {
-                $this->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $clienteId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $clienteId, $comparison);
-    }
-
-    /**
-     * Filter the query on the valor_total column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByValorTotal(1234); // WHERE valor_total = 1234
-     * $query->filterByValorTotal(array(12, 34)); // WHERE valor_total IN (12, 34)
-     * $query->filterByValorTotal(array('min' => 12)); // WHERE valor_total > 12
-     * </code>
-     *
-     * @param     mixed $valorTotal The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildOrcamentoQuery The current query, for fluid interface
-     */
-    public function filterByValorTotal($valorTotal = null, $comparison = null)
-    {
-        if (is_array($valorTotal)) {
-            $useMinMax = false;
-            if (isset($valorTotal['min'])) {
-                $this->addUsingAlias(OrcamentoTableMap::COL_VALOR_TOTAL, $valorTotal['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($valorTotal['max'])) {
-                $this->addUsingAlias(OrcamentoTableMap::COL_VALOR_TOTAL, $valorTotal['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(OrcamentoTableMap::COL_VALOR_TOTAL, $valorTotal, $comparison);
-    }
-
-    /**
      * Filter the query on the prazo column
      *
      * Example usage:
@@ -431,109 +317,61 @@ abstract class OrcamentoQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the descricao column
+     * Filter the query on the data_inicio column
      *
      * Example usage:
      * <code>
-     * $query->filterByDescricao('fooValue');   // WHERE descricao = 'fooValue'
-     * $query->filterByDescricao('%fooValue%'); // WHERE descricao LIKE '%fooValue%'
+     * $query->filterByDataInicio('fooValue');   // WHERE data_inicio = 'fooValue'
+     * $query->filterByDataInicio('%fooValue%'); // WHERE data_inicio LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $descricao The value to use as filter.
+     * @param     string $dataInicio The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildOrcamentoQuery The current query, for fluid interface
      */
-    public function filterByDescricao($descricao = null, $comparison = null)
+    public function filterByDataInicio($dataInicio = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($descricao)) {
+            if (is_array($dataInicio)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $descricao)) {
-                $descricao = str_replace('*', '%', $descricao);
+            } elseif (preg_match('/[\%\*]/', $dataInicio)) {
+                $dataInicio = str_replace('*', '%', $dataInicio);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(OrcamentoTableMap::COL_DESCRICAO, $descricao, $comparison);
+        return $this->addUsingAlias(OrcamentoTableMap::COL_DATA_INICIO, $dataInicio, $comparison);
     }
 
     /**
-     * Filter the query by a related \Table\Model\Cliente object
+     * Filter the query on the data_fim column
      *
-     * @param \Table\Model\Cliente|ObjectCollection $cliente The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     * Example usage:
+     * <code>
+     * $query->filterByDataFim('fooValue');   // WHERE data_fim = 'fooValue'
+     * $query->filterByDataFim('%fooValue%'); // WHERE data_fim LIKE '%fooValue%'
+     * </code>
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildOrcamentoQuery The current query, for fluid interface
-     */
-    public function filterByCliente($cliente, $comparison = null)
-    {
-        if ($cliente instanceof \Table\Model\Cliente) {
-            return $this
-                ->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $cliente->getId(), $comparison);
-        } elseif ($cliente instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(OrcamentoTableMap::COL_CLIENTE_ID, $cliente->toKeyValue('PrimaryKey', 'Id'), $comparison);
-        } else {
-            throw new PropelException('filterByCliente() only accepts arguments of type \Table\Model\Cliente or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Cliente relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     * @param     string $dataFim The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildOrcamentoQuery The current query, for fluid interface
      */
-    public function joinCliente($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function filterByDataFim($dataFim = null, $comparison = null)
     {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Cliente');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
+        if (null === $comparison) {
+            if (is_array($dataFim)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dataFim)) {
+                $dataFim = str_replace('*', '%', $dataFim);
+                $comparison = Criteria::LIKE;
+            }
         }
 
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Cliente');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Cliente relation Cliente object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\ClienteQuery A secondary query class using the current class as primary query
-     */
-    public function useClienteQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinCliente($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Cliente', '\Table\Model\ClienteQuery');
+        return $this->addUsingAlias(OrcamentoTableMap::COL_DATA_FIM, $dataFim, $comparison);
     }
 
     /**
@@ -619,9 +457,7 @@ abstract class OrcamentoQuery extends ModelCriteria
     public function prune($orcamento = null)
     {
         if ($orcamento) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(OrcamentoTableMap::COL_ID), $orcamento->getId(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(OrcamentoTableMap::COL_CLIENTE_ID), $orcamento->getClienteId(), Criteria::NOT_EQUAL);
-            $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
+            $this->addUsingAlias(OrcamentoTableMap::COL_ID, $orcamento->getId(), Criteria::NOT_EQUAL);
         }
 
         return $this;
@@ -678,9 +514,9 @@ abstract class OrcamentoQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             OrcamentoTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             OrcamentoTableMap::clearRelatedInstancePool();
 

@@ -23,11 +23,11 @@ use Table\Model\Map\UserTableMap;
 /**
  * Base class that represents a row from the 'user' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class User implements ActiveRecordInterface
+abstract class User implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -69,7 +69,7 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * The value for the password field.
-     * @var        int
+     * @var        string
      */
     protected $password;
 
@@ -78,24 +78,6 @@ abstract class User implements ActiveRecordInterface
      * @var        string
      */
     protected $salt;
-
-    /**
-     * The value for the email field.
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the testeenum field.
-     * @var        string
-     */
-    protected $testeenum;
-
-    /**
-     * The value for the usercol field.
-     * @var        string
-     */
-    protected $usercol;
 
     /**
      * @var        ChildCliente
@@ -329,7 +311,7 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * Get the [cliente_id] column value.
-     *
+     * 
      * @return int
      */
     public function getClienteId()
@@ -339,8 +321,8 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * Get the [password] column value.
-     *
-     * @return int
+     * 
+     * @return string
      */
     public function getPassword()
     {
@@ -349,7 +331,7 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * Get the [salt] column value.
-     *
+     * 
      * @return string
      */
     public function getSalt()
@@ -358,38 +340,8 @@ abstract class User implements ActiveRecordInterface
     }
 
     /**
-     * Get the [email] column value.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the [testeenum] column value.
-     *
-     * @return string
-     */
-    public function getTesteenum()
-    {
-        return $this->testeenum;
-    }
-
-    /**
-     * Get the [usercol] column value.
-     *
-     * @return string
-     */
-    public function getUsercol()
-    {
-        return $this->usercol;
-    }
-
-    /**
      * Set the value of [cliente_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
@@ -413,14 +365,14 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * Set the value of [password] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param  string $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
     public function setPassword($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
         if ($this->password !== $v) {
@@ -433,7 +385,7 @@ abstract class User implements ActiveRecordInterface
 
     /**
      * Set the value of [salt] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\User The current object (for fluent API support)
      */
@@ -450,66 +402,6 @@ abstract class User implements ActiveRecordInterface
 
         return $this;
     } // setSalt()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[UserTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [testeenum] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function setTesteenum($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->testeenum !== $v) {
-            $this->testeenum = $v;
-            $this->modifiedColumns[UserTableMap::COL_TESTEENUM] = true;
-        }
-
-        return $this;
-    } // setTesteenum()
-
-    /**
-     * Set the value of [usercol] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\User The current object (for fluent API support)
-     */
-    public function setUsercol($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->usercol !== $v) {
-            $this->usercol = $v;
-            $this->modifiedColumns[UserTableMap::COL_USERCOL] = true;
-        }
-
-        return $this;
-    } // setUsercol()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -551,19 +443,10 @@ abstract class User implements ActiveRecordInterface
             $this->cliente_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (int) $col : null;
+            $this->password = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Salt', TableMap::TYPE_PHPNAME, $indexType)];
             $this->salt = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('Testeenum', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->testeenum = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Usercol', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->usercol = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -572,7 +455,7 @@ abstract class User implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = UserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\User'), 0, $e);
@@ -790,15 +673,6 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_SALT)) {
             $modifiedColumns[':p' . $index++]  = 'salt';
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(UserTableMap::COL_TESTEENUM)) {
-            $modifiedColumns[':p' . $index++]  = 'testeenum';
-        }
-        if ($this->isColumnModified(UserTableMap::COL_USERCOL)) {
-            $modifiedColumns[':p' . $index++]  = 'usercol';
-        }
 
         $sql = sprintf(
             'INSERT INTO user (%s) VALUES (%s)',
@@ -810,23 +684,14 @@ abstract class User implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'cliente_id':
+                    case 'cliente_id':                        
                         $stmt->bindValue($identifier, $this->cliente_id, PDO::PARAM_INT);
                         break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_INT);
+                    case 'password':                        
+                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
                         break;
-                    case 'salt':
+                    case 'salt':                        
                         $stmt->bindValue($identifier, $this->salt, PDO::PARAM_STR);
-                        break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'testeenum':
-                        $stmt->bindValue($identifier, $this->testeenum, PDO::PARAM_STR);
-                        break;
-                    case 'usercol':
-                        $stmt->bindValue($identifier, $this->usercol, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -892,15 +757,6 @@ abstract class User implements ActiveRecordInterface
             case 2:
                 return $this->getSalt();
                 break;
-            case 3:
-                return $this->getEmail();
-                break;
-            case 4:
-                return $this->getTesteenum();
-                break;
-            case 5:
-                return $this->getUsercol();
-                break;
             default:
                 return null;
                 break;
@@ -934,18 +790,15 @@ abstract class User implements ActiveRecordInterface
             $keys[0] => $this->getClienteId(),
             $keys[1] => $this->getPassword(),
             $keys[2] => $this->getSalt(),
-            $keys[3] => $this->getEmail(),
-            $keys[4] => $this->getTesteenum(),
-            $keys[5] => $this->getUsercol(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aCliente) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cliente';
@@ -956,7 +809,7 @@ abstract class User implements ActiveRecordInterface
                     default:
                         $key = 'Cliente';
                 }
-
+        
                 $result[$key] = $this->aCliente->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1002,15 +855,6 @@ abstract class User implements ActiveRecordInterface
             case 2:
                 $this->setSalt($value);
                 break;
-            case 3:
-                $this->setEmail($value);
-                break;
-            case 4:
-                $this->setTesteenum($value);
-                break;
-            case 5:
-                $this->setUsercol($value);
-                break;
         } // switch()
 
         return $this;
@@ -1045,15 +889,6 @@ abstract class User implements ActiveRecordInterface
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setSalt($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setEmail($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setTesteenum($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setUsercol($arr[$keys[5]]);
         }
     }
 
@@ -1105,15 +940,6 @@ abstract class User implements ActiveRecordInterface
         if ($this->isColumnModified(UserTableMap::COL_SALT)) {
             $criteria->add(UserTableMap::COL_SALT, $this->salt);
         }
-        if ($this->isColumnModified(UserTableMap::COL_EMAIL)) {
-            $criteria->add(UserTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(UserTableMap::COL_TESTEENUM)) {
-            $criteria->add(UserTableMap::COL_TESTEENUM, $this->testeenum);
-        }
-        if ($this->isColumnModified(UserTableMap::COL_USERCOL)) {
-            $criteria->add(UserTableMap::COL_USERCOL, $this->usercol);
-        }
 
         return $criteria;
     }
@@ -1149,7 +975,7 @@ abstract class User implements ActiveRecordInterface
         $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
 
-        //relation fk_user_cliente1 to table cliente
+        //relation fk_user_cliente to table cliente
         if ($this->aCliente && $hash = spl_object_hash($this->aCliente)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -1164,7 +990,7 @@ abstract class User implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1210,9 +1036,6 @@ abstract class User implements ActiveRecordInterface
         $copyObj->setClienteId($this->getClienteId());
         $copyObj->setPassword($this->getPassword());
         $copyObj->setSalt($this->getSalt());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setTesteenum($this->getTesteenum());
-        $copyObj->setUsercol($this->getUsercol());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1298,9 +1121,6 @@ abstract class User implements ActiveRecordInterface
         $this->cliente_id = null;
         $this->password = null;
         $this->salt = null;
-        $this->email = null;
-        $this->testeenum = null;
-        $this->usercol = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

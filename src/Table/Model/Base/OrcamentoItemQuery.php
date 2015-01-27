@@ -18,21 +18,19 @@ use Table\Model\Map\OrcamentoItemTableMap;
 /**
  * Base class that represents a query for the 'orcamento_item' table.
  *
- *
+ * 
  *
  * @method     ChildOrcamentoItemQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildOrcamentoItemQuery orderByOrcamentoId($order = Criteria::ASC) Order by the orcamento_id column
- * @method     ChildOrcamentoItemQuery orderByProdutoId($order = Criteria::ASC) Order by the produto_id column
- * @method     ChildOrcamentoItemQuery orderByValor($order = Criteria::ASC) Order by the valor column
- * @method     ChildOrcamentoItemQuery orderByPrazo($order = Criteria::ASC) Order by the prazo column
+ * @method     ChildOrcamentoItemQuery orderByProduto($order = Criteria::ASC) Order by the produto column
  * @method     ChildOrcamentoItemQuery orderByQuantidade($order = Criteria::ASC) Order by the quantidade column
+ * @method     ChildOrcamentoItemQuery orderByValor($order = Criteria::ASC) Order by the valor column
  *
  * @method     ChildOrcamentoItemQuery groupById() Group by the id column
  * @method     ChildOrcamentoItemQuery groupByOrcamentoId() Group by the orcamento_id column
- * @method     ChildOrcamentoItemQuery groupByProdutoId() Group by the produto_id column
- * @method     ChildOrcamentoItemQuery groupByValor() Group by the valor column
- * @method     ChildOrcamentoItemQuery groupByPrazo() Group by the prazo column
+ * @method     ChildOrcamentoItemQuery groupByProduto() Group by the produto column
  * @method     ChildOrcamentoItemQuery groupByQuantidade() Group by the quantidade column
+ * @method     ChildOrcamentoItemQuery groupByValor() Group by the valor column
  *
  * @method     ChildOrcamentoItemQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildOrcamentoItemQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -42,46 +40,29 @@ use Table\Model\Map\OrcamentoItemTableMap;
  * @method     ChildOrcamentoItemQuery rightJoinOrcamento($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Orcamento relation
  * @method     ChildOrcamentoItemQuery innerJoinOrcamento($relationAlias = null) Adds a INNER JOIN clause to the query using the Orcamento relation
  *
- * @method     ChildOrcamentoItemQuery leftJoinProduto($relationAlias = null) Adds a LEFT JOIN clause to the query using the Produto relation
- * @method     ChildOrcamentoItemQuery rightJoinProduto($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Produto relation
- * @method     ChildOrcamentoItemQuery innerJoinProduto($relationAlias = null) Adds a INNER JOIN clause to the query using the Produto relation
- *
- * @method     \Table\Model\OrcamentoQuery|\Table\Model\ProdutoQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\OrcamentoQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildOrcamentoItem findOne(ConnectionInterface $con = null) Return the first ChildOrcamentoItem matching the query
  * @method     ChildOrcamentoItem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildOrcamentoItem matching the query, or a new ChildOrcamentoItem object populated from the query conditions when no match is found
  *
  * @method     ChildOrcamentoItem findOneById(int $id) Return the first ChildOrcamentoItem filtered by the id column
  * @method     ChildOrcamentoItem findOneByOrcamentoId(int $orcamento_id) Return the first ChildOrcamentoItem filtered by the orcamento_id column
- * @method     ChildOrcamentoItem findOneByProdutoId(int $produto_id) Return the first ChildOrcamentoItem filtered by the produto_id column
+ * @method     ChildOrcamentoItem findOneByProduto(string $produto) Return the first ChildOrcamentoItem filtered by the produto column
+ * @method     ChildOrcamentoItem findOneByQuantidade(string $quantidade) Return the first ChildOrcamentoItem filtered by the quantidade column
  * @method     ChildOrcamentoItem findOneByValor(string $valor) Return the first ChildOrcamentoItem filtered by the valor column
- * @method     ChildOrcamentoItem findOneByPrazo(int $prazo) Return the first ChildOrcamentoItem filtered by the prazo column
- * @method     ChildOrcamentoItem findOneByQuantidade(int $quantidade) Return the first ChildOrcamentoItem filtered by the quantidade column *
-
- * @method     ChildOrcamentoItem requirePk($key, ConnectionInterface $con = null) Return the ChildOrcamentoItem by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOne(ConnectionInterface $con = null) Return the first ChildOrcamentoItem matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- *
- * @method     ChildOrcamentoItem requireOneById(int $id) Return the first ChildOrcamentoItem filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOneByOrcamentoId(int $orcamento_id) Return the first ChildOrcamentoItem filtered by the orcamento_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOneByProdutoId(int $produto_id) Return the first ChildOrcamentoItem filtered by the produto_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOneByValor(string $valor) Return the first ChildOrcamentoItem filtered by the valor column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOneByPrazo(int $prazo) Return the first ChildOrcamentoItem filtered by the prazo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildOrcamentoItem requireOneByQuantidade(int $quantidade) Return the first ChildOrcamentoItem filtered by the quantidade column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildOrcamentoItem[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildOrcamentoItem objects based on current ModelCriteria
  * @method     ChildOrcamentoItem[]|ObjectCollection findById(int $id) Return ChildOrcamentoItem objects filtered by the id column
  * @method     ChildOrcamentoItem[]|ObjectCollection findByOrcamentoId(int $orcamento_id) Return ChildOrcamentoItem objects filtered by the orcamento_id column
- * @method     ChildOrcamentoItem[]|ObjectCollection findByProdutoId(int $produto_id) Return ChildOrcamentoItem objects filtered by the produto_id column
+ * @method     ChildOrcamentoItem[]|ObjectCollection findByProduto(string $produto) Return ChildOrcamentoItem objects filtered by the produto column
+ * @method     ChildOrcamentoItem[]|ObjectCollection findByQuantidade(string $quantidade) Return ChildOrcamentoItem objects filtered by the quantidade column
  * @method     ChildOrcamentoItem[]|ObjectCollection findByValor(string $valor) Return ChildOrcamentoItem objects filtered by the valor column
- * @method     ChildOrcamentoItem[]|ObjectCollection findByPrazo(int $prazo) Return ChildOrcamentoItem objects filtered by the prazo column
- * @method     ChildOrcamentoItem[]|ObjectCollection findByQuantidade(int $quantidade) Return ChildOrcamentoItem objects filtered by the quantidade column
  * @method     ChildOrcamentoItem[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class OrcamentoItemQuery extends ModelCriteria
 {
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
-
+    
     /**
      * Initializes internal state of \Table\Model\Base\OrcamentoItemQuery object.
      *
@@ -124,10 +105,10 @@ abstract class OrcamentoItemQuery extends ModelCriteria
      * Go fast if the query is untouched.
      *
      * <code>
-     * $obj = $c->findPk(array(12, 34, 56), $con);
+     * $obj = $c->findPk(array(12, 34), $con);
      * </code>
      *
-     * @param array[$id, $orcamento_id, $produto_id] $key Primary key to use for the query
+     * @param array[$id, $orcamento_id] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildOrcamentoItem|array|mixed the result, formatted by the current formatter
@@ -137,7 +118,7 @@ abstract class OrcamentoItemQuery extends ModelCriteria
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = OrcamentoItemTableMap::getInstanceFromPool(serialize(array((string) $key[0], (string) $key[1], (string) $key[2]))))) && !$this->formatter) {
+        if ((null !== ($obj = OrcamentoItemTableMap::getInstanceFromPool(serialize(array((string) $key[0], (string) $key[1]))))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -167,12 +148,11 @@ abstract class OrcamentoItemQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, orcamento_id, produto_id, valor, prazo, quantidade FROM orcamento_item WHERE id = :p0 AND orcamento_id = :p1 AND produto_id = :p2';
+        $sql = 'SELECT id, orcamento_id, produto, quantidade, valor FROM orcamento_item WHERE id = :p0 AND orcamento_id = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
-            $stmt->bindValue(':p2', $key[2], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
             Propel::log($e->getMessage(), Propel::LOG_ERR);
@@ -183,7 +163,7 @@ abstract class OrcamentoItemQuery extends ModelCriteria
             /** @var ChildOrcamentoItem $obj */
             $obj = new ChildOrcamentoItem();
             $obj->hydrate($row);
-            OrcamentoItemTableMap::addInstanceToPool($obj, serialize(array((string) $key[0], (string) $key[1], (string) $key[2])));
+            OrcamentoItemTableMap::addInstanceToPool($obj, serialize(array((string) $key[0], (string) $key[1])));
         }
         $stmt->closeCursor();
 
@@ -244,7 +224,6 @@ abstract class OrcamentoItemQuery extends ModelCriteria
     {
         $this->addUsingAlias(OrcamentoItemTableMap::COL_ID, $key[0], Criteria::EQUAL);
         $this->addUsingAlias(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $key[1], Criteria::EQUAL);
-        $this->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $key[2], Criteria::EQUAL);
 
         return $this;
     }
@@ -265,8 +244,6 @@ abstract class OrcamentoItemQuery extends ModelCriteria
             $cton0 = $this->getNewCriterion(OrcamentoItemTableMap::COL_ID, $key[0], Criteria::EQUAL);
             $cton1 = $this->getNewCriterion(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
-            $cton2 = $this->getNewCriterion(OrcamentoItemTableMap::COL_PRODUTO_ID, $key[2], Criteria::EQUAL);
-            $cton0->addAnd($cton2);
             $this->addOr($cton0);
         }
 
@@ -358,128 +335,32 @@ abstract class OrcamentoItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the produto_id column
+     * Filter the query on the produto column
      *
      * Example usage:
      * <code>
-     * $query->filterByProdutoId(1234); // WHERE produto_id = 1234
-     * $query->filterByProdutoId(array(12, 34)); // WHERE produto_id IN (12, 34)
-     * $query->filterByProdutoId(array('min' => 12)); // WHERE produto_id > 12
+     * $query->filterByProduto('fooValue');   // WHERE produto = 'fooValue'
+     * $query->filterByProduto('%fooValue%'); // WHERE produto LIKE '%fooValue%'
      * </code>
      *
-     * @see       filterByProduto()
-     *
-     * @param     mixed $produtoId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $produto The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
      */
-    public function filterByProdutoId($produtoId = null, $comparison = null)
+    public function filterByProduto($produto = null, $comparison = null)
     {
-        if (is_array($produtoId)) {
-            $useMinMax = false;
-            if (isset($produtoId['min'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $produtoId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($produtoId['max'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $produtoId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($produto)) {
                 $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $produto)) {
+                $produto = str_replace('*', '%', $produto);
+                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $produtoId, $comparison);
-    }
-
-    /**
-     * Filter the query on the valor column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByValor(1234); // WHERE valor = 1234
-     * $query->filterByValor(array(12, 34)); // WHERE valor IN (12, 34)
-     * $query->filterByValor(array('min' => 12)); // WHERE valor > 12
-     * </code>
-     *
-     * @param     mixed $valor The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
-     */
-    public function filterByValor($valor = null, $comparison = null)
-    {
-        if (is_array($valor)) {
-            $useMinMax = false;
-            if (isset($valor['min'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_VALOR, $valor['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($valor['max'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_VALOR, $valor['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(OrcamentoItemTableMap::COL_VALOR, $valor, $comparison);
-    }
-
-    /**
-     * Filter the query on the prazo column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPrazo(1234); // WHERE prazo = 1234
-     * $query->filterByPrazo(array(12, 34)); // WHERE prazo IN (12, 34)
-     * $query->filterByPrazo(array('min' => 12)); // WHERE prazo > 12
-     * </code>
-     *
-     * @param     mixed $prazo The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
-     */
-    public function filterByPrazo($prazo = null, $comparison = null)
-    {
-        if (is_array($prazo)) {
-            $useMinMax = false;
-            if (isset($prazo['min'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_PRAZO, $prazo['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($prazo['max'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_PRAZO, $prazo['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(OrcamentoItemTableMap::COL_PRAZO, $prazo, $comparison);
+        return $this->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO, $produto, $comparison);
     }
 
     /**
@@ -487,40 +368,57 @@ abstract class OrcamentoItemQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByQuantidade(1234); // WHERE quantidade = 1234
-     * $query->filterByQuantidade(array(12, 34)); // WHERE quantidade IN (12, 34)
-     * $query->filterByQuantidade(array('min' => 12)); // WHERE quantidade > 12
+     * $query->filterByQuantidade('fooValue');   // WHERE quantidade = 'fooValue'
+     * $query->filterByQuantidade('%fooValue%'); // WHERE quantidade LIKE '%fooValue%'
      * </code>
      *
-     * @param     mixed $quantidade The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $quantidade The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
      */
     public function filterByQuantidade($quantidade = null, $comparison = null)
     {
-        if (is_array($quantidade)) {
-            $useMinMax = false;
-            if (isset($quantidade['min'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_QUANTIDADE, $quantidade['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($quantidade['max'])) {
-                $this->addUsingAlias(OrcamentoItemTableMap::COL_QUANTIDADE, $quantidade['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($quantidade)) {
                 $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $quantidade)) {
+                $quantidade = str_replace('*', '%', $quantidade);
+                $comparison = Criteria::LIKE;
             }
         }
 
         return $this->addUsingAlias(OrcamentoItemTableMap::COL_QUANTIDADE, $quantidade, $comparison);
+    }
+
+    /**
+     * Filter the query on the valor column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByValor('fooValue');   // WHERE valor = 'fooValue'
+     * $query->filterByValor('%fooValue%'); // WHERE valor LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $valor The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
+     */
+    public function filterByValor($valor = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($valor)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $valor)) {
+                $valor = str_replace('*', '%', $valor);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(OrcamentoItemTableMap::COL_VALOR, $valor, $comparison);
     }
 
     /**
@@ -544,7 +442,7 @@ abstract class OrcamentoItemQuery extends ModelCriteria
             }
 
             return $this
-                ->addUsingAlias(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $orcamento->toKeyValue('Id', 'Id'), $comparison);
+                ->addUsingAlias(OrcamentoItemTableMap::COL_ORCAMENTO_ID, $orcamento->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByOrcamento() only accepts arguments of type \Table\Model\Orcamento or Collection');
         }
@@ -601,83 +499,6 @@ abstract class OrcamentoItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Table\Model\Produto object
-     *
-     * @param \Table\Model\Produto|ObjectCollection $produto The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildOrcamentoItemQuery The current query, for fluid interface
-     */
-    public function filterByProduto($produto, $comparison = null)
-    {
-        if ($produto instanceof \Table\Model\Produto) {
-            return $this
-                ->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $produto->getId(), $comparison);
-        } elseif ($produto instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(OrcamentoItemTableMap::COL_PRODUTO_ID, $produto->toKeyValue('PrimaryKey', 'Id'), $comparison);
-        } else {
-            throw new PropelException('filterByProduto() only accepts arguments of type \Table\Model\Produto or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Produto relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildOrcamentoItemQuery The current query, for fluid interface
-     */
-    public function joinProduto($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Produto');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Produto');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Produto relation Produto object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\ProdutoQuery A secondary query class using the current class as primary query
-     */
-    public function useProdutoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinProduto($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Produto', '\Table\Model\ProdutoQuery');
-    }
-
-    /**
      * Exclude object from result
      *
      * @param   ChildOrcamentoItem $orcamentoItem Object to remove from the list of results
@@ -689,8 +510,7 @@ abstract class OrcamentoItemQuery extends ModelCriteria
         if ($orcamentoItem) {
             $this->addCond('pruneCond0', $this->getAliasedColName(OrcamentoItemTableMap::COL_ID), $orcamentoItem->getId(), Criteria::NOT_EQUAL);
             $this->addCond('pruneCond1', $this->getAliasedColName(OrcamentoItemTableMap::COL_ORCAMENTO_ID), $orcamentoItem->getOrcamentoId(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond2', $this->getAliasedColName(OrcamentoItemTableMap::COL_PRODUTO_ID), $orcamentoItem->getProdutoId(), Criteria::NOT_EQUAL);
-            $this->combine(array('pruneCond0', 'pruneCond1', 'pruneCond2'), Criteria::LOGICAL_OR);
+            $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
         return $this;
@@ -747,9 +567,9 @@ abstract class OrcamentoItemQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             OrcamentoItemTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             OrcamentoItemTableMap::clearRelatedInstancePool();
 

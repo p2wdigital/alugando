@@ -18,7 +18,7 @@ use Table\Model\Map\ClienteTableMap;
 /**
  * Base class that represents a query for the 'cliente' table.
  *
- *
+ * 
  *
  * @method     ChildClienteQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildClienteQuery orderByRazaoSocial($order = Criteria::ASC) Order by the razao_social column
@@ -40,15 +40,11 @@ use Table\Model\Map\ClienteTableMap;
  * @method     ChildClienteQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildClienteQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildClienteQuery leftJoinOrcamento($relationAlias = null) Adds a LEFT JOIN clause to the query using the Orcamento relation
- * @method     ChildClienteQuery rightJoinOrcamento($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Orcamento relation
- * @method     ChildClienteQuery innerJoinOrcamento($relationAlias = null) Adds a INNER JOIN clause to the query using the Orcamento relation
- *
  * @method     ChildClienteQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
  * @method     ChildClienteQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
  * @method     ChildClienteQuery innerJoinUser($relationAlias = null) Adds a INNER JOIN clause to the query using the User relation
  *
- * @method     \Table\Model\OrcamentoQuery|\Table\Model\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\UserQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCliente findOne(ConnectionInterface $con = null) Return the first ChildCliente matching the query
  * @method     ChildCliente findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCliente matching the query, or a new ChildCliente object populated from the query conditions when no match is found
@@ -59,18 +55,7 @@ use Table\Model\Map\ClienteTableMap;
  * @method     ChildCliente findOneByCep(string $cep) Return the first ChildCliente filtered by the cep column
  * @method     ChildCliente findOneByDescricao(string $descricao) Return the first ChildCliente filtered by the descricao column
  * @method     ChildCliente findOneByDhInclusao(string $dh_inclusao) Return the first ChildCliente filtered by the dh_inclusao column
- * @method     ChildCliente findOneByDhAlteracao(string $dh_alteracao) Return the first ChildCliente filtered by the dh_alteracao column *
-
- * @method     ChildCliente requirePk($key, ConnectionInterface $con = null) Return the ChildCliente by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOne(ConnectionInterface $con = null) Return the first ChildCliente matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- *
- * @method     ChildCliente requireOneById(int $id) Return the first ChildCliente filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByRazaoSocial(string $razao_social) Return the first ChildCliente filtered by the razao_social column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByContato(string $contato) Return the first ChildCliente filtered by the contato column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByCep(string $cep) Return the first ChildCliente filtered by the cep column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByDescricao(string $descricao) Return the first ChildCliente filtered by the descricao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByDhInclusao(string $dh_inclusao) Return the first ChildCliente filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCliente requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildCliente filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildCliente findOneByDhAlteracao(string $dh_alteracao) Return the first ChildCliente filtered by the dh_alteracao column
  *
  * @method     ChildCliente[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCliente objects based on current ModelCriteria
  * @method     ChildCliente[]|ObjectCollection findById(int $id) Return ChildCliente objects filtered by the id column
@@ -85,8 +70,7 @@ use Table\Model\Map\ClienteTableMap;
  */
 abstract class ClienteQuery extends ModelCriteria
 {
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
-
+    
     /**
      * Initializes internal state of \Table\Model\Base\ClienteQuery object.
      *
@@ -174,7 +158,7 @@ abstract class ClienteQuery extends ModelCriteria
     {
         $sql = 'SELECT id, razao_social, contato, cep, descricao, dh_inclusao, dh_alteracao FROM cliente WHERE id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -506,79 +490,6 @@ abstract class ClienteQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Table\Model\Orcamento object
-     *
-     * @param \Table\Model\Orcamento|ObjectCollection $orcamento  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildClienteQuery The current query, for fluid interface
-     */
-    public function filterByOrcamento($orcamento, $comparison = null)
-    {
-        if ($orcamento instanceof \Table\Model\Orcamento) {
-            return $this
-                ->addUsingAlias(ClienteTableMap::COL_ID, $orcamento->getClienteId(), $comparison);
-        } elseif ($orcamento instanceof ObjectCollection) {
-            return $this
-                ->useOrcamentoQuery()
-                ->filterByPrimaryKeys($orcamento->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByOrcamento() only accepts arguments of type \Table\Model\Orcamento or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Orcamento relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildClienteQuery The current query, for fluid interface
-     */
-    public function joinOrcamento($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Orcamento');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Orcamento');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Orcamento relation Orcamento object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\OrcamentoQuery A secondary query class using the current class as primary query
-     */
-    public function useOrcamentoQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinOrcamento($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Orcamento', '\Table\Model\OrcamentoQuery');
-    }
-
-    /**
      * Filter the query by a related \Table\Model\User object
      *
      * @param \Table\Model\User|ObjectCollection $user  the related object to use as filter
@@ -718,9 +629,9 @@ abstract class ClienteQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             ClienteTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             ClienteTableMap::clearRelatedInstancePool();
 

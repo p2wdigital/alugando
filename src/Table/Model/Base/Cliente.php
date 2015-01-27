@@ -10,7 +10,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -18,10 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
-use Table\Model\Cliente as ChildCliente;
 use Table\Model\ClienteQuery as ChildClienteQuery;
-use Table\Model\Orcamento as ChildOrcamento;
-use Table\Model\OrcamentoQuery as ChildOrcamentoQuery;
 use Table\Model\User as ChildUser;
 use Table\Model\UserQuery as ChildUserQuery;
 use Table\Model\Map\ClienteTableMap;
@@ -29,11 +25,11 @@ use Table\Model\Map\ClienteTableMap;
 /**
  * Base class that represents a row from the 'cliente' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Cliente implements ActiveRecordInterface
+abstract class Cliente implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -110,12 +106,6 @@ abstract class Cliente implements ActiveRecordInterface
     protected $dh_alteracao;
 
     /**
-     * @var        ObjectCollection|ChildOrcamento[] Collection to store aggregation of ChildOrcamento objects.
-     */
-    protected $collOrcamentos;
-    protected $collOrcamentosPartial;
-
-    /**
      * @var        ChildUser one-to-one related ChildUser object
      */
     protected $singleUser;
@@ -127,12 +117,6 @@ abstract class Cliente implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildOrcamento[]
-     */
-    protected $orcamentosScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Table\Model\Base\Cliente object.
@@ -353,7 +337,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     *
+     * 
      * @return int
      */
     public function getId()
@@ -363,7 +347,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [razao_social] column value.
-     *
+     * 
      * @return string
      */
     public function getRazaoSocial()
@@ -373,7 +357,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [contato] column value.
-     *
+     * 
      * @return string
      */
     public function getContato()
@@ -383,7 +367,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [cep] column value.
-     *
+     * 
      * @return string
      */
     public function getCep()
@@ -393,7 +377,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [descricao] column value.
-     *
+     * 
      * @return string
      */
     public function getDescricao()
@@ -403,7 +387,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [dh_inclusao] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -423,7 +407,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [dh_alteracao] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -443,7 +427,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -463,7 +447,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [razao_social] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -483,7 +467,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [contato] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -503,7 +487,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [cep] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -523,7 +507,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Set the value of [descricao] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
      */
@@ -543,7 +527,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Sets the value of [dh_inclusao] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
@@ -563,7 +547,7 @@ abstract class Cliente implements ActiveRecordInterface
 
     /**
      * Sets the value of [dh_alteracao] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Table\Model\Cliente The current object (for fluent API support)
@@ -712,8 +696,6 @@ abstract class Cliente implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collOrcamentos = null;
-
             $this->singleUser = null;
 
         } // if (deep)
@@ -826,23 +808,6 @@ abstract class Cliente implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->orcamentosScheduledForDeletion !== null) {
-                if (!$this->orcamentosScheduledForDeletion->isEmpty()) {
-                    \Table\Model\OrcamentoQuery::create()
-                        ->filterByPrimaryKeys($this->orcamentosScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->orcamentosScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collOrcamentos !== null) {
-                foreach ($this->collOrcamentos as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->singleUser !== null) {
                 if (!$this->singleUser->isDeleted() && ($this->singleUser->isNew() || $this->singleUser->isModified())) {
                     $affectedRows += $this->singleUser->save($con);
@@ -907,25 +872,25 @@ abstract class Cliente implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
+                    case 'id':                        
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'razao_social':
+                    case 'razao_social':                        
                         $stmt->bindValue($identifier, $this->razao_social, PDO::PARAM_STR);
                         break;
-                    case 'contato':
+                    case 'contato':                        
                         $stmt->bindValue($identifier, $this->contato, PDO::PARAM_STR);
                         break;
-                    case 'cep':
+                    case 'cep':                        
                         $stmt->bindValue($identifier, $this->cep, PDO::PARAM_STR);
                         break;
-                    case 'descricao':
+                    case 'descricao':                        
                         $stmt->bindValue($identifier, $this->descricao, PDO::PARAM_STR);
                         break;
-                    case 'dh_inclusao':
+                    case 'dh_inclusao':                        
                         $stmt->bindValue($identifier, $this->dh_inclusao ? $this->dh_inclusao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'dh_alteracao':
+                    case 'dh_alteracao':                        
                         $stmt->bindValue($identifier, $this->dh_alteracao ? $this->dh_alteracao->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                 }
@@ -1049,43 +1014,14 @@ abstract class Cliente implements ActiveRecordInterface
             $keys[5] => $this->getDhInclusao(),
             $keys[6] => $this->getDhAlteracao(),
         );
-
-        $utc = new \DateTimeZone('utc');
-        if ($result[$keys[5]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[5]];
-            $result[$keys[5]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
-        }
-
-        if ($result[$keys[6]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[6]];
-            $result[$keys[6]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
-        }
-
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
-            if (null !== $this->collOrcamentos) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'orcamentos';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'orcamentos';
-                        break;
-                    default:
-                        $key = 'Orcamentos';
-                }
-
-                $result[$key] = $this->collOrcamentos->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->singleUser) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'user';
@@ -1096,7 +1032,7 @@ abstract class Cliente implements ActiveRecordInterface
                     default:
                         $key = 'User';
                 }
-
+        
                 $result[$key] = $this->singleUser->toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, true);
             }
         }
@@ -1306,7 +1242,7 @@ abstract class Cliente implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1361,12 +1297,6 @@ abstract class Cliente implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getOrcamentos() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addOrcamento($relObj->copy($deepCopy));
-                }
-            }
-
             $relObj = $this->getUser();
             if ($relObj) {
                 $copyObj->setUser($relObj->copy($deepCopy));
@@ -1413,230 +1343,6 @@ abstract class Cliente implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Orcamento' == $relationName) {
-            return $this->initOrcamentos();
-        }
-    }
-
-    /**
-     * Clears out the collOrcamentos collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addOrcamentos()
-     */
-    public function clearOrcamentos()
-    {
-        $this->collOrcamentos = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collOrcamentos collection loaded partially.
-     */
-    public function resetPartialOrcamentos($v = true)
-    {
-        $this->collOrcamentosPartial = $v;
-    }
-
-    /**
-     * Initializes the collOrcamentos collection.
-     *
-     * By default this just sets the collOrcamentos collection to an empty array (like clearcollOrcamentos());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initOrcamentos($overrideExisting = true)
-    {
-        if (null !== $this->collOrcamentos && !$overrideExisting) {
-            return;
-        }
-        $this->collOrcamentos = new ObjectCollection();
-        $this->collOrcamentos->setModel('\Table\Model\Orcamento');
-    }
-
-    /**
-     * Gets an array of ChildOrcamento objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildCliente is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildOrcamento[] List of ChildOrcamento objects
-     * @throws PropelException
-     */
-    public function getOrcamentos(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collOrcamentosPartial && !$this->isNew();
-        if (null === $this->collOrcamentos || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collOrcamentos) {
-                // return empty collection
-                $this->initOrcamentos();
-            } else {
-                $collOrcamentos = ChildOrcamentoQuery::create(null, $criteria)
-                    ->filterByCliente($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collOrcamentosPartial && count($collOrcamentos)) {
-                        $this->initOrcamentos(false);
-
-                        foreach ($collOrcamentos as $obj) {
-                            if (false == $this->collOrcamentos->contains($obj)) {
-                                $this->collOrcamentos->append($obj);
-                            }
-                        }
-
-                        $this->collOrcamentosPartial = true;
-                    }
-
-                    return $collOrcamentos;
-                }
-
-                if ($partial && $this->collOrcamentos) {
-                    foreach ($this->collOrcamentos as $obj) {
-                        if ($obj->isNew()) {
-                            $collOrcamentos[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collOrcamentos = $collOrcamentos;
-                $this->collOrcamentosPartial = false;
-            }
-        }
-
-        return $this->collOrcamentos;
-    }
-
-    /**
-     * Sets a collection of ChildOrcamento objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $orcamentos A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildCliente The current object (for fluent API support)
-     */
-    public function setOrcamentos(Collection $orcamentos, ConnectionInterface $con = null)
-    {
-        /** @var ChildOrcamento[] $orcamentosToDelete */
-        $orcamentosToDelete = $this->getOrcamentos(new Criteria(), $con)->diff($orcamentos);
-
-
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->orcamentosScheduledForDeletion = clone $orcamentosToDelete;
-
-        foreach ($orcamentosToDelete as $orcamentoRemoved) {
-            $orcamentoRemoved->setCliente(null);
-        }
-
-        $this->collOrcamentos = null;
-        foreach ($orcamentos as $orcamento) {
-            $this->addOrcamento($orcamento);
-        }
-
-        $this->collOrcamentos = $orcamentos;
-        $this->collOrcamentosPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Orcamento objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Orcamento objects.
-     * @throws PropelException
-     */
-    public function countOrcamentos(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collOrcamentosPartial && !$this->isNew();
-        if (null === $this->collOrcamentos || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collOrcamentos) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getOrcamentos());
-            }
-
-            $query = ChildOrcamentoQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByCliente($this)
-                ->count($con);
-        }
-
-        return count($this->collOrcamentos);
-    }
-
-    /**
-     * Method called to associate a ChildOrcamento object to this object
-     * through the ChildOrcamento foreign key attribute.
-     *
-     * @param  ChildOrcamento $l ChildOrcamento
-     * @return $this|\Table\Model\Cliente The current object (for fluent API support)
-     */
-    public function addOrcamento(ChildOrcamento $l)
-    {
-        if ($this->collOrcamentos === null) {
-            $this->initOrcamentos();
-            $this->collOrcamentosPartial = true;
-        }
-
-        if (!$this->collOrcamentos->contains($l)) {
-            $this->doAddOrcamento($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildOrcamento $orcamento The ChildOrcamento object to add.
-     */
-    protected function doAddOrcamento(ChildOrcamento $orcamento)
-    {
-        $this->collOrcamentos[]= $orcamento;
-        $orcamento->setCliente($this);
-    }
-
-    /**
-     * @param  ChildOrcamento $orcamento The ChildOrcamento object to remove.
-     * @return $this|ChildCliente The current object (for fluent API support)
-     */
-    public function removeOrcamento(ChildOrcamento $orcamento)
-    {
-        if ($this->getOrcamentos()->contains($orcamento)) {
-            $pos = $this->collOrcamentos->search($orcamento);
-            $this->collOrcamentos->remove($pos);
-            if (null === $this->orcamentosScheduledForDeletion) {
-                $this->orcamentosScheduledForDeletion = clone $this->collOrcamentos;
-                $this->orcamentosScheduledForDeletion->clear();
-            }
-            $this->orcamentosScheduledForDeletion[]= clone $orcamento;
-            $orcamento->setCliente(null);
-        }
-
-        return $this;
     }
 
     /**
@@ -1707,17 +1413,11 @@ abstract class Cliente implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collOrcamentos) {
-                foreach ($this->collOrcamentos as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->singleUser) {
                 $this->singleUser->clearAllReferences($deep);
             }
         } // if ($deep)
 
-        $this->collOrcamentos = null;
         $this->singleUser = null;
     }
 
