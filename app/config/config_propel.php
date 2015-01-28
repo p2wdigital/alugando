@@ -12,7 +12,7 @@ $manager->setConfiguration(array (
     ),
   ),
   'classname' => 'Propel\\Runtime\\Connection\\ConnectionWrapper',
-  'dsn' => 'mysql:host=localhost;dbname=wep2test',
+  'dsn' => 'mysql:host=localhost;dbname=wep2',
   'user' => 'root',
   'password' => '',
   'attributes' =>
