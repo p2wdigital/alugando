@@ -22,13 +22,17 @@ class FormTwig extends Twig_Extension
 
 		$loaderFile 	= new TwigLoaderFilesystem(array('src', 'app/View'));
 		$loaderArray 	= new \Twig_Loader_Array(array(
-				"formLoader.html"=>"{% use '::fields.html.twig' %} {% block form_row %} {{parent()}}{% endblock %}"
+				"formLoader.html"=>"{%- use '::fields.html.twig' -%} {%- block form_row -%} {{-parent()-}}{%- endblock -%}"
 		));
 		
 		$loader 		= new \Twig_Loader_Chain(array($loaderArray, $loaderFile));
 		$twig 			= new \Twig_Environment($loader, array('cache' => $cacheDir,'debug'=>$debug));
 
 		$twig->addExtension(new \Twig_Extension_Debug());
+
+		if(key_exists('attr', $option) && key_exists('attr', $field)):
+			$option['attr'] = $option['attr'] + $field['attr'];
+		endif;
 
 		return $twig->render("formLoader.html", $option + $field);
 

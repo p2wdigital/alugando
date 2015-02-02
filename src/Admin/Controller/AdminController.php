@@ -32,17 +32,19 @@ class AdminController extends Controller
 	 * @Route("/insert", name="admin_insert")
 	 */
 	public function insertAction(Request $request){
-		$con = Propel::getWriteConnection('default');
-		$con->useDebug(true);
-		$cliente = new Cliente();
+		//$con = Propel::getWriteConnection('default');
+		//$con->useDebug(true);
+		$cliente = ClienteQuery::create()->findPK(1095);
+		//var_dump($cliente);
+		//$cliente = new Cliente();
 		$form = new Form(new ClienteType(), $cliente);
-		var_dump($request->request->get("cliente"));
+		//var_dump($request->request->get("cliente"));
 		if(isset($_POST['cliente'])):
 			$form->handleRequest($request);
 			//var_dump($cliente);
 			$cliente->save();
-			var_dump($con->getLastExecutedQuery());
-			echo $cliente->getId();
+			//var_dump($con->getLastExecutedQuery());
+			//echo $cliente->getId();
 		endif;
 
 		return $this->render("Admin:Admin:insert.html.twig", array("form"=>$form->createView()));

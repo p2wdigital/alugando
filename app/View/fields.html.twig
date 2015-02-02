@@ -1,5 +1,5 @@
 {# Form Row #}
-{% block form_row %}
+{%- block form_row -%}
 	<div class="form-group">
 		{% if input  %}
 			{{block('label')}}
@@ -7,9 +7,9 @@
 		{% else %}
 			{{block('label')}}
 			{{block(type)}}
-		{% endif %}	
-	</div>
-{% endblock %}
+		{% endif -%}	
+    </div>
+{% endblock -%}
 
 {# Show Field#}
 {% block show_field %}
@@ -17,23 +17,29 @@
 {% endblock %}
 
 {# Label #}
-{% block label %}
-	{% if type not in ['submit'] %}
-    <label for="{{name}}">{{label}}</label>
-	{% endif %}
-{% endblock %}
+{%- block label -%}
+	{%- if type not in ['submit'] -%}
+	<label for="{{name}}">{{label}}</label>
+	{%- endif -%}
+{%- endblock -%}
 
 {# Input Type#}
-{% block input_type %}
-    <input type="{{type}}" name="{{name}}" class="form-control" data-mask="00/00/0000">
-{% endblock %}
+{%- block input_type -%}
+ 	{%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+	<input type="{{type}}" name="{{name}}" {{block('addAttr')}} {% if value is not empty %}value="{{value}}"{% endif %}/>
+{%- endblock -%}
 
-{% block textarea %}
-	
+{%- block textarea -%}
     <textarea name="{{name}}" class="form-control">{{value}}</textarea>
-{% endblock %}
+{%- endblock -%}
 
+{%- block submit -%}
+    <input type="submit" name="{{name}}" value="{{label}}" />
+{%- endblock -%}
 
-{% block submit %}
-    <input type="submit" name="{{name}}" value="{{label}}">
-{% endblock %}
+{%- block addAttr -%}
+    {%- for key, value in attr -%}
+        {{- key}}="{{value}}"{{" "}}
+    {%- endfor -%}
+{%- endblock -%}
+

@@ -50,7 +50,7 @@ class Form
 		$form 		= $request->request->get($this->formType->getOptions('name'));
 		$fields		= $this->builder->getFields();
 
-		if(count(array_diff_key($form, $fields))):
+		if(count($form) != count($fields)):
 			throw new \Exception("Quantidade de campos definida no type deve ser igual a quantidade de campos enviadas pelo formulário", 500);
 		endif;
 		foreach ($form as $key => $value):

@@ -36,7 +36,7 @@ class SubmitType extends AbstractType implements TypeInterface
 			$field['label'] = $this->labelName($this->field);
 		endif;
 
-		return $field = $field + $options;
+		return $field = $field + $options +array("attr"=>array()) ;
 
 	}
 }

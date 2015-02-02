@@ -38,7 +38,7 @@ class NumberType extends AbstractType implements TypeInterface
 		endif;
 
 
-		return $field = $field + $options;
+		return $field = $field + $options + array("attr"=>array());
 
 	}
 }
