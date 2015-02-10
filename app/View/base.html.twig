@@ -5,8 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" type="text/css" href="http://www.wep2.com.br/administracao/css/bootstrap.min.css">
-	<!-- Optional theme -->
+    {{link("http://www.wep2.com.br/administracao/css/bootstrap.min.css")}}
+    {{link(assert("/css/style.css"))}}
+     <!-- Optional theme -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {{link("//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400")}}
+    
     {% block head %}
 
     {% endblock %}
@@ -17,8 +22,6 @@
 
 {% block scripts %}
 <!-- Latest compiled and minified JavaScript -->
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="http://www.wep2.com.br/administracao/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/plunder/assert/jquery/jquery.mask.min.js"></script>
 

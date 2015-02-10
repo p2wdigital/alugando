@@ -38,6 +38,33 @@ class Request
 	}
 
 	public function getPathInfo(){
-		return $this->server->get("PATH_INFO", "", false);
+		$path = $this->server->get("PATH_INFO", "", false);
+		if($path != "") return $path;
+		
+		$path = $this->server->get("REQUEST_URI", "", false);
+		$base = $this->server->get("BASE", "", false);
+		return str_replace($base, "", $path);
+	}
+
+	public function getBase(){
+		$base = $this->server->get("BASE");
+		if ($base === null):
+			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->get('REQUEST_URI'), $match);
+				return $match[1] . $match[2];
+		endif;
+		return $base;
+	}
+
+	public function getBaseFile(){
+		$base = $this->server->get("BASE");
+		if ($base === null):
+			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->get('REQUEST_URI'), $match);
+				return $match[1];
+		endif;
+		return $base;
+	}
+
+	public function getMethod(){
+		return $this->server->get("REQUEST_METHOD", 'GET');
 	}
 }

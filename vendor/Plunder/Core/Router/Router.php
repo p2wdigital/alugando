@@ -15,6 +15,8 @@ class Router
 	protected $request;
 	protected $annotationRouter;
 
+
+
 	public function __construct(Request $request, AnnotationRouter $routers){
 		$this->request = $request;
 		$this->annotationRouter = $routers;
@@ -30,6 +32,7 @@ class Router
 	public function resolve(){
 		$path 		= rtrim($this->request->getPathInfo(),"/");
 		$routers 	= $this->annotationRouter->getRoute();
+		//var_dump($path, $routers);
 
 		foreach ($routers as $key => $value):
 			if($this->checkRoute($path, $value)):
@@ -118,6 +121,31 @@ class Router
 			return null;
 		endif;
 	}
+
+
+	public function generateUrl($name, $params = array(), $relative =true){
+		$route = $this->annotationRouter->getRoute();
+		
+		if(!array_key_exists($name, $route)):
+			var_dump($route);
+			throw new \Exception("Class Router->generateUrl erro \n Rota não encontrada " .$name, 500);
+		endif;
+
+		$aux = $route[$name]['route'];
+		//var_dump($aux);
+		foreach ($params as $key => $value):
+			$aux = str_replace("{". $key ."}", $value, $aux);
+		endforeach;
+		
+		if($relative):
+			return $this->request->getBase() . $aux;
+		else:
+			$server = $this->request->server;
+			return sprintf("%s://%s%s", $server->get("REQUEST_SCHEME", "http"), $server->get('HTTP_HOST')
+							,$this->request->getBase() . $aux);
+		endif;
+	}
+
 
 //*** Rotas
 //   $route = /admin/estoque/{page}

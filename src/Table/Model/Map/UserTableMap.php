@@ -59,7 +59,7 @@ class UserTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class UserTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
-     * the column name for the cliente_id field
+     * the column name for the id field
      */
-    const COL_CLIENTE_ID = 'user.cliente_id';
+    const COL_ID = 'user.id';
+
+    /**
+     * the column name for the login field
+     */
+    const COL_LOGIN = 'user.login';
 
     /**
      * the column name for the password field
@@ -98,11 +103,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('ClienteId', 'Password', 'Salt', ),
-        self::TYPE_CAMELNAME     => array('clienteId', 'password', 'salt', ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_CLIENTE_ID, UserTableMap::COL_PASSWORD, UserTableMap::COL_SALT, ),
-        self::TYPE_FIELDNAME     => array('cliente_id', 'password', 'salt', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id', 'Login', 'Password', 'Salt', ),
+        self::TYPE_CAMELNAME     => array('id', 'login', 'password', 'salt', ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID, UserTableMap::COL_LOGIN, UserTableMap::COL_PASSWORD, UserTableMap::COL_SALT, ),
+        self::TYPE_FIELDNAME     => array('id', 'login', 'password', 'salt', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class UserTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('ClienteId' => 0, 'Password' => 1, 'Salt' => 2, ),
-        self::TYPE_CAMELNAME     => array('clienteId' => 0, 'password' => 1, 'salt' => 2, ),
-        self::TYPE_COLNAME       => array(UserTableMap::COL_CLIENTE_ID => 0, UserTableMap::COL_PASSWORD => 1, UserTableMap::COL_SALT => 2, ),
-        self::TYPE_FIELDNAME     => array('cliente_id' => 0, 'password' => 1, 'salt' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Login' => 1, 'Password' => 2, 'Salt' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'login' => 1, 'password' => 2, 'salt' => 3, ),
+        self::TYPE_COLNAME       => array(UserTableMap::COL_ID => 0, UserTableMap::COL_LOGIN => 1, UserTableMap::COL_PASSWORD => 2, UserTableMap::COL_SALT => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'login' => 1, 'password' => 2, 'salt' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -134,9 +139,10 @@ class UserTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Table\\Model\\User');
         $this->setPackage('Table.Model');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
-        $this->addForeignPrimaryKey('cliente_id', 'ClienteId', 'INTEGER' , 'cliente', 'id', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
+        $this->addColumn('login', 'Login', 'VARCHAR', false, 45, null);
         $this->addColumn('password', 'Password', 'LONGVARCHAR', false, null, null);
         $this->addColumn('salt', 'Salt', 'LONGVARCHAR', false, null, null);
     } // initialize()
@@ -146,7 +152,6 @@ class UserTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Cliente', '\\Table\\Model\\Cliente', RelationMap::MANY_TO_ONE, array('cliente_id' => 'id', ), null, null);
     } // buildRelations()
 
     /**
@@ -165,11 +170,11 @@ class UserTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -189,10 +194,10 @@ class UserTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('ClienteId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -253,7 +258,7 @@ class UserTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -290,11 +295,13 @@ class UserTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(UserTableMap::COL_CLIENTE_ID);
+            $criteria->addSelectColumn(UserTableMap::COL_ID);
+            $criteria->addSelectColumn(UserTableMap::COL_LOGIN);
             $criteria->addSelectColumn(UserTableMap::COL_PASSWORD);
             $criteria->addSelectColumn(UserTableMap::COL_SALT);
         } else {
-            $criteria->addSelectColumn($alias . '.cliente_id');
+            $criteria->addSelectColumn($alias . '.id');
+            $criteria->addSelectColumn($alias . '.login');
             $criteria->addSelectColumn($alias . '.password');
             $criteria->addSelectColumn($alias . '.salt');
         }
@@ -348,7 +355,7 @@ class UserTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(UserTableMap::DATABASE_NAME);
-            $criteria->add(UserTableMap::COL_CLIENTE_ID, (array) $values, Criteria::IN);
+            $criteria->add(UserTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = UserQuery::create()->mergeWith($criteria);
@@ -394,6 +401,10 @@ class UserTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from User object
+        }
+
+        if ($criteria->containsKey(UserTableMap::COL_ID) && $criteria->keyContainsValue(UserTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTableMap::COL_ID.')');
         }
 
 

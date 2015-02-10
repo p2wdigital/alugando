@@ -27,6 +27,8 @@ class TwigLoaderFilesystem extends Twig_Loader_Filesystem
 		endif;
 			
 		$caminho 	.= implode("/", $aux);
+		//var_dump($aux, $caminho);
+
 		return $caminho;
 	}
 

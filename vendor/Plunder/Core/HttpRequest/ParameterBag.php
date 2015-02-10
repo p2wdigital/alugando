@@ -29,7 +29,7 @@ class ParameterBag
 		
 		if(array_key_exists($value, $this->parameter)):
 			if (is_array($this->parameter[$value])):
-				return $this->parameter[$value];
+				return new ParameterBag($this->parameter[$value]);
 			else:
 				return ($security) ? htmlentities($this->parameter[$value], ENT_QUOTES, "UTF-8") : $this->parameter[$value];
 			endif;
@@ -39,6 +39,6 @@ class ParameterBag
 	}
 
 	public function getAll(){
-		return $parameter;
+		return $this->parameter;
 	}
 }

@@ -2,12 +2,15 @@
 
 namespace Plunder\Core\Loader;
 
-use Plunder\Helpers\Cache\Cache;
 use Symfony\Component\Yaml\Parser;
+use Plunder\Helpers\Cache\Cache;
 use Plunder\Core\Container\Container;
 use Plunder\Helpers\Annotation\AnnotationRouter;
 use Plunder\Core\Config\Config;
-use Table\Model\ClienteQuery;
+use Plunder\Core\HttpRequest\Response;
+
+
+
 /**
 * Loader Class
 */
@@ -23,7 +26,7 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
-
+		// var_dump($_SERVER);
 		require_once (BASE_DIR."/app/config/config_propel.php");
 		new Container(new Parser());
 		new Config(Container::get('yaml'), Container::get('cache'));
@@ -61,7 +64,12 @@ class Loader
 			endif;
 		endforeach;
 		
-		$method->invokeArgs($method->getDeclaringClass()->newInstance(), $arg);
+		$response = $method->invokeArgs($method->getDeclaringClass()->newInstance(), $arg);
+		if ($response instanceof Response):
+			$response->send();
+		else:
+			throw new \Exception("Controller não retornou nenhuma resposta!", 500);
+		endif;
 
 	}
 

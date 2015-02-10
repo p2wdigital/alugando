@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+	<div id="header">
+		{% block header %}
+	    Aqui é o Header
+		{% endblock %}
+	</div>
+
+	<div id="nav">
+		{% block nav %}
+		    Aqui é o navBar
+		{% endblock %}
+	</div>
+	<div id="content">
+		<div class="container-fluid">
+		{% block content %}
+		    
+		{% endblock %}
+		</div>
+	</div>
+
+	<div id="footer">
+		
+	</div>
+
+{% endblock %}

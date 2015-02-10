@@ -1,0 +1,16 @@
+html{}
+body{background: #f1f1f1; font-family: 'Open Sans', Arial; font-size: 14px;}
+#header{width: 100%; background: #049372;}
+#nav{width: 230px; background: #3FC380; float: left; height: 1000px;}
+#content{padding-left: 230px; }
+#footer{width: 100%; display: table;}
+
+#content .post .titulo .url{color: #333; font-style: italic; margin: 0px 0 0 5px ; font-size: 95%;}
+
+/** GENERICOS **/
+.inline{display: inline-block;}
+.error, .error>li {color: #96281B;}
+.error>li:before{content: "- "; margin-left: 5px;}
+.ulsimple {margin: 0; padding: 0; list-style: none;}
+.mce-content-body {font-size: 17px;}
+

@@ -1,13 +1,15 @@
+plunder:
+  charset: utf-8
 propel:
   database:
       connections:
           default:
               adapter: mysql
               settings:
-                charset: utf8
+                charset: UTF-8
               classname: Propel\Runtime\Connection\ConnectionWrapper
               #classname: Propel\Runtime\Connection\DebugPDO
-              dsn: "mysql:host=localhost;dbname=wep2test"
+              dsn: "mysql:host=localhost;dbname=alugando"
               user: root
               password: null
               attributes:

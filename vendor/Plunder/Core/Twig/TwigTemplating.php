@@ -3,6 +3,7 @@
 namespace Plunder\Core\Twig;
 
 use Plunder\Core\Twig\Functions\FormTwig;
+use Plunder\Core\Twig\Functions\UrlTwig;
 use Twig_Extension_Debug;
 
 
@@ -16,7 +17,7 @@ class TwigTemplating
 		return $this;
 	}
 
-	public function render($view, $args = array(), $display){
+	public function render($view, $args = array()){
 
 		$cacheDir 	= sprintf("app/cache/%s/twig", ENVIRONMENT);
 		$debug 		= false;
@@ -30,11 +31,10 @@ class TwigTemplating
 		));
 		$twig->addExtension(new Twig_Extension_Debug());
 		$twig->addExtension(new FormTwig);
-		if ($display):
-			return $twig->display($view, $args);
-		else:
-			return $twig->render($view, $args);
-		endif;
+		$twig->addExtension(new UrlTwig);
+		
+		return $twig->render($view, $args);
+		
 	}
 
 

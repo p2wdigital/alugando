@@ -1,42 +1,81 @@
 {# Form Row #}
 {%- block form_row -%}
 	<div class="form-group">
-		{% if input  %}
-			{{block('label')}}
-			{{block('input_type')}}
-		{% else %}
-			{{block('label')}}
-			{{block(type)}}
-		{% endif -%}	
+		{{block('label')}}
+		{{block(type)}}
+		{{block("error")}}
     </div>
+{% endblock -%}
+{%- block form_widget -%}
+	{{block(type)}}
+{% endblock -%}
+
+{%- block form_label -%}
+	{{block('label')}}
+{% endblock -%}
+{%- block form_error -%}
+	{{block('error')}}
 {% endblock -%}
 
 {# Show Field#}
-{% block show_field %}
-
+{% block error %}
+	{% if error %}
+	<ul class="ulsimple error">
+	{% for item in error -%}
+		
+	   <li>{{item}}</li> 
+	{%- endfor %}
+	</ul>
+	{% endif %}
 {% endblock %}
 
 {# Label #}
 {%- block label -%}
-	{%- if type not in ['submit'] -%}
+	{%- if nolabel is not defined  -%}
 	<label for="{{name}}">{{label}}</label>
 	{%- endif -%}
 {%- endblock -%}
 
 {# Input Type#}
-{%- block input_type -%}
+{%- block input -%}
  	{%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
-	<input type="{{type}}" name="{{name}}" {{block('addAttr')}} {% if value is not empty %}value="{{value}}"{% endif %}/>
+	<input type="{{input_type}}" name="{{name}}" id="{{id|default('')}}" {{block('addAttr')}} 
+	{%- if value is not empty %} value="{{value}}"{% endif %}/>
 {%- endblock -%}
-
+{# Textarea #}
 {%- block textarea -%}
-    <textarea name="{{name}}" class="form-control">{{value}}</textarea>
+	{%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+    <textarea name="{{name}}" {{block('addAttr')}} id="{{id|default('')}}">{{value}}</textarea>
 {%- endblock -%}
 
+{# Submit#}
 {%- block submit -%}
     <input type="submit" name="{{name}}" value="{{label}}" />
 {%- endblock -%}
 
+{# Select #}
+{%- block select -%}
+	{%- set attr = attr|merge({class: (attr.class|default('') ~ ' form-control')|trim}) -%}
+	<select name="{{name}}" id="{{id|default('')}}" {{block("addAttr")}}>
+		{% if empty_data is defined %}
+			<option value="{{empty_value}}" {% if value is same as(null) %}selected="true"{% endif %}>{{empty_data}}</option>
+		{% endif %}
+		{% for key,item in data -%}
+			<option value="{{key}}" {% if value == key %}selected="true"{% endif %}>{{item}}</option>
+		{%- endfor %}		
+	</select>
+{%- endblock -%}
+
+{# Checkbox #}
+{%- block check -%}
+	<label>
+		<input type="checkbox" name="{{name}}" value="{{value}}" {% if checked %}checked="checked"{% endif %}> <span>{{label}}</span>
+	</label>
+{%- endblock -%}
+
+
+
+{# Atributos#}
 {%- block addAttr -%}
     {%- for key, value in attr -%}
         {{- key}}="{{value}}"{{" "}}

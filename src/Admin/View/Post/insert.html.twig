@@ -1,0 +1,156 @@
+{% extends 'Admin:layout.html.twig' %}
+{% use "Admin:widgets.html.twig" %}
+
+{% block content %}
+<div class="row post">
+<div class="col-xs-12">
+	<h2>Adicionar Post</h2>
+
+</div>	
+<form action="" method="POST">
+<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+	<div class="row">
+		<div class="col-xs-12">
+
+			<div class="form-group titulo">
+				{{form_widget(form.titulo, {attr:{placeholder:"Título do Post"}})}}
+				{{form_error(form.titulo)}}
+				<div class="url_label url" style="margin-top: 5px;">
+					<strong>Link Permanente</strong>: /<span class="span_url">{{form.url.value}}</span>
+					<span style="width: 200px; display: inline-block;">&nbsp;</span>
+					<a href="#" class="btn btn-xs btn-default text-right">Editar</a>
+					<a href="#" class="btn btn-xs btn-default">Atualizar</a>
+				</div>
+				<div class="url_input" style="display: none;">
+					<strong>Link Permanente</strong>: /<span class="inline" style="width: 100;">
+					{{form_widget(form.url, {attr:{class:"input-sm"}})}}
+					</span>
+				</div>
+			</div>
+			
+			{{form_row(form.text)}}
+		</div>
+	</div>	
+</div><!--/col-principal-->
+<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+	<div class="row">
+		<div class="col-xs-12">
+			{# Bloco Publicar#}
+			{% set panel_title = "Publicar" %}
+			{% set panel_body %}
+				{{form_row(form.status)}}
+				<input type="submit" class="btn btn-warning" value="Salvar">
+				
+			{% endset %}
+			{{block('panel')}}
+
+			{# Bloco Categoria#}
+			{% set panel_title = "Categorias" %}
+			{% set panel_body %}
+				<div class="checkbox">
+					<ul class="ulsimple list-category">
+						{% for item in form.categoria %}
+							<li>{{form_widget(item.id)}}</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<a href="#" class="addCategoria">+adicionar nova categoria</a>
+				<div class="categoria" style="display: none;">
+					<div class="form-group">
+						<br>
+						<input type="text" class="form-control input-sm" name="cate[nome]">
+					</div>
+					<div class="form-group">
+						<button class="save_categoria btn btn-sm btn-default">Adicionar nova categoria</button>
+					</div>
+				</div>
+			{% endset %}
+
+			{{block('panel')}}
+		</div>
+	</div>
+</div><!--/col-lateral-->
+</form>
+</div><!--/row-->
+{% endblock %}
+
+{% block scripts %}
+    {{parent()}}
+	<script type="text/javascript" src="/alugando/assert/jquery/tinymce/tinymce.jquery.js"></script>
+	<script type="text/javascript">
+	tinymce.init({
+	    selector: "#post_text",
+	    skin:"lightgray",
+	    content_css : "/alugando/assert/css/style.css",
+	    language:"pt_BR",
+	    height:"300px",
+	    browser_spellcheck : true,
+	    contextmenu: false,
+	    plugins: [
+	        "advlist autolink lists link image charmap print preview anchor",
+	        "searchreplace visualblocks code fullscreen",
+	        "insertdatetime media table contextmenu paste"
+	    ],
+	    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+	});
+
+	jQuery(document).ready(function($) {
+
+		$("#post_titulo").focusout(function(event) {
+			if ($(".url .span_url").html().length > 0){return false;}
+			//alert($(".url span").html().length);
+			var titulo = $.trim($(this).val());
+			titulo = titulo.replace(/ /g, '-');
+			$(".url .span_url").html(titulo.toLowerCase());
+			$("#post_url").val(titulo.toLowerCase());
+		});
+
+		$(".url .span_url").click(function(event) {
+			$(this).hide();
+			$("#post_url").attr({'type':'text'}).focus();
+
+		});
+		$("#post_url").focusout(function(){
+			var titulo = $.trim($(this).val());
+			titulo = titulo.replace(/ /g, '-');
+			$(".url .span_url").html(titulo.toLowerCase()).show();
+			$("#post_url").val(titulo.toLowerCase());
+			$(this).attr('type', 'hidden');;
+
+		});
+
+		$(".addCategoria").click(function(event) {
+			event.preventDefault();
+			$(".categoria").toggle();
+		});
+		$(".save_categoria").click(function(event) {
+			event.preventDefault();
+			var data = $(".categoria input").serialize();
+			$.ajax({
+				url: '{{path("categoria_insert_ajax")}}',
+				type: 'POST',
+				dataType: 'json',
+				data: data
+			})
+			.done(function(ret) {
+				console.debug(ret);
+				var li = $(".list-category").find('li').eq(0).clone();
+				li.find("input").attr('value', ret.Id).attr('checked', true);
+				li.find("input").attr('name', "categoria[" + $(".list-category li").size() +"][id]");
+				li.find('span').html(ret.Nome);
+
+				$(".list-category").prepend(li);
+			})
+			.fail(function(error) {
+				console.debug(error);
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+		});
+	});	
+
+
+	</script>
+{% endblock %}

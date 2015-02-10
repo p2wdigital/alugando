@@ -1,12 +1,2 @@
-{% extends "base.html.twig" %}
+{% extends 'Admin:layout.html.twig' %}
 
-{% block body %}
-  Ola mundo
-{% for item in cliente %}
-    {{item.id}} -  {{item.RazaoSocial}} - {{item.Contato}}
-  {#
-  {{item.id}} -  {{item.razao_social}} - {{item.contato}}
-   #} 
-  <br>
-{% endfor %}
-{% endblock %}

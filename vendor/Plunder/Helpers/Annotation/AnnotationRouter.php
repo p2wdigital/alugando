@@ -82,7 +82,7 @@ class AnnotationRouter extends Annotation
 				$class = $value['class'];
 				//Gera todas as rotas encontradas antes do class
 				foreach ($auxRoute as $key => $item):
-					$route[] = array(
+					$route[$item['name']] = array(
 						"namespace"=>$namespace, 
 						"class"=>$class, 
 						"route"=> strtolower(rtrim($item['route'], "/")),
@@ -107,7 +107,7 @@ class AnnotationRouter extends Annotation
 				foreach ($classRoute as $key => $c):
 					foreach ($auxRoute as $key => $rota):
 
-						$route[] = array(
+						$route[$rota['name']] = array(
 							"namespace"=>$namespace, 
 							"class"=>$class, 
 							"route"=> strtolower(rtrim($c['route'] . $rota['route'], "/")), 

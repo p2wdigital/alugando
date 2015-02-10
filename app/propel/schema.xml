@@ -1,49 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore" namespace="Table\Model">
-  <table name="cliente" idMethod="native" phpName="Cliente">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="razao_social" phpName="RazaoSocial" type="VARCHAR" size="80" required="true"/>
-    <column name="contato" phpName="Contato" type="VARCHAR" size="80" required="true"/>
-    <column name="cep" phpName="Cep" type="VARCHAR" size="8" required="true"/>
-    <column name="descricao" phpName="Descricao" type="LONGVARCHAR" required="true"/>
-    <column name="dh_inclusao" phpName="DhInclusao" type="TIMESTAMP"/>
-    <column name="dh_alteracao" phpName="DhAlteracao" type="TIMESTAMP"/>
+  <table name="categoria" idMethod="native" phpName="Categoria">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <column name="url" phpName="Url" type="VARCHAR" size="100" required="true"/>
+    <column name="descricao" phpName="Descricao" type="LONGVARCHAR"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="orcamento" idMethod="native" phpName="Orcamento">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="prazo" phpName="Prazo" type="INTEGER"/>
-    <column name="data_inicio" phpName="DataInicio" type="VARCHAR"/>
-    <column name="data_fim" phpName="DataFim" type="VARCHAR"/>
+  <table name="config" idMethod="native" phpName="Config">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="key" phpName="Key" type="VARCHAR" size="45" required="true"/>
+    <column name="value" phpName="Value" type="VARCHAR" size="45" required="true"/>
+    <column name="dh_inclusao" phpName="DhInclusao" type="VARCHAR"/>
+    <column name="dh_alteracao" phpName="DhAlteracao" type="VARCHAR"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="orcamento_item" idMethod="native" phpName="OrcamentoItem">
+  <table name="menu" idMethod="native" phpName="Menu">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="orcamento_id" phpName="OrcamentoId" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="produto" phpName="Produto" type="VARCHAR" size="45"/>
-    <column name="quantidade" phpName="Quantidade" type="VARCHAR" size="45"/>
-    <column name="valor" phpName="Valor" type="VARCHAR" size="45"/>
-    <foreign-key foreignTable="orcamento" name="fk_orcamento_item_orcamento1">
-      <reference local="orcamento_id" foreign="id"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45"/>
+    <column name="principal" phpName="Principal" type="INTEGER"/>
+    <column name="dh_inclusao" phpName="DhInclusao" type="VARCHAR"/>
+    <column name="dh_alteracao" phpName="DhAlteracao" type="VARCHAR"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="menu_item" idMethod="native" phpName="MenuItem">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="menu_id" phpName="MenuId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="post_id" phpName="PostId" type="INTEGER" required="true"/>
+    <column name="parent" phpName="Parent" type="INTEGER"/>
+    <column name="titulo" phpName="Titulo" type="VARCHAR" size="100"/>
+    <column name="tipo" phpName="Tipo" type="VARCHAR" size="45"/>
+    <column name="url" phpName="Url" type="VARCHAR" size="100"/>
+    <column name="data" phpName="Data" type="LONGVARCHAR"/>
+    <foreign-key foreignTable="menu" name="fk_menu_item_menu">
+      <reference local="menu_id" foreign="id"/>
     </foreign-key>
-    <index name="fk_orcamento_item_orcamento1_idx">
-      <index-column name="orcamento_id"/>
+    <foreign-key foreignTable="post" name="fk_menu_item_post1">
+      <reference local="post_id" foreign="id"/>
+    </foreign-key>
+    <index name="fk_menu_item_menu_idx">
+      <index-column name="menu_id"/>
+    </index>
+    <index name="fk_menu_item_post1_idx">
+      <index-column name="post_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="post" idMethod="native" phpName="Post">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="titulo" phpName="Titulo" type="VARCHAR" size="100"/>
+    <column name="text" phpName="Text" type="LONGVARCHAR"/>
+    <column name="tipo" phpName="Tipo" type="INTEGER"/>
+    <column name="status" phpName="Status" type="INTEGER"/>
+    <column name="url" phpName="Url" type="VARCHAR" size="100"/>
+    <column name="data" phpName="Data" type="VARCHAR"/>
+    <column name="tags" phpName="Tags" type="LONGVARCHAR"/>
+    <column name="dh_inclusao" phpName="DhInclusao" type="VARCHAR"/>
+    <column name="dh_alteracao" phpName="DhAlteracao" type="VARCHAR"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="post_data" idMethod="native" phpName="PostData">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="post_id" phpName="PostId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45"/>
+    <column name="data" phpName="Data" type="LONGVARCHAR"/>
+    <column name="dh_inclusao" phpName="DhInclusao" type="VARCHAR"/>
+    <column name="dh_alteracao" phpName="DhAlteracao" type="VARCHAR"/>
+    <foreign-key foreignTable="post" name="fk_post_data_post1">
+      <reference local="post_id" foreign="id"/>
+    </foreign-key>
+    <index name="fk_post_data_post1_idx">
+      <index-column name="post_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="post_has_categoria" idMethod="native" phpName="PostHasCategoria" isCrossRef="true">
+    <column name="post_id" phpName="PostId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="categoria_id" phpName="CategoriaId" type="INTEGER" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="post" name="fk_post_has_categoria_post1">
+      <reference local="post_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="categoria" name="fk_post_has_categoria_categoria1">
+      <reference local="categoria_id" foreign="id"/>
+    </foreign-key>
+    <index name="fk_post_has_categoria_categoria1_idx">
+      <index-column name="categoria_id"/>
+    </index>
+    <index name="fk_post_has_categoria_post1_idx">
+      <index-column name="post_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
   <table name="user" idMethod="native" phpName="User">
-    <column name="cliente_id" phpName="ClienteId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="login" phpName="Login" type="VARCHAR" size="45"/>
     <column name="password" phpName="Password" type="LONGVARCHAR"/>
     <column name="salt" phpName="Salt" type="LONGVARCHAR"/>
-    <foreign-key foreignTable="cliente" name="fk_user_cliente">
-      <reference local="cliente_id" foreign="id"/>
-    </foreign-key>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

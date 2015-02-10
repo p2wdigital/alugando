@@ -1,0 +1,12 @@
+{% block panel %}
+<div class="panel panel-default">
+  <div class="panel-heading" style="position:relative">
+    <a class="btn btn-xs btn-success" style="position: absolute; top:5px; right: 5px;" onclick="$(this).parent().parent().find('.panel-body').slideToggle();">Close</a>
+    <h3 class="panel-title">{{panel_title}}</h3>
+  </div>
+  <div class="panel-body">
+    {{panel_body}}
+  </div>
+</div>
+
+{% endblock %}
