@@ -4,32 +4,24 @@
     <meta charset="{% block encoding %}utf-8{% endblock %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Latest compiled and minified CSS -->
-    {{link("http://www.wep2.com.br/administracao/css/bootstrap.min.css")}}
+	{# CSS LINK #}
+    {{link(assert("/css/bootstrap.min.css"))}}
     {{link(assert("/css/style.css"))}}
-     <!-- Optional theme -->
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     {{link("//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400")}}
     
-    {% block head %}
-
-    {% endblock %}
+    {# JQuery #}
+    {{script(assert("/js/jquery/jquery-1.11.2.min.js"))}}
+    {{script(assert("/js/jquery/jquery-migrate-1.2.1.min.js"))}}
+    
+    {% block head %}{% endblock %}
+    
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 {% block body %}{% endblock %}
 
 {% block scripts %}
-<!-- Latest compiled and minified JavaScript -->
-<script type="text/javascript" src="http://www.wep2.com.br/administracao/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/plunder/assert/jquery/jquery.mask.min.js"></script>
-
-<script type="text/javascript">
-    
-
-</script>
-
+{{script(assert("/js/bootstrap/bootstrap.min.js"))}}
 {% endblock %}
 </body>
 </html>

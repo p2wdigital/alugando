@@ -1,9 +1,159 @@
 {% extends 'Admin:layout.html.twig' %}
-
+{% use 'Admin:widgets.html.twig' %}
 {% block content %}
 <div class="row">
-	<div class="col-xs-3">
-		
+	<div class="col-xs-12">
+		<h2>Menus</h2>
 	</div>
+	<div class="col-xs-3">
+		<div class="group-panel">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Páginas
+				</div>
+				<div class="panel-body">
+					<div class="checkbox" style="margin: 0;">
+						<ul class="ulsimple paginas">
+							{% for item in post %}
+								<li>
+								<label>
+									<input type="checkbox" name="post[{{loop.index}}]" value="{{item.id}}"><span>{{item.titulo}}</span>
+								</label>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="text-right">
+						<button class="addPage btn btn-warning">Adicionar</button>					
+					</div>
+				</div>
+			</div><!--panel-pagina-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Categorias
+				</div>
+				<div class="panel-body">
+					Aqui vem
+				</div>
+			</div><!--/panel categoria-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Links
+				</div>
+				<div class="panel-body">
+					Aqui vem Links
+				</div>
+			</div>
+		</div><!-- panel group-->
+	</div><!-- col lateral-->
+	<div class="col-xs-9">
+		{% set panel_title = "Estrutura do Menu" %}		
+		{% set panel_body %}
+			<p>Clique e arraste os elementos para alterar sua ordem</p>
+			<div class="">
+				<ul class="menu-sort">
+					
+				</ul>
+			</div>
+		{% endset %}
+		{{block("panel")}}
+	</div><!--/col menu-->
+
 </div><!--/row-->
+<script>
+jQuery(document).ready(function($) {
+
+	var page = 
+	('<li>\
+		<div class="panel panel-default"> \
+			<div class="panel-heading"> \
+				<div class="title"></div> \
+				<i class="fa fa-sort-down"></i> \
+			</div> \
+			<div class="panel-body" style="display:none"> \
+				<div class="form-group row"> \
+					<div class="col-xs-6">\
+						<label for="">Rotulo</label> \
+						<input type="text" name="label" class="form-control input-sm" />\
+					</div>\
+					<div class="col-xs-6">\
+						<label for="">Tag Title</label>\
+						<input type="text" name="title" class="form-control input-sm" />\
+					</div>\
+				</div> \
+				<hr>\
+				<div class="row">\
+					<div class="col-xs-12">\
+						<p>Original: <span class="original"></span></p>\
+						<a href="#" class="text-danger remove">Apagar</a>\
+					</div>\
+				</div>\
+			</div> \
+		</div> \
+	</li>');
+
+
+	
+	$(".group-panel .panel").each(function(index, el) {
+		if (index != 0) {
+			$(el).find(".panel-body").hide();
+			$(el).find('.panel-heading').append('<i class="fa fa-sort-down"></i>');
+
+		}else{
+			$(el).find('.panel-heading').append('<i class="fa fa-sort-up"></i>');
+		}
+	});
+
+	$(".group-panel .panel-heading").click(function(event) {
+		if ($(this).parent().find('.panel-body').is(":hidden")) {
+			$(".group-panel .panel .panel-heading i").removeClass('fa-sort-up').addClass('fa-sort-down');
+			$(this).find('i').addClass('fa-sort-up');
+			$(".group-panel .panel .panel-body").slideUp(150);
+			$(this).parent().find('.panel-body').slideDown(150);
+		};
+	});
+
+	$(".addPage").click(function(event) {
+		$(".paginas input").each(function(index, el) {
+			if ($(el).is(":checked")) {
+				var nome = $(el).parent().find('span').html();
+				var clone = $(page).clone();
+				$(clone).find('.panel-heading .title, .original').html(nome);
+				$(".menu-sort").append(clone);
+				
+				$(el).removeAttr('checked');
+				    
+			};
+
+		});
+	});
+
+	$('.menu-sort').nestedSortable({
+        handle: 'div',
+        items: 'li',
+        toleranceElement: '> div',
+        placeholder: "ui-state-highlight",
+        forcePlaceholderSize: true,    
+    	listType: 'ul'
+     });
+
+	$(".menu-sort").on('click', '.panel .panel-heading', function(event) {
+		event.preventDefault();
+		$(this).parent().find(".panel-body").slideToggle(120);
+	});
+
+	$(".menu-sort").on('click', '.remove', function(event) {
+		event.preventDefault();
+		$(this).closest("li").detach();
+	});
+});
+
+</script>
+
+{% endblock %}
+
+{% block head %}
+    {{parent()}}
+    {{script(assert("/js/jquery-ui/jquery-ui.js"))}}
+    {{script(assert("/js/jquery.nestedSortable.js"))}}
 {% endblock %}

@@ -173,7 +173,7 @@ class AnnotationRouter extends Annotation
 		if(strpos($value, "@Route") !== false):
 			//Retira espaços em branco, @route, " , ', que não estiverem no padrao {"id":value}
 			//	$str = preg_replace("/(\=\{.*?\})|((\"+)|@route\(|\s+|\*|\))/i", "$1", $value);
-			preg_match_all('/(?#atributos json)[, ]+?(\w+=\{.*?\})|(?#atributos simples)[( ]["]+([\s\w\/\-\.\{\}]*?)"+|(?#atributos compostos)[ ,]([^\s]+=+[^\s{,]+)[, )]+?/', $value, $mat);
+			preg_match_all('/(?#atributos json)[, ]+?(\w+=\{.*?\})|(?#atributos simples)[( ]["]+([\s\w\/\-\.\{\}]*?)"+|(?#atributos compostos)[ ,]([^\s]+=+[^\s{,)]+)[, )]+?/', $value, $mat);
 			$mat[3] = str_replace("\"", "", $mat[3]);
 
 			$aux = array_filter(array_merge($mat[1], $mat[2], $mat[3]));

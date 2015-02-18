@@ -4,16 +4,14 @@ namespace Admin\Controller;
 
 use Plunder\Core\Controller\Controller;
 use Plunder\Core\HttpRequest\Request;
-
 use Plunder\Core\HttpRequest\Response;
-
-use Table\Model\Post;
-use Table\Model\PostQuery;
 
 use Table\Model\Categoria;
 use Table\Model\CategoriaQuery;
+
+use Admin\Form\CategoriaForm;
 /**
-* @Route("/admin/categoria") 
+* @Route("/admin/categoria", name="categoria_home") 
 */
 class CategoriaController extends Controller
 {
@@ -22,21 +20,21 @@ class CategoriaController extends Controller
 	 * @Route("/", name="categoria_home")
 	 */
 	public function indexAction(){
-		echo 'oi';
-		return $this->render("Admin:Post:index.html.twig", array());
+		$categoria 	= new Categoria;
+		$form 		= new CategoriaForm($categoria);
+
+		if ($this->request->getMethod() == "POST"):
+			$form->handleRequest();
+			if($form->isValid()):
+				$categoria->save();
+				return $this->redirect($this->generateUrl('categoria_home'));
+			endif;
+		endif;
+
+		$cat 		= CategoriaQuery::create()->find();
+		return $this->render("Admin:Categoria:index.html.twig", array('form'=>$form->createView(), 'categoria'=>$cat));
 	}
 
-	/**
-	 * @Route("/insert", name="categoria_insert")
-	 */
-	public function insertAction(Request $request){
-		$post 		= new Post();
-		$categoria 	= CategoriaQuery::create()->find();
-		
-		$type 		= $request->query->get('type', 'post');
-		$form 		= $this->getForm($post, $type);
-		return $this->render("Admin:Post:insert.html.twig", array('form'=>$form, 'categoria'=>$categoria));
-	}
 	/**
 	 * @Route("/insert-ajax", name="categoria_insert_ajax")
 	 */
@@ -68,46 +66,45 @@ class CategoriaController extends Controller
 	}
 
 	/**
-	 * @Route("/update/{id}/{user}", name="admin_new", requirements={"id":"\d+"}, defaults={"user":"palex"})
+	 * @Route("/update/{id}", name="categoria_update")
 	 */
-	public function updateAction($user, $id ){
+	public function updateAction($id){
+		
+		$categoria	= CategoriaQuery::create()->findPK($id);
+		$form 		= new CategoriaForm($categoria);
+
+		if ($this->request->getMethod() == "POST"):
+			$form->handleRequest();
+			if($form->isValid()):
+				$categoria->save();
+				return $this->redirect($this->generateUrl('categoria_home'));
+			endif;
+		endif;
+
+		return $this->render("Admin:Categoria:update.html.twig", array('form'=>$form->createView()));
 	}
 
+	/**
+	 * @Route("/delete/{id}", name="categoria_delete")
+	 */
+	public function deleteAction($id){
+		
+		if ((int) $id == 1):
+			return new Response("Não é permitido deletar esta categoria", 400);
+		endif;
+		if (!$this->request->isAjax()):
+			return new Response("Operação Não permitida", 400);
+		endif;
 
-	private function getForm($data, $type){
-		$form = array();
-		$form['titulo'] = array(
-			'field'=>'titulo', 'name'=>'post[titulo]', 'type'=>'input',
-			'input_type'=>'text', 'label'=>'Título', 'attr'=>array(),
-			'value'=>$data->getTitulo(), 
-		);
-		$form['text'] = array(
-			'field'=>'text', 'name'=>'post[text]', 'type'=>'textarea',
-			'input_type'=>null, 'nolabel'=>true, 'attr'=>array(),
-			'value'=>$data->getText()
-		);
-		$form['tipo'] = array(
-			'field'=>'tipo', 'name'=>'post[tipo]', 'type'=>'input',
-			'input_type'=>'hidden', 'nolabel'=>true,
-			'value'=>$data->getTipo(),
-		);
-
-		$form['status'] = array(
-			'field'=>'status', 'name'=>'post[status]', 'type'=>'select',
-			'label'=>'Status','attr'=>array(),
-			'data'=>$data->getListStatus(), 'default'=>0, 'empty'=>'------',
-			'value'=>$data->getStatus(),
-		);
-		$form['url'] = array(
-			'field'=>'url', 'name'=>'post[url]', 'type'=>'input',
-			'input_type'=>'text',
-			'value'=>$data->getUrl(),
-		);
-
-		return $form;
-
-
+		$categoria	= CategoriaQuery::create()->filterById($id)->delete();
+		
+		if ($categoria):
+			return new Response("OK", 200);
+		else:
+			return new Response("Não foi possivel deletar esta categoria", 400);
+		endif;
 	}
+
 
 
 }

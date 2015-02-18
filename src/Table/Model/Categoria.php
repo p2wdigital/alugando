@@ -17,4 +17,13 @@ use Table\Model\Base\Categoria as BaseCategoria;
 class Categoria extends BaseCategoria
 {
 
+
+	public function getRules(){
+		$rules = array();
+
+		$rules['nome'] 		= array('NotBlank'=>array());
+		$rules['url']		= array('NotBlank'=>array());
+		return $rules;
+	}
+
 }

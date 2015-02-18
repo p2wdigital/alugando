@@ -1,0 +1,27 @@
+{% extends 'Admin:layout.html.twig' %}
+{% use 'Admin:widgets.html.twig' %}
+{% block content %}
+<div class="row">
+	<div class="col-xs-12">
+		<h2>Categoria</h2>
+		<br><br>
+	</div>
+	<div class="col-xs-4">
+		{% set panel_title = "Incluir nova categoria" %}
+		{% set panel_body %}
+			<form action="" method="POST">
+			{% include 'Admin:Categoria:_form.html.twig' %}
+			<div class="text-right">
+				<input type="submit" class="btn btn-warning" value="Incluir Categoria">
+			</div>
+			</form>	
+
+		{% endset %}
+		{{block('panel')}}
+	</div><!--/insert-->
+
+	<div class="col-xs-8">
+		{% include 'Admin:Categoria:_table.html.twig' %}
+	</div><!--/lista-->
+</div>
+{% endblock %}

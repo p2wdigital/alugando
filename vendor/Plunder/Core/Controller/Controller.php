@@ -24,9 +24,9 @@ class Controller
 		$twig = Container::get('templating');
 
 		if($display):
-			return new Response($twig->render($templating, $args, $display));
+			return new Response($twig->render($templating, $args + array('app'=>Container::get('app')), $display));
 		else:
-			return $twig->render($templating, $args, $display);
+			return $twig->render($templating, $args + array('app'=>Container::get('app')), $display);
 		endif;
 		
 	}

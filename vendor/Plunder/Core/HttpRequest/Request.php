@@ -67,4 +67,8 @@ class Request
 	public function getMethod(){
 		return $this->server->get("REQUEST_METHOD", 'GET');
 	}
+
+	public function isAjax(){
+		return 'XMLHttpRequest' == $this->server->get('HTTP_X_REQUESTED_WITH', null);
+	}
 }

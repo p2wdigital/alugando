@@ -1,17 +1,23 @@
 {% extends '::base.html.twig' %}
+{% block head %}
+    {{link(assert("/css/font-awesome.min.css"))}}
+{% endblock %}
 
 {% block body %}
-	<div id="header">
-		{% block header %}
-	    Aqui é o Header
+	
+	<div id="nav">
+		<div id="sep">
+			<span><i class="fa fa-flask"></i> plunder</span>
+		</div>
+		{% block nav %}
+			{% include 'Admin::_menu.html.twig' %}
 		{% endblock %}
+	</div>
+	<div id="header">
+		{% block header %}{% endblock %}
 	</div>
 
-	<div id="nav">
-		{% block nav %}
-		    Aqui é o navBar
-		{% endblock %}
-	</div>
+
 	<div id="content">
 		<div class="container-fluid">
 		{% block content %}

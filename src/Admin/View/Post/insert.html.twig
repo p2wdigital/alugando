@@ -1,6 +1,8 @@
 {% extends 'Admin:layout.html.twig' %}
 {% use "Admin:widgets.html.twig" %}
 
+{% block title %}Adicionar Novo Post{% endblock %}
+
 {% block content %}
 <div class="row post">
 <div class="col-xs-12">
@@ -76,14 +78,14 @@
 
 {% block scripts %}
     {{parent()}}
-	<script type="text/javascript" src="/alugando/assert/jquery/tinymce/tinymce.jquery.js"></script>
+    {{script(assert("/js/tinymce/tinymce.jquery.js"))}}
 	<script type="text/javascript">
 	tinymce.init({
 	    selector: "#post_text",
 	    skin:"lightgray",
-	    content_css : "/alugando/assert/css/style.css",
+	    content_css : "{{assert("/css/style.css")}}",
 	    language:"pt_BR",
-	    height:"300px",
+	    height:"1300px",
 	    browser_spellcheck : true,
 	    contextmenu: false,
 	    plugins: [

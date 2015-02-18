@@ -12,6 +12,7 @@ class UrlTwig extends Twig_Extension
             new Twig_SimpleFunction('path', array($this,'generatePath'), array('is_safe'=>array('html'))),
             new Twig_SimpleFunction('url', array($this,'generateUrl'), array('is_safe'=>array('html'))),
             new Twig_SimpleFunction('link', array($this,'generateLink'), array('is_safe'=>array('html'))),
+            new Twig_SimpleFunction('script', array($this,'generateScript'), array('is_safe'=>array('html'))),
             new Twig_SimpleFunction('assert', array($this,'generateAssert'), array('is_safe'=>array('html'))),
         );
     }
@@ -29,6 +30,11 @@ class UrlTwig extends Twig_Extension
     public function generateLink($path){
         return sprintf('<link rel="stylesheet" type="text/css" href="%s">', $path);
     }
+
+    public function generateScript($script){
+        return sprintf('<script src="%s"></script>', $script);
+    }
+
 
     public function generateAssert($path){
         $request = Container::get('request');

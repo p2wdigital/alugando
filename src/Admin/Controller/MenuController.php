@@ -4,6 +4,7 @@ namespace Admin\Controller;
 
 use Plunder\Core\Controller\Controller;
 use Plunder\Core\HttpRequest\Request;
+use Table\Model\PostQuery;
 
 /**
 * @Route("/admin/menu") 
@@ -12,10 +13,11 @@ class MenuController extends Controller
 {
 
 	/**
-	 * @Route("/", name="admin_home")
+	 * @Route("/", name="menu_home")
 	 */
 	public function indexAction(){
-		return $this->render("Admin:Admin:index.html.twig", array());
+		$post = PostQuery::create()->limit(10)->find();
+		return $this->render("Admin:Menu:index.html.twig", array('post'=>$post));
 	}
 
 	/**

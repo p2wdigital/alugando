@@ -14,7 +14,7 @@ use Admin\Form\PostForm;
 
 
 /**
-* @Route("/admin/post") 
+* @Route("/admin/post" name="post_home") 
 */
 class PostController extends Controller
 {
@@ -23,8 +23,8 @@ class PostController extends Controller
 	 * @Route("/", name="post_home")
 	 */
 	public function indexAction(){
-		echo 'oi';
-		return $this->render("Admin:Post:index.html.twig", array());
+		$post = PostQuery::create()->find();		
+		return $this->render("Admin:Post:index.html.twig", array('post'=>$post));
 	}
 
 	/**

@@ -2,5 +2,15 @@
 
 
 {% block content %}
-    
+<div class="row">
+<div class="col-xs-12">
+	<h1>Lista de Posts</h1>
+</div>    
+
+<div class="col-xs-12">
+	{% include 'Admin:Post:_table.html.twig' %}
+</div>
+
+</div>
+
 {% endblock %}

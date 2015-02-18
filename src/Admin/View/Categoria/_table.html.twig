@@ -1,0 +1,64 @@
+<table class="table table-striped table-hover bkg-white table-responsive">
+	<thead>
+		<tr>
+			<th>Nome</th>
+			<th>Url</th>
+			<th>Descrição</th>
+		</tr>
+	</thead>	
+	<tbody>
+		
+		{% for item in categoria %}
+		    <tr>
+		    	<td class="w40">
+		    		{{item.Nome}}
+		    		<div class="edit display-none">
+		    			<a href="{{path("categoria_update", {'id':item.Id})}}">Editar</a>
+		    			{% if item.Id != 1 %}
+		    				<a href="{{path("categoria_delete",{'id':item.Id})}}" class="text-danger delete">Apagar</a>
+		    			{% endif %}
+		    			<a href="Visualizar">Ver</a>
+		    		</div>
+		    		<div class="display-none">
+		    			<div class="id">{{item.Id}}</div>
+		    			<div class="nome">{{item.Nome}}</div>
+		    			<div class="url">{{item.Url}}</div>
+		    			<div class="descricao">{{item.Descricao}}</div>
+		    		</div>
+		    	</td>
+		    	<td>{{item.Url}}</td>
+		    	<td>{{item.Descricao}}</td>
+		    </tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<script>
+jQuery(document).ready(function($) {
+
+	$(".delete").click(function(event) {
+		var element = this;
+		event.preventDefault();
+			
+		$.ajax({
+			url: $(this).attr('href'),
+		})
+		.done(function() {
+			$(element).parents("tr").detach();
+		})
+		.fail(function(ret) {
+			alert(ret)	;
+		});
+		
+	});
+
+	$(".table tbody tr").hover(function() {
+		$(this).find('.edit').show();
+	}, function() {
+		$(this).find('.edit').hide();
+	});
+
+
+	$("")	
+});
+</script>

@@ -1,0 +1,37 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Título</th>
+			<th>Autor</th>
+			<th>Categorias</th>
+			<th>Tags</th>
+			<th>Comentários</th>
+			<th>Data</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in post %}
+		<tr>
+		    <td><strong>{{item.titulo}}</strong>
+				<div class="editar">
+					<a href="{{path("post_update", {id:item.id})}}">Editar</a>
+					<a href="" class="text-danger">Apagar</a>
+					<a href="">Visualizar</a>
+				</div>
+		    </td>
+		    <td>Autor</td>
+		    <td>
+				{% set cate = [] %}
+		    	{% for categoria in item.categorias %}
+		    		{% set cate = cate + [categoria.nome] %}
+		    	{% endfor %}
+		    	{{cate|join(", ")}}
+		    </td>
+		    <td>Tags</td>
+		    <td>Coments</td>
+		    <td>data</td>
+		 </tr>
+		{% endfor %}
+
+	</tbody>
+</table>

@@ -1,0 +1,19 @@
+{% extends 'Admin:layout.html.twig' %}
+{% use 'Admin:widgets.html.twig' %}
+{% block content %}
+<div class="row">
+	<div class="col-xs-12">
+		<h2>Atualizar Categoria</h2>
+		<br><br>
+	</div>
+	<div class="col-xs-10">
+			<form action="" method="POST">
+			{% include 'Admin:Categoria:_form.html.twig' %}
+			<div class="text-right">
+				<input type="submit" class="btn btn-warning" value="Atualizar Categoria">
+			</div>
+			</form>	
+	</div><!--/insert-->
+
+</div>
+{% endblock %}

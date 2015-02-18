@@ -33,6 +33,7 @@ class Loader
 		
 		$route = Container::get('router');
 		//var_dump($route->getContext());
+		Container::load("app", $route->getContext());
 		$this->callController($route->getContext());
 	}
 
