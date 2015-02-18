@@ -1,0 +1,21 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Páginas
+	</div>
+	<div class="panel-body">
+		<div class="checkbox" style="margin: 0;">
+			<ul class="ulsimple paginas">
+				{% for item in post %}
+					<li>
+					<label>
+						<input type="checkbox" name="post[{{loop.index}}]" value="{{item.id}}"><span>{{item.titulo}}</span>
+					</label>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="text-right">
+			<button class="addPage btn btn-warning">Adicionar</button>					
+		</div>
+	</div>
+</div><!--panel-pagina-->

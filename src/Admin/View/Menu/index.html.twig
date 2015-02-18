@@ -5,45 +5,11 @@
 	<div class="col-xs-12">
 		<h2>Menus</h2>
 	</div>
-	<div class="col-xs-3">
-		<div class="group-panel">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Páginas
-				</div>
-				<div class="panel-body">
-					<div class="checkbox" style="margin: 0;">
-						<ul class="ulsimple paginas">
-							{% for item in post %}
-								<li>
-								<label>
-									<input type="checkbox" name="post[{{loop.index}}]" value="{{item.id}}"><span>{{item.titulo}}</span>
-								</label>
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
-					<div class="text-right">
-						<button class="addPage btn btn-warning">Adicionar</button>					
-					</div>
-				</div>
-			</div><!--panel-pagina-->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Categorias
-				</div>
-				<div class="panel-body">
-					Aqui vem
-				</div>
-			</div><!--/panel categoria-->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Links
-				</div>
-				<div class="panel-body">
-					Aqui vem Links
-				</div>
-			</div>
+	<div class="col-xs-3 ">
+		<div class="group-panel disabled">
+			{% include 'Admin:Menu:_pages.html.twig' %}
+			{% include 'Admin:Menu:_category.html.twig' %}
+			{% include 'Admin:Menu:_links.html.twig' %}
 		</div><!-- panel group-->
 	</div><!-- col lateral-->
 	<div class="col-xs-9">
@@ -55,6 +21,7 @@
 					
 				</ul>
 			</div>
+			<button class="teste">Teste</button>
 		{% endset %}
 		{{block("panel")}}
 	</div><!--/col menu-->
@@ -68,6 +35,7 @@ jQuery(document).ready(function($) {
 		<div class="panel panel-default"> \
 			<div class="panel-heading"> \
 				<div class="title"></div> \
+				<div class="type"></div> \
 				<i class="fa fa-sort-down"></i> \
 			</div> \
 			<div class="panel-body" style="display:none"> \
@@ -79,6 +47,9 @@ jQuery(document).ready(function($) {
 					<div class="col-xs-6">\
 						<label for="">Tag Title</label>\
 						<input type="text" name="title" class="form-control input-sm" />\
+						<input type="hidden" name="id" />\
+						<input type="hidden" name="type" value="page" />\
+						<input type="hidden" name="parent" value="" />\
 					</div>\
 				</div> \
 				<hr>\
@@ -119,6 +90,9 @@ jQuery(document).ready(function($) {
 				var nome = $(el).parent().find('span').html();
 				var clone = $(page).clone();
 				$(clone).find('.panel-heading .title, .original').html(nome);
+				$(clone).find("input[name=label]").val(nome);
+				$(clone).find("input[name=id]").val($(this).val());
+
 				$(".menu-sort").append(clone);
 				
 				$(el).removeAttr('checked');
@@ -134,7 +108,9 @@ jQuery(document).ready(function($) {
         toleranceElement: '> div',
         placeholder: "ui-state-highlight",
         forcePlaceholderSize: true,    
-    	listType: 'ul'
+    	listType: 'ul',
+    	//isAllowed: myfunc
+    	update:myfunc
      });
 
 	$(".menu-sort").on('click', '.panel .panel-heading', function(event) {
@@ -146,7 +122,104 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 		$(this).closest("li").detach();
 	});
+
+	$(".teste").click(function(event) {
+
+		var obj = jsonEnconde($(".menu-sort > li"), true);
+		$(this).after(obj);
+		console.debug($('.menu-sort').nestedSortable('serialize'));
+		//return false;
+		$.ajax({
+			url: '{{path("menu_teste")}}',
+			type: 'POST',
+			data: {data: obj},
+		})
+		.done(function(ret) {
+			alert(ret);
+
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+		
+	});
+
+
+
+
 });
+function myfunc(event,ui){
+	console.log(ui.sender);
+
+	if ($(ui.item).parents('li').html() == undefined) {
+		console.log("Indefinido");
+	}else{
+		console.log("Definido ");
+	};
+
+}
+
+var i =0;
+function jsonEnconde(obj, isStringify){
+		jsonObj = new Array();
+		$(obj).each(function(index, el) {
+			
+			//alert($(el).html());
+			
+			
+			var panel = $(el).find('.panel-body');
+			var item = {};
+			item['id'] 		= $(panel).find('input[name=id]').val();
+			item['type'] 	= 'page';
+			item['label'] 	= $(panel).find('input[name=label]').val();
+			item['title'] 	= $(panel).find('input[name=title]').val();
+			if ($(el).find("ul>li").html() == undefined) {
+				item['parent'] = 0;
+				//console.log($(el).find("ul>li").html());
+			}else{
+				var aux = jsonEnconde($(el).find('ul>li'), false);
+				//console.debug(aux);
+				item['parent'] = aux;
+			};
+			jsonObj.push(item);
+			//console.debug($(el).closest('li').find('.panel-body').find('input[name=id]').val());
+		});
+		if (isStringify) {
+			return JSON.stringify(jsonObj);
+		}else{
+			return jsonObj;
+		}
+}
+function jsonEnconde2(obj){
+		jsonObj = new Array();
+		$(obj).each(function(index, el) {
+			
+			//alert($(el).html());
+			
+			
+			var panel = $(el).find('.panel-body');
+			var item = {};
+			item['id'] 		= $(panel).find('input[name=id]').val();
+			item['type'] 	= 'page';
+			item['label'] 	= $(panel).find('input[name=label]').val();
+			item['title'] 	= $(panel).find('input[name=title]').val();
+			if ($(el).find("ul>li").html() == undefined) {
+				item['parent'] = 0;
+				//console.log($(el).find("ul>li").html());
+			}else{
+				//var aux = jsonEnconde($(el).find('ul>li'));
+				//console.debug(aux);
+				//item['parent'] = aux;
+			};
+			jsonObj.push(item);
+			//console.debug($(el).closest('li').find('.panel-body').find('input[name=id]').val());
+		});
+		return jsonObj;
+}
 
 </script>
 

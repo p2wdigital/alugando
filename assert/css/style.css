@@ -42,7 +42,7 @@ box-shadow: 0 0px 0px rgba(0,0,0,.05);
 .menu-sort{list-style: none; padding: 0; cursor: pointer;}
 .menu-sort ul{list-style: none; }
 .menu-sort li {margin-top: 5px;}
-.menu-sort >li {width: 45%;}
+.menu-sort >li {width: 50%;}
 .menu-sort .panel {margin: 0;}
 .menu-sort .panel .panel-heading{position: relative;}
 .menu-sort .panel .panel-heading i{position: absolute; right: 15px; top: 10px;}
@@ -54,6 +54,12 @@ box-shadow: 0 0px 0px rgba(0,0,0,.05);
 
 
 /** GENERICOS **/
+.disabled {
+    z-index: 1000;
+    background-color: lightgrey;
+    opacity: 0.6;
+    pointer-events: none;
+}
 .display-none{display: none;}
 .bkg-white {background: #FFF;}
 .inline{display: inline-block;}

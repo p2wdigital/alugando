@@ -1,0 +1,33 @@
+<li>
+	{# Panel #}
+	<div class="panel panel-default"> 
+
+		<div class="panel-heading"> 
+			<div class="title"></div> 
+			<div class="type"></div> 
+			<i class="fa fa-sort-down"></i> 
+		</div> 
+		<div class="panel-body" style="display:none"> 
+			<div class="form-group row"> 
+				<div class="col-xs-6">
+					<label for="">Rotulo</label> 
+					<input type="text" name="label" class="form-control input-sm" />
+				</div>
+				<div class="col-xs-6">
+					<label for="">Tag Title</label>
+					<input type="text" name="title" class="form-control input-sm" />
+					<input type="hidden" name="id" />
+					<input type="hidden" name="type" value="page" />
+					<input type="hidden" name="parent" value="" />
+				</div>
+			</div> 
+			<hr>
+			<div class="row">
+				<div class="col-xs-12">
+					<p>Original: <span class="original"></span></p>
+					<a href="#" class="text-danger remove">Apagar</a>
+				</div>
+			</div>
+		</div> 
+	</div> 
+</li>
