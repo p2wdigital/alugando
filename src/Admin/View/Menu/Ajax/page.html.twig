@@ -1,7 +1,7 @@
 <li>
 	{# Panel #}
 	<div class="panel panel-default"> 
-
+		
 		<div class="panel-heading"> 
 			<div class="title"></div> 
 			<div class="type"></div> 
@@ -11,12 +11,13 @@
 			<div class="form-group row"> 
 				<div class="col-xs-6">
 					<label for="">Rotulo</label> 
-					<input type="text" name="label" class="form-control input-sm" />
+					<input type="text" id="label" class="form-control input-sm" />
 				</div>
 				<div class="col-xs-6">
 					<label for="">Tag Title</label>
-					<input type="text" name="title" class="form-control input-sm" />
-					<input type="hidden" name="id" />
+					<input type="text" id="title" class="form-control input-sm" />
+					<input type="hidden" name="menu-item-id[{{id}}]" />
+					<input type="hidden" name="">
 					<input type="hidden" name="type" value="page" />
 					<input type="hidden" name="parent" value="" />
 				</div>

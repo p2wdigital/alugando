@@ -8,7 +8,7 @@
 				{% for item in post %}
 					<li>
 					<label>
-						<input type="checkbox" name="post[{{loop.index}}]" value="{{item.id}}"><span>{{item.titulo}}</span>
+						<input type="checkbox" name="posts[{{loop.index}}]" value="{{item.id}}"><span>{{item.titulo}}</span>
 					</label>
 					</li>
 				{% endfor %}

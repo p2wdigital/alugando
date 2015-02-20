@@ -1,34 +1,83 @@
 {% extends 'Admin:layout.html.twig' %}
 {% use 'Admin:widgets.html.twig' %}
 {% block content %}
+{{dump(menus)}}
 <div class="row">
 	<div class="col-xs-12">
 		<h2>Menus</h2>
 	</div>
 	<div class="col-xs-3 ">
-		<div class="group-panel disabled">
+		<div class="group-panel">
 			{% include 'Admin:Menu:_pages.html.twig' %}
 			{% include 'Admin:Menu:_category.html.twig' %}
 			{% include 'Admin:Menu:_links.html.twig' %}
 		</div><!-- panel group-->
 	</div><!-- col lateral-->
 	<div class="col-xs-9">
-		{% set panel_title = "Estrutura do Menu" %}		
-		{% set panel_body %}
-			<p>Clique e arraste os elementos para alterar sua ordem</p>
-			<div class="">
-				<ul class="menu-sort">
-					
-				</ul>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="create-menu">
+					<label for="">Nome do Menu: </label>
+					<input type="text" class="form input-sm" id="nome" placeholder="Digite o Nome do Menu">
+					<div class="pull-right">
+						<button class="btn btn-warning btn-sm addMenu">Criar Menu</button>
+					</div>
+				</div>
+			</div><!--/heading-->
+			<div class="panel-body">
+				<h3>Estrutura do Menu</h3>
+				<p class="msg">Dê um nome ao seu menu, depois clique em Criar Menu</p>
+				<div class="">
+					<ul class="menu-sort">
+						<input type="hidden" name="menu_id">
+					</ul>
+				</div>
 			</div>
-			<button class="teste">Teste</button>
-		{% endset %}
-		{{block("panel")}}
+		</div>
+		
 	</div><!--/col menu-->
 
 </div><!--/row-->
 <script>
 jQuery(document).ready(function($) {
+
+
+	$(".addMenu").click(function(event) {
+		$.ajax({
+			url: '{{path("menu_create")}}',
+			type: 'POST',
+			dataType: 'json',
+			data: {nome: $("#nome").val()},
+		}).done(function(ret) {
+			$("input[name=menu_id]").val(ret.Id);
+			$(".msg").html("Adicione itens ao menu, utilizando o painel à esquerda!");
+			$(".group-panel").removeClass('disabled');
+			$(".addMenu").addClass('updateMenu').html("Salvar Menu").removeClass('addMenu');
+		}).fail(function(ret) {
+			alert("Erro na criação do Menu");
+		});
+	});
+
+	$(".addPage").click(function(event) {
+		var data = $(this).closest('.panel-body').find('input').serialize();
+		if (data.length == 0) {
+			alert("Selecione uma página para incluir no menu");
+			return false;
+		};
+		console.debug(data.length);
+		$.ajax({
+			url: '{{path("menu_add_item")}}',
+			type: 'POST',
+			data: {pages: data,'menu_id': $("input[name=menu_id]").val()},
+		}).done(function(ret) {
+			alert(ret);
+			console.log("success");
+		}).fail(function() {
+			console.log("error");
+		})
+		
+	});
+
 
 	var page = 
 	('<li>\
@@ -84,7 +133,7 @@ jQuery(document).ready(function($) {
 		};
 	});
 
-	$(".addPage").click(function(event) {
+	$(".addPages").click(function(event) {
 		$(".paginas input").each(function(index, el) {
 			if ($(el).is(":checked")) {
 				var nome = $(el).parent().find('span').html();
