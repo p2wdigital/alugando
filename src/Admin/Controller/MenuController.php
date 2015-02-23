@@ -8,30 +8,15 @@ use Plunder\Core\HttpRequest\Response;
 use Table\Model\PostQuery;
 use Table\Model\Menu;
 use Table\Model\MenuQuery;
+use Table\Model\MenuItemQuery;
 
 
 /**
-* @Route("/admin/menu", name="menu_home") 
+* @Prefix("/admin/menu") 
 */
 class MenuController extends Controller
 {
-
-	/**
-	 * @Route("/", name="menu_home")
-	 */
-	public function indexAction(){
-		$post = PostQuery::create()->limit(10)->find();
-		$menu = MenuQuery::create()->filterBy("Principal", '1')->findOne();
-		var_dump($menu);
-			
-		
-		if ($menu == array()):
-			$menu = MenuQuery::create()->findOne();
-		endif;
-
-		return $this->render("Admin:Menu:index.html.twig", array('post'=>$post, 'menus'=>$menu));
-	}
-
+	
 	/**
 	 * @Route("/teste", name="menu_teste")
 	 */
@@ -41,6 +26,7 @@ class MenuController extends Controller
 
 	/**
 	 * @Route("/create-menu", name="menu_create")
+	 * @Method("POST");
 	 */
 	public function createAction(Request $request){
 		$nome = $request->request->get('nome');
@@ -55,8 +41,46 @@ class MenuController extends Controller
 	/**
 	 * @Route("/add-item", name="menu_add_item")
 	 */
-	public function addItemAction(){
-		var_dump($_POST);
+	public function addItemAction(Request $request){
+		$post =  $_POST;
+		$resposta = "";
+
+		if ($post['type'] == 'page'):
+			foreach ($post['posts'] as $key => $value):
+				$item = new MenuItem();
+				$item->set
+			endforeach;
+		endif;
+
+		
+
+		return new Response(print_r($post, true));
+	}
+	
+	/**
+	* @Route("/{id}", name="menu_home")
+	* @Defaults({"id":""})
+	*/
+	public function indexAction($id){
+		$post = PostQuery::create()->limit(10)->find();
+		// Se id é nulo, tenta achar o menu principal;
+		if ($id == ""):
+			$menu = MenuQuery::create()->filterBy("Principal", '1')->findOne();
+			//Se não encontrar o principal, procura o primeiro menu;
+			if($menu == null):
+				$menu = MenuQuery::create()->findOne();
+			endif;
+		else:
+			//Se id for 0, é para criar um novo menu, então retorna null;
+			if($id == "menu-0"):
+				$menu = null;
+			else:
+				//Editar um menu existente;
+				$menu = MenuQuery::create()->findPK($id);
+			endif;
+		endif;
+		
+		return $this->render("Admin:Menu:index.html.twig", array('post'=>$post, 'menu'=>$menu));
 	}
 
 }

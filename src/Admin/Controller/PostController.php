@@ -14,7 +14,7 @@ use Admin\Form\PostForm;
 
 
 /**
-* @Route("/admin/post" name="post_home") 
+* @Prefix("/admin/post") 
 */
 class PostController extends Controller
 {
@@ -49,6 +49,7 @@ class PostController extends Controller
 
 	/**
 	 * @Route("/update/{id}", name="post_update")
+	 * @Regex({"id":"\d"})
 	 */
 	public function updateAction($id){
 		$post = PostQuery::create()->findPK($id);
@@ -66,10 +67,11 @@ class PostController extends Controller
 	}
 
 	/**
-	 * @Route("/server", name="post_server")
+	 * @Route("/server/{id}/{categoria}", name="post_server")
+	 * @Defaults({"id":"10","categoria":"teste"})
 	 */
-	public function serverAction(){
-		var_dump($_SERVER);
+	public function serverAction($id, $categoria){
+		var_dump($_SERVER, $id, $categoria);
 		//$path = $_SERVER['SCRIPT_FILENAME'];
 		$path = $_SERVER['SCRIPT_NAME'];
 		var_dump(realpath($path), basename($path), dirname($path), pathinfo($path));

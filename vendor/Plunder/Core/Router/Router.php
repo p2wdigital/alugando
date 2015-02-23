@@ -3,7 +3,7 @@
 namespace Plunder\Core\Router;
 
 use Plunder\Core\HttpRequest\Request;
-use Plunder\Helpers\Annotation\AnnotationRouter;
+use Plunder\Core\Annotation\AnnotationRouter;
 /**
 * 
 */
@@ -32,15 +32,20 @@ class Router
 	public function resolve(){
 		$path 		= rtrim($this->request->getPathInfo(),"/");
 		$routers 	= $this->annotationRouter->getRoute();
-		//var_dump($path, $routers);
 
 		foreach ($routers as $key => $value):
 			if($this->checkRoute($path, $value)):
-				return;
+				break;
 			endif;
 		endforeach;
-
+		
+		if(@$this->context['method'] !== null):
+			if ($this->request->getMethod() != $this->context['method']):
+				$this->context = array();
+			endif;
+		endif;
 	}
+
 	/**
 	 * [checkRoute Através da rota enviada é informado ]
 	 * @param  [type] $path  [description]
@@ -49,41 +54,42 @@ class Router
 	 */
 	public function checkRoute($path, Array $route){
 		$defaults = array();
-		$requirements = array();
+		$regex = array();
 		$reg = array(
-				"defaults"			=> "?[\w-.]*",
+				"defaults"			=> "(\/)?(?(1)[\w-.]*)",
 				"defaultsValues"	=> "?([\w-.]*)",
 				"notDefaults"		=> "[\w-.]+",
 				"notDefaultsValues"		=> "([\w-.]+)",
 		);
-
+		
 		if($route['defaults'] != null && $route['defaults'] != "" ):
 			$defaults =(array) json_decode($route['defaults']);
 		endif;
-		if($route['requirements'] != null && $route['requirements'] != "" ):
-			$requirements = (array)json_decode(addcslashes($route['requirements'],"\\"));
+		if($route['regex'] != null && $route['regex'] != "" ):
+			$regex = (array)json_decode(addcslashes($route['regex'],"\\"));
 		endif;
-		preg_match_all("/\{(.*?)\}/i", $route['route'], $matches);
+		preg_match_all("/\{(.*?)\}/i", $route['prefix'].$route['route'], $matches);
 				
 		//var_dump($matches);
 
-		$routeAux 	= $routeValues	= str_replace("/", "\/", $route['route']);
+		$routeAux 	= $routeValues	= str_replace("/", "\/", $route['prefix'] .$route['route']);
 		$mask 		= $matches[0];
 		$routeKeys	= $matches[1];
 		
 		foreach ($routeKeys as $key => $value):
 				if(array_key_exists($value, $defaults)):
-					if(array_key_exists($value, $requirements)):
-						$routeAux 		= str_replace($mask[$key], "?".$requirements[$value], $routeAux);
-						$routeValues 	= str_replace($mask[$key], "?(".$requirements[$value] . ")", $routeValues);
+					if(array_key_exists($value, $regex)):
+						$routeAux 		= str_replace($mask[$key], "?".$regex[$value], $routeAux);
+						$routeValues 	= str_replace($mask[$key], "?(".$regex[$value] . ")", $routeValues);
 					else:
-						$routeAux 		= str_replace($mask[$key], $reg['defaults'], $routeAux);
+						$routeAux 		= str_replace("\/".$mask[$key], $reg['defaults'], $routeAux);
 						$routeValues 	= str_replace($mask[$key], $reg['defaultsValues'], $routeValues);
 					endif;
+
 				else:
-					if(array_key_exists($value, $requirements)):
-						$routeAux 		= str_replace($mask[$key], $requirements[$value], $routeAux);
-						$routeValues 	= str_replace($mask[$key], "(" . $requirements[$value] .")", $routeValues);
+					if(array_key_exists($value, $regex)):
+						$routeAux 		= str_replace($mask[$key], $regex[$value], $routeAux);
+						$routeValues 	= str_replace($mask[$key], "(" . $regex[$value] .")", $routeValues);
 					else:
 						$routeAux		= str_replace($mask[$key], $reg['notDefaults'], $routeAux);
 						$routeValues 	= str_replace($mask[$key], $reg['notDefaultsValues'], $routeValues);
@@ -95,7 +101,7 @@ class Router
 		//$routeAux = preg_quote($route['route'], "/");
 		//var_dump($routeAux);
 		
-
+		
 		if(!preg_match("/^". $routeAux. "$/", $path)):
 			return false;
 		endif;
@@ -131,7 +137,7 @@ class Router
 			throw new \Exception("Class Router->generateUrl erro \n Rota não encontrada " .$name, 500);
 		endif;
 
-		$aux = $route[$name]['route'];
+		$aux = $route[$name]['prefix'].$route[$name]['route'];
 		//var_dump($aux);
 		foreach ($params as $key => $value):
 			$aux = str_replace("{". $key ."}", $value, $aux);

@@ -31,7 +31,7 @@ class AnnotationRouter extends Annotation
 		endforeach;
 		
 		//$cache->setCache($fileCache, $this->route, $finder);
-		//var_dump($this->route);
+		var_dump($this->route);
 		return $this;
 
 	}

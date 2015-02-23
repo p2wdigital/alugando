@@ -16,7 +16,7 @@ services:
         class: Plunder\Core\HttpRequest\Request
         params: null
     annotation_router:
-        class: Plunder\Helpers\Annotation\AnnotationRouter
+        class: Plunder\Core\Annotation\AnnotationRouter
         params: 
             finder: %finder%
             cache: %cache%

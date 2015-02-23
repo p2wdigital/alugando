@@ -6,7 +6,7 @@ use Plunder\Core\Controller\Controller;
 use Plunder\Core\HttpRequest\Request;
 
 /**
-* @Route("/admin") 
+* @Prefix("/admin") 
 */
 class AdminController extends Controller
 {
@@ -24,10 +24,7 @@ class AdminController extends Controller
 	public function insertAction(Request $request){
 	}
 
-	/**
-	 * @Route("/update/{id}/{user}", name="admin_new", requirements={"id":"\d+"} defaults={"user":"palex"})
-	 */
-	public function updateAction($user, $id ){
+	public function update($user, $id ){
 	}
 
 

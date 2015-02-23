@@ -11,7 +11,7 @@ use Table\Model\CategoriaQuery;
 
 use Admin\Form\CategoriaForm;
 /**
-* @Route("/admin/categoria", name="categoria_home") 
+* @Prefix("/admin/categoria") 
 */
 class CategoriaController extends Controller
 {
@@ -37,6 +37,7 @@ class CategoriaController extends Controller
 
 	/**
 	 * @Route("/insert-ajax", name="categoria_insert_ajax")
+	 * @Method("POST")
 	 */
 	public function insertAjaxAction(Request $request){
 		$categoria = new Categoria;
@@ -67,6 +68,7 @@ class CategoriaController extends Controller
 
 	/**
 	 * @Route("/update/{id}", name="categoria_update")
+	 * @Regex({"id":"\d"})
 	 */
 	public function updateAction($id){
 		
@@ -86,6 +88,7 @@ class CategoriaController extends Controller
 
 	/**
 	 * @Route("/delete/{id}", name="categoria_delete")
+	 * @Regex({"id":"\d"})
 	 */
 	public function deleteAction($id){
 		

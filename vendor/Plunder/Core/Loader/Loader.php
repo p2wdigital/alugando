@@ -3,10 +3,9 @@
 namespace Plunder\Core\Loader;
 
 use Symfony\Component\Yaml\Parser;
+use Plunder\Core\Config\Config;
 use Plunder\Helpers\Cache\Cache;
 use Plunder\Core\Container\Container;
-use Plunder\Helpers\Annotation\AnnotationRouter;
-use Plunder\Core\Config\Config;
 use Plunder\Core\HttpRequest\Response;
 
 
@@ -26,15 +25,20 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
-		// var_dump($_SERVER);
+		//Include propel class;
 		require_once (BASE_DIR."/app/config/config_propel.php");
+
 		new Container(new Parser());
 		new Config(Container::get('yaml'), Container::get('cache'));
 		
 		$route = Container::get('router');
-		//var_dump($route->getContext());
-		Container::load("app", $route->getContext());
-		$this->callController($route->getContext());
+		if($route->getContext() != array()):
+			Container::load("app", $route->getContext());
+			$this->callController($route->getContext());
+		else:
+			$response = new Response("404 Error", 404);
+			$response->send();
+		endif;
 	}
 
 
