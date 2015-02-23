@@ -16,10 +16,8 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Table\Model\Categoria as ChildCategoria;
-use Table\Model\CategoriaQuery as ChildCategoriaQuery;
-use Table\Model\MenuItem as ChildMenuItem;
-use Table\Model\MenuItemQuery as ChildMenuItemQuery;
+use Table\Model\Autor as ChildAutor;
+use Table\Model\AutorQuery as ChildAutorQuery;
 use Table\Model\Post as ChildPost;
 use Table\Model\PostData as ChildPostData;
 use Table\Model\PostDataQuery as ChildPostDataQuery;
@@ -31,11 +29,11 @@ use Table\Model\Map\PostTableMap;
 /**
  * Base class that represents a row from the 'post' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Post implements ActiveRecordInterface
+abstract class Post implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -76,28 +74,16 @@ abstract class Post implements ActiveRecordInterface
     protected $id;
 
     /**
+     * The value for the autor_id field.
+     * @var        int
+     */
+    protected $autor_id;
+
+    /**
      * The value for the titulo field.
      * @var        string
      */
     protected $titulo;
-
-    /**
-     * The value for the text field.
-     * @var        string
-     */
-    protected $text;
-
-    /**
-     * The value for the tipo field.
-     * @var        int
-     */
-    protected $tipo;
-
-    /**
-     * The value for the status field.
-     * @var        int
-     */
-    protected $status;
 
     /**
      * The value for the url field.
@@ -106,16 +92,22 @@ abstract class Post implements ActiveRecordInterface
     protected $url;
 
     /**
+     * The value for the content field.
+     * @var        string
+     */
+    protected $content;
+
+    /**
+     * The value for the status field.
+     * @var        int
+     */
+    protected $status;
+
+    /**
      * The value for the data field.
      * @var        string
      */
     protected $data;
-
-    /**
-     * The value for the tags field.
-     * @var        string
-     */
-    protected $tags;
 
     /**
      * The value for the dh_inclusao field.
@@ -130,10 +122,9 @@ abstract class Post implements ActiveRecordInterface
     protected $dh_alteracao;
 
     /**
-     * @var        ObjectCollection|ChildMenuItem[] Collection to store aggregation of ChildMenuItem objects.
+     * @var        ChildAutor
      */
-    protected $collMenuItems;
-    protected $collMenuItemsPartial;
+    protected $aAutor;
 
     /**
      * @var        ObjectCollection|ChildPostData[] Collection to store aggregation of ChildPostData objects.
@@ -148,34 +139,12 @@ abstract class Post implements ActiveRecordInterface
     protected $collPostHasCategoriasPartial;
 
     /**
-     * @var        ObjectCollection|ChildCategoria[] Cross Collection to store aggregation of ChildCategoria objects.
-     */
-    protected $collCategorias;
-
-    /**
-     * @var bool
-     */
-    protected $collCategoriasPartial;
-
-    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildCategoria[]
-     */
-    protected $categoriasScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildMenuItem[]
-     */
-    protected $menuItemsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -408,7 +377,7 @@ abstract class Post implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     *
+     * 
      * @return int
      */
     public function getId()
@@ -417,8 +386,18 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Get the [autor_id] column value.
+     * 
+     * @return int
+     */
+    public function getAutorId()
+    {
+        return $this->autor_id;
+    }
+
+    /**
      * Get the [titulo] column value.
-     *
+     * 
      * @return string
      */
     public function getTitulo()
@@ -427,38 +406,8 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Get the [text] column value.
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * Get the [tipo] column value.
-     *
-     * @return int
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
-     * Get the [status] column value.
-     *
-     * @return int
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * Get the [url] column value.
-     *
+     * 
      * @return string
      */
     public function getUrl()
@@ -467,8 +416,28 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
+     * Get the [content] column value.
+     * 
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Get the [status] column value.
+     * 
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
      * Get the [data] column value.
-     *
+     * 
      * @return string
      */
     public function getData()
@@ -477,18 +446,8 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Get the [tags] column value.
-     *
-     * @return string
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
      * Get the [dh_inclusao] column value.
-     *
+     * 
      * @return string
      */
     public function getDhInclusao()
@@ -498,7 +457,7 @@ abstract class Post implements ActiveRecordInterface
 
     /**
      * Get the [dh_alteracao] column value.
-     *
+     * 
      * @return string
      */
     public function getDhAlteracao()
@@ -508,8 +467,8 @@ abstract class Post implements ActiveRecordInterface
 
     /**
      * Set the value of [id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setId($v)
@@ -527,9 +486,33 @@ abstract class Post implements ActiveRecordInterface
     } // setId()
 
     /**
+     * Set the value of [autor_id] column.
+     * 
+     * @param int $v new value
+     * @return $this|\Table\Model\Post The current object (for fluent API support)
+     */
+    public function setAutorId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->autor_id !== $v) {
+            $this->autor_id = $v;
+            $this->modifiedColumns[PostTableMap::COL_AUTOR_ID] = true;
+        }
+
+        if ($this->aAutor !== null && $this->aAutor->getId() !== $v) {
+            $this->aAutor = null;
+        }
+
+        return $this;
+    } // setAutorId()
+
+    /**
      * Set the value of [titulo] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setTitulo($v)
@@ -547,69 +530,9 @@ abstract class Post implements ActiveRecordInterface
     } // setTitulo()
 
     /**
-     * Set the value of [text] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\Post The current object (for fluent API support)
-     */
-    public function setText($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->text !== $v) {
-            $this->text = $v;
-            $this->modifiedColumns[PostTableMap::COL_TEXT] = true;
-        }
-
-        return $this;
-    } // setText()
-
-    /**
-     * Set the value of [tipo] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Table\Model\Post The current object (for fluent API support)
-     */
-    public function setTipo($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->tipo !== $v) {
-            $this->tipo = $v;
-            $this->modifiedColumns[PostTableMap::COL_TIPO] = true;
-        }
-
-        return $this;
-    } // setTipo()
-
-    /**
-     * Set the value of [status] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Table\Model\Post The current object (for fluent API support)
-     */
-    public function setStatus($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->status !== $v) {
-            $this->status = $v;
-            $this->modifiedColumns[PostTableMap::COL_STATUS] = true;
-        }
-
-        return $this;
-    } // setStatus()
-
-    /**
      * Set the value of [url] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setUrl($v)
@@ -627,9 +550,49 @@ abstract class Post implements ActiveRecordInterface
     } // setUrl()
 
     /**
+     * Set the value of [content] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Post The current object (for fluent API support)
+     */
+    public function setContent($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->content !== $v) {
+            $this->content = $v;
+            $this->modifiedColumns[PostTableMap::COL_CONTENT] = true;
+        }
+
+        return $this;
+    } // setContent()
+
+    /**
+     * Set the value of [status] column.
+     * 
+     * @param int $v new value
+     * @return $this|\Table\Model\Post The current object (for fluent API support)
+     */
+    public function setStatus($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->status !== $v) {
+            $this->status = $v;
+            $this->modifiedColumns[PostTableMap::COL_STATUS] = true;
+        }
+
+        return $this;
+    } // setStatus()
+
+    /**
      * Set the value of [data] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setData($v)
@@ -647,29 +610,9 @@ abstract class Post implements ActiveRecordInterface
     } // setData()
 
     /**
-     * Set the value of [tags] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\Post The current object (for fluent API support)
-     */
-    public function setTags($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->tags !== $v) {
-            $this->tags = $v;
-            $this->modifiedColumns[PostTableMap::COL_TAGS] = true;
-        }
-
-        return $this;
-    } // setTags()
-
-    /**
      * Set the value of [dh_inclusao] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setDhInclusao($v)
@@ -688,8 +631,8 @@ abstract class Post implements ActiveRecordInterface
 
     /**
      * Set the value of [dh_alteracao] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Post The current object (for fluent API support)
      */
     public function setDhAlteracao($v)
@@ -745,31 +688,28 @@ abstract class Post implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PostTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostTableMap::translateFieldName('Titulo', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostTableMap::translateFieldName('AutorId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->autor_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Titulo', TableMap::TYPE_PHPNAME, $indexType)];
             $this->titulo = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostTableMap::translateFieldName('Text', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->text = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Tipo', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tipo = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->status = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('Url', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostTableMap::translateFieldName('Url', TableMap::TYPE_PHPNAME, $indexType)];
             $this->url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostTableMap::translateFieldName('Content', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->content = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->status = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PostTableMap::translateFieldName('Data', TableMap::TYPE_PHPNAME, $indexType)];
             $this->data = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PostTableMap::translateFieldName('Tags', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->tags = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PostTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PostTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_inclusao = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : PostTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PostTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -779,7 +719,7 @@ abstract class Post implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = PostTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = PostTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Post'), 0, $e);
@@ -801,6 +741,9 @@ abstract class Post implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aAutor !== null && $this->autor_id !== $this->aAutor->getId()) {
+            $this->aAutor = null;
+        }
     } // ensureConsistency
 
     /**
@@ -840,13 +783,11 @@ abstract class Post implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collMenuItems = null;
-
+            $this->aAutor = null;
             $this->collPostDatas = null;
 
             $this->collPostHasCategorias = null;
 
-            $this->collCategorias = null;
         } // if (deep)
     }
 
@@ -946,6 +887,18 @@ abstract class Post implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aAutor !== null) {
+                if ($this->aAutor->isModified() || $this->aAutor->isNew()) {
+                    $affectedRows += $this->aAutor->save($con);
+                }
+                $this->setAutor($this->aAutor);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -955,52 +908,6 @@ abstract class Post implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->categoriasScheduledForDeletion !== null) {
-                if (!$this->categoriasScheduledForDeletion->isEmpty()) {
-                    $pks = array();
-                    foreach ($this->categoriasScheduledForDeletion as $entry) {
-                        $entryPk = [];
-
-                        $entryPk[0] = $this->getId();
-                        $entryPk[1] = $entry->getId();
-                        $pks[] = $entryPk;
-                    }
-
-                    \Table\Model\PostHasCategoriaQuery::create()
-                        ->filterByPrimaryKeys($pks)
-                        ->delete($con);
-
-                    $this->categoriasScheduledForDeletion = null;
-                }
-
-            }
-
-            if ($this->collCategorias) {
-                foreach ($this->collCategorias as $categoria) {
-                    if (!$categoria->isDeleted() && ($categoria->isNew() || $categoria->isModified())) {
-                        $categoria->save($con);
-                    }
-                }
-            }
-
-
-            if ($this->menuItemsScheduledForDeletion !== null) {
-                if (!$this->menuItemsScheduledForDeletion->isEmpty()) {
-                    \Table\Model\MenuItemQuery::create()
-                        ->filterByPrimaryKeys($this->menuItemsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->menuItemsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collMenuItems !== null) {
-                foreach ($this->collMenuItems as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             if ($this->postDatasScheduledForDeletion !== null) {
@@ -1066,26 +973,23 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
+        if ($this->isColumnModified(PostTableMap::COL_AUTOR_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'autor_id';
+        }
         if ($this->isColumnModified(PostTableMap::COL_TITULO)) {
             $modifiedColumns[':p' . $index++]  = 'titulo';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $modifiedColumns[':p' . $index++]  = 'text';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TIPO)) {
-            $modifiedColumns[':p' . $index++]  = 'tipo';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_STATUS)) {
-            $modifiedColumns[':p' . $index++]  = 'status';
         }
         if ($this->isColumnModified(PostTableMap::COL_URL)) {
             $modifiedColumns[':p' . $index++]  = 'url';
         }
+        if ($this->isColumnModified(PostTableMap::COL_CONTENT)) {
+            $modifiedColumns[':p' . $index++]  = 'content';
+        }
+        if ($this->isColumnModified(PostTableMap::COL_STATUS)) {
+            $modifiedColumns[':p' . $index++]  = 'status';
+        }
         if ($this->isColumnModified(PostTableMap::COL_DATA)) {
             $modifiedColumns[':p' . $index++]  = 'data';
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TAGS)) {
-            $modifiedColumns[':p' . $index++]  = 'tags';
         }
         if ($this->isColumnModified(PostTableMap::COL_DH_INCLUSAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
@@ -1104,34 +1008,31 @@ abstract class Post implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
+                    case 'id':                        
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'titulo':
+                    case 'autor_id':                        
+                        $stmt->bindValue($identifier, $this->autor_id, PDO::PARAM_INT);
+                        break;
+                    case 'titulo':                        
                         $stmt->bindValue($identifier, $this->titulo, PDO::PARAM_STR);
                         break;
-                    case 'text':
-                        $stmt->bindValue($identifier, $this->text, PDO::PARAM_STR);
-                        break;
-                    case 'tipo':
-                        $stmt->bindValue($identifier, $this->tipo, PDO::PARAM_INT);
-                        break;
-                    case 'status':
-                        $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
-                        break;
-                    case 'url':
+                    case 'url':                        
                         $stmt->bindValue($identifier, $this->url, PDO::PARAM_STR);
                         break;
-                    case 'data':
+                    case 'content':                        
+                        $stmt->bindValue($identifier, $this->content, PDO::PARAM_STR);
+                        break;
+                    case 'status':                        
+                        $stmt->bindValue($identifier, $this->status, PDO::PARAM_INT);
+                        break;
+                    case 'data':                        
                         $stmt->bindValue($identifier, $this->data, PDO::PARAM_STR);
                         break;
-                    case 'tags':
-                        $stmt->bindValue($identifier, $this->tags, PDO::PARAM_STR);
-                        break;
-                    case 'dh_inclusao':
+                    case 'dh_inclusao':                        
                         $stmt->bindValue($identifier, $this->dh_inclusao, PDO::PARAM_STR);
                         break;
-                    case 'dh_alteracao':
+                    case 'dh_alteracao':                        
                         $stmt->bindValue($identifier, $this->dh_alteracao, PDO::PARAM_STR);
                         break;
                 }
@@ -1200,30 +1101,27 @@ abstract class Post implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getTitulo();
+                return $this->getAutorId();
                 break;
             case 2:
-                return $this->getText();
+                return $this->getTitulo();
                 break;
             case 3:
-                return $this->getTipo();
+                return $this->getUrl();
                 break;
             case 4:
-                return $this->getStatus();
+                return $this->getContent();
                 break;
             case 5:
-                return $this->getUrl();
+                return $this->getStatus();
                 break;
             case 6:
                 return $this->getData();
                 break;
             case 7:
-                return $this->getTags();
-                break;
-            case 8:
                 return $this->getDhInclusao();
                 break;
-            case 9:
+            case 8:
                 return $this->getDhAlteracao();
                 break;
             default:
@@ -1257,39 +1155,38 @@ abstract class Post implements ActiveRecordInterface
         $keys = PostTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getTitulo(),
-            $keys[2] => $this->getText(),
-            $keys[3] => $this->getTipo(),
-            $keys[4] => $this->getStatus(),
-            $keys[5] => $this->getUrl(),
+            $keys[1] => $this->getAutorId(),
+            $keys[2] => $this->getTitulo(),
+            $keys[3] => $this->getUrl(),
+            $keys[4] => $this->getContent(),
+            $keys[5] => $this->getStatus(),
             $keys[6] => $this->getData(),
-            $keys[7] => $this->getTags(),
-            $keys[8] => $this->getDhInclusao(),
-            $keys[9] => $this->getDhAlteracao(),
+            $keys[7] => $this->getDhInclusao(),
+            $keys[8] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
-            if (null !== $this->collMenuItems) {
-
+            if (null !== $this->aAutor) {
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'menuItems';
+                        $key = 'autor';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'menu_items';
+                        $key = 'autor';
                         break;
                     default:
-                        $key = 'MenuItems';
+                        $key = 'Autor';
                 }
-
-                $result[$key] = $this->collMenuItems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+        
+                $result[$key] = $this->aAutor->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collPostDatas) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'postDatas';
@@ -1300,11 +1197,11 @@ abstract class Post implements ActiveRecordInterface
                     default:
                         $key = 'PostDatas';
                 }
-
+        
                 $result[$key] = $this->collPostDatas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPostHasCategorias) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'postHasCategorias';
@@ -1315,7 +1212,7 @@ abstract class Post implements ActiveRecordInterface
                     default:
                         $key = 'PostHasCategorias';
                 }
-
+        
                 $result[$key] = $this->collPostHasCategorias->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1356,30 +1253,27 @@ abstract class Post implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setTitulo($value);
+                $this->setAutorId($value);
                 break;
             case 2:
-                $this->setText($value);
+                $this->setTitulo($value);
                 break;
             case 3:
-                $this->setTipo($value);
+                $this->setUrl($value);
                 break;
             case 4:
-                $this->setStatus($value);
+                $this->setContent($value);
                 break;
             case 5:
-                $this->setUrl($value);
+                $this->setStatus($value);
                 break;
             case 6:
                 $this->setData($value);
                 break;
             case 7:
-                $this->setTags($value);
-                break;
-            case 8:
                 $this->setDhInclusao($value);
                 break;
-            case 9:
+            case 8:
                 $this->setDhAlteracao($value);
                 break;
         } // switch()
@@ -1412,31 +1306,28 @@ abstract class Post implements ActiveRecordInterface
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTitulo($arr[$keys[1]]);
+            $this->setAutorId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setText($arr[$keys[2]]);
+            $this->setTitulo($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setTipo($arr[$keys[3]]);
+            $this->setUrl($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setStatus($arr[$keys[4]]);
+            $this->setContent($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUrl($arr[$keys[5]]);
+            $this->setStatus($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
             $this->setData($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setTags($arr[$keys[7]]);
+            $this->setDhInclusao($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setDhInclusao($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setDhAlteracao($arr[$keys[9]]);
+            $this->setDhAlteracao($arr[$keys[8]]);
         }
     }
 
@@ -1482,26 +1373,23 @@ abstract class Post implements ActiveRecordInterface
         if ($this->isColumnModified(PostTableMap::COL_ID)) {
             $criteria->add(PostTableMap::COL_ID, $this->id);
         }
+        if ($this->isColumnModified(PostTableMap::COL_AUTOR_ID)) {
+            $criteria->add(PostTableMap::COL_AUTOR_ID, $this->autor_id);
+        }
         if ($this->isColumnModified(PostTableMap::COL_TITULO)) {
             $criteria->add(PostTableMap::COL_TITULO, $this->titulo);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TEXT)) {
-            $criteria->add(PostTableMap::COL_TEXT, $this->text);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TIPO)) {
-            $criteria->add(PostTableMap::COL_TIPO, $this->tipo);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_STATUS)) {
-            $criteria->add(PostTableMap::COL_STATUS, $this->status);
         }
         if ($this->isColumnModified(PostTableMap::COL_URL)) {
             $criteria->add(PostTableMap::COL_URL, $this->url);
         }
+        if ($this->isColumnModified(PostTableMap::COL_CONTENT)) {
+            $criteria->add(PostTableMap::COL_CONTENT, $this->content);
+        }
+        if ($this->isColumnModified(PostTableMap::COL_STATUS)) {
+            $criteria->add(PostTableMap::COL_STATUS, $this->status);
+        }
         if ($this->isColumnModified(PostTableMap::COL_DATA)) {
             $criteria->add(PostTableMap::COL_DATA, $this->data);
-        }
-        if ($this->isColumnModified(PostTableMap::COL_TAGS)) {
-            $criteria->add(PostTableMap::COL_TAGS, $this->tags);
         }
         if ($this->isColumnModified(PostTableMap::COL_DH_INCLUSAO)) {
             $criteria->add(PostTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
@@ -1527,6 +1415,7 @@ abstract class Post implements ActiveRecordInterface
     {
         $criteria = ChildPostQuery::create();
         $criteria->add(PostTableMap::COL_ID, $this->id);
+        $criteria->add(PostTableMap::COL_AUTOR_ID, $this->autor_id);
 
         return $criteria;
     }
@@ -1539,10 +1428,18 @@ abstract class Post implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId();
+        $validPk = null !== $this->getId() &&
+            null !== $this->getAutorId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
+
+        //relation fk_post_autor1 to table autor
+        if ($this->aAutor && $hash = spl_object_hash($this->aAutor)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1552,25 +1449,31 @@ abstract class Post implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getId();
+        $pks = array();
+        $pks[0] = $this->getId();
+        $pks[1] = $this->getAutorId();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setId($key);
+        $this->setId($keys[0]);
+        $this->setAutorId($keys[1]);
     }
 
     /**
@@ -1579,7 +1482,7 @@ abstract class Post implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getId();
+        return (null === $this->getId()) && (null === $this->getAutorId());
     }
 
     /**
@@ -1595,13 +1498,12 @@ abstract class Post implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setAutorId($this->getAutorId());
         $copyObj->setTitulo($this->getTitulo());
-        $copyObj->setText($this->getText());
-        $copyObj->setTipo($this->getTipo());
-        $copyObj->setStatus($this->getStatus());
         $copyObj->setUrl($this->getUrl());
+        $copyObj->setContent($this->getContent());
+        $copyObj->setStatus($this->getStatus());
         $copyObj->setData($this->getData());
-        $copyObj->setTags($this->getTags());
         $copyObj->setDhInclusao($this->getDhInclusao());
         $copyObj->setDhAlteracao($this->getDhAlteracao());
 
@@ -1609,12 +1511,6 @@ abstract class Post implements ActiveRecordInterface
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
-
-            foreach ($this->getMenuItems() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addMenuItem($relObj->copy($deepCopy));
-                }
-            }
 
             foreach ($this->getPostDatas() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
@@ -1658,6 +1554,57 @@ abstract class Post implements ActiveRecordInterface
         return $copyObj;
     }
 
+    /**
+     * Declares an association between this object and a ChildAutor object.
+     *
+     * @param  ChildAutor $v
+     * @return $this|\Table\Model\Post The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setAutor(ChildAutor $v = null)
+    {
+        if ($v === null) {
+            $this->setAutorId(NULL);
+        } else {
+            $this->setAutorId($v->getId());
+        }
+
+        $this->aAutor = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildAutor object, it will not be re-added.
+        if ($v !== null) {
+            $v->addPost($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildAutor object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildAutor The associated ChildAutor object.
+     * @throws PropelException
+     */
+    public function getAutor(ConnectionInterface $con = null)
+    {
+        if ($this->aAutor === null && ($this->autor_id !== null)) {
+            $this->aAutor = ChildAutorQuery::create()->findPk($this->autor_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aAutor->addPosts($this);
+             */
+        }
+
+        return $this->aAutor;
+    }
+
 
     /**
      * Initializes a collection based on the name of a relation.
@@ -1669,258 +1616,12 @@ abstract class Post implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('MenuItem' == $relationName) {
-            return $this->initMenuItems();
-        }
         if ('PostData' == $relationName) {
             return $this->initPostDatas();
         }
         if ('PostHasCategoria' == $relationName) {
             return $this->initPostHasCategorias();
         }
-    }
-
-    /**
-     * Clears out the collMenuItems collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addMenuItems()
-     */
-    public function clearMenuItems()
-    {
-        $this->collMenuItems = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collMenuItems collection loaded partially.
-     */
-    public function resetPartialMenuItems($v = true)
-    {
-        $this->collMenuItemsPartial = $v;
-    }
-
-    /**
-     * Initializes the collMenuItems collection.
-     *
-     * By default this just sets the collMenuItems collection to an empty array (like clearcollMenuItems());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initMenuItems($overrideExisting = true)
-    {
-        if (null !== $this->collMenuItems && !$overrideExisting) {
-            return;
-        }
-        $this->collMenuItems = new ObjectCollection();
-        $this->collMenuItems->setModel('\Table\Model\MenuItem');
-    }
-
-    /**
-     * Gets an array of ChildMenuItem objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPost is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildMenuItem[] List of ChildMenuItem objects
-     * @throws PropelException
-     */
-    public function getMenuItems(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
-                // return empty collection
-                $this->initMenuItems();
-            } else {
-                $collMenuItems = ChildMenuItemQuery::create(null, $criteria)
-                    ->filterByPost($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collMenuItemsPartial && count($collMenuItems)) {
-                        $this->initMenuItems(false);
-
-                        foreach ($collMenuItems as $obj) {
-                            if (false == $this->collMenuItems->contains($obj)) {
-                                $this->collMenuItems->append($obj);
-                            }
-                        }
-
-                        $this->collMenuItemsPartial = true;
-                    }
-
-                    return $collMenuItems;
-                }
-
-                if ($partial && $this->collMenuItems) {
-                    foreach ($this->collMenuItems as $obj) {
-                        if ($obj->isNew()) {
-                            $collMenuItems[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collMenuItems = $collMenuItems;
-                $this->collMenuItemsPartial = false;
-            }
-        }
-
-        return $this->collMenuItems;
-    }
-
-    /**
-     * Sets a collection of ChildMenuItem objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $menuItems A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function setMenuItems(Collection $menuItems, ConnectionInterface $con = null)
-    {
-        /** @var ChildMenuItem[] $menuItemsToDelete */
-        $menuItemsToDelete = $this->getMenuItems(new Criteria(), $con)->diff($menuItems);
-
-
-        $this->menuItemsScheduledForDeletion = $menuItemsToDelete;
-
-        foreach ($menuItemsToDelete as $menuItemRemoved) {
-            $menuItemRemoved->setPost(null);
-        }
-
-        $this->collMenuItems = null;
-        foreach ($menuItems as $menuItem) {
-            $this->addMenuItem($menuItem);
-        }
-
-        $this->collMenuItems = $menuItems;
-        $this->collMenuItemsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related MenuItem objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related MenuItem objects.
-     * @throws PropelException
-     */
-    public function countMenuItems(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getMenuItems());
-            }
-
-            $query = ChildMenuItemQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByPost($this)
-                ->count($con);
-        }
-
-        return count($this->collMenuItems);
-    }
-
-    /**
-     * Method called to associate a ChildMenuItem object to this object
-     * through the ChildMenuItem foreign key attribute.
-     *
-     * @param  ChildMenuItem $l ChildMenuItem
-     * @return $this|\Table\Model\Post The current object (for fluent API support)
-     */
-    public function addMenuItem(ChildMenuItem $l)
-    {
-        if ($this->collMenuItems === null) {
-            $this->initMenuItems();
-            $this->collMenuItemsPartial = true;
-        }
-
-        if (!$this->collMenuItems->contains($l)) {
-            $this->doAddMenuItem($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildMenuItem $menuItem The ChildMenuItem object to add.
-     */
-    protected function doAddMenuItem(ChildMenuItem $menuItem)
-    {
-        $this->collMenuItems[]= $menuItem;
-        $menuItem->setPost($this);
-    }
-
-    /**
-     * @param  ChildMenuItem $menuItem The ChildMenuItem object to remove.
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function removeMenuItem(ChildMenuItem $menuItem)
-    {
-        if ($this->getMenuItems()->contains($menuItem)) {
-            $pos = $this->collMenuItems->search($menuItem);
-            $this->collMenuItems->remove($pos);
-            if (null === $this->menuItemsScheduledForDeletion) {
-                $this->menuItemsScheduledForDeletion = clone $this->collMenuItems;
-                $this->menuItemsScheduledForDeletion->clear();
-            }
-            $this->menuItemsScheduledForDeletion[]= clone $menuItem;
-            $menuItem->setPost(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Post is new, it will return
-     * an empty collection; or if this Post has previously
-     * been saved, it will retrieve related MenuItems from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Post.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildMenuItem[] List of ChildMenuItem objects
-     */
-    public function getMenuItemsJoinMenu(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildMenuItemQuery::create(null, $criteria);
-        $query->joinWith('Menu', $joinBehavior);
-
-        return $this->getMenuItems($query, $con);
     }
 
     /**
@@ -2039,7 +1740,7 @@ abstract class Post implements ActiveRecordInterface
         /** @var ChildPostData[] $postDatasToDelete */
         $postDatasToDelete = $this->getPostDatas(new Criteria(), $con)->diff($postDatas);
 
-
+        
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -2260,7 +1961,7 @@ abstract class Post implements ActiveRecordInterface
         /** @var ChildPostHasCategoria[] $postHasCategoriasToDelete */
         $postHasCategoriasToDelete = $this->getPostHasCategorias(new Criteria(), $con)->diff($postHasCategorias);
 
-
+        
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -2391,262 +2092,22 @@ abstract class Post implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collCategorias collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addCategorias()
-     */
-    public function clearCategorias()
-    {
-        $this->collCategorias = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Initializes the collCategorias crossRef collection.
-     *
-     * By default this just sets the collCategorias collection to an empty collection (like clearCategorias());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @return void
-     */
-    public function initCategorias()
-    {
-        $this->collCategorias = new ObjectCollection();
-        $this->collCategoriasPartial = true;
-
-        $this->collCategorias->setModel('\Table\Model\Categoria');
-    }
-
-    /**
-     * Checks if the collCategorias collection is loaded.
-     *
-     * @return bool
-     */
-    public function isCategoriasLoaded()
-    {
-        return null !== $this->collCategorias;
-    }
-
-    /**
-     * Gets a collection of ChildCategoria objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPost is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return ObjectCollection|ChildCategoria[] List of ChildCategoria objects
-     */
-    public function getCategorias(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collCategoriasPartial && !$this->isNew();
-        if (null === $this->collCategorias || null !== $criteria || $partial) {
-            if ($this->isNew()) {
-                // return empty collection
-                if (null === $this->collCategorias) {
-                    $this->initCategorias();
-                }
-            } else {
-
-                $query = ChildCategoriaQuery::create(null, $criteria)
-                    ->filterByPost($this);
-                $collCategorias = $query->find($con);
-                if (null !== $criteria) {
-                    return $collCategorias;
-                }
-
-                if ($partial && $this->collCategorias) {
-                    //make sure that already added objects gets added to the list of the database.
-                    foreach ($this->collCategorias as $obj) {
-                        if (!$collCategorias->contains($obj)) {
-                            $collCategorias[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collCategorias = $collCategorias;
-                $this->collCategoriasPartial = false;
-            }
-        }
-
-        return $this->collCategorias;
-    }
-
-    /**
-     * Sets a collection of Categoria objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param  Collection $categorias A Propel collection.
-     * @param  ConnectionInterface $con Optional connection object
-     * @return $this|ChildPost The current object (for fluent API support)
-     */
-    public function setCategorias(Collection $categorias, ConnectionInterface $con = null)
-    {
-        $this->clearCategorias();
-        $currentCategorias = $this->getCategorias();
-
-        $categoriasScheduledForDeletion = $currentCategorias->diff($categorias);
-
-        foreach ($categoriasScheduledForDeletion as $toDelete) {
-            $this->removeCategoria($toDelete);
-        }
-
-        foreach ($categorias as $categoria) {
-            if (!$currentCategorias->contains($categoria)) {
-                $this->doAddCategoria($categoria);
-            }
-        }
-
-        $this->collCategoriasPartial = false;
-        $this->collCategorias = $categorias;
-
-        return $this;
-    }
-
-    /**
-     * Gets the number of Categoria objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      boolean $distinct Set to true to force count distinct
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return int the number of related Categoria objects
-     */
-    public function countCategorias(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collCategoriasPartial && !$this->isNew();
-        if (null === $this->collCategorias || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collCategorias) {
-                return 0;
-            } else {
-
-                if ($partial && !$criteria) {
-                    return count($this->getCategorias());
-                }
-
-                $query = ChildCategoriaQuery::create(null, $criteria);
-                if ($distinct) {
-                    $query->distinct();
-                }
-
-                return $query
-                    ->filterByPost($this)
-                    ->count($con);
-            }
-        } else {
-            return count($this->collCategorias);
-        }
-    }
-
-    /**
-     * Associate a ChildCategoria to this object
-     * through the post_has_categoria cross reference table.
-     *
-     * @param ChildCategoria $categoria
-     * @return ChildPost The current object (for fluent API support)
-     */
-    public function addCategoria(ChildCategoria $categoria)
-    {
-        if ($this->collCategorias === null) {
-            $this->initCategorias();
-        }
-
-        if (!$this->getCategorias()->contains($categoria)) {
-            // only add it if the **same** object is not already associated
-            $this->collCategorias->push($categoria);
-            $this->doAddCategoria($categoria);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param ChildCategoria $categoria
-     */
-    protected function doAddCategoria(ChildCategoria $categoria)
-    {
-        $postHasCategoria = new ChildPostHasCategoria();
-
-        $postHasCategoria->setCategoria($categoria);
-
-        $postHasCategoria->setPost($this);
-
-        $this->addPostHasCategoria($postHasCategoria);
-
-        // set the back reference to this object directly as using provided method either results
-        // in endless loop or in multiple relations
-        if (!$categoria->isPostsLoaded()) {
-            $categoria->initPosts();
-            $categoria->getPosts()->push($this);
-        } elseif (!$categoria->getPosts()->contains($this)) {
-            $categoria->getPosts()->push($this);
-        }
-
-    }
-
-    /**
-     * Remove categoria of this object
-     * through the post_has_categoria cross reference table.
-     *
-     * @param ChildCategoria $categoria
-     * @return ChildPost The current object (for fluent API support)
-     */
-    public function removeCategoria(ChildCategoria $categoria)
-    {
-        if ($this->getCategorias()->contains($categoria)) { $postHasCategoria = new ChildPostHasCategoria();
-
-            $postHasCategoria->setCategoria($categoria);
-            if ($categoria->isPostsLoaded()) {
-                //remove the back reference if available
-                $categoria->getPosts()->removeObject($this);
-            }
-
-            $postHasCategoria->setPost($this);
-            $this->removePostHasCategoria(clone $postHasCategoria);
-            $postHasCategoria->clear();
-
-            $this->collCategorias->remove($this->collCategorias->search($categoria));
-
-            if (null === $this->categoriasScheduledForDeletion) {
-                $this->categoriasScheduledForDeletion = clone $this->collCategorias;
-                $this->categoriasScheduledForDeletion->clear();
-            }
-
-            $this->categoriasScheduledForDeletion->push($categoria);
-        }
-
-
-        return $this;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
+        if (null !== $this->aAutor) {
+            $this->aAutor->removePost($this);
+        }
         $this->id = null;
+        $this->autor_id = null;
         $this->titulo = null;
-        $this->text = null;
-        $this->tipo = null;
-        $this->status = null;
         $this->url = null;
+        $this->content = null;
+        $this->status = null;
         $this->data = null;
-        $this->tags = null;
         $this->dh_inclusao = null;
         $this->dh_alteracao = null;
         $this->alreadyInSave = false;
@@ -2667,11 +2128,6 @@ abstract class Post implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collMenuItems) {
-                foreach ($this->collMenuItems as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collPostDatas) {
                 foreach ($this->collPostDatas as $o) {
                     $o->clearAllReferences($deep);
@@ -2682,17 +2138,11 @@ abstract class Post implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collCategorias) {
-                foreach ($this->collCategorias as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collMenuItems = null;
         $this->collPostDatas = null;
         $this->collPostHasCategorias = null;
-        $this->collCategorias = null;
+        $this->aAutor = null;
     }
 
     /**

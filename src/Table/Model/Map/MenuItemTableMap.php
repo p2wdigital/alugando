@@ -59,7 +59,7 @@ class MenuItemTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class MenuItemTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the id field
@@ -82,9 +82,14 @@ class MenuItemTableMap extends TableMap
     const COL_MENU_ID = 'menu_item.menu_id';
 
     /**
-     * the column name for the post_id field
+     * the column name for the rotulo field
      */
-    const COL_POST_ID = 'menu_item.post_id';
+    const COL_ROTULO = 'menu_item.rotulo';
+
+    /**
+     * the column name for the title field
+     */
+    const COL_TITLE = 'menu_item.title';
 
     /**
      * the column name for the parent field
@@ -92,24 +97,34 @@ class MenuItemTableMap extends TableMap
     const COL_PARENT = 'menu_item.parent';
 
     /**
-     * the column name for the titulo field
-     */
-    const COL_TITULO = 'menu_item.titulo';
-
-    /**
      * the column name for the tipo field
      */
     const COL_TIPO = 'menu_item.tipo';
 
     /**
-     * the column name for the url field
+     * the column name for the tipo_id field
      */
-    const COL_URL = 'menu_item.url';
+    const COL_TIPO_ID = 'menu_item.tipo_id';
 
     /**
-     * the column name for the data field
+     * the column name for the ordem field
      */
-    const COL_DATA = 'menu_item.data';
+    const COL_ORDEM = 'menu_item.ordem';
+
+    /**
+     * the column name for the dados field
+     */
+    const COL_DADOS = 'menu_item.dados';
+
+    /**
+     * the column name for the dh_inclusao field
+     */
+    const COL_DH_INCLUSAO = 'menu_item.dh_inclusao';
+
+    /**
+     * the column name for the dh_alteracao field
+     */
+    const COL_DH_ALTERACAO = 'menu_item.dh_alteracao';
 
     /**
      * The default string format for model objects of the related table
@@ -123,11 +138,11 @@ class MenuItemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'MenuId', 'PostId', 'Parent', 'Titulo', 'Tipo', 'Url', 'Data', ),
-        self::TYPE_CAMELNAME     => array('id', 'menuId', 'postId', 'parent', 'titulo', 'tipo', 'url', 'data', ),
-        self::TYPE_COLNAME       => array(MenuItemTableMap::COL_ID, MenuItemTableMap::COL_MENU_ID, MenuItemTableMap::COL_POST_ID, MenuItemTableMap::COL_PARENT, MenuItemTableMap::COL_TITULO, MenuItemTableMap::COL_TIPO, MenuItemTableMap::COL_URL, MenuItemTableMap::COL_DATA, ),
-        self::TYPE_FIELDNAME     => array('id', 'menu_id', 'post_id', 'parent', 'titulo', 'tipo', 'url', 'data', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('Id', 'MenuId', 'Rotulo', 'Title', 'Parent', 'Tipo', 'TipoId', 'Ordem', 'Dados', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('id', 'menuId', 'rotulo', 'title', 'parent', 'tipo', 'tipoId', 'ordem', 'dados', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(MenuItemTableMap::COL_ID, MenuItemTableMap::COL_MENU_ID, MenuItemTableMap::COL_ROTULO, MenuItemTableMap::COL_TITLE, MenuItemTableMap::COL_PARENT, MenuItemTableMap::COL_TIPO, MenuItemTableMap::COL_TIPO_ID, MenuItemTableMap::COL_ORDEM, MenuItemTableMap::COL_DADOS, MenuItemTableMap::COL_DH_INCLUSAO, MenuItemTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('id', 'menu_id', 'rotulo', 'title', 'parent', 'tipo', 'tipo_id', 'ordem', 'dados', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -137,11 +152,11 @@ class MenuItemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'MenuId' => 1, 'PostId' => 2, 'Parent' => 3, 'Titulo' => 4, 'Tipo' => 5, 'Url' => 6, 'Data' => 7, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'menuId' => 1, 'postId' => 2, 'parent' => 3, 'titulo' => 4, 'tipo' => 5, 'url' => 6, 'data' => 7, ),
-        self::TYPE_COLNAME       => array(MenuItemTableMap::COL_ID => 0, MenuItemTableMap::COL_MENU_ID => 1, MenuItemTableMap::COL_POST_ID => 2, MenuItemTableMap::COL_PARENT => 3, MenuItemTableMap::COL_TITULO => 4, MenuItemTableMap::COL_TIPO => 5, MenuItemTableMap::COL_URL => 6, MenuItemTableMap::COL_DATA => 7, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'menu_id' => 1, 'post_id' => 2, 'parent' => 3, 'titulo' => 4, 'tipo' => 5, 'url' => 6, 'data' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'MenuId' => 1, 'Rotulo' => 2, 'Title' => 3, 'Parent' => 4, 'Tipo' => 5, 'TipoId' => 6, 'Ordem' => 7, 'Dados' => 8, 'DhInclusao' => 9, 'DhAlteracao' => 10, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'menuId' => 1, 'rotulo' => 2, 'title' => 3, 'parent' => 4, 'tipo' => 5, 'tipoId' => 6, 'ordem' => 7, 'dados' => 8, 'dhInclusao' => 9, 'dhAlteracao' => 10, ),
+        self::TYPE_COLNAME       => array(MenuItemTableMap::COL_ID => 0, MenuItemTableMap::COL_MENU_ID => 1, MenuItemTableMap::COL_ROTULO => 2, MenuItemTableMap::COL_TITLE => 3, MenuItemTableMap::COL_PARENT => 4, MenuItemTableMap::COL_TIPO => 5, MenuItemTableMap::COL_TIPO_ID => 6, MenuItemTableMap::COL_ORDEM => 7, MenuItemTableMap::COL_DADOS => 8, MenuItemTableMap::COL_DH_INCLUSAO => 9, MenuItemTableMap::COL_DH_ALTERACAO => 10, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'menu_id' => 1, 'rotulo' => 2, 'title' => 3, 'parent' => 4, 'tipo' => 5, 'tipo_id' => 6, 'ordem' => 7, 'dados' => 8, 'dh_inclusao' => 9, 'dh_alteracao' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -163,12 +178,15 @@ class MenuItemTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignPrimaryKey('menu_id', 'MenuId', 'INTEGER' , 'menu', 'id', true, null, null);
-        $this->addForeignKey('post_id', 'PostId', 'INTEGER', 'post', 'id', true, null, null);
-        $this->addColumn('parent', 'Parent', 'INTEGER', false, null, null);
-        $this->addColumn('titulo', 'Titulo', 'VARCHAR', false, 100, null);
-        $this->addColumn('tipo', 'Tipo', 'VARCHAR', false, 45, null);
-        $this->addColumn('url', 'Url', 'VARCHAR', false, 100, null);
-        $this->addColumn('data', 'Data', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('rotulo', 'Rotulo', 'VARCHAR', true, 80, null);
+        $this->addColumn('title', 'Title', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('parent', 'Parent', 'INTEGER', true, null, null);
+        $this->addColumn('tipo', 'Tipo', 'VARCHAR', true, 45, null);
+        $this->addColumn('tipo_id', 'TipoId', 'INTEGER', true, null, null);
+        $this->addColumn('ordem', 'Ordem', 'INTEGER', true, null, null);
+        $this->addColumn('dados', 'Dados', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('dh_inclusao', 'DhInclusao', 'VARCHAR', false, 255, null);
+        $this->addColumn('dh_alteracao', 'DhAlteracao', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -180,13 +198,6 @@ class MenuItemTableMap extends TableMap
   0 =>
   array (
     0 => ':menu_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
-        $this->addRelation('Post', '\\Table\\Model\\Post', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':post_id',
     1 => ':id',
   ),
 ), null, null, null, false);
@@ -283,7 +294,7 @@ class MenuItemTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-
+            
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -297,7 +308,7 @@ class MenuItemTableMap extends TableMap
 
         return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -358,7 +369,7 @@ class MenuItemTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -397,21 +408,27 @@ class MenuItemTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(MenuItemTableMap::COL_ID);
             $criteria->addSelectColumn(MenuItemTableMap::COL_MENU_ID);
-            $criteria->addSelectColumn(MenuItemTableMap::COL_POST_ID);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_ROTULO);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_TITLE);
             $criteria->addSelectColumn(MenuItemTableMap::COL_PARENT);
-            $criteria->addSelectColumn(MenuItemTableMap::COL_TITULO);
             $criteria->addSelectColumn(MenuItemTableMap::COL_TIPO);
-            $criteria->addSelectColumn(MenuItemTableMap::COL_URL);
-            $criteria->addSelectColumn(MenuItemTableMap::COL_DATA);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_TIPO_ID);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_ORDEM);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_DADOS);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_DH_INCLUSAO);
+            $criteria->addSelectColumn(MenuItemTableMap::COL_DH_ALTERACAO);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.menu_id');
-            $criteria->addSelectColumn($alias . '.post_id');
+            $criteria->addSelectColumn($alias . '.rotulo');
+            $criteria->addSelectColumn($alias . '.title');
             $criteria->addSelectColumn($alias . '.parent');
-            $criteria->addSelectColumn($alias . '.titulo');
             $criteria->addSelectColumn($alias . '.tipo');
-            $criteria->addSelectColumn($alias . '.url');
-            $criteria->addSelectColumn($alias . '.data');
+            $criteria->addSelectColumn($alias . '.tipo_id');
+            $criteria->addSelectColumn($alias . '.ordem');
+            $criteria->addSelectColumn($alias . '.dados');
+            $criteria->addSelectColumn($alias . '.dh_inclusao');
+            $criteria->addSelectColumn($alias . '.dh_alteracao');
         }
     }
 

@@ -23,11 +23,11 @@ use Table\Model\Map\PostDataTableMap;
 /**
  * Base class that represents a row from the 'post_data' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class PostData implements ActiveRecordInterface
+abstract class PostData implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -62,12 +62,6 @@ abstract class PostData implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id field.
-     * @var        int
-     */
-    protected $id;
-
-    /**
      * The value for the post_id field.
      * @var        int
      */
@@ -80,10 +74,10 @@ abstract class PostData implements ActiveRecordInterface
     protected $name;
 
     /**
-     * The value for the data field.
+     * The value for the value field.
      * @var        string
      */
-    protected $data;
+    protected $value;
 
     /**
      * The value for the dh_inclusao field.
@@ -328,18 +322,8 @@ abstract class PostData implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id] column value.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Get the [post_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPostId()
@@ -349,7 +333,7 @@ abstract class PostData implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -358,18 +342,18 @@ abstract class PostData implements ActiveRecordInterface
     }
 
     /**
-     * Get the [data] column value.
-     *
+     * Get the [value] column value.
+     * 
      * @return string
      */
-    public function getData()
+    public function getValue()
     {
-        return $this->data;
+        return $this->value;
     }
 
     /**
      * Get the [dh_inclusao] column value.
-     *
+     * 
      * @return string
      */
     public function getDhInclusao()
@@ -379,7 +363,7 @@ abstract class PostData implements ActiveRecordInterface
 
     /**
      * Get the [dh_alteracao] column value.
-     *
+     * 
      * @return string
      */
     public function getDhAlteracao()
@@ -388,29 +372,9 @@ abstract class PostData implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Table\Model\PostData The current object (for fluent API support)
-     */
-    public function setId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->id !== $v) {
-            $this->id = $v;
-            $this->modifiedColumns[PostDataTableMap::COL_ID] = true;
-        }
-
-        return $this;
-    } // setId()
-
-    /**
      * Set the value of [post_id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\PostData The current object (for fluent API support)
      */
     public function setPostId($v)
@@ -433,8 +397,8 @@ abstract class PostData implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\PostData The current object (for fluent API support)
      */
     public function setName($v)
@@ -452,29 +416,29 @@ abstract class PostData implements ActiveRecordInterface
     } // setName()
 
     /**
-     * Set the value of [data] column.
-     *
-     * @param  string $v new value
+     * Set the value of [value] column.
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\PostData The current object (for fluent API support)
      */
-    public function setData($v)
+    public function setValue($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->data !== $v) {
-            $this->data = $v;
-            $this->modifiedColumns[PostDataTableMap::COL_DATA] = true;
+        if ($this->value !== $v) {
+            $this->value = $v;
+            $this->modifiedColumns[PostDataTableMap::COL_VALUE] = true;
         }
 
         return $this;
-    } // setData()
+    } // setValue()
 
     /**
      * Set the value of [dh_inclusao] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\PostData The current object (for fluent API support)
      */
     public function setDhInclusao($v)
@@ -493,8 +457,8 @@ abstract class PostData implements ActiveRecordInterface
 
     /**
      * Set the value of [dh_alteracao] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\PostData The current object (for fluent API support)
      */
     public function setDhAlteracao($v)
@@ -547,22 +511,19 @@ abstract class PostData implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PostDataTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostDataTableMap::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PostDataTableMap::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->post_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostDataTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PostDataTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostDataTableMap::translateFieldName('Data', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->data = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PostDataTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->value = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostDataTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PostDataTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_inclusao = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PostDataTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PostDataTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -572,7 +533,7 @@ abstract class PostData implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = PostDataTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = PostDataTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\PostData'), 0, $e);
@@ -781,17 +742,14 @@ abstract class PostData implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PostDataTableMap::COL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'id';
-        }
         if ($this->isColumnModified(PostDataTableMap::COL_POST_ID)) {
             $modifiedColumns[':p' . $index++]  = 'post_id';
         }
         if ($this->isColumnModified(PostDataTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(PostDataTableMap::COL_DATA)) {
-            $modifiedColumns[':p' . $index++]  = 'data';
+        if ($this->isColumnModified(PostDataTableMap::COL_VALUE)) {
+            $modifiedColumns[':p' . $index++]  = 'value';
         }
         if ($this->isColumnModified(PostDataTableMap::COL_DH_INCLUSAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
@@ -810,22 +768,19 @@ abstract class PostData implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
-                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
-                        break;
-                    case 'post_id':
+                    case 'post_id':                        
                         $stmt->bindValue($identifier, $this->post_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'data':
-                        $stmt->bindValue($identifier, $this->data, PDO::PARAM_STR);
+                    case 'value':                        
+                        $stmt->bindValue($identifier, $this->value, PDO::PARAM_STR);
                         break;
-                    case 'dh_inclusao':
+                    case 'dh_inclusao':                        
                         $stmt->bindValue($identifier, $this->dh_inclusao, PDO::PARAM_STR);
                         break;
-                    case 'dh_alteracao':
+                    case 'dh_alteracao':                        
                         $stmt->bindValue($identifier, $this->dh_alteracao, PDO::PARAM_STR);
                         break;
                 }
@@ -884,21 +839,18 @@ abstract class PostData implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getId();
-                break;
-            case 1:
                 return $this->getPostId();
                 break;
-            case 2:
+            case 1:
                 return $this->getName();
                 break;
-            case 3:
-                return $this->getData();
+            case 2:
+                return $this->getValue();
                 break;
-            case 4:
+            case 3:
                 return $this->getDhInclusao();
                 break;
-            case 5:
+            case 4:
                 return $this->getDhAlteracao();
                 break;
             default:
@@ -931,21 +883,20 @@ abstract class PostData implements ActiveRecordInterface
         $alreadyDumpedObjects['PostData'][$this->hashCode()] = true;
         $keys = PostDataTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getId(),
-            $keys[1] => $this->getPostId(),
-            $keys[2] => $this->getName(),
-            $keys[3] => $this->getData(),
-            $keys[4] => $this->getDhInclusao(),
-            $keys[5] => $this->getDhAlteracao(),
+            $keys[0] => $this->getPostId(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getValue(),
+            $keys[3] => $this->getDhInclusao(),
+            $keys[4] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aPost) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'post';
@@ -956,7 +907,7 @@ abstract class PostData implements ActiveRecordInterface
                     default:
                         $key = 'Post';
                 }
-
+        
                 $result[$key] = $this->aPost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -994,21 +945,18 @@ abstract class PostData implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setId($value);
-                break;
-            case 1:
                 $this->setPostId($value);
                 break;
-            case 2:
+            case 1:
                 $this->setName($value);
                 break;
-            case 3:
-                $this->setData($value);
+            case 2:
+                $this->setValue($value);
                 break;
-            case 4:
+            case 3:
                 $this->setDhInclusao($value);
                 break;
-            case 5:
+            case 4:
                 $this->setDhAlteracao($value);
                 break;
         } // switch()
@@ -1038,22 +986,19 @@ abstract class PostData implements ActiveRecordInterface
         $keys = PostDataTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
+            $this->setPostId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setPostId($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setName($arr[$keys[2]]);
+            $this->setValue($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setData($arr[$keys[3]]);
+            $this->setDhInclusao($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDhInclusao($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setDhAlteracao($arr[$keys[5]]);
+            $this->setDhAlteracao($arr[$keys[4]]);
         }
     }
 
@@ -1096,17 +1041,14 @@ abstract class PostData implements ActiveRecordInterface
     {
         $criteria = new Criteria(PostDataTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PostDataTableMap::COL_ID)) {
-            $criteria->add(PostDataTableMap::COL_ID, $this->id);
-        }
         if ($this->isColumnModified(PostDataTableMap::COL_POST_ID)) {
             $criteria->add(PostDataTableMap::COL_POST_ID, $this->post_id);
         }
         if ($this->isColumnModified(PostDataTableMap::COL_NAME)) {
             $criteria->add(PostDataTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(PostDataTableMap::COL_DATA)) {
-            $criteria->add(PostDataTableMap::COL_DATA, $this->data);
+        if ($this->isColumnModified(PostDataTableMap::COL_VALUE)) {
+            $criteria->add(PostDataTableMap::COL_VALUE, $this->value);
         }
         if ($this->isColumnModified(PostDataTableMap::COL_DH_INCLUSAO)) {
             $criteria->add(PostDataTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
@@ -1131,8 +1073,8 @@ abstract class PostData implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildPostDataQuery::create();
-        $criteria->add(PostDataTableMap::COL_ID, $this->id);
         $criteria->add(PostDataTableMap::COL_POST_ID, $this->post_id);
+        $criteria->add(PostDataTableMap::COL_NAME, $this->name);
 
         return $criteria;
     }
@@ -1145,13 +1087,13 @@ abstract class PostData implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId() &&
-            null !== $this->getPostId();
+        $validPk = null !== $this->getPostId() &&
+            null !== $this->getName();
 
         $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
 
-        //relation fk_post_data_post1 to table post
+        //relation fk_post_data_post2 to table post
         if ($this->aPost && $hash = spl_object_hash($this->aPost)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -1166,7 +1108,7 @@ abstract class PostData implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.
@@ -1175,8 +1117,8 @@ abstract class PostData implements ActiveRecordInterface
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getId();
-        $pks[1] = $this->getPostId();
+        $pks[0] = $this->getPostId();
+        $pks[1] = $this->getName();
 
         return $pks;
     }
@@ -1189,8 +1131,8 @@ abstract class PostData implements ActiveRecordInterface
      */
     public function setPrimaryKey($keys)
     {
-        $this->setId($keys[0]);
-        $this->setPostId($keys[1]);
+        $this->setPostId($keys[0]);
+        $this->setName($keys[1]);
     }
 
     /**
@@ -1199,7 +1141,7 @@ abstract class PostData implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getId()) && (null === $this->getPostId());
+        return (null === $this->getPostId()) && (null === $this->getName());
     }
 
     /**
@@ -1215,10 +1157,9 @@ abstract class PostData implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setId($this->getId());
         $copyObj->setPostId($this->getPostId());
         $copyObj->setName($this->getName());
-        $copyObj->setData($this->getData());
+        $copyObj->setValue($this->getValue());
         $copyObj->setDhInclusao($this->getDhInclusao());
         $copyObj->setDhAlteracao($this->getDhAlteracao());
         if ($makeNew) {
@@ -1286,7 +1227,9 @@ abstract class PostData implements ActiveRecordInterface
     public function getPost(ConnectionInterface $con = null)
     {
         if ($this->aPost === null && ($this->post_id !== null)) {
-            $this->aPost = ChildPostQuery::create()->findPk($this->post_id, $con);
+            $this->aPost = ChildPostQuery::create()
+                ->filterByPostData($this) // here
+                ->findOne($con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
@@ -1309,10 +1252,9 @@ abstract class PostData implements ActiveRecordInterface
         if (null !== $this->aPost) {
             $this->aPost->removePostData($this);
         }
-        $this->id = null;
         $this->post_id = null;
         $this->name = null;
-        $this->data = null;
+        $this->value = null;
         $this->dh_inclusao = null;
         $this->dh_alteracao = null;
         $this->alreadyInSave = false;

@@ -18,17 +18,25 @@ use Table\Model\Map\CategoriaTableMap;
 /**
  * Base class that represents a query for the 'categoria' table.
  *
- *
+ * 
  *
  * @method     ChildCategoriaQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildCategoriaQuery orderByNome($order = Criteria::ASC) Order by the nome column
  * @method     ChildCategoriaQuery orderByUrl($order = Criteria::ASC) Order by the url column
+ * @method     ChildCategoriaQuery orderByParent($order = Criteria::ASC) Order by the parent column
  * @method     ChildCategoriaQuery orderByDescricao($order = Criteria::ASC) Order by the descricao column
+ * @method     ChildCategoriaQuery orderByOrdem($order = Criteria::ASC) Order by the ordem column
+ * @method     ChildCategoriaQuery orderByDhInclusao($order = Criteria::ASC) Order by the dh_inclusao column
+ * @method     ChildCategoriaQuery orderByDhAlteracao($order = Criteria::ASC) Order by the dh_alteracao column
  *
  * @method     ChildCategoriaQuery groupById() Group by the id column
  * @method     ChildCategoriaQuery groupByNome() Group by the nome column
  * @method     ChildCategoriaQuery groupByUrl() Group by the url column
+ * @method     ChildCategoriaQuery groupByParent() Group by the parent column
  * @method     ChildCategoriaQuery groupByDescricao() Group by the descricao column
+ * @method     ChildCategoriaQuery groupByOrdem() Group by the ordem column
+ * @method     ChildCategoriaQuery groupByDhInclusao() Group by the dh_inclusao column
+ * @method     ChildCategoriaQuery groupByDhAlteracao() Group by the dh_alteracao column
  *
  * @method     ChildCategoriaQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildCategoriaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -46,7 +54,11 @@ use Table\Model\Map\CategoriaTableMap;
  * @method     ChildCategoria findOneById(int $id) Return the first ChildCategoria filtered by the id column
  * @method     ChildCategoria findOneByNome(string $nome) Return the first ChildCategoria filtered by the nome column
  * @method     ChildCategoria findOneByUrl(string $url) Return the first ChildCategoria filtered by the url column
- * @method     ChildCategoria findOneByDescricao(string $descricao) Return the first ChildCategoria filtered by the descricao column *
+ * @method     ChildCategoria findOneByParent(int $parent) Return the first ChildCategoria filtered by the parent column
+ * @method     ChildCategoria findOneByDescricao(string $descricao) Return the first ChildCategoria filtered by the descricao column
+ * @method     ChildCategoria findOneByOrdem(int $ordem) Return the first ChildCategoria filtered by the ordem column
+ * @method     ChildCategoria findOneByDhInclusao(string $dh_inclusao) Return the first ChildCategoria filtered by the dh_inclusao column
+ * @method     ChildCategoria findOneByDhAlteracao(string $dh_alteracao) Return the first ChildCategoria filtered by the dh_alteracao column *
 
  * @method     ChildCategoria requirePk($key, ConnectionInterface $con = null) Return the ChildCategoria by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildCategoria requireOne(ConnectionInterface $con = null) Return the first ChildCategoria matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -54,13 +66,21 @@ use Table\Model\Map\CategoriaTableMap;
  * @method     ChildCategoria requireOneById(int $id) Return the first ChildCategoria filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildCategoria requireOneByNome(string $nome) Return the first ChildCategoria filtered by the nome column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildCategoria requireOneByUrl(string $url) Return the first ChildCategoria filtered by the url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildCategoria requireOneByParent(int $parent) Return the first ChildCategoria filtered by the parent column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildCategoria requireOneByDescricao(string $descricao) Return the first ChildCategoria filtered by the descricao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildCategoria requireOneByOrdem(int $ordem) Return the first ChildCategoria filtered by the ordem column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildCategoria requireOneByDhInclusao(string $dh_inclusao) Return the first ChildCategoria filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildCategoria requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildCategoria filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildCategoria[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCategoria objects based on current ModelCriteria
  * @method     ChildCategoria[]|ObjectCollection findById(int $id) Return ChildCategoria objects filtered by the id column
  * @method     ChildCategoria[]|ObjectCollection findByNome(string $nome) Return ChildCategoria objects filtered by the nome column
  * @method     ChildCategoria[]|ObjectCollection findByUrl(string $url) Return ChildCategoria objects filtered by the url column
+ * @method     ChildCategoria[]|ObjectCollection findByParent(int $parent) Return ChildCategoria objects filtered by the parent column
  * @method     ChildCategoria[]|ObjectCollection findByDescricao(string $descricao) Return ChildCategoria objects filtered by the descricao column
+ * @method     ChildCategoria[]|ObjectCollection findByOrdem(int $ordem) Return ChildCategoria objects filtered by the ordem column
+ * @method     ChildCategoria[]|ObjectCollection findByDhInclusao(string $dh_inclusao) Return ChildCategoria objects filtered by the dh_inclusao column
+ * @method     ChildCategoria[]|ObjectCollection findByDhAlteracao(string $dh_alteracao) Return ChildCategoria objects filtered by the dh_alteracao column
  * @method     ChildCategoria[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -153,9 +173,9 @@ abstract class CategoriaQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, nome, url, descricao FROM categoria WHERE id = :p0';
+        $sql = 'SELECT id, nome, url, parent, descricao, ordem, dh_inclusao, dh_alteracao FROM categoria WHERE id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -343,6 +363,47 @@ abstract class CategoriaQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the parent column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByParent(1234); // WHERE parent = 1234
+     * $query->filterByParent(array(12, 34)); // WHERE parent IN (12, 34)
+     * $query->filterByParent(array('min' => 12)); // WHERE parent > 12
+     * </code>
+     *
+     * @param     mixed $parent The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCategoriaQuery The current query, for fluid interface
+     */
+    public function filterByParent($parent = null, $comparison = null)
+    {
+        if (is_array($parent)) {
+            $useMinMax = false;
+            if (isset($parent['min'])) {
+                $this->addUsingAlias(CategoriaTableMap::COL_PARENT, $parent['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($parent['max'])) {
+                $this->addUsingAlias(CategoriaTableMap::COL_PARENT, $parent['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CategoriaTableMap::COL_PARENT, $parent, $comparison);
+    }
+
+    /**
      * Filter the query on the descricao column
      *
      * Example usage:
@@ -369,6 +430,105 @@ abstract class CategoriaQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CategoriaTableMap::COL_DESCRICAO, $descricao, $comparison);
+    }
+
+    /**
+     * Filter the query on the ordem column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByOrdem(1234); // WHERE ordem = 1234
+     * $query->filterByOrdem(array(12, 34)); // WHERE ordem IN (12, 34)
+     * $query->filterByOrdem(array('min' => 12)); // WHERE ordem > 12
+     * </code>
+     *
+     * @param     mixed $ordem The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCategoriaQuery The current query, for fluid interface
+     */
+    public function filterByOrdem($ordem = null, $comparison = null)
+    {
+        if (is_array($ordem)) {
+            $useMinMax = false;
+            if (isset($ordem['min'])) {
+                $this->addUsingAlias(CategoriaTableMap::COL_ORDEM, $ordem['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($ordem['max'])) {
+                $this->addUsingAlias(CategoriaTableMap::COL_ORDEM, $ordem['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CategoriaTableMap::COL_ORDEM, $ordem, $comparison);
+    }
+
+    /**
+     * Filter the query on the dh_inclusao column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDhInclusao('fooValue');   // WHERE dh_inclusao = 'fooValue'
+     * $query->filterByDhInclusao('%fooValue%'); // WHERE dh_inclusao LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dhInclusao The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCategoriaQuery The current query, for fluid interface
+     */
+    public function filterByDhInclusao($dhInclusao = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($dhInclusao)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dhInclusao)) {
+                $dhInclusao = str_replace('*', '%', $dhInclusao);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CategoriaTableMap::COL_DH_INCLUSAO, $dhInclusao, $comparison);
+    }
+
+    /**
+     * Filter the query on the dh_alteracao column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDhAlteracao('fooValue');   // WHERE dh_alteracao = 'fooValue'
+     * $query->filterByDhAlteracao('%fooValue%'); // WHERE dh_alteracao LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dhAlteracao The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCategoriaQuery The current query, for fluid interface
+     */
+    public function filterByDhAlteracao($dhAlteracao = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($dhAlteracao)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dhAlteracao)) {
+                $dhAlteracao = str_replace('*', '%', $dhAlteracao);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CategoriaTableMap::COL_DH_ALTERACAO, $dhAlteracao, $comparison);
     }
 
     /**
@@ -445,23 +605,6 @@ abstract class CategoriaQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related Post object
-     * using the post_has_categoria table as cross reference
-     *
-     * @param Post $post the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildCategoriaQuery The current query, for fluid interface
-     */
-    public function filterByPost($post, $comparison = Criteria::EQUAL)
-    {
-        return $this
-            ->usePostHasCategoriaQuery()
-            ->filterByPost($post, $comparison)
-            ->endUse();
-    }
-
-    /**
      * Exclude object from result
      *
      * @param   ChildCategoria $categoria Object to remove from the list of results
@@ -528,9 +671,9 @@ abstract class CategoriaQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CategoriaTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CategoriaTableMap::clearRelatedInstancePool();
 

@@ -11,94 +11,94 @@ use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Table\Model\PostData as ChildPostData;
-use Table\Model\PostDataQuery as ChildPostDataQuery;
-use Table\Model\Map\PostDataTableMap;
+use Table\Model\PageData as ChildPageData;
+use Table\Model\PageDataQuery as ChildPageDataQuery;
+use Table\Model\Map\PageDataTableMap;
 
 /**
- * Base class that represents a query for the 'post_data' table.
+ * Base class that represents a query for the 'page_data' table.
  *
  * 
  *
- * @method     ChildPostDataQuery orderByPostId($order = Criteria::ASC) Order by the post_id column
- * @method     ChildPostDataQuery orderByName($order = Criteria::ASC) Order by the name column
- * @method     ChildPostDataQuery orderByValue($order = Criteria::ASC) Order by the value column
- * @method     ChildPostDataQuery orderByDhInclusao($order = Criteria::ASC) Order by the dh_inclusao column
- * @method     ChildPostDataQuery orderByDhAlteracao($order = Criteria::ASC) Order by the dh_alteracao column
+ * @method     ChildPageDataQuery orderByPageId($order = Criteria::ASC) Order by the page_id column
+ * @method     ChildPageDataQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildPageDataQuery orderByValue($order = Criteria::ASC) Order by the value column
+ * @method     ChildPageDataQuery orderByDhInclusao($order = Criteria::ASC) Order by the dh_inclusao column
+ * @method     ChildPageDataQuery orderByDhAlteracao($order = Criteria::ASC) Order by the dh_alteracao column
  *
- * @method     ChildPostDataQuery groupByPostId() Group by the post_id column
- * @method     ChildPostDataQuery groupByName() Group by the name column
- * @method     ChildPostDataQuery groupByValue() Group by the value column
- * @method     ChildPostDataQuery groupByDhInclusao() Group by the dh_inclusao column
- * @method     ChildPostDataQuery groupByDhAlteracao() Group by the dh_alteracao column
+ * @method     ChildPageDataQuery groupByPageId() Group by the page_id column
+ * @method     ChildPageDataQuery groupByName() Group by the name column
+ * @method     ChildPageDataQuery groupByValue() Group by the value column
+ * @method     ChildPageDataQuery groupByDhInclusao() Group by the dh_inclusao column
+ * @method     ChildPageDataQuery groupByDhAlteracao() Group by the dh_alteracao column
  *
- * @method     ChildPostDataQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildPostDataQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildPostDataQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildPageDataQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildPageDataQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildPageDataQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildPostDataQuery leftJoinPost($relationAlias = null) Adds a LEFT JOIN clause to the query using the Post relation
- * @method     ChildPostDataQuery rightJoinPost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Post relation
- * @method     ChildPostDataQuery innerJoinPost($relationAlias = null) Adds a INNER JOIN clause to the query using the Post relation
+ * @method     ChildPageDataQuery leftJoinPage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Page relation
+ * @method     ChildPageDataQuery rightJoinPage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Page relation
+ * @method     ChildPageDataQuery innerJoinPage($relationAlias = null) Adds a INNER JOIN clause to the query using the Page relation
  *
- * @method     \Table\Model\PostQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\PageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildPostData findOne(ConnectionInterface $con = null) Return the first ChildPostData matching the query
- * @method     ChildPostData findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPostData matching the query, or a new ChildPostData object populated from the query conditions when no match is found
+ * @method     ChildPageData findOne(ConnectionInterface $con = null) Return the first ChildPageData matching the query
+ * @method     ChildPageData findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPageData matching the query, or a new ChildPageData object populated from the query conditions when no match is found
  *
- * @method     ChildPostData findOneByPostId(int $post_id) Return the first ChildPostData filtered by the post_id column
- * @method     ChildPostData findOneByName(string $name) Return the first ChildPostData filtered by the name column
- * @method     ChildPostData findOneByValue(string $value) Return the first ChildPostData filtered by the value column
- * @method     ChildPostData findOneByDhInclusao(string $dh_inclusao) Return the first ChildPostData filtered by the dh_inclusao column
- * @method     ChildPostData findOneByDhAlteracao(string $dh_alteracao) Return the first ChildPostData filtered by the dh_alteracao column *
+ * @method     ChildPageData findOneByPageId(int $page_id) Return the first ChildPageData filtered by the page_id column
+ * @method     ChildPageData findOneByName(string $name) Return the first ChildPageData filtered by the name column
+ * @method     ChildPageData findOneByValue(string $value) Return the first ChildPageData filtered by the value column
+ * @method     ChildPageData findOneByDhInclusao(string $dh_inclusao) Return the first ChildPageData filtered by the dh_inclusao column
+ * @method     ChildPageData findOneByDhAlteracao(string $dh_alteracao) Return the first ChildPageData filtered by the dh_alteracao column *
 
- * @method     ChildPostData requirePk($key, ConnectionInterface $con = null) Return the ChildPostData by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPostData requireOne(ConnectionInterface $con = null) Return the first ChildPostData matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requirePk($key, ConnectionInterface $con = null) Return the ChildPageData by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOne(ConnectionInterface $con = null) Return the first ChildPageData matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildPostData requireOneByPostId(int $post_id) Return the first ChildPostData filtered by the post_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPostData requireOneByName(string $name) Return the first ChildPostData filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPostData requireOneByValue(string $value) Return the first ChildPostData filtered by the value column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPostData requireOneByDhInclusao(string $dh_inclusao) Return the first ChildPostData filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildPostData requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildPostData filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOneByPageId(int $page_id) Return the first ChildPageData filtered by the page_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOneByName(string $name) Return the first ChildPageData filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOneByValue(string $value) Return the first ChildPageData filtered by the value column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOneByDhInclusao(string $dh_inclusao) Return the first ChildPageData filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPageData requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildPageData filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildPostData[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPostData objects based on current ModelCriteria
- * @method     ChildPostData[]|ObjectCollection findByPostId(int $post_id) Return ChildPostData objects filtered by the post_id column
- * @method     ChildPostData[]|ObjectCollection findByName(string $name) Return ChildPostData objects filtered by the name column
- * @method     ChildPostData[]|ObjectCollection findByValue(string $value) Return ChildPostData objects filtered by the value column
- * @method     ChildPostData[]|ObjectCollection findByDhInclusao(string $dh_inclusao) Return ChildPostData objects filtered by the dh_inclusao column
- * @method     ChildPostData[]|ObjectCollection findByDhAlteracao(string $dh_alteracao) Return ChildPostData objects filtered by the dh_alteracao column
- * @method     ChildPostData[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildPageData[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPageData objects based on current ModelCriteria
+ * @method     ChildPageData[]|ObjectCollection findByPageId(int $page_id) Return ChildPageData objects filtered by the page_id column
+ * @method     ChildPageData[]|ObjectCollection findByName(string $name) Return ChildPageData objects filtered by the name column
+ * @method     ChildPageData[]|ObjectCollection findByValue(string $value) Return ChildPageData objects filtered by the value column
+ * @method     ChildPageData[]|ObjectCollection findByDhInclusao(string $dh_inclusao) Return ChildPageData objects filtered by the dh_inclusao column
+ * @method     ChildPageData[]|ObjectCollection findByDhAlteracao(string $dh_alteracao) Return ChildPageData objects filtered by the dh_alteracao column
+ * @method     ChildPageData[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class PostDataQuery extends ModelCriteria
+abstract class PageDataQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Table\Model\Base\PostDataQuery object.
+     * Initializes internal state of \Table\Model\Base\PageDataQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Table\\Model\\PostData', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Table\\Model\\PageData', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildPostDataQuery object.
+     * Returns a new ChildPageDataQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildPostDataQuery
+     * @return ChildPageDataQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildPostDataQuery) {
+        if ($criteria instanceof ChildPageDataQuery) {
             return $criteria;
         }
-        $query = new ChildPostDataQuery();
+        $query = new ChildPageDataQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -118,22 +118,22 @@ abstract class PostDataQuery extends ModelCriteria
      * $obj = $c->findPk(array(12, 34), $con);
      * </code>
      *
-     * @param array[$post_id, $name] $key Primary key to use for the query
+     * @param array[$page_id, $name] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildPostData|array|mixed the result, formatted by the current formatter
+     * @return ChildPageData|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = PostDataTableMap::getInstanceFromPool(serialize(array((string) $key[0], (string) $key[1]))))) && !$this->formatter) {
+        if ((null !== ($obj = PageDataTableMap::getInstanceFromPool(serialize(array((string) $key[0], (string) $key[1]))))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PostDataTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(PageDataTableMap::DATABASE_NAME);
         }
         $this->basePreSelect($con);
         if ($this->formatter || $this->modelAlias || $this->with || $this->select
@@ -154,11 +154,11 @@ abstract class PostDataQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildPostData A model object, or null if the key is not found
+     * @return ChildPageData A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT post_id, name, value, dh_inclusao, dh_alteracao FROM post_data WHERE post_id = :p0 AND name = :p1';
+        $sql = 'SELECT page_id, name, value, dh_inclusao, dh_alteracao FROM page_data WHERE page_id = :p0 AND name = :p1';
         try {
             $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
@@ -170,10 +170,10 @@ abstract class PostDataQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildPostData $obj */
-            $obj = new ChildPostData();
+            /** @var ChildPageData $obj */
+            $obj = new ChildPageData();
             $obj->hydrate($row);
-            PostDataTableMap::addInstanceToPool($obj, serialize(array((string) $key[0], (string) $key[1])));
+            PageDataTableMap::addInstanceToPool($obj, serialize(array((string) $key[0], (string) $key[1])));
         }
         $stmt->closeCursor();
 
@@ -186,7 +186,7 @@ abstract class PostDataQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildPostData|array|mixed the result, formatted by the current formatter
+     * @return ChildPageData|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -228,12 +228,12 @@ abstract class PostDataQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(PostDataTableMap::COL_POST_ID, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(PostDataTableMap::COL_NAME, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(PageDataTableMap::COL_NAME, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -243,7 +243,7 @@ abstract class PostDataQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
@@ -251,8 +251,8 @@ abstract class PostDataQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(PostDataTableMap::COL_POST_ID, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(PostDataTableMap::COL_NAME, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(PageDataTableMap::COL_PAGE_ID, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(PageDataTableMap::COL_NAME, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
@@ -261,35 +261,35 @@ abstract class PostDataQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the post_id column
+     * Filter the query on the page_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByPostId(1234); // WHERE post_id = 1234
-     * $query->filterByPostId(array(12, 34)); // WHERE post_id IN (12, 34)
-     * $query->filterByPostId(array('min' => 12)); // WHERE post_id > 12
+     * $query->filterByPageId(1234); // WHERE page_id = 1234
+     * $query->filterByPageId(array(12, 34)); // WHERE page_id IN (12, 34)
+     * $query->filterByPageId(array('min' => 12)); // WHERE page_id > 12
      * </code>
      *
-     * @see       filterByPost()
+     * @see       filterByPage()
      *
-     * @param     mixed $postId The value to use as filter.
+     * @param     mixed $pageId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
-    public function filterByPostId($postId = null, $comparison = null)
+    public function filterByPageId($pageId = null, $comparison = null)
     {
-        if (is_array($postId)) {
+        if (is_array($pageId)) {
             $useMinMax = false;
-            if (isset($postId['min'])) {
-                $this->addUsingAlias(PostDataTableMap::COL_POST_ID, $postId['min'], Criteria::GREATER_EQUAL);
+            if (isset($pageId['min'])) {
+                $this->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $pageId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($postId['max'])) {
-                $this->addUsingAlias(PostDataTableMap::COL_POST_ID, $postId['max'], Criteria::LESS_EQUAL);
+            if (isset($pageId['max'])) {
+                $this->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $pageId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -300,7 +300,7 @@ abstract class PostDataQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PostDataTableMap::COL_POST_ID, $postId, $comparison);
+        return $this->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $pageId, $comparison);
     }
 
     /**
@@ -316,7 +316,7 @@ abstract class PostDataQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByName($name = null, $comparison = null)
     {
@@ -329,7 +329,7 @@ abstract class PostDataQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PostDataTableMap::COL_NAME, $name, $comparison);
+        return $this->addUsingAlias(PageDataTableMap::COL_NAME, $name, $comparison);
     }
 
     /**
@@ -345,7 +345,7 @@ abstract class PostDataQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByValue($value = null, $comparison = null)
     {
@@ -358,7 +358,7 @@ abstract class PostDataQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PostDataTableMap::COL_VALUE, $value, $comparison);
+        return $this->addUsingAlias(PageDataTableMap::COL_VALUE, $value, $comparison);
     }
 
     /**
@@ -374,7 +374,7 @@ abstract class PostDataQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByDhInclusao($dhInclusao = null, $comparison = null)
     {
@@ -387,7 +387,7 @@ abstract class PostDataQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PostDataTableMap::COL_DH_INCLUSAO, $dhInclusao, $comparison);
+        return $this->addUsingAlias(PageDataTableMap::COL_DH_INCLUSAO, $dhInclusao, $comparison);
     }
 
     /**
@@ -403,7 +403,7 @@ abstract class PostDataQuery extends ModelCriteria
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
     public function filterByDhAlteracao($dhAlteracao = null, $comparison = null)
     {
@@ -416,48 +416,48 @@ abstract class PostDataQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PostDataTableMap::COL_DH_ALTERACAO, $dhAlteracao, $comparison);
+        return $this->addUsingAlias(PageDataTableMap::COL_DH_ALTERACAO, $dhAlteracao, $comparison);
     }
 
     /**
-     * Filter the query by a related \Table\Model\Post object
+     * Filter the query by a related \Table\Model\Page object
      *
-     * @param \Table\Model\Post|ObjectCollection $post The related object(s) to use as filter
+     * @param \Table\Model\Page|ObjectCollection $page The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildPostDataQuery The current query, for fluid interface
+     * @return ChildPageDataQuery The current query, for fluid interface
      */
-    public function filterByPost($post, $comparison = null)
+    public function filterByPage($page, $comparison = null)
     {
-        if ($post instanceof \Table\Model\Post) {
+        if ($page instanceof \Table\Model\Page) {
             return $this
-                ->addUsingAlias(PostDataTableMap::COL_POST_ID, $post->getId(), $comparison);
-        } elseif ($post instanceof ObjectCollection) {
+                ->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $page->getId(), $comparison);
+        } elseif ($page instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(PostDataTableMap::COL_POST_ID, $post->toKeyValue('Id', 'Id'), $comparison);
+                ->addUsingAlias(PageDataTableMap::COL_PAGE_ID, $page->toKeyValue('Id', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByPost() only accepts arguments of type \Table\Model\Post or Collection');
+            throw new PropelException('filterByPage() only accepts arguments of type \Table\Model\Page or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Post relation
+     * Adds a JOIN clause to the query using the Page relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
-    public function joinPost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinPage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Post');
+        $relationMap = $tableMap->getRelation('Page');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -472,14 +472,14 @@ abstract class PostDataQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Post');
+            $this->addJoinObject($join, 'Page');
         }
 
         return $this;
     }
 
     /**
-     * Use the Post relation Post object
+     * Use the Page relation Page object
      *
      * @see useQuery()
      *
@@ -487,27 +487,27 @@ abstract class PostDataQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \Table\Model\PostQuery A secondary query class using the current class as primary query
+     * @return \Table\Model\PageQuery A secondary query class using the current class as primary query
      */
-    public function usePostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usePageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinPost($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Post', '\Table\Model\PostQuery');
+            ->joinPage($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Page', '\Table\Model\PageQuery');
     }
 
     /**
      * Exclude object from result
      *
-     * @param   ChildPostData $postData Object to remove from the list of results
+     * @param   ChildPageData $pageData Object to remove from the list of results
      *
-     * @return $this|ChildPostDataQuery The current query, for fluid interface
+     * @return $this|ChildPageDataQuery The current query, for fluid interface
      */
-    public function prune($postData = null)
+    public function prune($pageData = null)
     {
-        if ($postData) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(PostDataTableMap::COL_POST_ID), $postData->getPostId(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(PostDataTableMap::COL_NAME), $postData->getName(), Criteria::NOT_EQUAL);
+        if ($pageData) {
+            $this->addCond('pruneCond0', $this->getAliasedColName(PageDataTableMap::COL_PAGE_ID), $pageData->getPageId(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(PageDataTableMap::COL_NAME), $pageData->getName(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
@@ -515,7 +515,7 @@ abstract class PostDataQuery extends ModelCriteria
     }
 
     /**
-     * Deletes all rows from the post_data table.
+     * Deletes all rows from the page_data table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -523,7 +523,7 @@ abstract class PostDataQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostDataTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageDataTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -534,8 +534,8 @@ abstract class PostDataQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            PostDataTableMap::clearInstancePool();
-            PostDataTableMap::clearRelatedInstancePool();
+            PageDataTableMap::clearInstancePool();
+            PageDataTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -553,26 +553,26 @@ abstract class PostDataQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostDataTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageDataTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(PostDataTableMap::DATABASE_NAME);
+        $criteria->setDbName(PageDataTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
             
-            PostDataTableMap::removeInstanceFromPool($criteria);
+            PageDataTableMap::removeInstanceFromPool($criteria);
         
             $affectedRows += ModelCriteria::delete($con);
-            PostDataTableMap::clearRelatedInstancePool();
+            PageDataTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-} // PostDataQuery
+} // PageDataQuery

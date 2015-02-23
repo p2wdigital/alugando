@@ -18,20 +18,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 use Table\Model\Categoria as ChildCategoria;
 use Table\Model\CategoriaQuery as ChildCategoriaQuery;
-use Table\Model\Post as ChildPost;
 use Table\Model\PostHasCategoria as ChildPostHasCategoria;
 use Table\Model\PostHasCategoriaQuery as ChildPostHasCategoriaQuery;
-use Table\Model\PostQuery as ChildPostQuery;
 use Table\Model\Map\CategoriaTableMap;
 
 /**
  * Base class that represents a row from the 'categoria' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Categoria implements ActiveRecordInterface
+abstract class Categoria implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -84,10 +82,34 @@ abstract class Categoria implements ActiveRecordInterface
     protected $url;
 
     /**
+     * The value for the parent field.
+     * @var        int
+     */
+    protected $parent;
+
+    /**
      * The value for the descricao field.
      * @var        string
      */
     protected $descricao;
+
+    /**
+     * The value for the ordem field.
+     * @var        int
+     */
+    protected $ordem;
+
+    /**
+     * The value for the dh_inclusao field.
+     * @var        string
+     */
+    protected $dh_inclusao;
+
+    /**
+     * The value for the dh_alteracao field.
+     * @var        string
+     */
+    protected $dh_alteracao;
 
     /**
      * @var        ObjectCollection|ChildPostHasCategoria[] Collection to store aggregation of ChildPostHasCategoria objects.
@@ -96,28 +118,12 @@ abstract class Categoria implements ActiveRecordInterface
     protected $collPostHasCategoriasPartial;
 
     /**
-     * @var        ObjectCollection|ChildPost[] Cross Collection to store aggregation of ChildPost objects.
-     */
-    protected $collPosts;
-
-    /**
-     * @var bool
-     */
-    protected $collPostsPartial;
-
-    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPost[]
-     */
-    protected $postsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -344,7 +350,7 @@ abstract class Categoria implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     *
+     * 
      * @return int
      */
     public function getId()
@@ -354,7 +360,7 @@ abstract class Categoria implements ActiveRecordInterface
 
     /**
      * Get the [nome] column value.
-     *
+     * 
      * @return string
      */
     public function getNome()
@@ -364,7 +370,7 @@ abstract class Categoria implements ActiveRecordInterface
 
     /**
      * Get the [url] column value.
-     *
+     * 
      * @return string
      */
     public function getUrl()
@@ -373,8 +379,18 @@ abstract class Categoria implements ActiveRecordInterface
     }
 
     /**
+     * Get the [parent] column value.
+     * 
+     * @return int
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Get the [descricao] column value.
-     *
+     * 
      * @return string
      */
     public function getDescricao()
@@ -383,9 +399,39 @@ abstract class Categoria implements ActiveRecordInterface
     }
 
     /**
+     * Get the [ordem] column value.
+     * 
+     * @return int
+     */
+    public function getOrdem()
+    {
+        return $this->ordem;
+    }
+
+    /**
+     * Get the [dh_inclusao] column value.
+     * 
+     * @return string
+     */
+    public function getDhInclusao()
+    {
+        return $this->dh_inclusao;
+    }
+
+    /**
+     * Get the [dh_alteracao] column value.
+     * 
+     * @return string
+     */
+    public function getDhAlteracao()
+    {
+        return $this->dh_alteracao;
+    }
+
+    /**
      * Set the value of [id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\Categoria The current object (for fluent API support)
      */
     public function setId($v)
@@ -404,8 +450,8 @@ abstract class Categoria implements ActiveRecordInterface
 
     /**
      * Set the value of [nome] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Categoria The current object (for fluent API support)
      */
     public function setNome($v)
@@ -424,8 +470,8 @@ abstract class Categoria implements ActiveRecordInterface
 
     /**
      * Set the value of [url] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Categoria The current object (for fluent API support)
      */
     public function setUrl($v)
@@ -443,9 +489,29 @@ abstract class Categoria implements ActiveRecordInterface
     } // setUrl()
 
     /**
+     * Set the value of [parent] column.
+     * 
+     * @param int $v new value
+     * @return $this|\Table\Model\Categoria The current object (for fluent API support)
+     */
+    public function setParent($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->parent !== $v) {
+            $this->parent = $v;
+            $this->modifiedColumns[CategoriaTableMap::COL_PARENT] = true;
+        }
+
+        return $this;
+    } // setParent()
+
+    /**
      * Set the value of [descricao] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\Categoria The current object (for fluent API support)
      */
     public function setDescricao($v)
@@ -461,6 +527,66 @@ abstract class Categoria implements ActiveRecordInterface
 
         return $this;
     } // setDescricao()
+
+    /**
+     * Set the value of [ordem] column.
+     * 
+     * @param int $v new value
+     * @return $this|\Table\Model\Categoria The current object (for fluent API support)
+     */
+    public function setOrdem($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->ordem !== $v) {
+            $this->ordem = $v;
+            $this->modifiedColumns[CategoriaTableMap::COL_ORDEM] = true;
+        }
+
+        return $this;
+    } // setOrdem()
+
+    /**
+     * Set the value of [dh_inclusao] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Categoria The current object (for fluent API support)
+     */
+    public function setDhInclusao($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->dh_inclusao !== $v) {
+            $this->dh_inclusao = $v;
+            $this->modifiedColumns[CategoriaTableMap::COL_DH_INCLUSAO] = true;
+        }
+
+        return $this;
+    } // setDhInclusao()
+
+    /**
+     * Set the value of [dh_alteracao] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Categoria The current object (for fluent API support)
+     */
+    public function setDhAlteracao($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->dh_alteracao !== $v) {
+            $this->dh_alteracao = $v;
+            $this->modifiedColumns[CategoriaTableMap::COL_DH_ALTERACAO] = true;
+        }
+
+        return $this;
+    } // setDhAlteracao()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -507,8 +633,20 @@ abstract class Categoria implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CategoriaTableMap::translateFieldName('Url', TableMap::TYPE_PHPNAME, $indexType)];
             $this->url = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CategoriaTableMap::translateFieldName('Descricao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CategoriaTableMap::translateFieldName('Parent', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->parent = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CategoriaTableMap::translateFieldName('Descricao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->descricao = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CategoriaTableMap::translateFieldName('Ordem', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->ordem = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CategoriaTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->dh_inclusao = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : CategoriaTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -517,7 +655,7 @@ abstract class Categoria implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 4; // 4 = CategoriaTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = CategoriaTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Categoria'), 0, $e);
@@ -580,7 +718,6 @@ abstract class Categoria implements ActiveRecordInterface
 
             $this->collPostHasCategorias = null;
 
-            $this->collPosts = null;
         } // if (deep)
     }
 
@@ -691,35 +828,6 @@ abstract class Categoria implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->postsScheduledForDeletion !== null) {
-                if (!$this->postsScheduledForDeletion->isEmpty()) {
-                    $pks = array();
-                    foreach ($this->postsScheduledForDeletion as $entry) {
-                        $entryPk = [];
-
-                        $entryPk[1] = $this->getId();
-                        $entryPk[0] = $entry->getId();
-                        $pks[] = $entryPk;
-                    }
-
-                    \Table\Model\PostHasCategoriaQuery::create()
-                        ->filterByPrimaryKeys($pks)
-                        ->delete($con);
-
-                    $this->postsScheduledForDeletion = null;
-                }
-
-            }
-
-            if ($this->collPosts) {
-                foreach ($this->collPosts as $post) {
-                    if (!$post->isDeleted() && ($post->isNew() || $post->isModified())) {
-                        $post->save($con);
-                    }
-                }
-            }
-
-
             if ($this->postHasCategoriasScheduledForDeletion !== null) {
                 if (!$this->postHasCategoriasScheduledForDeletion->isEmpty()) {
                     \Table\Model\PostHasCategoriaQuery::create()
@@ -772,8 +880,20 @@ abstract class Categoria implements ActiveRecordInterface
         if ($this->isColumnModified(CategoriaTableMap::COL_URL)) {
             $modifiedColumns[':p' . $index++]  = 'url';
         }
+        if ($this->isColumnModified(CategoriaTableMap::COL_PARENT)) {
+            $modifiedColumns[':p' . $index++]  = 'parent';
+        }
         if ($this->isColumnModified(CategoriaTableMap::COL_DESCRICAO)) {
             $modifiedColumns[':p' . $index++]  = 'descricao';
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_ORDEM)) {
+            $modifiedColumns[':p' . $index++]  = 'ordem';
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_DH_INCLUSAO)) {
+            $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_DH_ALTERACAO)) {
+            $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
         }
 
         $sql = sprintf(
@@ -786,17 +906,29 @@ abstract class Categoria implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
+                    case 'id':                        
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'nome':
+                    case 'nome':                        
                         $stmt->bindValue($identifier, $this->nome, PDO::PARAM_STR);
                         break;
-                    case 'url':
+                    case 'url':                        
                         $stmt->bindValue($identifier, $this->url, PDO::PARAM_STR);
                         break;
-                    case 'descricao':
+                    case 'parent':                        
+                        $stmt->bindValue($identifier, $this->parent, PDO::PARAM_INT);
+                        break;
+                    case 'descricao':                        
                         $stmt->bindValue($identifier, $this->descricao, PDO::PARAM_STR);
+                        break;
+                    case 'ordem':                        
+                        $stmt->bindValue($identifier, $this->ordem, PDO::PARAM_INT);
+                        break;
+                    case 'dh_inclusao':                        
+                        $stmt->bindValue($identifier, $this->dh_inclusao, PDO::PARAM_STR);
+                        break;
+                    case 'dh_alteracao':                        
+                        $stmt->bindValue($identifier, $this->dh_alteracao, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -870,7 +1002,19 @@ abstract class Categoria implements ActiveRecordInterface
                 return $this->getUrl();
                 break;
             case 3:
+                return $this->getParent();
+                break;
+            case 4:
                 return $this->getDescricao();
+                break;
+            case 5:
+                return $this->getOrdem();
+                break;
+            case 6:
+                return $this->getDhInclusao();
+                break;
+            case 7:
+                return $this->getDhAlteracao();
                 break;
             default:
                 return null;
@@ -905,16 +1049,20 @@ abstract class Categoria implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getNome(),
             $keys[2] => $this->getUrl(),
-            $keys[3] => $this->getDescricao(),
+            $keys[3] => $this->getParent(),
+            $keys[4] => $this->getDescricao(),
+            $keys[5] => $this->getOrdem(),
+            $keys[6] => $this->getDhInclusao(),
+            $keys[7] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collPostHasCategorias) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'postHasCategorias';
@@ -925,7 +1073,7 @@ abstract class Categoria implements ActiveRecordInterface
                     default:
                         $key = 'PostHasCategorias';
                 }
-
+        
                 $result[$key] = $this->collPostHasCategorias->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -972,7 +1120,19 @@ abstract class Categoria implements ActiveRecordInterface
                 $this->setUrl($value);
                 break;
             case 3:
+                $this->setParent($value);
+                break;
+            case 4:
                 $this->setDescricao($value);
+                break;
+            case 5:
+                $this->setOrdem($value);
+                break;
+            case 6:
+                $this->setDhInclusao($value);
+                break;
+            case 7:
+                $this->setDhAlteracao($value);
                 break;
         } // switch()
 
@@ -1010,7 +1170,19 @@ abstract class Categoria implements ActiveRecordInterface
             $this->setUrl($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDescricao($arr[$keys[3]]);
+            $this->setParent($arr[$keys[3]]);
+        }
+        if (array_key_exists($keys[4], $arr)) {
+            $this->setDescricao($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setOrdem($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setDhInclusao($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setDhAlteracao($arr[$keys[7]]);
         }
     }
 
@@ -1062,8 +1234,20 @@ abstract class Categoria implements ActiveRecordInterface
         if ($this->isColumnModified(CategoriaTableMap::COL_URL)) {
             $criteria->add(CategoriaTableMap::COL_URL, $this->url);
         }
+        if ($this->isColumnModified(CategoriaTableMap::COL_PARENT)) {
+            $criteria->add(CategoriaTableMap::COL_PARENT, $this->parent);
+        }
         if ($this->isColumnModified(CategoriaTableMap::COL_DESCRICAO)) {
             $criteria->add(CategoriaTableMap::COL_DESCRICAO, $this->descricao);
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_ORDEM)) {
+            $criteria->add(CategoriaTableMap::COL_ORDEM, $this->ordem);
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_DH_INCLUSAO)) {
+            $criteria->add(CategoriaTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
+        }
+        if ($this->isColumnModified(CategoriaTableMap::COL_DH_ALTERACAO)) {
+            $criteria->add(CategoriaTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
         }
 
         return $criteria;
@@ -1108,7 +1292,7 @@ abstract class Categoria implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1153,7 +1337,11 @@ abstract class Categoria implements ActiveRecordInterface
     {
         $copyObj->setNome($this->getNome());
         $copyObj->setUrl($this->getUrl());
+        $copyObj->setParent($this->getParent());
         $copyObj->setDescricao($this->getDescricao());
+        $copyObj->setOrdem($this->getOrdem());
+        $copyObj->setDhInclusao($this->getDhInclusao());
+        $copyObj->setDhAlteracao($this->getDhAlteracao());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1328,7 +1516,7 @@ abstract class Categoria implements ActiveRecordInterface
         /** @var ChildPostHasCategoria[] $postHasCategoriasToDelete */
         $postHasCategoriasToDelete = $this->getPostHasCategorias(new Criteria(), $con)->diff($postHasCategorias);
 
-
+        
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1459,248 +1647,6 @@ abstract class Categoria implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collPosts collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPosts()
-     */
-    public function clearPosts()
-    {
-        $this->collPosts = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Initializes the collPosts crossRef collection.
-     *
-     * By default this just sets the collPosts collection to an empty collection (like clearPosts());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @return void
-     */
-    public function initPosts()
-    {
-        $this->collPosts = new ObjectCollection();
-        $this->collPostsPartial = true;
-
-        $this->collPosts->setModel('\Table\Model\Post');
-    }
-
-    /**
-     * Checks if the collPosts collection is loaded.
-     *
-     * @return bool
-     */
-    public function isPostsLoaded()
-    {
-        return null !== $this->collPosts;
-    }
-
-    /**
-     * Gets a collection of ChildPost objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildCategoria is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return ObjectCollection|ChildPost[] List of ChildPost objects
-     */
-    public function getPosts(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPostsPartial && !$this->isNew();
-        if (null === $this->collPosts || null !== $criteria || $partial) {
-            if ($this->isNew()) {
-                // return empty collection
-                if (null === $this->collPosts) {
-                    $this->initPosts();
-                }
-            } else {
-
-                $query = ChildPostQuery::create(null, $criteria)
-                    ->filterByCategoria($this);
-                $collPosts = $query->find($con);
-                if (null !== $criteria) {
-                    return $collPosts;
-                }
-
-                if ($partial && $this->collPosts) {
-                    //make sure that already added objects gets added to the list of the database.
-                    foreach ($this->collPosts as $obj) {
-                        if (!$collPosts->contains($obj)) {
-                            $collPosts[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPosts = $collPosts;
-                $this->collPostsPartial = false;
-            }
-        }
-
-        return $this->collPosts;
-    }
-
-    /**
-     * Sets a collection of Post objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param  Collection $posts A Propel collection.
-     * @param  ConnectionInterface $con Optional connection object
-     * @return $this|ChildCategoria The current object (for fluent API support)
-     */
-    public function setPosts(Collection $posts, ConnectionInterface $con = null)
-    {
-        $this->clearPosts();
-        $currentPosts = $this->getPosts();
-
-        $postsScheduledForDeletion = $currentPosts->diff($posts);
-
-        foreach ($postsScheduledForDeletion as $toDelete) {
-            $this->removePost($toDelete);
-        }
-
-        foreach ($posts as $post) {
-            if (!$currentPosts->contains($post)) {
-                $this->doAddPost($post);
-            }
-        }
-
-        $this->collPostsPartial = false;
-        $this->collPosts = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Gets the number of Post objects related by a many-to-many relationship
-     * to the current object by way of the post_has_categoria cross-reference table.
-     *
-     * @param      Criteria $criteria Optional query object to filter the query
-     * @param      boolean $distinct Set to true to force count distinct
-     * @param      ConnectionInterface $con Optional connection object
-     *
-     * @return int the number of related Post objects
-     */
-    public function countPosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPostsPartial && !$this->isNew();
-        if (null === $this->collPosts || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPosts) {
-                return 0;
-            } else {
-
-                if ($partial && !$criteria) {
-                    return count($this->getPosts());
-                }
-
-                $query = ChildPostQuery::create(null, $criteria);
-                if ($distinct) {
-                    $query->distinct();
-                }
-
-                return $query
-                    ->filterByCategoria($this)
-                    ->count($con);
-            }
-        } else {
-            return count($this->collPosts);
-        }
-    }
-
-    /**
-     * Associate a ChildPost to this object
-     * through the post_has_categoria cross reference table.
-     *
-     * @param ChildPost $post
-     * @return ChildCategoria The current object (for fluent API support)
-     */
-    public function addPost(ChildPost $post)
-    {
-        if ($this->collPosts === null) {
-            $this->initPosts();
-        }
-
-        if (!$this->getPosts()->contains($post)) {
-            // only add it if the **same** object is not already associated
-            $this->collPosts->push($post);
-            $this->doAddPost($post);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     * @param ChildPost $post
-     */
-    protected function doAddPost(ChildPost $post)
-    {
-        $postHasCategoria = new ChildPostHasCategoria();
-
-        $postHasCategoria->setPost($post);
-
-        $postHasCategoria->setCategoria($this);
-
-        $this->addPostHasCategoria($postHasCategoria);
-
-        // set the back reference to this object directly as using provided method either results
-        // in endless loop or in multiple relations
-        if (!$post->isCategoriasLoaded()) {
-            $post->initCategorias();
-            $post->getCategorias()->push($this);
-        } elseif (!$post->getCategorias()->contains($this)) {
-            $post->getCategorias()->push($this);
-        }
-
-    }
-
-    /**
-     * Remove post of this object
-     * through the post_has_categoria cross reference table.
-     *
-     * @param ChildPost $post
-     * @return ChildCategoria The current object (for fluent API support)
-     */
-    public function removePost(ChildPost $post)
-    {
-        if ($this->getPosts()->contains($post)) { $postHasCategoria = new ChildPostHasCategoria();
-
-            $postHasCategoria->setPost($post);
-            if ($post->isCategoriasLoaded()) {
-                //remove the back reference if available
-                $post->getCategorias()->removeObject($this);
-            }
-
-            $postHasCategoria->setCategoria($this);
-            $this->removePostHasCategoria(clone $postHasCategoria);
-            $postHasCategoria->clear();
-
-            $this->collPosts->remove($this->collPosts->search($post));
-
-            if (null === $this->postsScheduledForDeletion) {
-                $this->postsScheduledForDeletion = clone $this->collPosts;
-                $this->postsScheduledForDeletion->clear();
-            }
-
-            $this->postsScheduledForDeletion->push($post);
-        }
-
-
-        return $this;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1710,7 +1656,11 @@ abstract class Categoria implements ActiveRecordInterface
         $this->id = null;
         $this->nome = null;
         $this->url = null;
+        $this->parent = null;
         $this->descricao = null;
+        $this->ordem = null;
+        $this->dh_inclusao = null;
+        $this->dh_alteracao = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1734,15 +1684,9 @@ abstract class Categoria implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collPosts) {
-                foreach ($this->collPosts as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
         $this->collPostHasCategorias = null;
-        $this->collPosts = null;
     }
 
     /**

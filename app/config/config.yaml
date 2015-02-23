@@ -6,7 +6,7 @@ propel:
           default:
               adapter: mysql
               settings:
-                charset: UTF-8
+                charset: UTF8
               classname: Propel\Runtime\Connection\ConnectionWrapper
               #classname: Propel\Runtime\Connection\DebugPDO
               dsn: "mysql:host=localhost;dbname=alugando"

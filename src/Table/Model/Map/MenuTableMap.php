@@ -59,7 +59,7 @@ class MenuTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class MenuTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the id field
@@ -85,6 +85,11 @@ class MenuTableMap extends TableMap
      * the column name for the principal field
      */
     const COL_PRINCIPAL = 'menu.principal';
+
+    /**
+     * the column name for the dados field
+     */
+    const COL_DADOS = 'menu.dados';
 
     /**
      * the column name for the dh_inclusao field
@@ -108,11 +113,11 @@ class MenuTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Nome', 'Principal', 'DhInclusao', 'DhAlteracao', ),
-        self::TYPE_CAMELNAME     => array('id', 'nome', 'principal', 'dhInclusao', 'dhAlteracao', ),
-        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID, MenuTableMap::COL_NOME, MenuTableMap::COL_PRINCIPAL, MenuTableMap::COL_DH_INCLUSAO, MenuTableMap::COL_DH_ALTERACAO, ),
-        self::TYPE_FIELDNAME     => array('id', 'nome', 'principal', 'dh_inclusao', 'dh_alteracao', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Nome', 'Principal', 'Dados', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('id', 'nome', 'principal', 'dados', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID, MenuTableMap::COL_NOME, MenuTableMap::COL_PRINCIPAL, MenuTableMap::COL_DADOS, MenuTableMap::COL_DH_INCLUSAO, MenuTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('id', 'nome', 'principal', 'dados', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class MenuTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Nome' => 1, 'Principal' => 2, 'DhInclusao' => 3, 'DhAlteracao' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'nome' => 1, 'principal' => 2, 'dhInclusao' => 3, 'dhAlteracao' => 4, ),
-        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID => 0, MenuTableMap::COL_NOME => 1, MenuTableMap::COL_PRINCIPAL => 2, MenuTableMap::COL_DH_INCLUSAO => 3, MenuTableMap::COL_DH_ALTERACAO => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'nome' => 1, 'principal' => 2, 'dh_inclusao' => 3, 'dh_alteracao' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Nome' => 1, 'Principal' => 2, 'Dados' => 3, 'DhInclusao' => 4, 'DhAlteracao' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'nome' => 1, 'principal' => 2, 'dados' => 3, 'dhInclusao' => 4, 'dhAlteracao' => 5, ),
+        self::TYPE_COLNAME       => array(MenuTableMap::COL_ID => 0, MenuTableMap::COL_NOME => 1, MenuTableMap::COL_PRINCIPAL => 2, MenuTableMap::COL_DADOS => 3, MenuTableMap::COL_DH_INCLUSAO => 4, MenuTableMap::COL_DH_ALTERACAO => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'nome' => 1, 'principal' => 2, 'dados' => 3, 'dh_inclusao' => 4, 'dh_alteracao' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -147,8 +152,9 @@ class MenuTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('nome', 'Nome', 'VARCHAR', false, 45, null);
-        $this->addColumn('principal', 'Principal', 'INTEGER', false, null, null);
+        $this->addColumn('nome', 'Nome', 'VARCHAR', true, 100, null);
+        $this->addColumn('principal', 'Principal', 'BOOLEAN', false, 1, null);
+        $this->addColumn('dados', 'Dados', 'LONGVARCHAR', false, null, null);
         $this->addColumn('dh_inclusao', 'DhInclusao', 'VARCHAR', false, 255, null);
         $this->addColumn('dh_alteracao', 'DhAlteracao', 'VARCHAR', false, 255, null);
     } // initialize()
@@ -210,7 +216,7 @@ class MenuTableMap extends TableMap
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -271,7 +277,7 @@ class MenuTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -311,12 +317,14 @@ class MenuTableMap extends TableMap
             $criteria->addSelectColumn(MenuTableMap::COL_ID);
             $criteria->addSelectColumn(MenuTableMap::COL_NOME);
             $criteria->addSelectColumn(MenuTableMap::COL_PRINCIPAL);
+            $criteria->addSelectColumn(MenuTableMap::COL_DADOS);
             $criteria->addSelectColumn(MenuTableMap::COL_DH_INCLUSAO);
             $criteria->addSelectColumn(MenuTableMap::COL_DH_ALTERACAO);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.nome');
             $criteria->addSelectColumn($alias . '.principal');
+            $criteria->addSelectColumn($alias . '.dados');
             $criteria->addSelectColumn($alias . '.dh_inclusao');
             $criteria->addSelectColumn($alias . '.dh_alteracao');
         }

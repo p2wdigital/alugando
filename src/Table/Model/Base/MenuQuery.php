@@ -18,17 +18,19 @@ use Table\Model\Map\MenuTableMap;
 /**
  * Base class that represents a query for the 'menu' table.
  *
- *
+ * 
  *
  * @method     ChildMenuQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildMenuQuery orderByNome($order = Criteria::ASC) Order by the nome column
  * @method     ChildMenuQuery orderByPrincipal($order = Criteria::ASC) Order by the principal column
+ * @method     ChildMenuQuery orderByDados($order = Criteria::ASC) Order by the dados column
  * @method     ChildMenuQuery orderByDhInclusao($order = Criteria::ASC) Order by the dh_inclusao column
  * @method     ChildMenuQuery orderByDhAlteracao($order = Criteria::ASC) Order by the dh_alteracao column
  *
  * @method     ChildMenuQuery groupById() Group by the id column
  * @method     ChildMenuQuery groupByNome() Group by the nome column
  * @method     ChildMenuQuery groupByPrincipal() Group by the principal column
+ * @method     ChildMenuQuery groupByDados() Group by the dados column
  * @method     ChildMenuQuery groupByDhInclusao() Group by the dh_inclusao column
  * @method     ChildMenuQuery groupByDhAlteracao() Group by the dh_alteracao column
  *
@@ -47,7 +49,8 @@ use Table\Model\Map\MenuTableMap;
  *
  * @method     ChildMenu findOneById(int $id) Return the first ChildMenu filtered by the id column
  * @method     ChildMenu findOneByNome(string $nome) Return the first ChildMenu filtered by the nome column
- * @method     ChildMenu findOneByPrincipal(int $principal) Return the first ChildMenu filtered by the principal column
+ * @method     ChildMenu findOneByPrincipal(boolean $principal) Return the first ChildMenu filtered by the principal column
+ * @method     ChildMenu findOneByDados(string $dados) Return the first ChildMenu filtered by the dados column
  * @method     ChildMenu findOneByDhInclusao(string $dh_inclusao) Return the first ChildMenu filtered by the dh_inclusao column
  * @method     ChildMenu findOneByDhAlteracao(string $dh_alteracao) Return the first ChildMenu filtered by the dh_alteracao column *
 
@@ -56,14 +59,16 @@ use Table\Model\Map\MenuTableMap;
  *
  * @method     ChildMenu requireOneById(int $id) Return the first ChildMenu filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenu requireOneByNome(string $nome) Return the first ChildMenu filtered by the nome column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildMenu requireOneByPrincipal(int $principal) Return the first ChildMenu filtered by the principal column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenu requireOneByPrincipal(boolean $principal) Return the first ChildMenu filtered by the principal column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenu requireOneByDados(string $dados) Return the first ChildMenu filtered by the dados column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenu requireOneByDhInclusao(string $dh_inclusao) Return the first ChildMenu filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenu requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildMenu filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMenu[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMenu objects based on current ModelCriteria
  * @method     ChildMenu[]|ObjectCollection findById(int $id) Return ChildMenu objects filtered by the id column
  * @method     ChildMenu[]|ObjectCollection findByNome(string $nome) Return ChildMenu objects filtered by the nome column
- * @method     ChildMenu[]|ObjectCollection findByPrincipal(int $principal) Return ChildMenu objects filtered by the principal column
+ * @method     ChildMenu[]|ObjectCollection findByPrincipal(boolean $principal) Return ChildMenu objects filtered by the principal column
+ * @method     ChildMenu[]|ObjectCollection findByDados(string $dados) Return ChildMenu objects filtered by the dados column
  * @method     ChildMenu[]|ObjectCollection findByDhInclusao(string $dh_inclusao) Return ChildMenu objects filtered by the dh_inclusao column
  * @method     ChildMenu[]|ObjectCollection findByDhAlteracao(string $dh_alteracao) Return ChildMenu objects filtered by the dh_alteracao column
  * @method     ChildMenu[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -158,9 +163,9 @@ abstract class MenuQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, nome, principal, dh_inclusao, dh_alteracao FROM menu WHERE id = :p0';
+        $sql = 'SELECT id, nome, principal, dados, dh_inclusao, dh_alteracao FROM menu WHERE id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -323,40 +328,55 @@ abstract class MenuQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByPrincipal(1234); // WHERE principal = 1234
-     * $query->filterByPrincipal(array(12, 34)); // WHERE principal IN (12, 34)
-     * $query->filterByPrincipal(array('min' => 12)); // WHERE principal > 12
+     * $query->filterByPrincipal(true); // WHERE principal = true
+     * $query->filterByPrincipal('yes'); // WHERE principal = true
      * </code>
      *
-     * @param     mixed $principal The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     boolean|string $principal The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMenuQuery The current query, for fluid interface
      */
     public function filterByPrincipal($principal = null, $comparison = null)
     {
-        if (is_array($principal)) {
-            $useMinMax = false;
-            if (isset($principal['min'])) {
-                $this->addUsingAlias(MenuTableMap::COL_PRINCIPAL, $principal['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($principal['max'])) {
-                $this->addUsingAlias(MenuTableMap::COL_PRINCIPAL, $principal['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
+        if (is_string($principal)) {
+            $principal = in_array(strtolower($principal), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
         }
 
         return $this->addUsingAlias(MenuTableMap::COL_PRINCIPAL, $principal, $comparison);
+    }
+
+    /**
+     * Filter the query on the dados column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDados('fooValue');   // WHERE dados = 'fooValue'
+     * $query->filterByDados('%fooValue%'); // WHERE dados LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dados The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMenuQuery The current query, for fluid interface
+     */
+    public function filterByDados($dados = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($dados)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dados)) {
+                $dados = str_replace('*', '%', $dados);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MenuTableMap::COL_DADOS, $dados, $comparison);
     }
 
     /**
@@ -557,9 +577,9 @@ abstract class MenuQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             MenuTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             MenuTableMap::clearRelatedInstancePool();
 

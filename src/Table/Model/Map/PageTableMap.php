@@ -11,12 +11,12 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Map\TableMapTrait;
-use Table\Model\PostHasCategoria;
-use Table\Model\PostHasCategoriaQuery;
+use Table\Model\Page;
+use Table\Model\PageQuery;
 
 
 /**
- * This class defines the structure of the 'post_has_categoria' table.
+ * This class defines the structure of the 'page' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Table\Model\PostHasCategoriaQuery;
  * (i.e. if it's a text column type).
  *
  */
-class PostHasCategoriaTableMap extends TableMap
+class PageTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class PostHasCategoriaTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'Table.Model.Map.PostHasCategoriaTableMap';
+    const CLASS_NAME = 'Table.Model.Map.PageTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class PostHasCategoriaTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'post_has_categoria';
+    const TABLE_NAME = 'page';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Table\\Model\\PostHasCategoria';
+    const OM_CLASS = '\\Table\\Model\\Page';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Table.Model.PostHasCategoria';
+    const CLASS_DEFAULT = 'Table.Model.Page';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 2;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,17 +69,62 @@ class PostHasCategoriaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 2;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
-     * the column name for the post_id field
+     * the column name for the id field
      */
-    const COL_POST_ID = 'post_has_categoria.post_id';
+    const COL_ID = 'page.id';
 
     /**
-     * the column name for the categoria_id field
+     * the column name for the autor_id field
      */
-    const COL_CATEGORIA_ID = 'post_has_categoria.categoria_id';
+    const COL_AUTOR_ID = 'page.autor_id';
+
+    /**
+     * the column name for the titulo field
+     */
+    const COL_TITULO = 'page.titulo';
+
+    /**
+     * the column name for the url field
+     */
+    const COL_URL = 'page.url';
+
+    /**
+     * the column name for the content field
+     */
+    const COL_CONTENT = 'page.content';
+
+    /**
+     * the column name for the parent field
+     */
+    const COL_PARENT = 'page.parent';
+
+    /**
+     * the column name for the ordem field
+     */
+    const COL_ORDEM = 'page.ordem';
+
+    /**
+     * the column name for the status field
+     */
+    const COL_STATUS = 'page.status';
+
+    /**
+     * the column name for the tipo field
+     */
+    const COL_TIPO = 'page.tipo';
+
+    /**
+     * the column name for the dh_inclusao field
+     */
+    const COL_DH_INCLUSAO = 'page.dh_inclusao';
+
+    /**
+     * the column name for the dh_alteracao field
+     */
+    const COL_DH_ALTERACAO = 'page.dh_alteracao';
 
     /**
      * The default string format for model objects of the related table
@@ -93,11 +138,11 @@ class PostHasCategoriaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PostId', 'CategoriaId', ),
-        self::TYPE_CAMELNAME     => array('postId', 'categoriaId', ),
-        self::TYPE_COLNAME       => array(PostHasCategoriaTableMap::COL_POST_ID, PostHasCategoriaTableMap::COL_CATEGORIA_ID, ),
-        self::TYPE_FIELDNAME     => array('post_id', 'categoria_id', ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id', 'AutorId', 'Titulo', 'Url', 'Content', 'Parent', 'Ordem', 'Status', 'Tipo', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('id', 'autorId', 'titulo', 'url', 'content', 'parent', 'ordem', 'status', 'tipo', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(PageTableMap::COL_ID, PageTableMap::COL_AUTOR_ID, PageTableMap::COL_TITULO, PageTableMap::COL_URL, PageTableMap::COL_CONTENT, PageTableMap::COL_PARENT, PageTableMap::COL_ORDEM, PageTableMap::COL_STATUS, PageTableMap::COL_TIPO, PageTableMap::COL_DH_INCLUSAO, PageTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('id', 'autor_id', 'titulo', 'url', 'content', 'parent', 'ordem', 'status', 'tipo', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -107,11 +152,11 @@ class PostHasCategoriaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PostId' => 0, 'CategoriaId' => 1, ),
-        self::TYPE_CAMELNAME     => array('postId' => 0, 'categoriaId' => 1, ),
-        self::TYPE_COLNAME       => array(PostHasCategoriaTableMap::COL_POST_ID => 0, PostHasCategoriaTableMap::COL_CATEGORIA_ID => 1, ),
-        self::TYPE_FIELDNAME     => array('post_id' => 0, 'categoria_id' => 1, ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'AutorId' => 1, 'Titulo' => 2, 'Url' => 3, 'Content' => 4, 'Parent' => 5, 'Ordem' => 6, 'Status' => 7, 'Tipo' => 8, 'DhInclusao' => 9, 'DhAlteracao' => 10, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'autorId' => 1, 'titulo' => 2, 'url' => 3, 'content' => 4, 'parent' => 5, 'ordem' => 6, 'status' => 7, 'tipo' => 8, 'dhInclusao' => 9, 'dhAlteracao' => 10, ),
+        self::TYPE_COLNAME       => array(PageTableMap::COL_ID => 0, PageTableMap::COL_AUTOR_ID => 1, PageTableMap::COL_TITULO => 2, PageTableMap::COL_URL => 3, PageTableMap::COL_CONTENT => 4, PageTableMap::COL_PARENT => 5, PageTableMap::COL_ORDEM => 6, PageTableMap::COL_STATUS => 7, PageTableMap::COL_TIPO => 8, PageTableMap::COL_DH_INCLUSAO => 9, PageTableMap::COL_DH_ALTERACAO => 10, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'autor_id' => 1, 'titulo' => 2, 'url' => 3, 'content' => 4, 'parent' => 5, 'ordem' => 6, 'status' => 7, 'tipo' => 8, 'dh_inclusao' => 9, 'dh_alteracao' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -124,15 +169,24 @@ class PostHasCategoriaTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('post_has_categoria');
-        $this->setPhpName('PostHasCategoria');
+        $this->setName('page');
+        $this->setPhpName('Page');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Table\\Model\\PostHasCategoria');
+        $this->setClassName('\\Table\\Model\\Page');
         $this->setPackage('Table.Model');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
-        $this->addForeignPrimaryKey('post_id', 'PostId', 'INTEGER' , 'post', 'id', true, null, null);
-        $this->addForeignPrimaryKey('categoria_id', 'CategoriaId', 'INTEGER' , 'categoria', 'id', true, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
+        $this->addForeignPrimaryKey('autor_id', 'AutorId', 'INTEGER' , 'autor', 'id', true, null, null);
+        $this->addColumn('titulo', 'Titulo', 'VARCHAR', true, 100, null);
+        $this->addColumn('url', 'Url', 'VARCHAR', true, 100, null);
+        $this->addColumn('content', 'Content', 'LONGVARCHAR', true, null, null);
+        $this->addColumn('parent', 'Parent', 'INTEGER', true, null, null);
+        $this->addColumn('ordem', 'Ordem', 'INTEGER', true, null, null);
+        $this->addColumn('status', 'Status', 'INTEGER', true, null, null);
+        $this->addColumn('tipo', 'Tipo', 'VARCHAR', true, 45, null);
+        $this->addColumn('dh_inclusao', 'DhInclusao', 'VARCHAR', false, 45, null);
+        $this->addColumn('dh_alteracao', 'DhAlteracao', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -140,20 +194,20 @@ class PostHasCategoriaTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Post', '\\Table\\Model\\Post', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Autor', '\\Table\\Model\\Autor', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
-    0 => ':post_id',
+    0 => ':autor_id',
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('Categoria', '\\Table\\Model\\Categoria', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('PageData', '\\Table\\Model\\PageData', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':categoria_id',
+    0 => ':page_id',
     1 => ':id',
   ),
-), null, null, null, false);
+), null, null, 'PageDatas', false);
     } // buildRelations()
 
     /**
@@ -164,14 +218,14 @@ class PostHasCategoriaTableMap extends TableMap
      * to the cache in order to ensure that the same objects are always returned by find*()
      * and findPk*() calls.
      *
-     * @param \Table\Model\PostHasCategoria $obj A \Table\Model\PostHasCategoria object.
+     * @param \Table\Model\Page $obj A \Table\Model\Page object.
      * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize(array((string) $obj->getPostId(), (string) $obj->getCategoriaId()));
+                $key = serialize(array((string) $obj->getId(), (string) $obj->getAutorId()));
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -185,13 +239,13 @@ class PostHasCategoriaTableMap extends TableMap
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param mixed $value A \Table\Model\PostHasCategoria object or a primary key value.
+     * @param mixed $value A \Table\Model\Page object or a primary key value.
      */
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \Table\Model\PostHasCategoria) {
-                $key = serialize(array((string) $value->getPostId(), (string) $value->getCategoriaId()));
+            if (is_object($value) && $value instanceof \Table\Model\Page) {
+                $key = serialize(array((string) $value->getId(), (string) $value->getAutorId()));
 
             } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
@@ -201,7 +255,7 @@ class PostHasCategoriaTableMap extends TableMap
 
                 return;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \Table\Model\PostHasCategoria object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \Table\Model\Page object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
                 throw $e;
             }
 
@@ -225,11 +279,11 @@ class PostHasCategoriaTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CategoriaId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('AutorId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CategoriaId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('AutorId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -251,12 +305,12 @@ class PostHasCategoriaTableMap extends TableMap
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 1 + $offset
-                : self::translateFieldName('CategoriaId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('AutorId', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
         return $pks;
@@ -275,7 +329,7 @@ class PostHasCategoriaTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? PostHasCategoriaTableMap::CLASS_DEFAULT : PostHasCategoriaTableMap::OM_CLASS;
+        return $withPrefix ? PageTableMap::CLASS_DEFAULT : PageTableMap::OM_CLASS;
     }
 
     /**
@@ -289,22 +343,22 @@ class PostHasCategoriaTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (PostHasCategoria object, last column rank)
+     * @return array           (Page object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = PostHasCategoriaTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = PostHasCategoriaTableMap::getInstanceFromPool($key))) {
+        $key = PageTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = PageTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + PostHasCategoriaTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + PageTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = PostHasCategoriaTableMap::OM_CLASS;
-            /** @var PostHasCategoria $obj */
+            $cls = PageTableMap::OM_CLASS;
+            /** @var Page $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            PostHasCategoriaTableMap::addInstanceToPool($obj, $key);
+            PageTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -327,18 +381,18 @@ class PostHasCategoriaTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = PostHasCategoriaTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = PostHasCategoriaTableMap::getInstanceFromPool($key))) {
+            $key = PageTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = PageTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var PostHasCategoria $obj */
+                /** @var Page $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                PostHasCategoriaTableMap::addInstanceToPool($obj, $key);
+                PageTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -359,11 +413,29 @@ class PostHasCategoriaTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PostHasCategoriaTableMap::COL_POST_ID);
-            $criteria->addSelectColumn(PostHasCategoriaTableMap::COL_CATEGORIA_ID);
+            $criteria->addSelectColumn(PageTableMap::COL_ID);
+            $criteria->addSelectColumn(PageTableMap::COL_AUTOR_ID);
+            $criteria->addSelectColumn(PageTableMap::COL_TITULO);
+            $criteria->addSelectColumn(PageTableMap::COL_URL);
+            $criteria->addSelectColumn(PageTableMap::COL_CONTENT);
+            $criteria->addSelectColumn(PageTableMap::COL_PARENT);
+            $criteria->addSelectColumn(PageTableMap::COL_ORDEM);
+            $criteria->addSelectColumn(PageTableMap::COL_STATUS);
+            $criteria->addSelectColumn(PageTableMap::COL_TIPO);
+            $criteria->addSelectColumn(PageTableMap::COL_DH_INCLUSAO);
+            $criteria->addSelectColumn(PageTableMap::COL_DH_ALTERACAO);
         } else {
-            $criteria->addSelectColumn($alias . '.post_id');
-            $criteria->addSelectColumn($alias . '.categoria_id');
+            $criteria->addSelectColumn($alias . '.id');
+            $criteria->addSelectColumn($alias . '.autor_id');
+            $criteria->addSelectColumn($alias . '.titulo');
+            $criteria->addSelectColumn($alias . '.url');
+            $criteria->addSelectColumn($alias . '.content');
+            $criteria->addSelectColumn($alias . '.parent');
+            $criteria->addSelectColumn($alias . '.ordem');
+            $criteria->addSelectColumn($alias . '.status');
+            $criteria->addSelectColumn($alias . '.tipo');
+            $criteria->addSelectColumn($alias . '.dh_inclusao');
+            $criteria->addSelectColumn($alias . '.dh_alteracao');
         }
     }
 
@@ -376,7 +448,7 @@ class PostHasCategoriaTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(PostHasCategoriaTableMap::DATABASE_NAME)->getTable(PostHasCategoriaTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(PageTableMap::DATABASE_NAME)->getTable(PageTableMap::TABLE_NAME);
     }
 
     /**
@@ -384,16 +456,16 @@ class PostHasCategoriaTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(PostHasCategoriaTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(PostHasCategoriaTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new PostHasCategoriaTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(PageTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(PageTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new PageTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a PostHasCategoria or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Page or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or PostHasCategoria object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Page object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -404,17 +476,17 @@ class PostHasCategoriaTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostHasCategoriaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Table\Model\PostHasCategoria) { // it's a model object
+        } elseif ($values instanceof \Table\Model\Page) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(PostHasCategoriaTableMap::DATABASE_NAME);
+            $criteria = new Criteria(PageTableMap::DATABASE_NAME);
             // primary key is composite; we therefore, expect
             // the primary key passed to be an array of pkey values
             if (count($values) == count($values, COUNT_RECURSIVE)) {
@@ -422,19 +494,19 @@ class PostHasCategoriaTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(PostHasCategoriaTableMap::COL_POST_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(PostHasCategoriaTableMap::COL_CATEGORIA_ID, $value[1]));
+                $criterion = $criteria->getNewCriterion(PageTableMap::COL_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(PageTableMap::COL_AUTOR_ID, $value[1]));
                 $criteria->addOr($criterion);
             }
         }
 
-        $query = PostHasCategoriaQuery::create()->mergeWith($criteria);
+        $query = PageQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            PostHasCategoriaTableMap::clearInstancePool();
+            PageTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                PostHasCategoriaTableMap::removeInstanceFromPool($singleval);
+                PageTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -442,20 +514,20 @@ class PostHasCategoriaTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the post_has_categoria table.
+     * Deletes all rows from the page table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return PostHasCategoriaQuery::create()->doDeleteAll($con);
+        return PageQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a PostHasCategoria or Criteria object.
+     * Performs an INSERT on the database, given a Page or Criteria object.
      *
-     * @param mixed               $criteria Criteria or PostHasCategoria object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Page object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -464,18 +536,22 @@ class PostHasCategoriaTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PostHasCategoriaTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from PostHasCategoria object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Page object
+        }
+
+        if ($criteria->containsKey(PageTableMap::COL_ID) && $criteria->keyContainsValue(PageTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PageTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = PostHasCategoriaQuery::create()->mergeWith($criteria);
+        $query = PageQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -484,7 +560,7 @@ class PostHasCategoriaTableMap extends TableMap
         });
     }
 
-} // PostHasCategoriaTableMap
+} // PageTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-PostHasCategoriaTableMap::buildTableMap();
+PageTableMap::buildTableMap();

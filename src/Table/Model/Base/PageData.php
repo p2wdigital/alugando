@@ -9,32 +9,30 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Table\Model\Menu as ChildMenu;
-use Table\Model\MenuItem as ChildMenuItem;
-use Table\Model\MenuItemQuery as ChildMenuItemQuery;
-use Table\Model\MenuQuery as ChildMenuQuery;
-use Table\Model\Map\MenuTableMap;
+use Table\Model\Page as ChildPage;
+use Table\Model\PageDataQuery as ChildPageDataQuery;
+use Table\Model\PageQuery as ChildPageQuery;
+use Table\Model\Map\PageDataTableMap;
 
 /**
- * Base class that represents a row from the 'menu' table.
+ * Base class that represents a row from the 'page_data' table.
  *
  * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Menu implements ActiveRecordInterface 
+abstract class PageData implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Table\\Model\\Map\\MenuTableMap';
+    const TABLE_MAP = '\\Table\\Model\\Map\\PageDataTableMap';
 
 
     /**
@@ -64,28 +62,22 @@ abstract class Menu implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the id field.
+     * The value for the page_id field.
      * @var        int
      */
-    protected $id;
+    protected $page_id;
 
     /**
-     * The value for the nome field.
+     * The value for the name field.
      * @var        string
      */
-    protected $nome;
+    protected $name;
 
     /**
-     * The value for the principal field.
-     * @var        boolean
-     */
-    protected $principal;
-
-    /**
-     * The value for the dados field.
+     * The value for the value field.
      * @var        string
      */
-    protected $dados;
+    protected $value;
 
     /**
      * The value for the dh_inclusao field.
@@ -100,10 +92,9 @@ abstract class Menu implements ActiveRecordInterface
     protected $dh_alteracao;
 
     /**
-     * @var        ObjectCollection|ChildMenuItem[] Collection to store aggregation of ChildMenuItem objects.
+     * @var        ChildPage
      */
-    protected $collMenuItems;
-    protected $collMenuItemsPartial;
+    protected $aPage;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -114,13 +105,7 @@ abstract class Menu implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildMenuItem[]
-     */
-    protected $menuItemsScheduledForDeletion = null;
-
-    /**
-     * Initializes internal state of Table\Model\Base\Menu object.
+     * Initializes internal state of Table\Model\Base\PageData object.
      */
     public function __construct()
     {
@@ -215,9 +200,9 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Menu</code> instance.  If
-     * <code>obj</code> is an instance of <code>Menu</code>, delegates to
-     * <code>equals(Menu)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>PageData</code> instance.  If
+     * <code>obj</code> is an instance of <code>PageData</code>, delegates to
+     * <code>equals(PageData)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -283,7 +268,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Menu The current object, for fluid interface
+     * @return $this|PageData The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -337,53 +322,33 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Get the [id] column value.
+     * Get the [page_id] column value.
      * 
      * @return int
      */
-    public function getId()
+    public function getPageId()
     {
-        return $this->id;
+        return $this->page_id;
     }
 
     /**
-     * Get the [nome] column value.
+     * Get the [name] column value.
      * 
      * @return string
      */
-    public function getNome()
+    public function getName()
     {
-        return $this->nome;
+        return $this->name;
     }
 
     /**
-     * Get the [principal] column value.
-     * 
-     * @return boolean
-     */
-    public function getPrincipal()
-    {
-        return $this->principal;
-    }
-
-    /**
-     * Get the [principal] column value.
-     * 
-     * @return boolean
-     */
-    public function isPrincipal()
-    {
-        return $this->getPrincipal();
-    }
-
-    /**
-     * Get the [dados] column value.
+     * Get the [value] column value.
      * 
      * @return string
      */
-    public function getDados()
+    public function getValue()
     {
-        return $this->dados;
+        return $this->value;
     }
 
     /**
@@ -407,98 +372,74 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [id] column.
+     * Set the value of [page_id] column.
      * 
      * @param int $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      */
-    public function setId($v)
+    public function setPageId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->id !== $v) {
-            $this->id = $v;
-            $this->modifiedColumns[MenuTableMap::COL_ID] = true;
+        if ($this->page_id !== $v) {
+            $this->page_id = $v;
+            $this->modifiedColumns[PageDataTableMap::COL_PAGE_ID] = true;
+        }
+
+        if ($this->aPage !== null && $this->aPage->getId() !== $v) {
+            $this->aPage = null;
         }
 
         return $this;
-    } // setId()
+    } // setPageId()
 
     /**
-     * Set the value of [nome] column.
+     * Set the value of [name] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      */
-    public function setNome($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->nome !== $v) {
-            $this->nome = $v;
-            $this->modifiedColumns[MenuTableMap::COL_NOME] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[PageDataTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setNome()
+    } // setName()
 
     /**
-     * Sets the value of the [principal] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     * 
-     * @param  boolean|integer|string $v The new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
-     */
-    public function setPrincipal($v)
-    {
-        if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
-            }
-        }
-
-        if ($this->principal !== $v) {
-            $this->principal = $v;
-            $this->modifiedColumns[MenuTableMap::COL_PRINCIPAL] = true;
-        }
-
-        return $this;
-    } // setPrincipal()
-
-    /**
-     * Set the value of [dados] column.
+     * Set the value of [value] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      */
-    public function setDados($v)
+    public function setValue($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->dados !== $v) {
-            $this->dados = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DADOS] = true;
+        if ($this->value !== $v) {
+            $this->value = $v;
+            $this->modifiedColumns[PageDataTableMap::COL_VALUE] = true;
         }
 
         return $this;
-    } // setDados()
+    } // setValue()
 
     /**
      * Set the value of [dh_inclusao] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      */
     public function setDhInclusao($v)
     {
@@ -508,7 +449,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->dh_inclusao !== $v) {
             $this->dh_inclusao = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DH_INCLUSAO] = true;
+            $this->modifiedColumns[PageDataTableMap::COL_DH_INCLUSAO] = true;
         }
 
         return $this;
@@ -518,7 +459,7 @@ abstract class Menu implements ActiveRecordInterface
      * Set the value of [dh_alteracao] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      */
     public function setDhAlteracao($v)
     {
@@ -528,7 +469,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->dh_alteracao !== $v) {
             $this->dh_alteracao = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DH_ALTERACAO] = true;
+            $this->modifiedColumns[PageDataTableMap::COL_DH_ALTERACAO] = true;
         }
 
         return $this;
@@ -570,22 +511,19 @@ abstract class Menu implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MenuTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PageDataTableMap::translateFieldName('PageId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->page_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MenuTableMap::translateFieldName('Nome', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->nome = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PageDataTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MenuTableMap::translateFieldName('Principal', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->principal = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PageDataTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->value = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MenuTableMap::translateFieldName('Dados', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->dados = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MenuTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PageDataTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_inclusao = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MenuTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PageDataTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -595,10 +533,10 @@ abstract class Menu implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = MenuTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = PageDataTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Menu'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\PageData'), 0, $e);
         }
     }
 
@@ -617,6 +555,9 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aPage !== null && $this->page_id !== $this->aPage->getId()) {
+            $this->aPage = null;
+        }
     } // ensureConsistency
 
     /**
@@ -640,13 +581,13 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(PageDataTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildMenuQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildPageDataQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -656,8 +597,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collMenuItems = null;
-
+            $this->aPage = null;
         } // if (deep)
     }
 
@@ -667,8 +607,8 @@ abstract class Menu implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Menu::setDeleted()
-     * @see Menu::isDeleted()
+     * @see PageData::setDeleted()
+     * @see PageData::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -677,11 +617,11 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageDataTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildMenuQuery::create()
+            $deleteQuery = ChildPageDataQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -712,7 +652,7 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(PageDataTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -731,7 +671,7 @@ abstract class Menu implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                MenuTableMap::addInstanceToPool($this);
+                PageDataTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -757,6 +697,18 @@ abstract class Menu implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aPage !== null) {
+                if ($this->aPage->isModified() || $this->aPage->isNew()) {
+                    $affectedRows += $this->aPage->save($con);
+                }
+                $this->setPage($this->aPage);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -766,23 +718,6 @@ abstract class Menu implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
-            }
-
-            if ($this->menuItemsScheduledForDeletion !== null) {
-                if (!$this->menuItemsScheduledForDeletion->isEmpty()) {
-                    \Table\Model\MenuItemQuery::create()
-                        ->filterByPrimaryKeys($this->menuItemsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->menuItemsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collMenuItems !== null) {
-                foreach ($this->collMenuItems as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -805,33 +740,26 @@ abstract class Menu implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[MenuTableMap::COL_ID] = true;
-        if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MenuTableMap::COL_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'id';
+        if ($this->isColumnModified(PageDataTableMap::COL_PAGE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'page_id';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_NOME)) {
-            $modifiedColumns[':p' . $index++]  = 'nome';
+        if ($this->isColumnModified(PageDataTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_PRINCIPAL)) {
-            $modifiedColumns[':p' . $index++]  = 'principal';
+        if ($this->isColumnModified(PageDataTableMap::COL_VALUE)) {
+            $modifiedColumns[':p' . $index++]  = 'value';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DADOS)) {
-            $modifiedColumns[':p' . $index++]  = 'dados';
-        }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_INCLUSAO)) {
+        if ($this->isColumnModified(PageDataTableMap::COL_DH_INCLUSAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_ALTERACAO)) {
+        if ($this->isColumnModified(PageDataTableMap::COL_DH_ALTERACAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
         }
 
         $sql = sprintf(
-            'INSERT INTO menu (%s) VALUES (%s)',
+            'INSERT INTO page_data (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -840,17 +768,14 @@ abstract class Menu implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':                        
-                        $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
+                    case 'page_id':                        
+                        $stmt->bindValue($identifier, $this->page_id, PDO::PARAM_INT);
                         break;
-                    case 'nome':                        
-                        $stmt->bindValue($identifier, $this->nome, PDO::PARAM_STR);
+                    case 'name':                        
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'principal':
-                        $stmt->bindValue($identifier, (int) $this->principal, PDO::PARAM_INT);
-                        break;
-                    case 'dados':                        
-                        $stmt->bindValue($identifier, $this->dados, PDO::PARAM_STR);
+                    case 'value':                        
+                        $stmt->bindValue($identifier, $this->value, PDO::PARAM_STR);
                         break;
                     case 'dh_inclusao':                        
                         $stmt->bindValue($identifier, $this->dh_inclusao, PDO::PARAM_STR);
@@ -865,13 +790,6 @@ abstract class Menu implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -904,7 +822,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = PageDataTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -921,21 +839,18 @@ abstract class Menu implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getId();
+                return $this->getPageId();
                 break;
             case 1:
-                return $this->getNome();
+                return $this->getName();
                 break;
             case 2:
-                return $this->getPrincipal();
+                return $this->getValue();
                 break;
             case 3:
-                return $this->getDados();
-                break;
-            case 4:
                 return $this->getDhInclusao();
                 break;
-            case 5:
+            case 4:
                 return $this->getDhAlteracao();
                 break;
             default:
@@ -962,18 +877,17 @@ abstract class Menu implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Menu'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['PageData'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Menu'][$this->hashCode()] = true;
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['PageData'][$this->hashCode()] = true;
+        $keys = PageDataTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getId(),
-            $keys[1] => $this->getNome(),
-            $keys[2] => $this->getPrincipal(),
-            $keys[3] => $this->getDados(),
-            $keys[4] => $this->getDhInclusao(),
-            $keys[5] => $this->getDhAlteracao(),
+            $keys[0] => $this->getPageId(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getValue(),
+            $keys[3] => $this->getDhInclusao(),
+            $keys[4] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -981,20 +895,20 @@ abstract class Menu implements ActiveRecordInterface
         }
         
         if ($includeForeignObjects) {
-            if (null !== $this->collMenuItems) {
+            if (null !== $this->aPage) {
                 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'menuItems';
+                        $key = 'page';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'menu_items';
+                        $key = 'page';
                         break;
                     default:
-                        $key = 'MenuItems';
+                        $key = 'Page';
                 }
         
-                $result[$key] = $this->collMenuItems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aPage->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1010,11 +924,11 @@ abstract class Menu implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Table\Model\Menu
+     * @return $this|\Table\Model\PageData
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = PageDataTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1025,27 +939,24 @@ abstract class Menu implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Table\Model\Menu
+     * @return $this|\Table\Model\PageData
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setId($value);
+                $this->setPageId($value);
                 break;
             case 1:
-                $this->setNome($value);
+                $this->setName($value);
                 break;
             case 2:
-                $this->setPrincipal($value);
+                $this->setValue($value);
                 break;
             case 3:
-                $this->setDados($value);
-                break;
-            case 4:
                 $this->setDhInclusao($value);
                 break;
-            case 5:
+            case 4:
                 $this->setDhAlteracao($value);
                 break;
         } // switch()
@@ -1072,25 +983,22 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $keys = PageDataTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setId($arr[$keys[0]]);
+            $this->setPageId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setNome($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPrincipal($arr[$keys[2]]);
+            $this->setValue($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDados($arr[$keys[3]]);
+            $this->setDhInclusao($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDhInclusao($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setDhAlteracao($arr[$keys[5]]);
+            $this->setDhAlteracao($arr[$keys[4]]);
         }
     }
 
@@ -1111,7 +1019,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Table\Model\Menu The current object, for fluid interface
+     * @return $this|\Table\Model\PageData The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1131,25 +1039,22 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(MenuTableMap::DATABASE_NAME);
+        $criteria = new Criteria(PageDataTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
-            $criteria->add(MenuTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(PageDataTableMap::COL_PAGE_ID)) {
+            $criteria->add(PageDataTableMap::COL_PAGE_ID, $this->page_id);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_NOME)) {
-            $criteria->add(MenuTableMap::COL_NOME, $this->nome);
+        if ($this->isColumnModified(PageDataTableMap::COL_NAME)) {
+            $criteria->add(PageDataTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_PRINCIPAL)) {
-            $criteria->add(MenuTableMap::COL_PRINCIPAL, $this->principal);
+        if ($this->isColumnModified(PageDataTableMap::COL_VALUE)) {
+            $criteria->add(PageDataTableMap::COL_VALUE, $this->value);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DADOS)) {
-            $criteria->add(MenuTableMap::COL_DADOS, $this->dados);
+        if ($this->isColumnModified(PageDataTableMap::COL_DH_INCLUSAO)) {
+            $criteria->add(PageDataTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_INCLUSAO)) {
-            $criteria->add(MenuTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
-        }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_ALTERACAO)) {
-            $criteria->add(MenuTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
+        if ($this->isColumnModified(PageDataTableMap::COL_DH_ALTERACAO)) {
+            $criteria->add(PageDataTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
         }
 
         return $criteria;
@@ -1167,8 +1072,9 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildMenuQuery::create();
-        $criteria->add(MenuTableMap::COL_ID, $this->id);
+        $criteria = ChildPageDataQuery::create();
+        $criteria->add(PageDataTableMap::COL_PAGE_ID, $this->page_id);
+        $criteria->add(PageDataTableMap::COL_NAME, $this->name);
 
         return $criteria;
     }
@@ -1181,10 +1087,18 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getId();
+        $validPk = null !== $this->getPageId() &&
+            null !== $this->getName();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
+
+        //relation fk_page_data_page1 to table page
+        if ($this->aPage && $hash = spl_object_hash($this->aPage)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1196,23 +1110,29 @@ abstract class Menu implements ActiveRecordInterface
     }
         
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getId();
+        $pks = array();
+        $pks[0] = $this->getPageId();
+        $pks[1] = $this->getName();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setId($key);
+        $this->setPageId($keys[0]);
+        $this->setName($keys[1]);
     }
 
     /**
@@ -1221,7 +1141,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getId();
+        return (null === $this->getPageId()) && (null === $this->getName());
     }
 
     /**
@@ -1230,35 +1150,20 @@ abstract class Menu implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Table\Model\Menu (or compatible) type.
+     * @param      object $copyObj An object of \Table\Model\PageData (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setNome($this->getNome());
-        $copyObj->setPrincipal($this->getPrincipal());
-        $copyObj->setDados($this->getDados());
+        $copyObj->setPageId($this->getPageId());
+        $copyObj->setName($this->getName());
+        $copyObj->setValue($this->getValue());
         $copyObj->setDhInclusao($this->getDhInclusao());
         $copyObj->setDhAlteracao($this->getDhAlteracao());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getMenuItems() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addMenuItem($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1271,7 +1176,7 @@ abstract class Menu implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Table\Model\Menu Clone of current object.
+     * @return \Table\Model\PageData Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1284,241 +1189,57 @@ abstract class Menu implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildPage object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('MenuItem' == $relationName) {
-            return $this->initMenuItems();
-        }
-    }
-
-    /**
-     * Clears out the collMenuItems collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addMenuItems()
-     */
-    public function clearMenuItems()
-    {
-        $this->collMenuItems = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collMenuItems collection loaded partially.
-     */
-    public function resetPartialMenuItems($v = true)
-    {
-        $this->collMenuItemsPartial = $v;
-    }
-
-    /**
-     * Initializes the collMenuItems collection.
-     *
-     * By default this just sets the collMenuItems collection to an empty array (like clearcollMenuItems());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initMenuItems($overrideExisting = true)
-    {
-        if (null !== $this->collMenuItems && !$overrideExisting) {
-            return;
-        }
-        $this->collMenuItems = new ObjectCollection();
-        $this->collMenuItems->setModel('\Table\Model\MenuItem');
-    }
-
-    /**
-     * Gets an array of ChildMenuItem objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildMenu is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildMenuItem[] List of ChildMenuItem objects
+     * @param  ChildPage $v
+     * @return $this|\Table\Model\PageData The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getMenuItems(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setPage(ChildPage $v = null)
     {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
-                // return empty collection
-                $this->initMenuItems();
-            } else {
-                $collMenuItems = ChildMenuItemQuery::create(null, $criteria)
-                    ->filterByMenu($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collMenuItemsPartial && count($collMenuItems)) {
-                        $this->initMenuItems(false);
-
-                        foreach ($collMenuItems as $obj) {
-                            if (false == $this->collMenuItems->contains($obj)) {
-                                $this->collMenuItems->append($obj);
-                            }
-                        }
-
-                        $this->collMenuItemsPartial = true;
-                    }
-
-                    return $collMenuItems;
-                }
-
-                if ($partial && $this->collMenuItems) {
-                    foreach ($this->collMenuItems as $obj) {
-                        if ($obj->isNew()) {
-                            $collMenuItems[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collMenuItems = $collMenuItems;
-                $this->collMenuItemsPartial = false;
-            }
+        if ($v === null) {
+            $this->setPageId(NULL);
+        } else {
+            $this->setPageId($v->getId());
         }
 
-        return $this->collMenuItems;
-    }
+        $this->aPage = $v;
 
-    /**
-     * Sets a collection of ChildMenuItem objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $menuItems A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildMenu The current object (for fluent API support)
-     */
-    public function setMenuItems(Collection $menuItems, ConnectionInterface $con = null)
-    {
-        /** @var ChildMenuItem[] $menuItemsToDelete */
-        $menuItemsToDelete = $this->getMenuItems(new Criteria(), $con)->diff($menuItems);
-
-        
-        //since at least one column in the foreign key is at the same time a PK
-        //we can not just set a PK to NULL in the lines below. We have to store
-        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->menuItemsScheduledForDeletion = clone $menuItemsToDelete;
-
-        foreach ($menuItemsToDelete as $menuItemRemoved) {
-            $menuItemRemoved->setMenu(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildPage object, it will not be re-added.
+        if ($v !== null) {
+            $v->addPageData($this);
         }
 
-        $this->collMenuItems = null;
-        foreach ($menuItems as $menuItem) {
-            $this->addMenuItem($menuItem);
-        }
-
-        $this->collMenuItems = $menuItems;
-        $this->collMenuItemsPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related MenuItem objects.
+     * Get the associated ChildPage object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related MenuItem objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildPage The associated ChildPage object.
      * @throws PropelException
      */
-    public function countMenuItems(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getPage(ConnectionInterface $con = null)
     {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getMenuItems());
-            }
-
-            $query = ChildMenuItemQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByMenu($this)
-                ->count($con);
+        if ($this->aPage === null && ($this->page_id !== null)) {
+            $this->aPage = ChildPageQuery::create()
+                ->filterByPageData($this) // here
+                ->findOne($con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aPage->addPageDatas($this);
+             */
         }
 
-        return count($this->collMenuItems);
-    }
-
-    /**
-     * Method called to associate a ChildMenuItem object to this object
-     * through the ChildMenuItem foreign key attribute.
-     *
-     * @param  ChildMenuItem $l ChildMenuItem
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
-     */
-    public function addMenuItem(ChildMenuItem $l)
-    {
-        if ($this->collMenuItems === null) {
-            $this->initMenuItems();
-            $this->collMenuItemsPartial = true;
-        }
-
-        if (!$this->collMenuItems->contains($l)) {
-            $this->doAddMenuItem($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildMenuItem $menuItem The ChildMenuItem object to add.
-     */
-    protected function doAddMenuItem(ChildMenuItem $menuItem)
-    {
-        $this->collMenuItems[]= $menuItem;
-        $menuItem->setMenu($this);
-    }
-
-    /**
-     * @param  ChildMenuItem $menuItem The ChildMenuItem object to remove.
-     * @return $this|ChildMenu The current object (for fluent API support)
-     */
-    public function removeMenuItem(ChildMenuItem $menuItem)
-    {
-        if ($this->getMenuItems()->contains($menuItem)) {
-            $pos = $this->collMenuItems->search($menuItem);
-            $this->collMenuItems->remove($pos);
-            if (null === $this->menuItemsScheduledForDeletion) {
-                $this->menuItemsScheduledForDeletion = clone $this->collMenuItems;
-                $this->menuItemsScheduledForDeletion->clear();
-            }
-            $this->menuItemsScheduledForDeletion[]= clone $menuItem;
-            $menuItem->setMenu(null);
-        }
-
-        return $this;
+        return $this->aPage;
     }
 
     /**
@@ -1528,10 +1249,12 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->id = null;
-        $this->nome = null;
-        $this->principal = null;
-        $this->dados = null;
+        if (null !== $this->aPage) {
+            $this->aPage->removePageData($this);
+        }
+        $this->page_id = null;
+        $this->name = null;
+        $this->value = null;
         $this->dh_inclusao = null;
         $this->dh_alteracao = null;
         $this->alreadyInSave = false;
@@ -1552,14 +1275,9 @@ abstract class Menu implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collMenuItems) {
-                foreach ($this->collMenuItems as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collMenuItems = null;
+        $this->aPage = null;
     }
 
     /**
@@ -1569,7 +1287,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(MenuTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(PageDataTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

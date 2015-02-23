@@ -48,7 +48,7 @@ class MenuController extends Controller
 		if ($post['type'] == 'page'):
 			foreach ($post['posts'] as $key => $value):
 				$item = new MenuItem();
-				$item->set
+				
 			endforeach;
 		endif;
 

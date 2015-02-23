@@ -16,25 +16,27 @@ use Propel\Runtime\Exception\LogicException;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
-use Table\Model\Menu as ChildMenu;
-use Table\Model\MenuItem as ChildMenuItem;
-use Table\Model\MenuItemQuery as ChildMenuItemQuery;
-use Table\Model\MenuQuery as ChildMenuQuery;
-use Table\Model\Map\MenuTableMap;
+use Table\Model\Autor as ChildAutor;
+use Table\Model\AutorQuery as ChildAutorQuery;
+use Table\Model\Page as ChildPage;
+use Table\Model\PageQuery as ChildPageQuery;
+use Table\Model\Post as ChildPost;
+use Table\Model\PostQuery as ChildPostQuery;
+use Table\Model\Map\AutorTableMap;
 
 /**
- * Base class that represents a row from the 'menu' table.
+ * Base class that represents a row from the 'autor' table.
  *
  * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class Menu implements ActiveRecordInterface 
+abstract class Autor implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Table\\Model\\Map\\MenuTableMap';
+    const TABLE_MAP = '\\Table\\Model\\Map\\AutorTableMap';
 
 
     /**
@@ -76,10 +78,34 @@ abstract class Menu implements ActiveRecordInterface
     protected $nome;
 
     /**
-     * The value for the principal field.
-     * @var        boolean
+     * The value for the email field.
+     * @var        string
      */
-    protected $principal;
+    protected $email;
+
+    /**
+     * The value for the usuario field.
+     * @var        string
+     */
+    protected $usuario;
+
+    /**
+     * The value for the senha field.
+     * @var        string
+     */
+    protected $senha;
+
+    /**
+     * The value for the salt field.
+     * @var        string
+     */
+    protected $salt;
+
+    /**
+     * The value for the descricao field.
+     * @var        string
+     */
+    protected $descricao;
 
     /**
      * The value for the dados field.
@@ -100,10 +126,16 @@ abstract class Menu implements ActiveRecordInterface
     protected $dh_alteracao;
 
     /**
-     * @var        ObjectCollection|ChildMenuItem[] Collection to store aggregation of ChildMenuItem objects.
+     * @var        ObjectCollection|ChildPage[] Collection to store aggregation of ChildPage objects.
      */
-    protected $collMenuItems;
-    protected $collMenuItemsPartial;
+    protected $collPages;
+    protected $collPagesPartial;
+
+    /**
+     * @var        ObjectCollection|ChildPost[] Collection to store aggregation of ChildPost objects.
+     */
+    protected $collPosts;
+    protected $collPostsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -115,12 +147,18 @@ abstract class Menu implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildMenuItem[]
+     * @var ObjectCollection|ChildPage[]
      */
-    protected $menuItemsScheduledForDeletion = null;
+    protected $pagesScheduledForDeletion = null;
 
     /**
-     * Initializes internal state of Table\Model\Base\Menu object.
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildPost[]
+     */
+    protected $postsScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of Table\Model\Base\Autor object.
      */
     public function __construct()
     {
@@ -215,9 +253,9 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Menu</code> instance.  If
-     * <code>obj</code> is an instance of <code>Menu</code>, delegates to
-     * <code>equals(Menu)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Autor</code> instance.  If
+     * <code>obj</code> is an instance of <code>Autor</code>, delegates to
+     * <code>equals(Autor)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -283,7 +321,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Menu The current object, for fluid interface
+     * @return $this|Autor The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -357,23 +395,53 @@ abstract class Menu implements ActiveRecordInterface
     }
 
     /**
-     * Get the [principal] column value.
+     * Get the [email] column value.
      * 
-     * @return boolean
+     * @return string
      */
-    public function getPrincipal()
+    public function getEmail()
     {
-        return $this->principal;
+        return $this->email;
     }
 
     /**
-     * Get the [principal] column value.
+     * Get the [usuario] column value.
      * 
-     * @return boolean
+     * @return string
      */
-    public function isPrincipal()
+    public function getUsuario()
     {
-        return $this->getPrincipal();
+        return $this->usuario;
+    }
+
+    /**
+     * Get the [senha] column value.
+     * 
+     * @return string
+     */
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * Get the [salt] column value.
+     * 
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Get the [descricao] column value.
+     * 
+     * @return string
+     */
+    public function getDescricao()
+    {
+        return $this->descricao;
     }
 
     /**
@@ -410,7 +478,7 @@ abstract class Menu implements ActiveRecordInterface
      * Set the value of [id] column.
      * 
      * @param int $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -420,7 +488,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[MenuTableMap::COL_ID] = true;
+            $this->modifiedColumns[AutorTableMap::COL_ID] = true;
         }
 
         return $this;
@@ -430,7 +498,7 @@ abstract class Menu implements ActiveRecordInterface
      * Set the value of [nome] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
     public function setNome($v)
     {
@@ -440,45 +508,117 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->nome !== $v) {
             $this->nome = $v;
-            $this->modifiedColumns[MenuTableMap::COL_NOME] = true;
+            $this->modifiedColumns[AutorTableMap::COL_NOME] = true;
         }
 
         return $this;
     } // setNome()
 
     /**
-     * Sets the value of the [principal] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * Set the value of [email] column.
      * 
-     * @param  boolean|integer|string $v The new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @param string $v new value
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
-    public function setPrincipal($v)
+    public function setEmail($v)
     {
         if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
-            }
+            $v = (string) $v;
         }
 
-        if ($this->principal !== $v) {
-            $this->principal = $v;
-            $this->modifiedColumns[MenuTableMap::COL_PRINCIPAL] = true;
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[AutorTableMap::COL_EMAIL] = true;
         }
 
         return $this;
-    } // setPrincipal()
+    } // setEmail()
+
+    /**
+     * Set the value of [usuario] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
+     */
+    public function setUsuario($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->usuario !== $v) {
+            $this->usuario = $v;
+            $this->modifiedColumns[AutorTableMap::COL_USUARIO] = true;
+        }
+
+        return $this;
+    } // setUsuario()
+
+    /**
+     * Set the value of [senha] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
+     */
+    public function setSenha($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->senha !== $v) {
+            $this->senha = $v;
+            $this->modifiedColumns[AutorTableMap::COL_SENHA] = true;
+        }
+
+        return $this;
+    } // setSenha()
+
+    /**
+     * Set the value of [salt] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
+     */
+    public function setSalt($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->salt !== $v) {
+            $this->salt = $v;
+            $this->modifiedColumns[AutorTableMap::COL_SALT] = true;
+        }
+
+        return $this;
+    } // setSalt()
+
+    /**
+     * Set the value of [descricao] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
+     */
+    public function setDescricao($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->descricao !== $v) {
+            $this->descricao = $v;
+            $this->modifiedColumns[AutorTableMap::COL_DESCRICAO] = true;
+        }
+
+        return $this;
+    } // setDescricao()
 
     /**
      * Set the value of [dados] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
     public function setDados($v)
     {
@@ -488,7 +628,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->dados !== $v) {
             $this->dados = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DADOS] = true;
+            $this->modifiedColumns[AutorTableMap::COL_DADOS] = true;
         }
 
         return $this;
@@ -498,7 +638,7 @@ abstract class Menu implements ActiveRecordInterface
      * Set the value of [dh_inclusao] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
     public function setDhInclusao($v)
     {
@@ -508,7 +648,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->dh_inclusao !== $v) {
             $this->dh_inclusao = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DH_INCLUSAO] = true;
+            $this->modifiedColumns[AutorTableMap::COL_DH_INCLUSAO] = true;
         }
 
         return $this;
@@ -518,7 +658,7 @@ abstract class Menu implements ActiveRecordInterface
      * Set the value of [dh_alteracao] column.
      * 
      * @param string $v new value
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
     public function setDhAlteracao($v)
     {
@@ -528,7 +668,7 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($this->dh_alteracao !== $v) {
             $this->dh_alteracao = $v;
-            $this->modifiedColumns[MenuTableMap::COL_DH_ALTERACAO] = true;
+            $this->modifiedColumns[AutorTableMap::COL_DH_ALTERACAO] = true;
         }
 
         return $this;
@@ -570,22 +710,34 @@ abstract class Menu implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MenuTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : AutorTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MenuTableMap::translateFieldName('Nome', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : AutorTableMap::translateFieldName('Nome', TableMap::TYPE_PHPNAME, $indexType)];
             $this->nome = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MenuTableMap::translateFieldName('Principal', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->principal = (null !== $col) ? (boolean) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : AutorTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MenuTableMap::translateFieldName('Dados', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AutorTableMap::translateFieldName('Usuario', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->usuario = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AutorTableMap::translateFieldName('Senha', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->senha = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AutorTableMap::translateFieldName('Salt', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->salt = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AutorTableMap::translateFieldName('Descricao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->descricao = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : AutorTableMap::translateFieldName('Dados', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dados = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MenuTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : AutorTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_inclusao = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MenuTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : AutorTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -595,10 +747,10 @@ abstract class Menu implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = MenuTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 10; // 10 = AutorTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Menu'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\Autor'), 0, $e);
         }
     }
 
@@ -640,13 +792,13 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(AutorTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildMenuQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildAutorQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -656,7 +808,9 @@ abstract class Menu implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collMenuItems = null;
+            $this->collPages = null;
+
+            $this->collPosts = null;
 
         } // if (deep)
     }
@@ -667,8 +821,8 @@ abstract class Menu implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Menu::setDeleted()
-     * @see Menu::isDeleted()
+     * @see Autor::setDeleted()
+     * @see Autor::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -677,11 +831,11 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(AutorTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildMenuQuery::create()
+            $deleteQuery = ChildAutorQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -712,7 +866,7 @@ abstract class Menu implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MenuTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(AutorTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -731,7 +885,7 @@ abstract class Menu implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                MenuTableMap::addInstanceToPool($this);
+                AutorTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -768,17 +922,34 @@ abstract class Menu implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->menuItemsScheduledForDeletion !== null) {
-                if (!$this->menuItemsScheduledForDeletion->isEmpty()) {
-                    \Table\Model\MenuItemQuery::create()
-                        ->filterByPrimaryKeys($this->menuItemsScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->pagesScheduledForDeletion !== null) {
+                if (!$this->pagesScheduledForDeletion->isEmpty()) {
+                    \Table\Model\PageQuery::create()
+                        ->filterByPrimaryKeys($this->pagesScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->menuItemsScheduledForDeletion = null;
+                    $this->pagesScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collMenuItems !== null) {
-                foreach ($this->collMenuItems as $referrerFK) {
+            if ($this->collPages !== null) {
+                foreach ($this->collPages as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->postsScheduledForDeletion !== null) {
+                if (!$this->postsScheduledForDeletion->isEmpty()) {
+                    \Table\Model\PostQuery::create()
+                        ->filterByPrimaryKeys($this->postsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->postsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPosts !== null) {
+                foreach ($this->collPosts as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -805,33 +976,45 @@ abstract class Menu implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[MenuTableMap::COL_ID] = true;
+        $this->modifiedColumns[AutorTableMap::COL_ID] = true;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MenuTableMap::COL_ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . AutorTableMap::COL_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
+        if ($this->isColumnModified(AutorTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_NOME)) {
+        if ($this->isColumnModified(AutorTableMap::COL_NOME)) {
             $modifiedColumns[':p' . $index++]  = 'nome';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_PRINCIPAL)) {
-            $modifiedColumns[':p' . $index++]  = 'principal';
+        if ($this->isColumnModified(AutorTableMap::COL_EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DADOS)) {
+        if ($this->isColumnModified(AutorTableMap::COL_USUARIO)) {
+            $modifiedColumns[':p' . $index++]  = 'usuario';
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_SENHA)) {
+            $modifiedColumns[':p' . $index++]  = 'senha';
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_SALT)) {
+            $modifiedColumns[':p' . $index++]  = 'salt';
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DESCRICAO)) {
+            $modifiedColumns[':p' . $index++]  = 'descricao';
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DADOS)) {
             $modifiedColumns[':p' . $index++]  = 'dados';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_INCLUSAO)) {
+        if ($this->isColumnModified(AutorTableMap::COL_DH_INCLUSAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_ALTERACAO)) {
+        if ($this->isColumnModified(AutorTableMap::COL_DH_ALTERACAO)) {
             $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
         }
 
         $sql = sprintf(
-            'INSERT INTO menu (%s) VALUES (%s)',
+            'INSERT INTO autor (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -846,8 +1029,20 @@ abstract class Menu implements ActiveRecordInterface
                     case 'nome':                        
                         $stmt->bindValue($identifier, $this->nome, PDO::PARAM_STR);
                         break;
-                    case 'principal':
-                        $stmt->bindValue($identifier, (int) $this->principal, PDO::PARAM_INT);
+                    case 'email':                        
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case 'usuario':                        
+                        $stmt->bindValue($identifier, $this->usuario, PDO::PARAM_STR);
+                        break;
+                    case 'senha':                        
+                        $stmt->bindValue($identifier, $this->senha, PDO::PARAM_STR);
+                        break;
+                    case 'salt':                        
+                        $stmt->bindValue($identifier, $this->salt, PDO::PARAM_STR);
+                        break;
+                    case 'descricao':                        
+                        $stmt->bindValue($identifier, $this->descricao, PDO::PARAM_STR);
                         break;
                     case 'dados':                        
                         $stmt->bindValue($identifier, $this->dados, PDO::PARAM_STR);
@@ -904,7 +1099,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = AutorTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -927,15 +1122,27 @@ abstract class Menu implements ActiveRecordInterface
                 return $this->getNome();
                 break;
             case 2:
-                return $this->getPrincipal();
+                return $this->getEmail();
                 break;
             case 3:
-                return $this->getDados();
+                return $this->getUsuario();
                 break;
             case 4:
-                return $this->getDhInclusao();
+                return $this->getSenha();
                 break;
             case 5:
+                return $this->getSalt();
+                break;
+            case 6:
+                return $this->getDescricao();
+                break;
+            case 7:
+                return $this->getDados();
+                break;
+            case 8:
+                return $this->getDhInclusao();
+                break;
+            case 9:
                 return $this->getDhAlteracao();
                 break;
             default:
@@ -962,18 +1169,22 @@ abstract class Menu implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Menu'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Autor'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Menu'][$this->hashCode()] = true;
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Autor'][$this->hashCode()] = true;
+        $keys = AutorTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getNome(),
-            $keys[2] => $this->getPrincipal(),
-            $keys[3] => $this->getDados(),
-            $keys[4] => $this->getDhInclusao(),
-            $keys[5] => $this->getDhAlteracao(),
+            $keys[2] => $this->getEmail(),
+            $keys[3] => $this->getUsuario(),
+            $keys[4] => $this->getSenha(),
+            $keys[5] => $this->getSalt(),
+            $keys[6] => $this->getDescricao(),
+            $keys[7] => $this->getDados(),
+            $keys[8] => $this->getDhInclusao(),
+            $keys[9] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -981,20 +1192,35 @@ abstract class Menu implements ActiveRecordInterface
         }
         
         if ($includeForeignObjects) {
-            if (null !== $this->collMenuItems) {
+            if (null !== $this->collPages) {
                 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'menuItems';
+                        $key = 'pages';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'menu_items';
+                        $key = 'pages';
                         break;
                     default:
-                        $key = 'MenuItems';
+                        $key = 'Pages';
                 }
         
-                $result[$key] = $this->collMenuItems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->collPages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPosts) {
+                
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'posts';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'posts';
+                        break;
+                    default:
+                        $key = 'Posts';
+                }
+        
+                $result[$key] = $this->collPosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1010,11 +1236,11 @@ abstract class Menu implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Table\Model\Menu
+     * @return $this|\Table\Model\Autor
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MenuTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = AutorTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1025,7 +1251,7 @@ abstract class Menu implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Table\Model\Menu
+     * @return $this|\Table\Model\Autor
      */
     public function setByPosition($pos, $value)
     {
@@ -1037,15 +1263,27 @@ abstract class Menu implements ActiveRecordInterface
                 $this->setNome($value);
                 break;
             case 2:
-                $this->setPrincipal($value);
+                $this->setEmail($value);
                 break;
             case 3:
-                $this->setDados($value);
+                $this->setUsuario($value);
                 break;
             case 4:
-                $this->setDhInclusao($value);
+                $this->setSenha($value);
                 break;
             case 5:
+                $this->setSalt($value);
+                break;
+            case 6:
+                $this->setDescricao($value);
+                break;
+            case 7:
+                $this->setDados($value);
+                break;
+            case 8:
+                $this->setDhInclusao($value);
+                break;
+            case 9:
                 $this->setDhAlteracao($value);
                 break;
         } // switch()
@@ -1072,7 +1310,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = MenuTableMap::getFieldNames($keyType);
+        $keys = AutorTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
@@ -1081,16 +1319,28 @@ abstract class Menu implements ActiveRecordInterface
             $this->setNome($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPrincipal($arr[$keys[2]]);
+            $this->setEmail($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDados($arr[$keys[3]]);
+            $this->setUsuario($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDhInclusao($arr[$keys[4]]);
+            $this->setSenha($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setDhAlteracao($arr[$keys[5]]);
+            $this->setSalt($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setDescricao($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setDados($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setDhInclusao($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setDhAlteracao($arr[$keys[9]]);
         }
     }
 
@@ -1111,7 +1361,7 @@ abstract class Menu implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Table\Model\Menu The current object, for fluid interface
+     * @return $this|\Table\Model\Autor The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1131,25 +1381,37 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(MenuTableMap::DATABASE_NAME);
+        $criteria = new Criteria(AutorTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(MenuTableMap::COL_ID)) {
-            $criteria->add(MenuTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(AutorTableMap::COL_ID)) {
+            $criteria->add(AutorTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_NOME)) {
-            $criteria->add(MenuTableMap::COL_NOME, $this->nome);
+        if ($this->isColumnModified(AutorTableMap::COL_NOME)) {
+            $criteria->add(AutorTableMap::COL_NOME, $this->nome);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_PRINCIPAL)) {
-            $criteria->add(MenuTableMap::COL_PRINCIPAL, $this->principal);
+        if ($this->isColumnModified(AutorTableMap::COL_EMAIL)) {
+            $criteria->add(AutorTableMap::COL_EMAIL, $this->email);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DADOS)) {
-            $criteria->add(MenuTableMap::COL_DADOS, $this->dados);
+        if ($this->isColumnModified(AutorTableMap::COL_USUARIO)) {
+            $criteria->add(AutorTableMap::COL_USUARIO, $this->usuario);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_INCLUSAO)) {
-            $criteria->add(MenuTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
+        if ($this->isColumnModified(AutorTableMap::COL_SENHA)) {
+            $criteria->add(AutorTableMap::COL_SENHA, $this->senha);
         }
-        if ($this->isColumnModified(MenuTableMap::COL_DH_ALTERACAO)) {
-            $criteria->add(MenuTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
+        if ($this->isColumnModified(AutorTableMap::COL_SALT)) {
+            $criteria->add(AutorTableMap::COL_SALT, $this->salt);
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DESCRICAO)) {
+            $criteria->add(AutorTableMap::COL_DESCRICAO, $this->descricao);
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DADOS)) {
+            $criteria->add(AutorTableMap::COL_DADOS, $this->dados);
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DH_INCLUSAO)) {
+            $criteria->add(AutorTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
+        }
+        if ($this->isColumnModified(AutorTableMap::COL_DH_ALTERACAO)) {
+            $criteria->add(AutorTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
         }
 
         return $criteria;
@@ -1167,8 +1429,8 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildMenuQuery::create();
-        $criteria->add(MenuTableMap::COL_ID, $this->id);
+        $criteria = ChildAutorQuery::create();
+        $criteria->add(AutorTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1230,7 +1492,7 @@ abstract class Menu implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Table\Model\Menu (or compatible) type.
+     * @param      object $copyObj An object of \Table\Model\Autor (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1238,7 +1500,11 @@ abstract class Menu implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setNome($this->getNome());
-        $copyObj->setPrincipal($this->getPrincipal());
+        $copyObj->setEmail($this->getEmail());
+        $copyObj->setUsuario($this->getUsuario());
+        $copyObj->setSenha($this->getSenha());
+        $copyObj->setSalt($this->getSalt());
+        $copyObj->setDescricao($this->getDescricao());
         $copyObj->setDados($this->getDados());
         $copyObj->setDhInclusao($this->getDhInclusao());
         $copyObj->setDhAlteracao($this->getDhAlteracao());
@@ -1248,9 +1514,15 @@ abstract class Menu implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getMenuItems() as $relObj) {
+            foreach ($this->getPages() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addMenuItem($relObj->copy($deepCopy));
+                    $copyObj->addPage($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPosts() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPost($relObj->copy($deepCopy));
                 }
             }
 
@@ -1271,7 +1543,7 @@ abstract class Menu implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Table\Model\Menu Clone of current object.
+     * @return \Table\Model\Autor Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1295,37 +1567,40 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('MenuItem' == $relationName) {
-            return $this->initMenuItems();
+        if ('Page' == $relationName) {
+            return $this->initPages();
+        }
+        if ('Post' == $relationName) {
+            return $this->initPosts();
         }
     }
 
     /**
-     * Clears out the collMenuItems collection
+     * Clears out the collPages collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addMenuItems()
+     * @see        addPages()
      */
-    public function clearMenuItems()
+    public function clearPages()
     {
-        $this->collMenuItems = null; // important to set this to NULL since that means it is uninitialized
+        $this->collPages = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collMenuItems collection loaded partially.
+     * Reset is the collPages collection loaded partially.
      */
-    public function resetPartialMenuItems($v = true)
+    public function resetPartialPages($v = true)
     {
-        $this->collMenuItemsPartial = $v;
+        $this->collPagesPartial = $v;
     }
 
     /**
-     * Initializes the collMenuItems collection.
+     * Initializes the collPages collection.
      *
-     * By default this just sets the collMenuItems collection to an empty array (like clearcollMenuItems());
+     * By default this just sets the collPages collection to an empty array (like clearcollPages());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1334,188 +1609,409 @@ abstract class Menu implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initMenuItems($overrideExisting = true)
+    public function initPages($overrideExisting = true)
     {
-        if (null !== $this->collMenuItems && !$overrideExisting) {
+        if (null !== $this->collPages && !$overrideExisting) {
             return;
         }
-        $this->collMenuItems = new ObjectCollection();
-        $this->collMenuItems->setModel('\Table\Model\MenuItem');
+        $this->collPages = new ObjectCollection();
+        $this->collPages->setModel('\Table\Model\Page');
     }
 
     /**
-     * Gets an array of ChildMenuItem objects which contain a foreign key that references this object.
+     * Gets an array of ChildPage objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildMenu is new, it will return
+     * If this ChildAutor is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildMenuItem[] List of ChildMenuItem objects
+     * @return ObjectCollection|ChildPage[] List of ChildPage objects
      * @throws PropelException
      */
-    public function getMenuItems(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getPages(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
+        $partial = $this->collPagesPartial && !$this->isNew();
+        if (null === $this->collPages || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPages) {
                 // return empty collection
-                $this->initMenuItems();
+                $this->initPages();
             } else {
-                $collMenuItems = ChildMenuItemQuery::create(null, $criteria)
-                    ->filterByMenu($this)
+                $collPages = ChildPageQuery::create(null, $criteria)
+                    ->filterByAutor($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collMenuItemsPartial && count($collMenuItems)) {
-                        $this->initMenuItems(false);
+                    if (false !== $this->collPagesPartial && count($collPages)) {
+                        $this->initPages(false);
 
-                        foreach ($collMenuItems as $obj) {
-                            if (false == $this->collMenuItems->contains($obj)) {
-                                $this->collMenuItems->append($obj);
+                        foreach ($collPages as $obj) {
+                            if (false == $this->collPages->contains($obj)) {
+                                $this->collPages->append($obj);
                             }
                         }
 
-                        $this->collMenuItemsPartial = true;
+                        $this->collPagesPartial = true;
                     }
 
-                    return $collMenuItems;
+                    return $collPages;
                 }
 
-                if ($partial && $this->collMenuItems) {
-                    foreach ($this->collMenuItems as $obj) {
+                if ($partial && $this->collPages) {
+                    foreach ($this->collPages as $obj) {
                         if ($obj->isNew()) {
-                            $collMenuItems[] = $obj;
+                            $collPages[] = $obj;
                         }
                     }
                 }
 
-                $this->collMenuItems = $collMenuItems;
-                $this->collMenuItemsPartial = false;
+                $this->collPages = $collPages;
+                $this->collPagesPartial = false;
             }
         }
 
-        return $this->collMenuItems;
+        return $this->collPages;
     }
 
     /**
-     * Sets a collection of ChildMenuItem objects related by a one-to-many relationship
+     * Sets a collection of ChildPage objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $menuItems A Propel collection.
+     * @param      Collection $pages A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildMenu The current object (for fluent API support)
+     * @return $this|ChildAutor The current object (for fluent API support)
      */
-    public function setMenuItems(Collection $menuItems, ConnectionInterface $con = null)
+    public function setPages(Collection $pages, ConnectionInterface $con = null)
     {
-        /** @var ChildMenuItem[] $menuItemsToDelete */
-        $menuItemsToDelete = $this->getMenuItems(new Criteria(), $con)->diff($menuItems);
+        /** @var ChildPage[] $pagesToDelete */
+        $pagesToDelete = $this->getPages(new Criteria(), $con)->diff($pages);
 
         
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->menuItemsScheduledForDeletion = clone $menuItemsToDelete;
+        $this->pagesScheduledForDeletion = clone $pagesToDelete;
 
-        foreach ($menuItemsToDelete as $menuItemRemoved) {
-            $menuItemRemoved->setMenu(null);
+        foreach ($pagesToDelete as $pageRemoved) {
+            $pageRemoved->setAutor(null);
         }
 
-        $this->collMenuItems = null;
-        foreach ($menuItems as $menuItem) {
-            $this->addMenuItem($menuItem);
+        $this->collPages = null;
+        foreach ($pages as $page) {
+            $this->addPage($page);
         }
 
-        $this->collMenuItems = $menuItems;
-        $this->collMenuItemsPartial = false;
+        $this->collPages = $pages;
+        $this->collPagesPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related MenuItem objects.
+     * Returns the number of related Page objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related MenuItem objects.
+     * @return int             Count of related Page objects.
      * @throws PropelException
      */
-    public function countMenuItems(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countPages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collMenuItemsPartial && !$this->isNew();
-        if (null === $this->collMenuItems || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collMenuItems) {
+        $partial = $this->collPagesPartial && !$this->isNew();
+        if (null === $this->collPages || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPages) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getMenuItems());
+                return count($this->getPages());
             }
 
-            $query = ChildMenuItemQuery::create(null, $criteria);
+            $query = ChildPageQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByMenu($this)
+                ->filterByAutor($this)
                 ->count($con);
         }
 
-        return count($this->collMenuItems);
+        return count($this->collPages);
     }
 
     /**
-     * Method called to associate a ChildMenuItem object to this object
-     * through the ChildMenuItem foreign key attribute.
+     * Method called to associate a ChildPage object to this object
+     * through the ChildPage foreign key attribute.
      *
-     * @param  ChildMenuItem $l ChildMenuItem
-     * @return $this|\Table\Model\Menu The current object (for fluent API support)
+     * @param  ChildPage $l ChildPage
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
      */
-    public function addMenuItem(ChildMenuItem $l)
+    public function addPage(ChildPage $l)
     {
-        if ($this->collMenuItems === null) {
-            $this->initMenuItems();
-            $this->collMenuItemsPartial = true;
+        if ($this->collPages === null) {
+            $this->initPages();
+            $this->collPagesPartial = true;
         }
 
-        if (!$this->collMenuItems->contains($l)) {
-            $this->doAddMenuItem($l);
+        if (!$this->collPages->contains($l)) {
+            $this->doAddPage($l);
         }
 
         return $this;
     }
 
     /**
-     * @param ChildMenuItem $menuItem The ChildMenuItem object to add.
+     * @param ChildPage $page The ChildPage object to add.
      */
-    protected function doAddMenuItem(ChildMenuItem $menuItem)
+    protected function doAddPage(ChildPage $page)
     {
-        $this->collMenuItems[]= $menuItem;
-        $menuItem->setMenu($this);
+        $this->collPages[]= $page;
+        $page->setAutor($this);
     }
 
     /**
-     * @param  ChildMenuItem $menuItem The ChildMenuItem object to remove.
-     * @return $this|ChildMenu The current object (for fluent API support)
+     * @param  ChildPage $page The ChildPage object to remove.
+     * @return $this|ChildAutor The current object (for fluent API support)
      */
-    public function removeMenuItem(ChildMenuItem $menuItem)
+    public function removePage(ChildPage $page)
     {
-        if ($this->getMenuItems()->contains($menuItem)) {
-            $pos = $this->collMenuItems->search($menuItem);
-            $this->collMenuItems->remove($pos);
-            if (null === $this->menuItemsScheduledForDeletion) {
-                $this->menuItemsScheduledForDeletion = clone $this->collMenuItems;
-                $this->menuItemsScheduledForDeletion->clear();
+        if ($this->getPages()->contains($page)) {
+            $pos = $this->collPages->search($page);
+            $this->collPages->remove($pos);
+            if (null === $this->pagesScheduledForDeletion) {
+                $this->pagesScheduledForDeletion = clone $this->collPages;
+                $this->pagesScheduledForDeletion->clear();
             }
-            $this->menuItemsScheduledForDeletion[]= clone $menuItem;
-            $menuItem->setMenu(null);
+            $this->pagesScheduledForDeletion[]= clone $page;
+            $page->setAutor(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Clears out the collPosts collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addPosts()
+     */
+    public function clearPosts()
+    {
+        $this->collPosts = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collPosts collection loaded partially.
+     */
+    public function resetPartialPosts($v = true)
+    {
+        $this->collPostsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPosts collection.
+     *
+     * By default this just sets the collPosts collection to an empty array (like clearcollPosts());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPosts($overrideExisting = true)
+    {
+        if (null !== $this->collPosts && !$overrideExisting) {
+            return;
+        }
+        $this->collPosts = new ObjectCollection();
+        $this->collPosts->setModel('\Table\Model\Post');
+    }
+
+    /**
+     * Gets an array of ChildPost objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildAutor is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildPost[] List of ChildPost objects
+     * @throws PropelException
+     */
+    public function getPosts(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPostsPartial && !$this->isNew();
+        if (null === $this->collPosts || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPosts) {
+                // return empty collection
+                $this->initPosts();
+            } else {
+                $collPosts = ChildPostQuery::create(null, $criteria)
+                    ->filterByAutor($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collPostsPartial && count($collPosts)) {
+                        $this->initPosts(false);
+
+                        foreach ($collPosts as $obj) {
+                            if (false == $this->collPosts->contains($obj)) {
+                                $this->collPosts->append($obj);
+                            }
+                        }
+
+                        $this->collPostsPartial = true;
+                    }
+
+                    return $collPosts;
+                }
+
+                if ($partial && $this->collPosts) {
+                    foreach ($this->collPosts as $obj) {
+                        if ($obj->isNew()) {
+                            $collPosts[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPosts = $collPosts;
+                $this->collPostsPartial = false;
+            }
+        }
+
+        return $this->collPosts;
+    }
+
+    /**
+     * Sets a collection of ChildPost objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $posts A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildAutor The current object (for fluent API support)
+     */
+    public function setPosts(Collection $posts, ConnectionInterface $con = null)
+    {
+        /** @var ChildPost[] $postsToDelete */
+        $postsToDelete = $this->getPosts(new Criteria(), $con)->diff($posts);
+
+        
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->postsScheduledForDeletion = clone $postsToDelete;
+
+        foreach ($postsToDelete as $postRemoved) {
+            $postRemoved->setAutor(null);
+        }
+
+        $this->collPosts = null;
+        foreach ($posts as $post) {
+            $this->addPost($post);
+        }
+
+        $this->collPosts = $posts;
+        $this->collPostsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Post objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Post objects.
+     * @throws PropelException
+     */
+    public function countPosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPostsPartial && !$this->isNew();
+        if (null === $this->collPosts || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPosts) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getPosts());
+            }
+
+            $query = ChildPostQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByAutor($this)
+                ->count($con);
+        }
+
+        return count($this->collPosts);
+    }
+
+    /**
+     * Method called to associate a ChildPost object to this object
+     * through the ChildPost foreign key attribute.
+     *
+     * @param  ChildPost $l ChildPost
+     * @return $this|\Table\Model\Autor The current object (for fluent API support)
+     */
+    public function addPost(ChildPost $l)
+    {
+        if ($this->collPosts === null) {
+            $this->initPosts();
+            $this->collPostsPartial = true;
+        }
+
+        if (!$this->collPosts->contains($l)) {
+            $this->doAddPost($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildPost $post The ChildPost object to add.
+     */
+    protected function doAddPost(ChildPost $post)
+    {
+        $this->collPosts[]= $post;
+        $post->setAutor($this);
+    }
+
+    /**
+     * @param  ChildPost $post The ChildPost object to remove.
+     * @return $this|ChildAutor The current object (for fluent API support)
+     */
+    public function removePost(ChildPost $post)
+    {
+        if ($this->getPosts()->contains($post)) {
+            $pos = $this->collPosts->search($post);
+            $this->collPosts->remove($pos);
+            if (null === $this->postsScheduledForDeletion) {
+                $this->postsScheduledForDeletion = clone $this->collPosts;
+                $this->postsScheduledForDeletion->clear();
+            }
+            $this->postsScheduledForDeletion[]= clone $post;
+            $post->setAutor(null);
         }
 
         return $this;
@@ -1530,7 +2026,11 @@ abstract class Menu implements ActiveRecordInterface
     {
         $this->id = null;
         $this->nome = null;
-        $this->principal = null;
+        $this->email = null;
+        $this->usuario = null;
+        $this->senha = null;
+        $this->salt = null;
+        $this->descricao = null;
         $this->dados = null;
         $this->dh_inclusao = null;
         $this->dh_alteracao = null;
@@ -1552,14 +2052,20 @@ abstract class Menu implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collMenuItems) {
-                foreach ($this->collMenuItems as $o) {
+            if ($this->collPages) {
+                foreach ($this->collPages as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collPosts) {
+                foreach ($this->collPosts as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
         } // if ($deep)
 
-        $this->collMenuItems = null;
+        $this->collPages = null;
+        $this->collPosts = null;
     }
 
     /**
@@ -1569,7 +2075,7 @@ abstract class Menu implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(MenuTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(AutorTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

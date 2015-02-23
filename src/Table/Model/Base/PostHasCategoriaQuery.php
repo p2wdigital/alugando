@@ -18,7 +18,7 @@ use Table\Model\Map\PostHasCategoriaTableMap;
 /**
  * Base class that represents a query for the 'post_has_categoria' table.
  *
- *
+ * 
  *
  * @method     ChildPostHasCategoriaQuery orderByPostId($order = Criteria::ASC) Order by the post_id column
  * @method     ChildPostHasCategoriaQuery orderByCategoriaId($order = Criteria::ASC) Order by the categoria_id column
@@ -149,8 +149,8 @@ abstract class PostHasCategoriaQuery extends ModelCriteria
     {
         $sql = 'SELECT post_id, categoria_id FROM post_has_categoria WHERE post_id = :p0 AND categoria_id = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -356,7 +356,7 @@ abstract class PostHasCategoriaQuery extends ModelCriteria
             }
 
             return $this
-                ->addUsingAlias(PostHasCategoriaTableMap::COL_POST_ID, $post->toKeyValue('PrimaryKey', 'Id'), $comparison);
+                ->addUsingAlias(PostHasCategoriaTableMap::COL_POST_ID, $post->toKeyValue('Id', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByPost() only accepts arguments of type \Table\Model\Post or Collection');
         }
@@ -558,9 +558,9 @@ abstract class PostHasCategoriaQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PostHasCategoriaTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PostHasCategoriaTableMap::clearRelatedInstancePool();
 

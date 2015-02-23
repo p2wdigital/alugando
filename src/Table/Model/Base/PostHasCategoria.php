@@ -25,11 +25,11 @@ use Table\Model\Map\PostHasCategoriaTableMap;
 /**
  * Base class that represents a row from the 'post_has_categoria' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class PostHasCategoria implements ActiveRecordInterface
+abstract class PostHasCategoria implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -312,7 +312,7 @@ abstract class PostHasCategoria implements ActiveRecordInterface
 
     /**
      * Get the [post_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPostId()
@@ -322,7 +322,7 @@ abstract class PostHasCategoria implements ActiveRecordInterface
 
     /**
      * Get the [categoria_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCategoriaId()
@@ -332,8 +332,8 @@ abstract class PostHasCategoria implements ActiveRecordInterface
 
     /**
      * Set the value of [post_id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\PostHasCategoria The current object (for fluent API support)
      */
     public function setPostId($v)
@@ -356,8 +356,8 @@ abstract class PostHasCategoria implements ActiveRecordInterface
 
     /**
      * Set the value of [categoria_id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\PostHasCategoria The current object (for fluent API support)
      */
     public function setCategoriaId($v)
@@ -664,10 +664,10 @@ abstract class PostHasCategoria implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'post_id':
+                    case 'post_id':                        
                         $stmt->bindValue($identifier, $this->post_id, PDO::PARAM_INT);
                         break;
-                    case 'categoria_id':
+                    case 'categoria_id':                        
                         $stmt->bindValue($identifier, $this->categoria_id, PDO::PARAM_INT);
                         break;
                 }
@@ -768,10 +768,10 @@ abstract class PostHasCategoria implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aPost) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'post';
@@ -782,11 +782,11 @@ abstract class PostHasCategoria implements ActiveRecordInterface
                     default:
                         $key = 'Post';
                 }
-
+        
                 $result[$key] = $this->aPost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aCategoria) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'categoria';
@@ -797,7 +797,7 @@ abstract class PostHasCategoria implements ActiveRecordInterface
                     default:
                         $key = 'Categoria';
                 }
-
+        
                 $result[$key] = $this->aCategoria->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -956,14 +956,14 @@ abstract class PostHasCategoria implements ActiveRecordInterface
         $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
 
-        //relation fk_post_has_categoria_post1 to table post
+        //relation fk_post_has_categoria1_post1 to table post
         if ($this->aPost && $hash = spl_object_hash($this->aPost)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
         }
 
-        //relation fk_post_has_categoria_categoria1 to table categoria
+        //relation fk_post_has_categoria1_categoria1 to table categoria
         if ($this->aCategoria && $hash = spl_object_hash($this->aCategoria)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -978,7 +978,7 @@ abstract class PostHasCategoria implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.
@@ -1094,7 +1094,9 @@ abstract class PostHasCategoria implements ActiveRecordInterface
     public function getPost(ConnectionInterface $con = null)
     {
         if ($this->aPost === null && ($this->post_id !== null)) {
-            $this->aPost = ChildPostQuery::create()->findPk($this->post_id, $con);
+            $this->aPost = ChildPostQuery::create()
+                ->filterByPostHasCategoria($this) // here
+                ->findOne($con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be

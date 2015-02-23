@@ -18,25 +18,31 @@ use Table\Model\Map\MenuItemTableMap;
 /**
  * Base class that represents a query for the 'menu_item' table.
  *
- *
+ * 
  *
  * @method     ChildMenuItemQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildMenuItemQuery orderByMenuId($order = Criteria::ASC) Order by the menu_id column
- * @method     ChildMenuItemQuery orderByPostId($order = Criteria::ASC) Order by the post_id column
+ * @method     ChildMenuItemQuery orderByRotulo($order = Criteria::ASC) Order by the rotulo column
+ * @method     ChildMenuItemQuery orderByTitle($order = Criteria::ASC) Order by the title column
  * @method     ChildMenuItemQuery orderByParent($order = Criteria::ASC) Order by the parent column
- * @method     ChildMenuItemQuery orderByTitulo($order = Criteria::ASC) Order by the titulo column
  * @method     ChildMenuItemQuery orderByTipo($order = Criteria::ASC) Order by the tipo column
- * @method     ChildMenuItemQuery orderByUrl($order = Criteria::ASC) Order by the url column
- * @method     ChildMenuItemQuery orderByData($order = Criteria::ASC) Order by the data column
+ * @method     ChildMenuItemQuery orderByTipoId($order = Criteria::ASC) Order by the tipo_id column
+ * @method     ChildMenuItemQuery orderByOrdem($order = Criteria::ASC) Order by the ordem column
+ * @method     ChildMenuItemQuery orderByDados($order = Criteria::ASC) Order by the dados column
+ * @method     ChildMenuItemQuery orderByDhInclusao($order = Criteria::ASC) Order by the dh_inclusao column
+ * @method     ChildMenuItemQuery orderByDhAlteracao($order = Criteria::ASC) Order by the dh_alteracao column
  *
  * @method     ChildMenuItemQuery groupById() Group by the id column
  * @method     ChildMenuItemQuery groupByMenuId() Group by the menu_id column
- * @method     ChildMenuItemQuery groupByPostId() Group by the post_id column
+ * @method     ChildMenuItemQuery groupByRotulo() Group by the rotulo column
+ * @method     ChildMenuItemQuery groupByTitle() Group by the title column
  * @method     ChildMenuItemQuery groupByParent() Group by the parent column
- * @method     ChildMenuItemQuery groupByTitulo() Group by the titulo column
  * @method     ChildMenuItemQuery groupByTipo() Group by the tipo column
- * @method     ChildMenuItemQuery groupByUrl() Group by the url column
- * @method     ChildMenuItemQuery groupByData() Group by the data column
+ * @method     ChildMenuItemQuery groupByTipoId() Group by the tipo_id column
+ * @method     ChildMenuItemQuery groupByOrdem() Group by the ordem column
+ * @method     ChildMenuItemQuery groupByDados() Group by the dados column
+ * @method     ChildMenuItemQuery groupByDhInclusao() Group by the dh_inclusao column
+ * @method     ChildMenuItemQuery groupByDhAlteracao() Group by the dh_alteracao column
  *
  * @method     ChildMenuItemQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildMenuItemQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -46,45 +52,50 @@ use Table\Model\Map\MenuItemTableMap;
  * @method     ChildMenuItemQuery rightJoinMenu($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Menu relation
  * @method     ChildMenuItemQuery innerJoinMenu($relationAlias = null) Adds a INNER JOIN clause to the query using the Menu relation
  *
- * @method     ChildMenuItemQuery leftJoinPost($relationAlias = null) Adds a LEFT JOIN clause to the query using the Post relation
- * @method     ChildMenuItemQuery rightJoinPost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Post relation
- * @method     ChildMenuItemQuery innerJoinPost($relationAlias = null) Adds a INNER JOIN clause to the query using the Post relation
- *
- * @method     \Table\Model\MenuQuery|\Table\Model\PostQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Table\Model\MenuQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildMenuItem findOne(ConnectionInterface $con = null) Return the first ChildMenuItem matching the query
  * @method     ChildMenuItem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMenuItem matching the query, or a new ChildMenuItem object populated from the query conditions when no match is found
  *
  * @method     ChildMenuItem findOneById(int $id) Return the first ChildMenuItem filtered by the id column
  * @method     ChildMenuItem findOneByMenuId(int $menu_id) Return the first ChildMenuItem filtered by the menu_id column
- * @method     ChildMenuItem findOneByPostId(int $post_id) Return the first ChildMenuItem filtered by the post_id column
+ * @method     ChildMenuItem findOneByRotulo(string $rotulo) Return the first ChildMenuItem filtered by the rotulo column
+ * @method     ChildMenuItem findOneByTitle(string $title) Return the first ChildMenuItem filtered by the title column
  * @method     ChildMenuItem findOneByParent(int $parent) Return the first ChildMenuItem filtered by the parent column
- * @method     ChildMenuItem findOneByTitulo(string $titulo) Return the first ChildMenuItem filtered by the titulo column
  * @method     ChildMenuItem findOneByTipo(string $tipo) Return the first ChildMenuItem filtered by the tipo column
- * @method     ChildMenuItem findOneByUrl(string $url) Return the first ChildMenuItem filtered by the url column
- * @method     ChildMenuItem findOneByData(string $data) Return the first ChildMenuItem filtered by the data column *
+ * @method     ChildMenuItem findOneByTipoId(int $tipo_id) Return the first ChildMenuItem filtered by the tipo_id column
+ * @method     ChildMenuItem findOneByOrdem(int $ordem) Return the first ChildMenuItem filtered by the ordem column
+ * @method     ChildMenuItem findOneByDados(string $dados) Return the first ChildMenuItem filtered by the dados column
+ * @method     ChildMenuItem findOneByDhInclusao(string $dh_inclusao) Return the first ChildMenuItem filtered by the dh_inclusao column
+ * @method     ChildMenuItem findOneByDhAlteracao(string $dh_alteracao) Return the first ChildMenuItem filtered by the dh_alteracao column *
 
  * @method     ChildMenuItem requirePk($key, ConnectionInterface $con = null) Return the ChildMenuItem by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenuItem requireOne(ConnectionInterface $con = null) Return the first ChildMenuItem matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMenuItem requireOneById(int $id) Return the first ChildMenuItem filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenuItem requireOneByMenuId(int $menu_id) Return the first ChildMenuItem filtered by the menu_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildMenuItem requireOneByPostId(int $post_id) Return the first ChildMenuItem filtered by the post_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByRotulo(string $rotulo) Return the first ChildMenuItem filtered by the rotulo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByTitle(string $title) Return the first ChildMenuItem filtered by the title column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenuItem requireOneByParent(int $parent) Return the first ChildMenuItem filtered by the parent column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildMenuItem requireOneByTitulo(string $titulo) Return the first ChildMenuItem filtered by the titulo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildMenuItem requireOneByTipo(string $tipo) Return the first ChildMenuItem filtered by the tipo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildMenuItem requireOneByUrl(string $url) Return the first ChildMenuItem filtered by the url column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildMenuItem requireOneByData(string $data) Return the first ChildMenuItem filtered by the data column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByTipoId(int $tipo_id) Return the first ChildMenuItem filtered by the tipo_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByOrdem(int $ordem) Return the first ChildMenuItem filtered by the ordem column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByDados(string $dados) Return the first ChildMenuItem filtered by the dados column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByDhInclusao(string $dh_inclusao) Return the first ChildMenuItem filtered by the dh_inclusao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildMenuItem requireOneByDhAlteracao(string $dh_alteracao) Return the first ChildMenuItem filtered by the dh_alteracao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildMenuItem[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMenuItem objects based on current ModelCriteria
  * @method     ChildMenuItem[]|ObjectCollection findById(int $id) Return ChildMenuItem objects filtered by the id column
  * @method     ChildMenuItem[]|ObjectCollection findByMenuId(int $menu_id) Return ChildMenuItem objects filtered by the menu_id column
- * @method     ChildMenuItem[]|ObjectCollection findByPostId(int $post_id) Return ChildMenuItem objects filtered by the post_id column
+ * @method     ChildMenuItem[]|ObjectCollection findByRotulo(string $rotulo) Return ChildMenuItem objects filtered by the rotulo column
+ * @method     ChildMenuItem[]|ObjectCollection findByTitle(string $title) Return ChildMenuItem objects filtered by the title column
  * @method     ChildMenuItem[]|ObjectCollection findByParent(int $parent) Return ChildMenuItem objects filtered by the parent column
- * @method     ChildMenuItem[]|ObjectCollection findByTitulo(string $titulo) Return ChildMenuItem objects filtered by the titulo column
  * @method     ChildMenuItem[]|ObjectCollection findByTipo(string $tipo) Return ChildMenuItem objects filtered by the tipo column
- * @method     ChildMenuItem[]|ObjectCollection findByUrl(string $url) Return ChildMenuItem objects filtered by the url column
- * @method     ChildMenuItem[]|ObjectCollection findByData(string $data) Return ChildMenuItem objects filtered by the data column
+ * @method     ChildMenuItem[]|ObjectCollection findByTipoId(int $tipo_id) Return ChildMenuItem objects filtered by the tipo_id column
+ * @method     ChildMenuItem[]|ObjectCollection findByOrdem(int $ordem) Return ChildMenuItem objects filtered by the ordem column
+ * @method     ChildMenuItem[]|ObjectCollection findByDados(string $dados) Return ChildMenuItem objects filtered by the dados column
+ * @method     ChildMenuItem[]|ObjectCollection findByDhInclusao(string $dh_inclusao) Return ChildMenuItem objects filtered by the dh_inclusao column
+ * @method     ChildMenuItem[]|ObjectCollection findByDhAlteracao(string $dh_alteracao) Return ChildMenuItem objects filtered by the dh_alteracao column
  * @method     ChildMenuItem[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -177,10 +188,10 @@ abstract class MenuItemQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, menu_id, post_id, parent, titulo, tipo, url, data FROM menu_item WHERE id = :p0 AND menu_id = :p1';
+        $sql = 'SELECT id, menu_id, rotulo, title, parent, tipo, tipo_id, ordem, dados, dh_inclusao, dh_alteracao FROM menu_item WHERE id = :p0 AND menu_id = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -364,46 +375,61 @@ abstract class MenuItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the post_id column
+     * Filter the query on the rotulo column
      *
      * Example usage:
      * <code>
-     * $query->filterByPostId(1234); // WHERE post_id = 1234
-     * $query->filterByPostId(array(12, 34)); // WHERE post_id IN (12, 34)
-     * $query->filterByPostId(array('min' => 12)); // WHERE post_id > 12
+     * $query->filterByRotulo('fooValue');   // WHERE rotulo = 'fooValue'
+     * $query->filterByRotulo('%fooValue%'); // WHERE rotulo LIKE '%fooValue%'
      * </code>
      *
-     * @see       filterByPost()
-     *
-     * @param     mixed $postId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $rotulo The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMenuItemQuery The current query, for fluid interface
      */
-    public function filterByPostId($postId = null, $comparison = null)
+    public function filterByRotulo($rotulo = null, $comparison = null)
     {
-        if (is_array($postId)) {
-            $useMinMax = false;
-            if (isset($postId['min'])) {
-                $this->addUsingAlias(MenuItemTableMap::COL_POST_ID, $postId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($postId['max'])) {
-                $this->addUsingAlias(MenuItemTableMap::COL_POST_ID, $postId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
+        if (null === $comparison) {
+            if (is_array($rotulo)) {
                 $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $rotulo)) {
+                $rotulo = str_replace('*', '%', $rotulo);
+                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(MenuItemTableMap::COL_POST_ID, $postId, $comparison);
+        return $this->addUsingAlias(MenuItemTableMap::COL_ROTULO, $rotulo, $comparison);
+    }
+
+    /**
+     * Filter the query on the title column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTitle('fooValue');   // WHERE title = 'fooValue'
+     * $query->filterByTitle('%fooValue%'); // WHERE title LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $title The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMenuItemQuery The current query, for fluid interface
+     */
+    public function filterByTitle($title = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($title)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $title)) {
+                $title = str_replace('*', '%', $title);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MenuItemTableMap::COL_TITLE, $title, $comparison);
     }
 
     /**
@@ -448,35 +474,6 @@ abstract class MenuItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the titulo column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByTitulo('fooValue');   // WHERE titulo = 'fooValue'
-     * $query->filterByTitulo('%fooValue%'); // WHERE titulo LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $titulo The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildMenuItemQuery The current query, for fluid interface
-     */
-    public function filterByTitulo($titulo = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($titulo)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $titulo)) {
-                $titulo = str_replace('*', '%', $titulo);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(MenuItemTableMap::COL_TITULO, $titulo, $comparison);
-    }
-
-    /**
      * Filter the query on the tipo column
      *
      * Example usage:
@@ -506,61 +503,172 @@ abstract class MenuItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the url column
+     * Filter the query on the tipo_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByUrl('fooValue');   // WHERE url = 'fooValue'
-     * $query->filterByUrl('%fooValue%'); // WHERE url LIKE '%fooValue%'
+     * $query->filterByTipoId(1234); // WHERE tipo_id = 1234
+     * $query->filterByTipoId(array(12, 34)); // WHERE tipo_id IN (12, 34)
+     * $query->filterByTipoId(array('min' => 12)); // WHERE tipo_id > 12
      * </code>
      *
-     * @param     string $url The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $tipoId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMenuItemQuery The current query, for fluid interface
      */
-    public function filterByUrl($url = null, $comparison = null)
+    public function filterByTipoId($tipoId = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($url)) {
+        if (is_array($tipoId)) {
+            $useMinMax = false;
+            if (isset($tipoId['min'])) {
+                $this->addUsingAlias(MenuItemTableMap::COL_TIPO_ID, $tipoId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($tipoId['max'])) {
+                $this->addUsingAlias(MenuItemTableMap::COL_TIPO_ID, $tipoId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $url)) {
-                $url = str_replace('*', '%', $url);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(MenuItemTableMap::COL_URL, $url, $comparison);
+        return $this->addUsingAlias(MenuItemTableMap::COL_TIPO_ID, $tipoId, $comparison);
     }
 
     /**
-     * Filter the query on the data column
+     * Filter the query on the ordem column
      *
      * Example usage:
      * <code>
-     * $query->filterByData('fooValue');   // WHERE data = 'fooValue'
-     * $query->filterByData('%fooValue%'); // WHERE data LIKE '%fooValue%'
+     * $query->filterByOrdem(1234); // WHERE ordem = 1234
+     * $query->filterByOrdem(array(12, 34)); // WHERE ordem IN (12, 34)
+     * $query->filterByOrdem(array('min' => 12)); // WHERE ordem > 12
      * </code>
      *
-     * @param     string $data The value to use as filter.
+     * @param     mixed $ordem The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMenuItemQuery The current query, for fluid interface
+     */
+    public function filterByOrdem($ordem = null, $comparison = null)
+    {
+        if (is_array($ordem)) {
+            $useMinMax = false;
+            if (isset($ordem['min'])) {
+                $this->addUsingAlias(MenuItemTableMap::COL_ORDEM, $ordem['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($ordem['max'])) {
+                $this->addUsingAlias(MenuItemTableMap::COL_ORDEM, $ordem['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MenuItemTableMap::COL_ORDEM, $ordem, $comparison);
+    }
+
+    /**
+     * Filter the query on the dados column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDados('fooValue');   // WHERE dados = 'fooValue'
+     * $query->filterByDados('%fooValue%'); // WHERE dados LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dados The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildMenuItemQuery The current query, for fluid interface
      */
-    public function filterByData($data = null, $comparison = null)
+    public function filterByDados($dados = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($data)) {
+            if (is_array($dados)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $data)) {
-                $data = str_replace('*', '%', $data);
+            } elseif (preg_match('/[\%\*]/', $dados)) {
+                $dados = str_replace('*', '%', $dados);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(MenuItemTableMap::COL_DATA, $data, $comparison);
+        return $this->addUsingAlias(MenuItemTableMap::COL_DADOS, $dados, $comparison);
+    }
+
+    /**
+     * Filter the query on the dh_inclusao column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDhInclusao('fooValue');   // WHERE dh_inclusao = 'fooValue'
+     * $query->filterByDhInclusao('%fooValue%'); // WHERE dh_inclusao LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dhInclusao The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMenuItemQuery The current query, for fluid interface
+     */
+    public function filterByDhInclusao($dhInclusao = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($dhInclusao)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dhInclusao)) {
+                $dhInclusao = str_replace('*', '%', $dhInclusao);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MenuItemTableMap::COL_DH_INCLUSAO, $dhInclusao, $comparison);
+    }
+
+    /**
+     * Filter the query on the dh_alteracao column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDhAlteracao('fooValue');   // WHERE dh_alteracao = 'fooValue'
+     * $query->filterByDhAlteracao('%fooValue%'); // WHERE dh_alteracao LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $dhAlteracao The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMenuItemQuery The current query, for fluid interface
+     */
+    public function filterByDhAlteracao($dhAlteracao = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($dhAlteracao)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $dhAlteracao)) {
+                $dhAlteracao = str_replace('*', '%', $dhAlteracao);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MenuItemTableMap::COL_DH_ALTERACAO, $dhAlteracao, $comparison);
     }
 
     /**
@@ -641,83 +749,6 @@ abstract class MenuItemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Table\Model\Post object
-     *
-     * @param \Table\Model\Post|ObjectCollection $post The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildMenuItemQuery The current query, for fluid interface
-     */
-    public function filterByPost($post, $comparison = null)
-    {
-        if ($post instanceof \Table\Model\Post) {
-            return $this
-                ->addUsingAlias(MenuItemTableMap::COL_POST_ID, $post->getId(), $comparison);
-        } elseif ($post instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(MenuItemTableMap::COL_POST_ID, $post->toKeyValue('PrimaryKey', 'Id'), $comparison);
-        } else {
-            throw new PropelException('filterByPost() only accepts arguments of type \Table\Model\Post or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Post relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildMenuItemQuery The current query, for fluid interface
-     */
-    public function joinPost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Post');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Post');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Post relation Post object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \Table\Model\PostQuery A secondary query class using the current class as primary query
-     */
-    public function usePostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPost($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Post', '\Table\Model\PostQuery');
-    }
-
-    /**
      * Exclude object from result
      *
      * @param   ChildMenuItem $menuItem Object to remove from the list of results
@@ -786,9 +817,9 @@ abstract class MenuItemQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             MenuItemTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             MenuItemTableMap::clearRelatedInstancePool();
 

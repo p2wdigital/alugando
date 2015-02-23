@@ -59,7 +59,7 @@ class CategoriaTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CategoriaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the id field
@@ -87,9 +87,29 @@ class CategoriaTableMap extends TableMap
     const COL_URL = 'categoria.url';
 
     /**
+     * the column name for the parent field
+     */
+    const COL_PARENT = 'categoria.parent';
+
+    /**
      * the column name for the descricao field
      */
     const COL_DESCRICAO = 'categoria.descricao';
+
+    /**
+     * the column name for the ordem field
+     */
+    const COL_ORDEM = 'categoria.ordem';
+
+    /**
+     * the column name for the dh_inclusao field
+     */
+    const COL_DH_INCLUSAO = 'categoria.dh_inclusao';
+
+    /**
+     * the column name for the dh_alteracao field
+     */
+    const COL_DH_ALTERACAO = 'categoria.dh_alteracao';
 
     /**
      * The default string format for model objects of the related table
@@ -103,11 +123,11 @@ class CategoriaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Nome', 'Url', 'Descricao', ),
-        self::TYPE_CAMELNAME     => array('id', 'nome', 'url', 'descricao', ),
-        self::TYPE_COLNAME       => array(CategoriaTableMap::COL_ID, CategoriaTableMap::COL_NOME, CategoriaTableMap::COL_URL, CategoriaTableMap::COL_DESCRICAO, ),
-        self::TYPE_FIELDNAME     => array('id', 'nome', 'url', 'descricao', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id', 'Nome', 'Url', 'Parent', 'Descricao', 'Ordem', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('id', 'nome', 'url', 'parent', 'descricao', 'ordem', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(CategoriaTableMap::COL_ID, CategoriaTableMap::COL_NOME, CategoriaTableMap::COL_URL, CategoriaTableMap::COL_PARENT, CategoriaTableMap::COL_DESCRICAO, CategoriaTableMap::COL_ORDEM, CategoriaTableMap::COL_DH_INCLUSAO, CategoriaTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('id', 'nome', 'url', 'parent', 'descricao', 'ordem', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -117,11 +137,11 @@ class CategoriaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Nome' => 1, 'Url' => 2, 'Descricao' => 3, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'nome' => 1, 'url' => 2, 'descricao' => 3, ),
-        self::TYPE_COLNAME       => array(CategoriaTableMap::COL_ID => 0, CategoriaTableMap::COL_NOME => 1, CategoriaTableMap::COL_URL => 2, CategoriaTableMap::COL_DESCRICAO => 3, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'nome' => 1, 'url' => 2, 'descricao' => 3, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Nome' => 1, 'Url' => 2, 'Parent' => 3, 'Descricao' => 4, 'Ordem' => 5, 'DhInclusao' => 6, 'DhAlteracao' => 7, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'nome' => 1, 'url' => 2, 'parent' => 3, 'descricao' => 4, 'ordem' => 5, 'dhInclusao' => 6, 'dhAlteracao' => 7, ),
+        self::TYPE_COLNAME       => array(CategoriaTableMap::COL_ID => 0, CategoriaTableMap::COL_NOME => 1, CategoriaTableMap::COL_URL => 2, CategoriaTableMap::COL_PARENT => 3, CategoriaTableMap::COL_DESCRICAO => 4, CategoriaTableMap::COL_ORDEM => 5, CategoriaTableMap::COL_DH_INCLUSAO => 6, CategoriaTableMap::COL_DH_ALTERACAO => 7, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'nome' => 1, 'url' => 2, 'parent' => 3, 'descricao' => 4, 'ordem' => 5, 'dh_inclusao' => 6, 'dh_alteracao' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -142,9 +162,13 @@ class CategoriaTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('nome', 'Nome', 'VARCHAR', true, 45, null);
-        $this->addColumn('url', 'Url', 'VARCHAR', true, 100, null);
-        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('nome', 'Nome', 'VARCHAR', true, 80, null);
+        $this->addColumn('url', 'Url', 'VARCHAR', true, 80, null);
+        $this->addColumn('parent', 'Parent', 'INTEGER', true, null, null);
+        $this->addColumn('descricao', 'Descricao', 'LONGVARCHAR', true, null, null);
+        $this->addColumn('ordem', 'Ordem', 'INTEGER', false, null, null);
+        $this->addColumn('dh_inclusao', 'DhInclusao', 'VARCHAR', false, 255, null);
+        $this->addColumn('dh_alteracao', 'DhAlteracao', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -159,7 +183,6 @@ class CategoriaTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'PostHasCategorias', false);
-        $this->addRelation('Post', '\\Table\\Model\\Post', RelationMap::MANY_TO_MANY, array(), null, null, 'Posts');
     } // buildRelations()
 
     /**
@@ -205,7 +228,7 @@ class CategoriaTableMap extends TableMap
                 : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -266,7 +289,7 @@ class CategoriaTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -306,12 +329,20 @@ class CategoriaTableMap extends TableMap
             $criteria->addSelectColumn(CategoriaTableMap::COL_ID);
             $criteria->addSelectColumn(CategoriaTableMap::COL_NOME);
             $criteria->addSelectColumn(CategoriaTableMap::COL_URL);
+            $criteria->addSelectColumn(CategoriaTableMap::COL_PARENT);
             $criteria->addSelectColumn(CategoriaTableMap::COL_DESCRICAO);
+            $criteria->addSelectColumn(CategoriaTableMap::COL_ORDEM);
+            $criteria->addSelectColumn(CategoriaTableMap::COL_DH_INCLUSAO);
+            $criteria->addSelectColumn(CategoriaTableMap::COL_DH_ALTERACAO);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.nome');
             $criteria->addSelectColumn($alias . '.url');
+            $criteria->addSelectColumn($alias . '.parent');
             $criteria->addSelectColumn($alias . '.descricao');
+            $criteria->addSelectColumn($alias . '.ordem');
+            $criteria->addSelectColumn($alias . '.dh_inclusao');
+            $criteria->addSelectColumn($alias . '.dh_alteracao');
         }
     }
 

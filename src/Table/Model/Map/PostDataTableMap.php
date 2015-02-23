@@ -59,7 +59,7 @@ class PostDataTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,7 @@ class PostDataTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
-
-    /**
-     * the column name for the id field
-     */
-    const COL_ID = 'post_data.id';
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the post_id field
@@ -87,9 +82,9 @@ class PostDataTableMap extends TableMap
     const COL_NAME = 'post_data.name';
 
     /**
-     * the column name for the data field
+     * the column name for the value field
      */
-    const COL_DATA = 'post_data.data';
+    const COL_VALUE = 'post_data.value';
 
     /**
      * the column name for the dh_inclusao field
@@ -113,11 +108,11 @@ class PostDataTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'PostId', 'Name', 'Data', 'DhInclusao', 'DhAlteracao', ),
-        self::TYPE_CAMELNAME     => array('id', 'postId', 'name', 'data', 'dhInclusao', 'dhAlteracao', ),
-        self::TYPE_COLNAME       => array(PostDataTableMap::COL_ID, PostDataTableMap::COL_POST_ID, PostDataTableMap::COL_NAME, PostDataTableMap::COL_DATA, PostDataTableMap::COL_DH_INCLUSAO, PostDataTableMap::COL_DH_ALTERACAO, ),
-        self::TYPE_FIELDNAME     => array('id', 'post_id', 'name', 'data', 'dh_inclusao', 'dh_alteracao', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('PostId', 'Name', 'Value', 'DhInclusao', 'DhAlteracao', ),
+        self::TYPE_CAMELNAME     => array('postId', 'name', 'value', 'dhInclusao', 'dhAlteracao', ),
+        self::TYPE_COLNAME       => array(PostDataTableMap::COL_POST_ID, PostDataTableMap::COL_NAME, PostDataTableMap::COL_VALUE, PostDataTableMap::COL_DH_INCLUSAO, PostDataTableMap::COL_DH_ALTERACAO, ),
+        self::TYPE_FIELDNAME     => array('post_id', 'name', 'value', 'dh_inclusao', 'dh_alteracao', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -127,11 +122,11 @@ class PostDataTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'PostId' => 1, 'Name' => 2, 'Data' => 3, 'DhInclusao' => 4, 'DhAlteracao' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'postId' => 1, 'name' => 2, 'data' => 3, 'dhInclusao' => 4, 'dhAlteracao' => 5, ),
-        self::TYPE_COLNAME       => array(PostDataTableMap::COL_ID => 0, PostDataTableMap::COL_POST_ID => 1, PostDataTableMap::COL_NAME => 2, PostDataTableMap::COL_DATA => 3, PostDataTableMap::COL_DH_INCLUSAO => 4, PostDataTableMap::COL_DH_ALTERACAO => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'post_id' => 1, 'name' => 2, 'data' => 3, 'dh_inclusao' => 4, 'dh_alteracao' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('PostId' => 0, 'Name' => 1, 'Value' => 2, 'DhInclusao' => 3, 'DhAlteracao' => 4, ),
+        self::TYPE_CAMELNAME     => array('postId' => 0, 'name' => 1, 'value' => 2, 'dhInclusao' => 3, 'dhAlteracao' => 4, ),
+        self::TYPE_COLNAME       => array(PostDataTableMap::COL_POST_ID => 0, PostDataTableMap::COL_NAME => 1, PostDataTableMap::COL_VALUE => 2, PostDataTableMap::COL_DH_INCLUSAO => 3, PostDataTableMap::COL_DH_ALTERACAO => 4, ),
+        self::TYPE_FIELDNAME     => array('post_id' => 0, 'name' => 1, 'value' => 2, 'dh_inclusao' => 3, 'dh_alteracao' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -151,10 +146,9 @@ class PostDataTableMap extends TableMap
         $this->setPackage('Table.Model');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignPrimaryKey('post_id', 'PostId', 'INTEGER' , 'post', 'id', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 45, null);
-        $this->addColumn('data', 'Data', 'LONGVARCHAR', false, null, null);
+        $this->addPrimaryKey('name', 'Name', 'VARCHAR', true, 45, null);
+        $this->addColumn('value', 'Value', 'LONGVARCHAR', true, null, null);
         $this->addColumn('dh_inclusao', 'DhInclusao', 'VARCHAR', false, 255, null);
         $this->addColumn('dh_alteracao', 'DhAlteracao', 'VARCHAR', false, 255, null);
     } // initialize()
@@ -188,7 +182,7 @@ class PostDataTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize(array((string) $obj->getId(), (string) $obj->getPostId()));
+                $key = serialize(array((string) $obj->getPostId(), (string) $obj->getName()));
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -208,7 +202,7 @@ class PostDataTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
             if (is_object($value) && $value instanceof \Table\Model\PostData) {
-                $key = serialize(array((string) $value->getId(), (string) $value->getPostId()));
+                $key = serialize(array((string) $value->getPostId(), (string) $value->getName()));
 
             } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
@@ -242,11 +236,11 @@ class PostDataTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -264,21 +258,21 @@ class PostDataTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-
+            
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)
         ];
-        $pks[] = (int) $row[
+        $pks[] = (string) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 1 + $offset
-                : self::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
         return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -339,7 +333,7 @@ class PostDataTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -376,17 +370,15 @@ class PostDataTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PostDataTableMap::COL_ID);
             $criteria->addSelectColumn(PostDataTableMap::COL_POST_ID);
             $criteria->addSelectColumn(PostDataTableMap::COL_NAME);
-            $criteria->addSelectColumn(PostDataTableMap::COL_DATA);
+            $criteria->addSelectColumn(PostDataTableMap::COL_VALUE);
             $criteria->addSelectColumn(PostDataTableMap::COL_DH_INCLUSAO);
             $criteria->addSelectColumn(PostDataTableMap::COL_DH_ALTERACAO);
         } else {
-            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.post_id');
             $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.data');
+            $criteria->addSelectColumn($alias . '.value');
             $criteria->addSelectColumn($alias . '.dh_inclusao');
             $criteria->addSelectColumn($alias . '.dh_alteracao');
         }
@@ -447,8 +439,8 @@ class PostDataTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(PostDataTableMap::COL_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(PostDataTableMap::COL_POST_ID, $value[1]));
+                $criterion = $criteria->getNewCriterion(PostDataTableMap::COL_POST_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(PostDataTableMap::COL_NAME, $value[1]));
                 $criteria->addOr($criterion);
             }
         }

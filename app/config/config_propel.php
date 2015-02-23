@@ -6,7 +6,7 @@ $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'settings' =>
   array (
-    'charset' => 'utf8',
+    'charset' => 'UTF8',
     'queries' =>
     array (
     ),

@@ -72,7 +72,7 @@ class Router
 				
 		//var_dump($matches);
 
-		$routeAux 	= $routeValues	= str_replace("/", "\/", $route['prefix'] .$route['route']);
+		$routeAux 	= $routeValues	= str_replace("/", "\/", rtrim($route['prefix'] .$route['route'],"/"));
 		$mask 		= $matches[0];
 		$routeKeys	= $matches[1];
 		
@@ -138,11 +138,14 @@ class Router
 		endif;
 
 		$aux = $route[$name]['prefix'].$route[$name]['route'];
-		//var_dump($aux);
+		
 		foreach ($params as $key => $value):
 			$aux = str_replace("{". $key ."}", $value, $aux);
 		endforeach;
-		
+		$aux = explode("{", $aux);
+		$aux = $aux[0];
+
+
 		if($relative):
 			return $this->request->getBase() . $aux;
 		else:

@@ -18,18 +18,16 @@ use Propel\Runtime\Parser\AbstractParser;
 use Table\Model\Menu as ChildMenu;
 use Table\Model\MenuItemQuery as ChildMenuItemQuery;
 use Table\Model\MenuQuery as ChildMenuQuery;
-use Table\Model\Post as ChildPost;
-use Table\Model\PostQuery as ChildPostQuery;
 use Table\Model\Map\MenuItemTableMap;
 
 /**
  * Base class that represents a row from the 'menu_item' table.
  *
- *
+ * 
  *
 * @package    propel.generator.Table.Model.Base
 */
-abstract class MenuItem implements ActiveRecordInterface
+abstract class MenuItem implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -76,10 +74,16 @@ abstract class MenuItem implements ActiveRecordInterface
     protected $menu_id;
 
     /**
-     * The value for the post_id field.
-     * @var        int
+     * The value for the rotulo field.
+     * @var        string
      */
-    protected $post_id;
+    protected $rotulo;
+
+    /**
+     * The value for the title field.
+     * @var        string
+     */
+    protected $title;
 
     /**
      * The value for the parent field.
@@ -88,38 +92,45 @@ abstract class MenuItem implements ActiveRecordInterface
     protected $parent;
 
     /**
-     * The value for the titulo field.
-     * @var        string
-     */
-    protected $titulo;
-
-    /**
      * The value for the tipo field.
      * @var        string
      */
     protected $tipo;
 
     /**
-     * The value for the url field.
-     * @var        string
+     * The value for the tipo_id field.
+     * @var        int
      */
-    protected $url;
+    protected $tipo_id;
 
     /**
-     * The value for the data field.
+     * The value for the ordem field.
+     * @var        int
+     */
+    protected $ordem;
+
+    /**
+     * The value for the dados field.
      * @var        string
      */
-    protected $data;
+    protected $dados;
+
+    /**
+     * The value for the dh_inclusao field.
+     * @var        string
+     */
+    protected $dh_inclusao;
+
+    /**
+     * The value for the dh_alteracao field.
+     * @var        string
+     */
+    protected $dh_alteracao;
 
     /**
      * @var        ChildMenu
      */
     protected $aMenu;
-
-    /**
-     * @var        ChildPost
-     */
-    protected $aPost;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -348,7 +359,7 @@ abstract class MenuItem implements ActiveRecordInterface
 
     /**
      * Get the [id] column value.
-     *
+     * 
      * @return int
      */
     public function getId()
@@ -358,7 +369,7 @@ abstract class MenuItem implements ActiveRecordInterface
 
     /**
      * Get the [menu_id] column value.
-     *
+     * 
      * @return int
      */
     public function getMenuId()
@@ -367,18 +378,28 @@ abstract class MenuItem implements ActiveRecordInterface
     }
 
     /**
-     * Get the [post_id] column value.
-     *
-     * @return int
+     * Get the [rotulo] column value.
+     * 
+     * @return string
      */
-    public function getPostId()
+    public function getRotulo()
     {
-        return $this->post_id;
+        return $this->rotulo;
+    }
+
+    /**
+     * Get the [title] column value.
+     * 
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
      * Get the [parent] column value.
-     *
+     * 
      * @return int
      */
     public function getParent()
@@ -387,18 +408,8 @@ abstract class MenuItem implements ActiveRecordInterface
     }
 
     /**
-     * Get the [titulo] column value.
-     *
-     * @return string
-     */
-    public function getTitulo()
-    {
-        return $this->titulo;
-    }
-
-    /**
      * Get the [tipo] column value.
-     *
+     * 
      * @return string
      */
     public function getTipo()
@@ -407,29 +418,59 @@ abstract class MenuItem implements ActiveRecordInterface
     }
 
     /**
-     * Get the [url] column value.
-     *
-     * @return string
+     * Get the [tipo_id] column value.
+     * 
+     * @return int
      */
-    public function getUrl()
+    public function getTipoId()
     {
-        return $this->url;
+        return $this->tipo_id;
     }
 
     /**
-     * Get the [data] column value.
-     *
+     * Get the [ordem] column value.
+     * 
+     * @return int
+     */
+    public function getOrdem()
+    {
+        return $this->ordem;
+    }
+
+    /**
+     * Get the [dados] column value.
+     * 
      * @return string
      */
-    public function getData()
+    public function getDados()
     {
-        return $this->data;
+        return $this->dados;
+    }
+
+    /**
+     * Get the [dh_inclusao] column value.
+     * 
+     * @return string
+     */
+    public function getDhInclusao()
+    {
+        return $this->dh_inclusao;
+    }
+
+    /**
+     * Get the [dh_alteracao] column value.
+     * 
+     * @return string
+     */
+    public function getDhAlteracao()
+    {
+        return $this->dh_alteracao;
     }
 
     /**
      * Set the value of [id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
     public function setId($v)
@@ -448,8 +489,8 @@ abstract class MenuItem implements ActiveRecordInterface
 
     /**
      * Set the value of [menu_id] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
     public function setMenuId($v)
@@ -471,33 +512,49 @@ abstract class MenuItem implements ActiveRecordInterface
     } // setMenuId()
 
     /**
-     * Set the value of [post_id] column.
-     *
-     * @param  int $v new value
+     * Set the value of [rotulo] column.
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
-    public function setPostId($v)
+    public function setRotulo($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->post_id !== $v) {
-            $this->post_id = $v;
-            $this->modifiedColumns[MenuItemTableMap::COL_POST_ID] = true;
-        }
-
-        if ($this->aPost !== null && $this->aPost->getId() !== $v) {
-            $this->aPost = null;
+        if ($this->rotulo !== $v) {
+            $this->rotulo = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_ROTULO] = true;
         }
 
         return $this;
-    } // setPostId()
+    } // setRotulo()
+
+    /**
+     * Set the value of [title] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
+     */
+    public function setTitle($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->title !== $v) {
+            $this->title = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_TITLE] = true;
+        }
+
+        return $this;
+    } // setTitle()
 
     /**
      * Set the value of [parent] column.
-     *
-     * @param  int $v new value
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
     public function setParent($v)
@@ -515,29 +572,9 @@ abstract class MenuItem implements ActiveRecordInterface
     } // setParent()
 
     /**
-     * Set the value of [titulo] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
-     */
-    public function setTitulo($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->titulo !== $v) {
-            $this->titulo = $v;
-            $this->modifiedColumns[MenuItemTableMap::COL_TITULO] = true;
-        }
-
-        return $this;
-    } // setTitulo()
-
-    /**
      * Set the value of [tipo] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param string $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
     public function setTipo($v)
@@ -555,44 +592,104 @@ abstract class MenuItem implements ActiveRecordInterface
     } // setTipo()
 
     /**
-     * Set the value of [url] column.
-     *
-     * @param  string $v new value
+     * Set the value of [tipo_id] column.
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
-    public function setUrl($v)
+    public function setTipoId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->url !== $v) {
-            $this->url = $v;
-            $this->modifiedColumns[MenuItemTableMap::COL_URL] = true;
+        if ($this->tipo_id !== $v) {
+            $this->tipo_id = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_TIPO_ID] = true;
         }
 
         return $this;
-    } // setUrl()
+    } // setTipoId()
 
     /**
-     * Set the value of [data] column.
-     *
-     * @param  string $v new value
+     * Set the value of [ordem] column.
+     * 
+     * @param int $v new value
      * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
      */
-    public function setData($v)
+    public function setOrdem($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->ordem !== $v) {
+            $this->ordem = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_ORDEM] = true;
+        }
+
+        return $this;
+    } // setOrdem()
+
+    /**
+     * Set the value of [dados] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
+     */
+    public function setDados($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->data !== $v) {
-            $this->data = $v;
-            $this->modifiedColumns[MenuItemTableMap::COL_DATA] = true;
+        if ($this->dados !== $v) {
+            $this->dados = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_DADOS] = true;
         }
 
         return $this;
-    } // setData()
+    } // setDados()
+
+    /**
+     * Set the value of [dh_inclusao] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
+     */
+    public function setDhInclusao($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->dh_inclusao !== $v) {
+            $this->dh_inclusao = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_DH_INCLUSAO] = true;
+        }
+
+        return $this;
+    } // setDhInclusao()
+
+    /**
+     * Set the value of [dh_alteracao] column.
+     * 
+     * @param string $v new value
+     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
+     */
+    public function setDhAlteracao($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->dh_alteracao !== $v) {
+            $this->dh_alteracao = $v;
+            $this->modifiedColumns[MenuItemTableMap::COL_DH_ALTERACAO] = true;
+        }
+
+        return $this;
+    } // setDhAlteracao()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -636,23 +733,32 @@ abstract class MenuItem implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MenuItemTableMap::translateFieldName('MenuId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->menu_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MenuItemTableMap::translateFieldName('PostId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->post_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MenuItemTableMap::translateFieldName('Rotulo', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->rotulo = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MenuItemTableMap::translateFieldName('Parent', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MenuItemTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->title = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MenuItemTableMap::translateFieldName('Parent', TableMap::TYPE_PHPNAME, $indexType)];
             $this->parent = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MenuItemTableMap::translateFieldName('Titulo', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->titulo = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MenuItemTableMap::translateFieldName('Tipo', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tipo = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MenuItemTableMap::translateFieldName('Url', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->url = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MenuItemTableMap::translateFieldName('TipoId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->tipo_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MenuItemTableMap::translateFieldName('Data', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->data = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MenuItemTableMap::translateFieldName('Ordem', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->ordem = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : MenuItemTableMap::translateFieldName('Dados', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->dados = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : MenuItemTableMap::translateFieldName('DhInclusao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->dh_inclusao = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : MenuItemTableMap::translateFieldName('DhAlteracao', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->dh_alteracao = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -661,7 +767,7 @@ abstract class MenuItem implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = MenuItemTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = MenuItemTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Table\\Model\\MenuItem'), 0, $e);
@@ -685,9 +791,6 @@ abstract class MenuItem implements ActiveRecordInterface
     {
         if ($this->aMenu !== null && $this->menu_id !== $this->aMenu->getId()) {
             $this->aMenu = null;
-        }
-        if ($this->aPost !== null && $this->post_id !== $this->aPost->getId()) {
-            $this->aPost = null;
         }
     } // ensureConsistency
 
@@ -729,7 +832,6 @@ abstract class MenuItem implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aMenu = null;
-            $this->aPost = null;
         } // if (deep)
     }
 
@@ -841,13 +943,6 @@ abstract class MenuItem implements ActiveRecordInterface
                 $this->setMenu($this->aMenu);
             }
 
-            if ($this->aPost !== null) {
-                if ($this->aPost->isModified() || $this->aPost->isNew()) {
-                    $affectedRows += $this->aPost->save($con);
-                }
-                $this->setPost($this->aPost);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -891,23 +986,32 @@ abstract class MenuItem implements ActiveRecordInterface
         if ($this->isColumnModified(MenuItemTableMap::COL_MENU_ID)) {
             $modifiedColumns[':p' . $index++]  = 'menu_id';
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_POST_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'post_id';
+        if ($this->isColumnModified(MenuItemTableMap::COL_ROTULO)) {
+            $modifiedColumns[':p' . $index++]  = 'rotulo';
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_TITLE)) {
+            $modifiedColumns[':p' . $index++]  = 'title';
         }
         if ($this->isColumnModified(MenuItemTableMap::COL_PARENT)) {
             $modifiedColumns[':p' . $index++]  = 'parent';
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_TITULO)) {
-            $modifiedColumns[':p' . $index++]  = 'titulo';
-        }
         if ($this->isColumnModified(MenuItemTableMap::COL_TIPO)) {
             $modifiedColumns[':p' . $index++]  = 'tipo';
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_URL)) {
-            $modifiedColumns[':p' . $index++]  = 'url';
+        if ($this->isColumnModified(MenuItemTableMap::COL_TIPO_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'tipo_id';
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_DATA)) {
-            $modifiedColumns[':p' . $index++]  = 'data';
+        if ($this->isColumnModified(MenuItemTableMap::COL_ORDEM)) {
+            $modifiedColumns[':p' . $index++]  = 'ordem';
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DADOS)) {
+            $modifiedColumns[':p' . $index++]  = 'dados';
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DH_INCLUSAO)) {
+            $modifiedColumns[':p' . $index++]  = 'dh_inclusao';
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DH_ALTERACAO)) {
+            $modifiedColumns[':p' . $index++]  = 'dh_alteracao';
         }
 
         $sql = sprintf(
@@ -920,29 +1024,38 @@ abstract class MenuItem implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'id':
+                    case 'id':                        
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'menu_id':
+                    case 'menu_id':                        
                         $stmt->bindValue($identifier, $this->menu_id, PDO::PARAM_INT);
                         break;
-                    case 'post_id':
-                        $stmt->bindValue($identifier, $this->post_id, PDO::PARAM_INT);
+                    case 'rotulo':                        
+                        $stmt->bindValue($identifier, $this->rotulo, PDO::PARAM_STR);
                         break;
-                    case 'parent':
+                    case 'title':                        
+                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+                        break;
+                    case 'parent':                        
                         $stmt->bindValue($identifier, $this->parent, PDO::PARAM_INT);
                         break;
-                    case 'titulo':
-                        $stmt->bindValue($identifier, $this->titulo, PDO::PARAM_STR);
-                        break;
-                    case 'tipo':
+                    case 'tipo':                        
                         $stmt->bindValue($identifier, $this->tipo, PDO::PARAM_STR);
                         break;
-                    case 'url':
-                        $stmt->bindValue($identifier, $this->url, PDO::PARAM_STR);
+                    case 'tipo_id':                        
+                        $stmt->bindValue($identifier, $this->tipo_id, PDO::PARAM_INT);
                         break;
-                    case 'data':
-                        $stmt->bindValue($identifier, $this->data, PDO::PARAM_STR);
+                    case 'ordem':                        
+                        $stmt->bindValue($identifier, $this->ordem, PDO::PARAM_INT);
+                        break;
+                    case 'dados':                        
+                        $stmt->bindValue($identifier, $this->dados, PDO::PARAM_STR);
+                        break;
+                    case 'dh_inclusao':                        
+                        $stmt->bindValue($identifier, $this->dh_inclusao, PDO::PARAM_STR);
+                        break;
+                    case 'dh_alteracao':                        
+                        $stmt->bindValue($identifier, $this->dh_alteracao, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1013,22 +1126,31 @@ abstract class MenuItem implements ActiveRecordInterface
                 return $this->getMenuId();
                 break;
             case 2:
-                return $this->getPostId();
+                return $this->getRotulo();
                 break;
             case 3:
-                return $this->getParent();
+                return $this->getTitle();
                 break;
             case 4:
-                return $this->getTitulo();
+                return $this->getParent();
                 break;
             case 5:
                 return $this->getTipo();
                 break;
             case 6:
-                return $this->getUrl();
+                return $this->getTipoId();
                 break;
             case 7:
-                return $this->getData();
+                return $this->getOrdem();
+                break;
+            case 8:
+                return $this->getDados();
+                break;
+            case 9:
+                return $this->getDhInclusao();
+                break;
+            case 10:
+                return $this->getDhAlteracao();
                 break;
             default:
                 return null;
@@ -1062,21 +1184,24 @@ abstract class MenuItem implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getMenuId(),
-            $keys[2] => $this->getPostId(),
-            $keys[3] => $this->getParent(),
-            $keys[4] => $this->getTitulo(),
+            $keys[2] => $this->getRotulo(),
+            $keys[3] => $this->getTitle(),
+            $keys[4] => $this->getParent(),
             $keys[5] => $this->getTipo(),
-            $keys[6] => $this->getUrl(),
-            $keys[7] => $this->getData(),
+            $keys[6] => $this->getTipoId(),
+            $keys[7] => $this->getOrdem(),
+            $keys[8] => $this->getDados(),
+            $keys[9] => $this->getDhInclusao(),
+            $keys[10] => $this->getDhAlteracao(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aMenu) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'menu';
@@ -1087,23 +1212,8 @@ abstract class MenuItem implements ActiveRecordInterface
                     default:
                         $key = 'Menu';
                 }
-
+        
                 $result[$key] = $this->aMenu->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aPost) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'post';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'post';
-                        break;
-                    default:
-                        $key = 'Post';
-                }
-
-                $result[$key] = $this->aPost->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1146,22 +1256,31 @@ abstract class MenuItem implements ActiveRecordInterface
                 $this->setMenuId($value);
                 break;
             case 2:
-                $this->setPostId($value);
+                $this->setRotulo($value);
                 break;
             case 3:
-                $this->setParent($value);
+                $this->setTitle($value);
                 break;
             case 4:
-                $this->setTitulo($value);
+                $this->setParent($value);
                 break;
             case 5:
                 $this->setTipo($value);
                 break;
             case 6:
-                $this->setUrl($value);
+                $this->setTipoId($value);
                 break;
             case 7:
-                $this->setData($value);
+                $this->setOrdem($value);
+                break;
+            case 8:
+                $this->setDados($value);
+                break;
+            case 9:
+                $this->setDhInclusao($value);
+                break;
+            case 10:
+                $this->setDhAlteracao($value);
                 break;
         } // switch()
 
@@ -1196,22 +1315,31 @@ abstract class MenuItem implements ActiveRecordInterface
             $this->setMenuId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPostId($arr[$keys[2]]);
+            $this->setRotulo($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setParent($arr[$keys[3]]);
+            $this->setTitle($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTitulo($arr[$keys[4]]);
+            $this->setParent($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setTipo($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUrl($arr[$keys[6]]);
+            $this->setTipoId($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setData($arr[$keys[7]]);
+            $this->setOrdem($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setDados($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setDhInclusao($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setDhAlteracao($arr[$keys[10]]);
         }
     }
 
@@ -1260,23 +1388,32 @@ abstract class MenuItem implements ActiveRecordInterface
         if ($this->isColumnModified(MenuItemTableMap::COL_MENU_ID)) {
             $criteria->add(MenuItemTableMap::COL_MENU_ID, $this->menu_id);
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_POST_ID)) {
-            $criteria->add(MenuItemTableMap::COL_POST_ID, $this->post_id);
+        if ($this->isColumnModified(MenuItemTableMap::COL_ROTULO)) {
+            $criteria->add(MenuItemTableMap::COL_ROTULO, $this->rotulo);
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_TITLE)) {
+            $criteria->add(MenuItemTableMap::COL_TITLE, $this->title);
         }
         if ($this->isColumnModified(MenuItemTableMap::COL_PARENT)) {
             $criteria->add(MenuItemTableMap::COL_PARENT, $this->parent);
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_TITULO)) {
-            $criteria->add(MenuItemTableMap::COL_TITULO, $this->titulo);
-        }
         if ($this->isColumnModified(MenuItemTableMap::COL_TIPO)) {
             $criteria->add(MenuItemTableMap::COL_TIPO, $this->tipo);
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_URL)) {
-            $criteria->add(MenuItemTableMap::COL_URL, $this->url);
+        if ($this->isColumnModified(MenuItemTableMap::COL_TIPO_ID)) {
+            $criteria->add(MenuItemTableMap::COL_TIPO_ID, $this->tipo_id);
         }
-        if ($this->isColumnModified(MenuItemTableMap::COL_DATA)) {
-            $criteria->add(MenuItemTableMap::COL_DATA, $this->data);
+        if ($this->isColumnModified(MenuItemTableMap::COL_ORDEM)) {
+            $criteria->add(MenuItemTableMap::COL_ORDEM, $this->ordem);
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DADOS)) {
+            $criteria->add(MenuItemTableMap::COL_DADOS, $this->dados);
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DH_INCLUSAO)) {
+            $criteria->add(MenuItemTableMap::COL_DH_INCLUSAO, $this->dh_inclusao);
+        }
+        if ($this->isColumnModified(MenuItemTableMap::COL_DH_ALTERACAO)) {
+            $criteria->add(MenuItemTableMap::COL_DH_ALTERACAO, $this->dh_alteracao);
         }
 
         return $criteria;
@@ -1315,7 +1452,7 @@ abstract class MenuItem implements ActiveRecordInterface
         $validPrimaryKeyFKs = 1;
         $primaryKeyFKs = [];
 
-        //relation fk_menu_item_menu to table menu
+        //relation fk_menu_item_menu1 to table menu
         if ($this->aMenu && $hash = spl_object_hash($this->aMenu)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -1330,7 +1467,7 @@ abstract class MenuItem implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.
@@ -1380,12 +1517,15 @@ abstract class MenuItem implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setMenuId($this->getMenuId());
-        $copyObj->setPostId($this->getPostId());
+        $copyObj->setRotulo($this->getRotulo());
+        $copyObj->setTitle($this->getTitle());
         $copyObj->setParent($this->getParent());
-        $copyObj->setTitulo($this->getTitulo());
         $copyObj->setTipo($this->getTipo());
-        $copyObj->setUrl($this->getUrl());
-        $copyObj->setData($this->getData());
+        $copyObj->setTipoId($this->getTipoId());
+        $copyObj->setOrdem($this->getOrdem());
+        $copyObj->setDados($this->getDados());
+        $copyObj->setDhInclusao($this->getDhInclusao());
+        $copyObj->setDhAlteracao($this->getDhAlteracao());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1466,57 +1606,6 @@ abstract class MenuItem implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildPost object.
-     *
-     * @param  ChildPost $v
-     * @return $this|\Table\Model\MenuItem The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setPost(ChildPost $v = null)
-    {
-        if ($v === null) {
-            $this->setPostId(NULL);
-        } else {
-            $this->setPostId($v->getId());
-        }
-
-        $this->aPost = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildPost object, it will not be re-added.
-        if ($v !== null) {
-            $v->addMenuItem($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildPost object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildPost The associated ChildPost object.
-     * @throws PropelException
-     */
-    public function getPost(ConnectionInterface $con = null)
-    {
-        if ($this->aPost === null && ($this->post_id !== null)) {
-            $this->aPost = ChildPostQuery::create()->findPk($this->post_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aPost->addMenuItems($this);
-             */
-        }
-
-        return $this->aPost;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1526,17 +1615,17 @@ abstract class MenuItem implements ActiveRecordInterface
         if (null !== $this->aMenu) {
             $this->aMenu->removeMenuItem($this);
         }
-        if (null !== $this->aPost) {
-            $this->aPost->removeMenuItem($this);
-        }
         $this->id = null;
         $this->menu_id = null;
-        $this->post_id = null;
+        $this->rotulo = null;
+        $this->title = null;
         $this->parent = null;
-        $this->titulo = null;
         $this->tipo = null;
-        $this->url = null;
-        $this->data = null;
+        $this->tipo_id = null;
+        $this->ordem = null;
+        $this->dados = null;
+        $this->dh_inclusao = null;
+        $this->dh_alteracao = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1558,7 +1647,6 @@ abstract class MenuItem implements ActiveRecordInterface
         } // if ($deep)
 
         $this->aMenu = null;
-        $this->aPost = null;
     }
 
     /**
