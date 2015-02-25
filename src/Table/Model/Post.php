@@ -17,14 +17,12 @@ use Table\Model\Base\Post as BasePost;
 class Post extends BasePost
 {
 
-
-
 	public function getListStatus(){
 		return array(
 			1=>'Pendente de Revisão',
 			2=>'Excluído',
 			3=>'Rascunho',
-			4=>'Publicado',
+			9=>'Publicado',
 		);
 	}
 
@@ -33,7 +31,7 @@ class Post extends BasePost
 		$rules = array();
 
 		$rules['titulo'] 	= array('NotBlank'=>array());
-		$rules['text']		= array('NotBlank'=>array());
+		$rules['content']	= array('NotBlank'=>array());
 		$rules['status']	= array('NotBlank'=>array());
 		$rules['url']		= array('NotBlank'=>array());
 

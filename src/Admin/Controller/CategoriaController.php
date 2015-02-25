@@ -41,14 +41,11 @@ class CategoriaController extends Controller
 	 */
 	public function insertAjaxAction(Request $request){
 		$categoria = new Categoria;
-		if($request->getMethod() != "POST"):
-			return new Response("Requisição Inválida", 400);
-		endif;			
-		$nome 	= trim($request->request->get('cate')->get('nome'));
+		$nome 	= $request->post->pull('cate.nome');
 		$url 	= strtolower(str_replace(" ", "-", $nome));
 
-		if (strlen(trim($nome)) == 0):
-			return  new Response("Nome da categoria deve ser preenchido", 400);
+		if (strlen($nome) == 0):
+			return new Response("Nome da categoria deve ser preenchido", 400);
 		endif;
 		$categoria->setNome($nome);
 		$categoria->setUrl($url);

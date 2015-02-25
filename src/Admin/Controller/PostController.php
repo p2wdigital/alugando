@@ -31,14 +31,14 @@ class PostController extends Controller
 	 * @Route("/insert", name="post_insert")
 	 */
 	public function insertAction(Request $request){
-		$type = $request->query->get('type', 'post');
-
+		
 		$post = new Post;
 		$form = new PostForm($post);
 
 		if ($request->getMethod() == "POST"):
 			$form->handleRequest($this->request);
 			if($form->isValid()):
+				$post->setAutorId(1);
 				$post->save();
 				return $this->redirect($this->generateUrl("post_update", array("id"=>$post->getId())));
 			endif;
@@ -52,12 +52,13 @@ class PostController extends Controller
 	 * @Regex({"id":"\d"})
 	 */
 	public function updateAction($id){
-		$post = PostQuery::create()->findPK($id);
+		$post = PostQuery::create()->filterById($id)->findOne();
 		$form = new PostForm($post);
 
 		if ($this->request->getMethod() == "POST"):
 			$form->handleRequest($this->request);
 			if($form->isValid()):
+				$post->setAutorId(1);
 				$post->save();
 			endif;
 		endif;		

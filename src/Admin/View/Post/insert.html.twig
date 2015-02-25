@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			
-			{{form_row(form.text)}}
+			{{form_row(form.content)}}
 		</div>
 	</div>	
 </div><!--/col-principal-->
@@ -82,7 +82,7 @@
     {{script(assert("/js/tinymce/tinymce.jquery.js"))}}
 	<script type="text/javascript">
 	tinymce.init({
-	    selector: "#post_text",
+	    selector: "#post_content",
 	    skin:"lightgray",
 	    content_css : "{{assert("/css/style.css")}}",
 	    language:"pt_BR",

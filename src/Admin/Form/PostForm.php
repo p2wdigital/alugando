@@ -27,8 +27,8 @@ class PostForm extends AbstractFormType
 		$form['titulo'] = $type->set('label', 'Título');
 						
 
-		$type = new Type\Textarea("post", 'text');
-		$form['text'] = $type->set('nolabel', true);
+		$type = new Type\Textarea("post", 'content');
+		$form['content'] = $type->set('nolabel', true);
 		
 		$type = new Type\Select('post', 'status');
 		$form['status'] = $type->set('empty_data','---')->set('empty_value', 0)->set('data', $this->data->getListStatus());
@@ -56,7 +56,7 @@ class PostForm extends AbstractFormType
 		$form = $this->form;
 
 		$form['titulo'] 	= $form['titulo']->set("value", $data->getTitulo())->getForm();
-		$form['text'] 		= $form['text']->set("value", $data->getContent())->getForm();
+		$form['content'] 	= $form['content']->set("value", $data->getContent())->getForm();
 		$form['status'] 	= $form['status']->set("value", $data->getStatus())->getForm();
 		$form['url'] 		= $form['url']->set("value", $data->getUrl())->getForm();
 
@@ -81,7 +81,7 @@ class PostForm extends AbstractFormType
 		$post = $_POST['post'];
 		
 		$data->setTitulo($post['titulo']);
-		$data->setText($post['text']);
+		$data->setContent($post['content']);
 		
 		$data->setStatus($post['status']);
 		$data->setUrl($post['url']);

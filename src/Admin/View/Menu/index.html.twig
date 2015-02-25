@@ -18,17 +18,19 @@
 				<div class="create-menu">
 					{# Se existe um menu, update #}
 					{% if menu is not empty %}
-						<label for="">Nome do Menu: </label>
-						<input type="text" class="form input-sm" id="nome" placeholder="Digite o Nome do Menu" value="{{menu.nome}}">
 						<div class="pull-right">
 							<button class="btn btn-warning btn-sm updateMenu">Salvar Menu</button>
 						</div>
+						<label for="">Nome do Menu: </label>
+						<input type="text" class="form input-sm" id="nome" name="nome_menu" placeholder="Digite o Nome do Menu" value="{{menu.nome}}">
+						<br><span class="erro_nome error"></span>
 					{% else %}
-   						<label for="">Nome do Menu: </label>
-						<input type="text" class="form input-sm" id="nome" placeholder="Digite o Nome do Menu">
 						<div class="pull-right">
 							<button class="btn btn-warning btn-sm addMenu">Criar Menu</button>
 						</div>
+   						<label for="">Nome do Menu: </label>
+   						<input type="text" class="form input-sm" id="nome" name="nome_menu" placeholder="Digite o Nome do Menu">
+   						<br><span class="erro_nome error"></span>
 					{% endif %}
 				</div>
 			</div><!--/heading-->
@@ -42,8 +44,19 @@
 				{% endif %}
 				<div class="">
 					<ul class="menu-sort">
-						<input type="hidden" name="menu_id" {% if menu is not empty %}value="{{menu.Id}}"{% endif %}>
 					</ul>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<h4>Opções do menu</h4>
+				<div class="checkbox menu-options">
+					<label for="">
+						<input type="checkbox" name="principal" {% if menu.principal %}checked="true"{% endif %}> Menu Principal
+					</label><br>
+					<label for="">
+						<input type="checkbox" name="add_auto" {% if menu.getData("add_auto") %}checked="true"{% endif %} > Adicionar automaticamente novas páginas?
+					</label>
+					<input type="hidden" name="menu_id" {% if menu is not empty %}value="{{menu.Id}}"{% endif %}>
 				</div>
 			</div>
 		</div>
@@ -56,25 +69,31 @@ jQuery(document).ready(function($) {
 
 
 	$(".addMenu").click(function(event) {
+		var data = $("#nome, .menu-options input").serialize();
 		$.ajax({
 			url: '{{path("menu_create")}}',
-			type: 'POST',
-			dataType: 'json',
-			data: {nome: $("#nome").val()},
+			type: 'POST', dataType: 'json', data: data,
 		}).done(function(ret) {
+			$(".erro_nome").html('');
+			if(ret.erro){
+				$(".erro_nome").html(ret.erro.nome);
+				alert("Ocorreu um erro ao criar o novo menu.");
+				return false;
+			}
+
 			$("input[name=menu_id]").val(ret.Id);
 			$(".msg").html("Adicione itens ao menu, utilizando o painel à esquerda!");
 			$(".group-panel").removeClass('disabled');
 			$(".addMenu").addClass('updateMenu').html("Salvar Menu").removeClass('addMenu');
-		}).fail(function(ret) {
-			alert("Erro na criação do Menu");
+		}).fail(function(ret, x) {
+			alert("Ocorreu um erro ao criar o novo menu, verifique as mensagens");
 		});
-	});
+	});//--/add-menu
 
 	$(".addPage").click(function(event) {
 		var data = $(this).closest('.panel-body').find('input').serialize();
 		if (data.length == 0) {
-			alert("Selecione uma página para incluir no menu");
+			alert("Selecione uma página para incluir no menu.");
 			return false;
 		};
 		data = data +"&type=page&" + $("input[name=menu_id]").serialize();
@@ -90,7 +109,7 @@ jQuery(document).ready(function($) {
 			console.log("error");
 		});
 		
-	});
+	});//--/addPage
 
 
 	var page = 

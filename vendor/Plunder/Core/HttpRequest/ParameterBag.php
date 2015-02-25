@@ -25,20 +25,31 @@ class ParameterBag
 	 * @param  boolean $security [true: aplica htmlentities, false: retorna valor padrao]
 	 * @return [type]            [Valor do array]
 	 */
-	public function get($value, $default=null, $security = true){
+	public function pull($value, $default=null, $security = true){
 		
-		if(array_key_exists($value, $this->parameter)):
-			if (is_array($this->parameter[$value])):
-				return new ParameterBag($this->parameter[$value]);
+		$aux = explode(".",trim($value));
+
+		$parameter = $this->parameter;
+
+		foreach ($aux as $key => $value):
+		
+			if(!is_array($parameter)) break;
+
+			if (array_key_exists($value, $parameter)):
+				$parameter = $parameter[$value];
 			else:
-				return ($security) ? htmlentities($this->parameter[$value], ENT_QUOTES, "UTF-8") : $this->parameter[$value];
+				$parameter = $default;
 			endif;
+		endforeach;
+
+		if (is_array($parameter)):
+			return new ParameterBag($parameter);
 		else:
-			return $default;
+			return ($security) ? htmlentities($parameter, ENT_QUOTES, "UTF-8") : $parameter;
 		endif;
 	}
 
-	public function getAll(){
+	public function toArray(){
 		return $this->parameter;
 	}
 }

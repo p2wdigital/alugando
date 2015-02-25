@@ -15,7 +15,7 @@ class Request
 	 * [$request Valores de $_POST]
 	 * @var array
 	 */
-	public $request 	= array();
+	public $post 		= array();
 	/**
 	 * [$server Valores de $_SERVER]
 	 * @var array
@@ -29,46 +29,46 @@ class Request
 
 	public function initialize(array $get = array(), array $post = array(), array $server = array()){
 		$this->query 	= 	new ParameterBag($get);
-		$this->request  = 	new ParameterBag($post);
+		$this->post  	= 	new ParameterBag($post);
 		$this->server 	= 	new ParameterBag($server);
 	}
 
 	public function getRequest(){
-		$this->request->getAll();
+		$this->post->toArray();
 	}
 
 	public function getPathInfo(){
-		$path = $this->server->get("PATH_INFO", "", false);
+		$path = $this->server->pull("PATH_INFO", "", false);
 		if($path != "") return $path;
 		
-		$path = $this->server->get("REQUEST_URI", "", false);
-		$base = $this->server->get("BASE", "", false);
+		$path = $this->server->pull("REQUEST_URI", "", false);
+		$base = $this->server->pull("BASE", "", false);
 		return str_replace($base, "", $path);
 	}
 
 	public function getBase(){
-		$base = $this->server->get("BASE");
+		$base = $this->server->pull("BASE");
 		if ($base === null):
-			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->get('REQUEST_URI'), $match);
+			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->pull('REQUEST_URI'), $match);
 				return $match[1] . $match[2];
 		endif;
 		return $base;
 	}
 
 	public function getBaseFile(){
-		$base = $this->server->get("BASE");
+		$base = $this->server->pull("BASE");
 		if ($base === null):
-			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->get('REQUEST_URI'), $match);
+			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->pull('REQUEST_URI'), $match);
 				return $match[1];
 		endif;
 		return $base;
 	}
 
 	public function getMethod(){
-		return $this->server->get("REQUEST_METHOD", 'GET');
+		return $this->server->pull("REQUEST_METHOD", 'GET');
 	}
 
 	public function isAjax(){
-		return 'XMLHttpRequest' == $this->server->get('HTTP_X_REQUESTED_WITH', null);
+		return 'XMLHttpRequest' == $this->server->pull('HTTP_X_REQUESTED_WITH', null);
 	}
 }

@@ -28,13 +28,26 @@ class MenuController extends Controller
 	 * @Route("/create-menu", name="menu_create")
 	 * @Method("POST");
 	 */
-	public function createAction(Request $request){
-		$nome = $request->request->get('nome');
+	public function createAction(Request $req){
+		$erro = array();
+		if(strlen($req->post->pull("nome_menu")) == 0):
+			$erro['erro']['nome'] =array("Este campo não deve ser vazio");
+		endif;
+		//var_dump($req->post->pull("add_auto"));
 		$menu = new Menu();
-		$menu->setNome($nome);
-		$menu->save();
-
-		return new Response($menu->toJSON());
+		if($erro == array()):
+			$menu->setNome($req->post->pull("nome_menu"));
+			$menu->setPrincipal($req->post->pull("principal"));
+			$options = array(
+				"add_auto"=> ($req->post->pull("add_auto") == null) ? false : true,
+			);
+			$menu->setDados(json_encode($options));
+			$menu->save();
+			return new Response($menu->toJSON());
+		else:
+			return new Response(json_encode($erro), 200);
+		endif;
+		
 	}
 
 
