@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="{% block encoding %}utf-8{% endblock %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	{# CSS LINK #}
+    {{link(assert("/css/bootstrap.min.css"))}}
+    {{link(assert("/css/font-awesome.min.css"))}}
+    {{link(assert("/css/site.css"))}}
+    {{link("//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400")}}
+    {# JQuery #}
+    {{script(assert("/js/jquery/jquery-1.11.2.min.js"))}}
+    {{script(assert("/js/jquery/jquery-migrate-1.2.1.min.js"))}}
+    
+    {% block head %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body onload="initialize()">
+{% block body %}
+    {% block header  %}{% include 'Site:Common:header.html.twig' %}{% endblock %}
+    {% block content %}{% endblock %}
+    {% block footer  %}{% include 'Site:Common:footer.html.twig' %}{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+{{script(assert("/js/bootstrap/bootstrap.min.js"))}}
+{% endblock %}
+</body>
+</html>

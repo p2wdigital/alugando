@@ -25,6 +25,7 @@ class Loader
 	 * @return [type] [description]
 	 */
 	private function init(){
+		//var_dump($_SERVER);
 		//Include propel class;
 		require_once (BASE_DIR."/app/config/config_propel.php");
 
@@ -32,6 +33,7 @@ class Loader
 		new Config(Container::get('yaml'), Container::get('cache'));
 		
 		$route = Container::get('router');
+
 		if($route->getContext() != array()):
 			Container::load("app", $route->getContext());
 			$this->callController($route->getContext());

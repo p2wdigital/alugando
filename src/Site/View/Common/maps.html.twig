@@ -1,0 +1,30 @@
+<div class="col-xs-12" id="maps"></div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script type="text/javascript">
+      function initialize() {
+		var styles = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
+		var styledMap = new google.maps.StyledMapType(styles,{name: "Styled Map"});
+        var mapOptions = {
+          center: new google.maps.LatLng(-23.568114, -46.693433),
+          zoom: 15,
+          scrollwheel: false,
+          navigationControl: false,
+		  mapTypeControl: false,
+		  scaleControl: false,
+          mapTypeControlOptions: {
+     		 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+    		}
+        };
+        var map = new google.maps.Map(document.getElementById("maps"),
+            mapOptions);
+		var image = '{{assert("/img/maps2.png")}}';
+        var myLatLng = new google.maps.LatLng(-23.569822, -46.692650);
+		var beachMarker = new google.maps.Marker({
+		  position: myLatLng,
+		  map: map,
+		  icon: image
+		});        
+		map.mapTypes.set('map_style', styledMap);
+		map.setMapTypeId('map_style');        
+      }
+    </script>

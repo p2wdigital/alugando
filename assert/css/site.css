@@ -1,0 +1,35 @@
+body{font-family: 'Open Sans', Arial; font-size: 14px;}
+#header	{background: url("../img/fundo-top.jpg");}
+#header .line{background: url("../img/divider.jpg"); height: 2px;}
+#header .logo img{margin-top: 20px;}
+#header .divider{background: url("../img/divider.png"); background-repeat: repeat-x; height: 5px;margin-top: 5px;}
+
+#header .nav {margin-top: 90px;}
+#header .nav ul{list-style: none; margin: 0; padding: 0;}
+#header .nav ul li{display: inline-block; padding-left: 30px; position: relative;}
+#header .nav ul li a{ font-size: 15px; font-weight: 600; color: #7d7c7c;}
+#header .nav ul .active a,
+#header .nav ul li a:hover{color: #03A084; border-bottom: 3px solid #03A084; text-decoration: none; }
+/**submenu**/
+#header .nav ul li ul{display: none; width: 200px; background:#03A084; position: absolute; z-index: 100; text-align: left; top: 21px; }
+#header .nav ul li:hover ul{display: block;} 
+#header .nav ul li ul li{line-height: 40px; padding: 0 10px; border-bottom: 1px solid #FFF; width: 100%;} 
+#header .nav ul li ul li:last-child{border-bottom: none;}
+#header .nav ul li ul li a{color: #FFF; font-size: 13px;}
+#header .nav ul li ul li a:hover{color: #FFF; text-decoration: underline;}
+#header .clientes{padding: 15px 0;}
+
+
+#home h1{color: #00a588; text-align: center;}
+#home h2{color: #8f8f8f; text-align: center; font-size: 95%; text-transform: uppercase; margin-top: 0;
+		background: url("../img/divider.jpg"); background-repeat: no-repeat; background-position: bottom center; padding-bottom: 20px;}
+#home p{color: #696969;}
+
+.box-android{margin-top: 70px; position: relative; padding: 20px; float: right; width: auto; width: 263px;}
+.box-android img{ position: absolute; top: 0; right: 0; z-index: -10;}
+.box-android p{color: #FFFFFF!important;}
+.box-android span{font-size: 150%;}
+
+
+#maps{height: 250px; margin-top:50px;}
+#footer{background: #333; min-height: 500px}

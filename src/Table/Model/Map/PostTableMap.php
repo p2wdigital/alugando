@@ -203,6 +203,7 @@ class PostTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'PostHasCategorias', false);
+        $this->addRelation('Categoria', '\\Table\\Model\\Categoria', RelationMap::MANY_TO_MANY, array(), null, null, 'Categorias');
     } // buildRelations()
 
     /**

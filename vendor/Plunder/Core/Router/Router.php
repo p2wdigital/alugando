@@ -32,7 +32,7 @@ class Router
 	public function resolve(){
 		$path 		= rtrim($this->request->getPathInfo(),"/");
 		$routers 	= $this->annotationRouter->getRoute();
-
+		//var_dump($routers);
 		foreach ($routers as $key => $value):
 			if($this->checkRoute($path, $value)):
 				break;

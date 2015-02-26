@@ -56,6 +56,7 @@ class Request
 	}
 
 	public function getBaseFile(){
+		
 		$base = $this->server->pull("BASE");
 		if ($base === null):
 			preg_match("/^(.*)(\/\w+\.php).*/i", $this->server->pull('REQUEST_URI'), $match);

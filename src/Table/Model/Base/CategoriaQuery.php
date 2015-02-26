@@ -605,6 +605,23 @@ abstract class CategoriaQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related Post object
+     * using the post_has_categoria table as cross reference
+     *
+     * @param Post $post the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCategoriaQuery The current query, for fluid interface
+     */
+    public function filterByPost($post, $comparison = Criteria::EQUAL)
+    {
+        return $this
+            ->usePostHasCategoriaQuery()
+            ->filterByPost($post, $comparison)
+            ->endUse();
+    }
+
+    /**
      * Exclude object from result
      *
      * @param   ChildCategoria $categoria Object to remove from the list of results

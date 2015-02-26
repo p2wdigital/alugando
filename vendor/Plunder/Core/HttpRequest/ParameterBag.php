@@ -26,7 +26,7 @@ class ParameterBag
 	 * @return [type]            [Valor do array]
 	 */
 	public function pull($value, $default=null, $security = true){
-		
+		//var_dump($_SERVER);
 		$aux = explode(".",trim($value));
 
 		$parameter = $this->parameter;

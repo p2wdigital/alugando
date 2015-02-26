@@ -130,6 +130,7 @@ class PostHasCategoriaTableMap extends TableMap
         $this->setClassName('\\Table\\Model\\PostHasCategoria');
         $this->setPackage('Table.Model');
         $this->setUseIdGenerator(false);
+        $this->setIsCrossRef(true);
         // columns
         $this->addForeignPrimaryKey('post_id', 'PostId', 'INTEGER' , 'post', 'id', true, null, null);
         $this->addForeignPrimaryKey('categoria_id', 'CategoriaId', 'INTEGER' , 'categoria', 'id', true, null, null);

@@ -1,0 +1,38 @@
+<div class="container-fluid" id="header">
+<div class="row">
+	<div class="col-xs-12 line"></div>
+	<div class="container">
+		<div class="col-xs-12 col-md-3 text-center logo">
+			<img src="{{assert("/img/logo-alugando-tablet.png")}}" alt="">
+		</div>		
+		<div class="col-xs-12 col-md-9 nav text-right">
+			<ul>
+				<li class="active"><a href="{{path("site_home")}}">Home</a></li>
+				<li><a href="{{path("site_home")}}">A Empresa</a></li>
+				<li><a href="{{path("site_home")}}">Produtos</a>
+					<ul>
+						<li><a href="">Aluguel de Tablets</a></li>
+						<li><a href="">Aluguel de Tablets</a></li>
+						<li><a href="">Acessórios</a></li>
+					</ul>
+				</li>
+				<li><a href="{{path("site_home")}}">Orçamento</a></li>
+				<li><a href="{{path("site_home")}}">Na Mídia</a></li>
+				<li><a href="{{path("site_home")}}">Contato</a></li>
+				<li><a href="{{path("site_home")}}">Blog</a></li>
+			</ul>			
+		</div>
+		<div class="col-xs-12 divider"></div>
+
+		{% block banner %}
+			{% include 'Site:Common:banner.html.twig' %}
+		{% endblock %}
+		{% block clientes %}
+			<div class="col-xs-12 text-center clientes">
+				<p class="text-left">Quando eles precisaram de aluguel tablets, eles nos chamaram:</p>
+				<img src="{{assert("/img/clientes.jpg")}}" alt="">
+			</div>
+		{% endblock %}
+	</div><!--container-->
+</div>	<!--/row-->
+</div><!--/container-fluid-->
