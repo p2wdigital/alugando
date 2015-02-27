@@ -1,10 +1,14 @@
 {% extends 'Site:layout.html.twig' %}
+{% use 'Site:Widget:box_icon.html.twig'%}
+
 {% block content %}
+{% include 'Site:Common:orcamento.html.twig' %}
 <div class="container" id="home">
+
 <div class="col-md-8 col-xs-6">
 	<h1>Aluguel de Tablets e iPad</h1>
 	<h2>Aluguel de tablets e iPad para eventos, ações publicitárias, treinamentos e pesquisas!</h2>
-	<p>A Alugando Tablet foi criada em 2012, quando percebeu a carência no mercado de aluguel de tablets para equipamentos com sistema operacional Android. As poucas empresas, que já atuavam neste segmento, estavam totalmente focadas no aluguel de iPad, e assim nasceu a Alugando Tablet, para suprir as grandes demandas deste mercado específico. Trabalhamos duro, fizemos altos investimentos, e hoje, com mais de 450 tablets Samung Galaxy Android disponíveis para locação, somos referência neste segmento.
+	<p>A Alugando Tablet foi criada em 2012, quando percebeu a carência no mercado de aluguel de tablets para equipamentos com sistema operacional Android. As poucas empresas, que já atuavam neste segmento, estavam totalmente focadas no aluguel de iPad, e assim nasceu a Alugando Tablet, para suprir as grandes demandas deste mercado específico. Trabalhamos duro, fizemos altos investimentos, e hoje, com mais de 500 tablets Samung Galaxy Android e iPads disponíveis para locação, somos referência neste segmento.
 	</p>
 	<p>Consolidados, e conhecidos no mercado de aluguel de tablets Samsung, as demandas por aluguel de iPad começaram a ser cada vez mais frequentes, e hoje a Alugando Tablet possuí um estoque consideravél de iPad disponível para locação.		
 	</p>
@@ -15,12 +19,46 @@
 		
 	<img src="{{assert("/img/box.png")}}" alt="">
 	<p class="text-center">
-		<i class="fa fa-android fa-3x"></i> <br>
-		<span>+450 Tablets</span> <br>
-Com mais de 450 tablets Samsung Galaxy disponíveis para locação. Somos referência quando se trata de aluguel de tablets com sistema operacional Android!		
+		<i class="fa fa-android fa-3x"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-apple fa-3x"></i> <br>
+		<span>+500 Tablets</span> <br>
+Com mais de 500 tablets Samsung Galaxy e iPad disponíveis para locação. Somos referência quando se trata de aluguel de tablets com sistema operacional Android!		
 
 	</p>
 	</div>
 </div>
 </div><!--/container-->
+<br><br>
+<div class="container">
+	<div class="col-xs-4 h100">
+		{% set icon = "01" %}
+		{% set icon_title = "Aluguel de Tablets Para Eventos" %}
+		{% set icon_body %}
+			Aluguel de tablets para eventos e exposições é uma ótima forma de atrair e impressionar seu público. Você pode disponibilizar um cadastro para seu visitantes, deixar rodando um vídeo sobre sua empresa, produtos ou serviços. <br> Idéia para utilização dos tablets não faltam!
+		{% endset %}
+		{{block("box_icon")}}
+	</div>
+	<div class="col-xs-4 h100">
+		{% set icon = "02" %}
+		{% set icon_title = "Aluguel de Tablets Para Pesquisas" %}
+		{% set icon_body %}
+			Quando perguntamos para as diversas empresas de pesquisa que atendemos, qual era o benefício de se utilizar tablets, todas disseram que a aceitação do publico em preencher uma pesquisa com um tablet era maior do que no papel, conseguindo coletar mais informações e um menor período de tempo!
+		{% endset %}
+		{{block("box_icon")}}
+	</div>
+	<div class="col-xs-4 h100">
+		{% set icon = "03" %}
+		{% set icon_title = "Aluguel de Tablets para Campanhas Publicitárias" %}
+		{% set icon_body %}
+			Mostrar novos produtos e serviços em vídeo ou de uma forma interativa em tablets, com certeza vai impressionar seu clientes.
+		{% endset %}
+		{{block("box_icon")}}
+
+	</div>
+</div>
+<br><br>
+
+
+
+{% include 'Site:Common:video.html.twig' %}
+
 {% endblock %}

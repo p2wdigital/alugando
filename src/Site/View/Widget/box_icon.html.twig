@@ -1,0 +1,17 @@
+{% block box_icon %}
+<div class="box-icon">
+	<div class="icon text-center">
+		<img src="{{assert("/img/icon"~ icon|default("01") ~".png")}}" alt="">
+	</div><!--/icon -->
+	<div class="icon-title text-center">
+		<h3>{{icon_title}}</h3>
+	</div>
+	<div class="icon-body">
+		{{icon_body}}
+	</div>
+</div>
+{% set icon = "" %}
+{% set icon_title = "" %}
+{% set icon_body = "" %}
+
+{% endblock %}

@@ -25,14 +25,14 @@
 		<div class="col-xs-12 divider"></div>
 
 		{% block banner %}
-			{% include 'Site:Common:banner.html.twig' %}
 		{% endblock %}
-		{% block clientes %}
-			<div class="col-xs-12 text-center clientes">
-				<p class="text-left">Quando eles precisaram de aluguel tablets, eles nos chamaram:</p>
-				<img src="{{assert("/img/clientes.jpg")}}" alt="">
-			</div>
-		{% endblock %}
+
 	</div><!--container-->
 </div>	<!--/row-->
+<div class="row color">
+	{% include 'Site:Common:banner.html.twig' %}
+</div>
+<div class="container">
+	{% include 'Site:Common:clientes.html.twig' %}
+</div>	
 </div><!--/container-fluid-->
