@@ -9,6 +9,8 @@
     {{link(assert("/css/font-awesome.min.css"))}}
     {{link(assert("/css/site.css"))}}
     {{link("//fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,700,600,400,300italic")}}
+    {{link("//fonts.googleapis.com/css?family=PT+Sans:400,700,400italic")}}
+
     {# JQuery #}
     {{script(assert("/js/jquery/jquery-1.11.2.min.js"))}}
     {{script(assert("/js/jquery/jquery-migrate-1.2.1.min.js"))}}
@@ -18,7 +20,7 @@
 </head>
 <body onload="initialize()">
 {% block body %}
-    {% block header  %}{% include 'Site:Common:header.html.twig' %}{% endblock %}
+    {% block header  %}{% endblock %}
     {% block content %}{% endblock %}
     {% block footer  %}{% include 'Site:Common:footer.html.twig' %}{% endblock %}
 {% endblock %}

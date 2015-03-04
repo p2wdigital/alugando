@@ -8,8 +8,8 @@
 		<div class="col-xs-12 col-md-9 nav text-right">
 			<ul>
 				<li class="active"><a href="{{path("site_home")}}">Home</a></li>
-				<li><a href="{{path("site_home")}}">A Empresa</a></li>
-				<li><a href="{{path("site_home")}}">Produtos</a>
+				<li><a href="{{path("site_empresa")}}">A Empresa</a></li>
+				<li><a href="{{path("site_empresa")}}">Produtos</a>
 					<ul>
 						<li><a href="">Aluguel de Tablets</a></li>
 						<li><a href="">Aluguel de Tablets</a></li>
@@ -22,17 +22,17 @@
 				<li><a href="{{path("site_home")}}">Blog</a></li>
 			</ul>			
 		</div>
-		<div class="col-xs-12 divider"></div>
-
-		{% block banner %}
-		{% endblock %}
-
 	</div><!--container-->
 </div>	<!--/row-->
-<div class="row color">
-	{% include 'Site:Common:banner.html.twig' %}
+{% block header_change %}
+<div class="row page-title">
+	<div class="container">
+		<div class="col-xs-12">
+			<h1>A Empresa</h1>
+		</div>
+	</div>
 </div>
-<div class="container">
-	{% include 'Site:Common:clientes.html.twig' %}
-</div>	
+
+
+{% endblock %}
 </div><!--/container-fluid-->

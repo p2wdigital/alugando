@@ -1,8 +1,11 @@
-{% extends 'Site:layout.html.twig' %}
 {% use 'Site:Widget:box_icon.html.twig'%}
+{% extends 'Site:layout.html.twig' %}
+
+{% block header %}
+	{% include 'Site:Common:header-home.html.twig' %}
+{% endblock %}
 
 {% block content %}
-{% include 'Site:Common:orcamento.html.twig' %}
 <div class="container" id="home">
 
 <div class="col-md-8 col-xs-6">

@@ -17,5 +17,11 @@ class DefaultController extends Controller{
 		
 		return $this->render("Site:Default:home.html.twig");
 	}
+	/**
+	 * @Route("/empresa", name="site_empresa")
+	 */
+	public function empresaAction(){
+		return $this->render("Site:Default:empresa.html.twig");
+	}
 
 }

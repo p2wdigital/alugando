@@ -1,0 +1,33 @@
+{% extends 'Site::layout.html.twig' %}
+
+{% block header %}
+	{% include 'Site:Common:header.html.twig'  %}
+
+{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="col-xs-6">
+		<br>
+		<div class="embed-responsive embed-responsive-16by9">
+		<iframe src="https://www.youtube.com/embed/UF7I7s2lZnk" class="embed-responsive-item" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div> <!--/video-->
+	<div class="col-xs-6">
+		<h2>Sobre Nós</h2>
+		<p>
+A Alugando Tablet é uma empresa especializada em aluguel de tablets e iPads.
+<br><br>
+Nos orgulhamos de atender nossos clientes seja simplesmente efetuando o aluguel de tablet a um preço competitivo no mercado, ou com uma solução mais sofisticada envolvendo desenvolvimento de aplicativos personalizados as suas necessidades. 
+<br><br>
+Temos como compromisso sempre oferecer tablets de ponta, em excelentes condições de funcionamento, esperamos em breve tê-lo como cliente!			
+		</p>
+	</div><!--/sobre nos-->
+	<div class="col-xs-12 divider"></div>
+	<div class="col-xs-12">
+		Nossos clientes:
+		<img src="{{assert("/img/clientes_old.jpg")}}" class="img-responsive" alt="">
+		<br><br>
+	</div>
+</div>
+
+{% endblock %}

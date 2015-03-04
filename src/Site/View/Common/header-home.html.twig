@@ -1,0 +1,13 @@
+{% extends 'Site:Common:header.html.twig' %}
+
+{% block header_change %}
+	<div class="row color">
+		{% include 'Site:Common:banner.html.twig' %}
+	</div>
+
+	{% include 'Site:Common:orcamento.html.twig' %}
+	<div class="container">
+		<div class="divider"></div>
+		{% include 'Site:Common:clientes.html.twig' %}
+	</div>	
+{% endblock %}
