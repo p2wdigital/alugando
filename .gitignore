@@ -1,6 +1,7 @@
 !/vendor
 /app/cache
 /Docs
+/_Docs
 /vendor/*
 !/vendor/Plunder
 composer.lock
