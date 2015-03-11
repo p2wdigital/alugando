@@ -1,0 +1,21 @@
+{% set menu =
+	[{name:"Home", icon:null, href:"site_home", children:{}},
+	{name:"A Empresa", icon:null, href:"site_empresa", children:{}},
+	{name:"Produtos", icon:null, href:"site_empresa", children:{}},
+	{name:"Orçamento", icon:null, href:"site_empresa", children:{}},
+	{name:"Na Mídia", icon:null, href:"site_empresa", children:{}},
+	{name:"Contato", icon:null, href:"site_empresa", children:{}},
+	{name:"BLOG", icon:null, href:"site_empresa", children:{}},
+	]
+%}
+
+<ul>
+	{% for item in menu %}
+	{% if app.name == item.href %}{% set active = "active" %}{% endif %}
+	<li class="{{active|default('')}}">
+		<a href="{{path(item.href)}}">{{item.name}}</a>
+	</li>
+	{% set active = "" %}
+	{% endfor %}
+</ul>			
+

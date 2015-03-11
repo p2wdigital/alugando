@@ -1,6 +1,19 @@
 		{% block clientes %}
 			<div class="col-xs-12 text-center clientes" >
 				<p class="text-left">Quando eles precisaram de aluguel tablets, eles nos chamaram:</p>
-				<img src="{{assert("/img/clientes.jpg")}}" alt="" style="width: 100%;">
+				{% block clientes_images %}
+				<img src="{{assert("/img/clientes/cliente_01.jpg")}}" alt="Cliente Data Folha">
+				<img src="{{assert("/img/clientes/cliente_02.jpg")}}" alt="Cliente Levis">
+				<img src="{{assert("/img/clientes/cliente_03.jpg")}}" alt="Cliente SBT">
+				<img src="{{assert("/img/clientes/cliente_04.jpg")}}" alt="Cliente ROCK">
+				<img src="{{assert("/img/clientes/cliente_05.jpg")}}" alt="Cliente Ipsos">
+				<img src="{{assert("/img/clientes/cliente_06.jpg")}}" alt="Cliente Walmart">
+				<img src="{{assert("/img/clientes/cliente_07.jpg")}}" alt="Cliente Netshoes">
+				<img src="{{assert("/img/clientes/cliente_08.jpg")}}" alt="Cliente Petrobras">
+				<img src="{{assert("/img/clientes/cliente_09.jpg")}}" alt="Cliente B2W">
+				<img src="{{assert("/img/clientes/cliente_10.jpg")}}" alt="Cliente Senac">
+				<img src="{{assert("/img/clientes/cliente_11.jpg")}}" alt="Cliente Bungiorno">
+				<img src="{{assert("/img/clientes/cliente_12.jpg")}}" alt="Cliente Brainjuicer">
+				{% endblock %}
 			</div>
 		{% endblock %}

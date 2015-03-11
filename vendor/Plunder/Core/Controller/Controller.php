@@ -22,13 +22,13 @@ class Controller
 
 	protected function render($templating, $args = array(), $display = true){
 		$twig = Container::get('templating');
+		
 
 		if($display):
 			return new Response($twig->render($templating, $args + array('app'=>Container::get('app')), $display));
 		else:
 			return $twig->render($templating, $args + array('app'=>Container::get('app')), $display);
 		endif;
-		
 	}
 
 	protected function generateUrl($name, $param = array()){
